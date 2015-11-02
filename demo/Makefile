@@ -16,14 +16,14 @@ ifeq ($(TYPE),release)
 COMPILE_FLAGS += -O3
 endif
 
-NAME = bin/$(CONFIG)/$(TYPE)/$(PROGRAM_NAME).a
+NAME = bin/$(CONFIG)/$(TYPE)/$(PROGRAM_NAME)
 ifneq ($(LIBS_EXTERN), )
 LIBS = $(shell pkg-config --libs --cflags $(LIBS_EXTERN))
 endif
 COMPILE_FLAGS += -Wno-write-strings -std=c++14 -Wall -Wextra $(COMPILE_FLAGS_EXTRA) $(DEFS) -Winvalid-pch
 # TODO: Make this automated
-INCLUDES = -I build/header/$(CONFIG)/$(TYPE) -I include
-STATIC_LIBS =
+INCLUDES = -I build/header/$(CONFIG)/$(TYPE) -I include -I ../include
+STATIC_LIBS = ../bin/$(CONFIG)/$(TYPE)/flare.a
 # MAKEFLAGS = "-j 4"
 
 SOURCES = $(shell find src -name '*.cpp' -printf '%T@\t%p\n' | sort -k 1nr | cut -f2-)
@@ -41,10 +41,7 @@ FOLDERS_LIBS = $(subst libs/src,build/obj/$(CONFIG)/$(TYPE)/libs,$(shell find li
 TOTAL = $(words $(SOURCES) $(SOURCES_LIBS))
 COUNTER = 1
 
-all: dirs build/header/$(CONFIG)/$(TYPE)/flare.h.gch $(NAME) flare-demo
-
-flare-demo:
-	@cd demo && $(MAKE)
+all: dirs build/header/$(CONFIG)/$(TYPE)/standard.h.gch $(NAME)
 
 dirs:
 ifneq ($(wildcard $(FOLDERS) $(FOLDERS_LIBS) build/header/$(CONFIG)/$(TYPE) bin/$(CONFIG)/$(TYPE)),$(FOLDERS) $(FOLDERS_LIBS) build/header/$(CONFIG)/$(TYPE) bin/$(CONFIG)/$(TYPE))
@@ -55,35 +52,36 @@ ifneq ($(wildcard $(FOLDERS) $(FOLDERS_LIBS) build/header/$(CONFIG)/$(TYPE) bin/
 	@mkdir -p bin/$(CONFIG)/$(TYPE)
 endif
 
-$(NAME): $(OBJECTS_LIBS) $(OBJECTS) 
+$(NAME): $(OBJECTS_LIBS) $(OBJECTS) ../bin/$(CONFIG)/$(TYPE)/flare.a
 	@echo "Linking: $(NAME)"
-# This can be done better
-	@ar rvs -o $@ $^
+	@$(CXX) $(INCLUDES) $(LIBS) $(DEFS) $(COMPILE_FLAGS) -o $@ $^ $(STATIC_LIBS) 
 
-$(OBJECTS) : build/obj/$(CONFIG)/$(TYPE)/%.o : src/%.cpp build/header/$(CONFIG)/$(TYPE)/flare.h.gch
+$(OBJECTS) : build/obj/$(CONFIG)/$(TYPE)/%.o : src/%.cpp build/header/$(CONFIG)/$(TYPE)/standard.h.gch
 	@echo "Compiling: $<"
-	@$(CXX) $(INCLUDES) $(LIBS) $(DEFS) $(COMPILE_FLAGS) -c -o $@ $< $(STATIC_LIBS)
+	@$(CXX) $(INCLUDES) $(LIBS) $(DEFS) $(COMPILE_FLAGS) -c -o $@ $<
 
-$(OBJECTS_LIBS) : build/obj/$(CONFIG)/$(TYPE)/libs/%.o : libs/src/%.cpp
+$(OBJECTS_LIBS) : build/obj/$(CONFIG)/$(TYPE)/libs/%.o : libs/src/%.cpp ../build/header/$(CONFIG)/$(TYPE)/flare.h.gch
 	@echo "Compiling: $<"
 	@$(CXX) $(INCLUDES) $(LIBS) $(DEFS) $(COMPILE_FLAGS) -c -o $@ $< -Wno-type-limits -Wno-missing-field-initializers
 
-build/header/$(CONFIG)/$(TYPE)/flare.h.gch: $(HEADERS) $(HEADERS_LIBS)
-	@echo "Compiling: include/flare.h"
-	@$(CXX) $(COMPILE_FLAGS) $(INCLUDES) include/flare.h -o build/header/$(CONFIG)/$(TYPE)/flare.h.gch
+build/header/$(CONFIG)/$(TYPE)/standard.h.gch: $(HEADERS) $(HEADERS_LIBS) ../build/header/$(CONFIG)/$(TYPE)/flare.h.gch
+	@echo "Compiling: include/standard.h"
+	@$(CXX) $(COMPILE_FLAGS) $(INCLUDES) include/standard.h -o build/header/$(CONFIG)/$(TYPE)/standard.h.gch
 
 run:
-	@cd demo && make run
+	@echo "Running: $(NAME)"
+	@cd sandbox && ./../$(NAME)
 
 debug:
-	@cd demo && make debug
+	@echo "Running: $(NAME) (using gdb)"
+	@cd sandbox && gdb ../$(NAME) -ex run -ex bt -ex quit --silent
 
 valgrind:
-	@cd demo && valgrind
+	@echo "Running: $(NAME) (using valgrind)"
+	@cd sandbox && valgrind ./../$(NAME) -ex run -ex bt -ex quit --silent
 
 clean:
-	@cd demo && make clean
 	@echo "Removing build files"
 	@rm -rf build/
 	@rm -rf bin/
-	@rm -f include/flare.h.gch
+	@rm -f include/standard.h.gch

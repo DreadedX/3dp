@@ -1,0 +1,7 @@
+PROGRAM_NAME = demo
+
+LIBS_EXTERN = glew glfw3
+DEFS =
+
+COMPILE_FLAGS_EXTRA +=
+
