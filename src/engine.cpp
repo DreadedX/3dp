@@ -1,10 +1,10 @@
-#include "flare.h"
+#include "flare/flare.h"
 
 struct Settings {
 
     // NOTE: These are the default engine settigs.
     char *name = "flare engine";
-    glm::ivec2 resolution = glm::ivec2(1280, 720);
+    glm::ivec2 resolution = glm::ivec2(400, 400);
     int swap = 0;
 };
 
@@ -12,6 +12,7 @@ GLFWwindow *window = nullptr;
 
 void flare::init() {
 
+    // Initialize window
     // TODO: The settings need to be passed in from somewhere else
     Settings settings;
 
@@ -45,17 +46,18 @@ void flare::init() {
     glfwMakeContextCurrent(window);
 
     glewExperimental = GL_TRUE;
-    if (glewInit() != GLEW_OK) {
+    GLenum glewStatus = glewInit();
+    if (glewStatus != GLEW_OK) {
 
 	// TODO: Use logger
-	printf("Failed to initialize glew\n");
+	printf("Failed to initialize glew: %s\n", glewGetErrorString(glewStatus));
 	exit(-1);
     }
 
-    // NOTE: Test code
-    GLuint vertexBuffer;
-    glGenBuffers(1, &vertexBuffer);
-    printf("%u\n", vertexBuffer);
+    glGetError();
+
+    // Initialize other systems
+    initRender();
 }
 
 bool flare::isRunning() {
@@ -70,6 +72,9 @@ void flare::update() {
 
 	glfwSetWindowShouldClose(window, GL_TRUE);
     }
+
+    flare::updateRender();
+    // flare::updateTick();
 
     glfwSwapBuffers(window);
     glfwPollEvents();

@@ -1,4 +1,4 @@
-#include "flare.h"
+#include "flare/flare.h"
 
 bool keys[25536] = {false};
 

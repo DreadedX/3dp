@@ -2,9 +2,9 @@
 
 int main() {
 
-    std::cout << "This is a demo program for the flare engine." << std::endl;
-
     flare::init();
+
+    printf("This is a demo program for the flare engine!\n");
 
     while (flare::isRunning()) {
 

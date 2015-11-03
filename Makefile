@@ -38,10 +38,9 @@ OBJECTS_LIBS = $(subst .cpp,.o,$(subst libs/src/,build/obj/$(CONFIG)/$(TYPE)/lib
 FOLDERS = $(subst src,build/obj/$(CONFIG)/$(TYPE),$(shell find src -type d | sort -k 1nr | cut -f2-))
 FOLDERS_LIBS = $(subst libs/src,build/obj/$(CONFIG)/$(TYPE)/libs,$(shell find libs/src -type d | sort -k 1nr | cut -f2-))
 
-TOTAL = $(words $(SOURCES) $(SOURCES_LIBS))
-COUNTER = 1
+ASSETS = $(shell find assets -name '*.*' -printf '%T@\t%p\n' | sort -k 1nr | cut -f2-)
 
-all: dirs build/header/$(CONFIG)/$(TYPE)/flare.h.gch $(NAME) flare-demo
+all: dirs build/header/$(CONFIG)/$(TYPE)/flare/flare.h.gch $(NAME) flare-demo 
 
 flare-demo:
 	@cd demo && $(MAKE)
@@ -51,7 +50,7 @@ ifneq ($(wildcard $(FOLDERS) $(FOLDERS_LIBS) build/header/$(CONFIG)/$(TYPE) bin/
 	@echo "Creating folders"
 	@mkdir -p $(FOLDERS)
 	@mkdir -p $(FOLDERS_LIBS)
-	@mkdir -p build/header/$(CONFIG)/$(TYPE)
+	@mkdir -p build/header/$(CONFIG)/$(TYPE)/flare
 	@mkdir -p bin/$(CONFIG)/$(TYPE)
 endif
 
@@ -60,7 +59,7 @@ $(NAME): $(OBJECTS_LIBS) $(OBJECTS)
 # This can be done better
 	@ar rvs -o $@ $^
 
-$(OBJECTS) : build/obj/$(CONFIG)/$(TYPE)/%.o : src/%.cpp build/header/$(CONFIG)/$(TYPE)/flare.h.gch
+$(OBJECTS) : build/obj/$(CONFIG)/$(TYPE)/%.o : src/%.cpp build/header/$(CONFIG)/$(TYPE)/flare/flare.h.gch
 	@echo "Compiling: $<"
 	@$(CXX) $(INCLUDES) $(LIBS) $(DEFS) $(COMPILE_FLAGS) -c -o $@ $< $(STATIC_LIBS)
 
@@ -68,9 +67,9 @@ $(OBJECTS_LIBS) : build/obj/$(CONFIG)/$(TYPE)/libs/%.o : libs/src/%.cpp
 	@echo "Compiling: $<"
 	@$(CXX) $(INCLUDES) $(LIBS) $(DEFS) $(COMPILE_FLAGS) -c -o $@ $< -Wno-type-limits -Wno-missing-field-initializers
 
-build/header/$(CONFIG)/$(TYPE)/flare.h.gch: $(HEADERS) $(HEADERS_LIBS)
-	@echo "Compiling: include/flare.h"
-	@$(CXX) $(COMPILE_FLAGS) $(INCLUDES) include/flare.h -o build/header/$(CONFIG)/$(TYPE)/flare.h.gch
+build/header/$(CONFIG)/$(TYPE)/flare/flare.h.gch: $(HEADERS) $(HEADERS_LIBS)
+	@echo "Compiling: include/flare/flare.h"
+	@$(CXX) $(COMPILE_FLAGS) $(INCLUDES) include/flare/flare.h -o build/header/$(CONFIG)/$(TYPE)/flare/flare.h.gch
 
 run:
 	@cd demo && make run
@@ -86,4 +85,4 @@ clean:
 	@echo "Removing build files"
 	@rm -rf build/
 	@rm -rf bin/
-	@rm -f include/flare.h.gch
+	@rm -f include/flare/flare.h.gch

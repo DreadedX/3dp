@@ -60,11 +60,11 @@ $(OBJECTS) : build/obj/$(CONFIG)/$(TYPE)/%.o : src/%.cpp build/header/$(CONFIG)/
 	@echo "Compiling: $<"
 	@$(CXX) $(INCLUDES) $(LIBS) $(DEFS) $(COMPILE_FLAGS) -c -o $@ $<
 
-$(OBJECTS_LIBS) : build/obj/$(CONFIG)/$(TYPE)/libs/%.o : libs/src/%.cpp ../build/header/$(CONFIG)/$(TYPE)/flare.h.gch
+$(OBJECTS_LIBS) : build/obj/$(CONFIG)/$(TYPE)/libs/%.o : libs/src/%.cpp ../build/header/$(CONFIG)/$(TYPE)/flare/flare.h.gch
 	@echo "Compiling: $<"
 	@$(CXX) $(INCLUDES) $(LIBS) $(DEFS) $(COMPILE_FLAGS) -c -o $@ $< -Wno-type-limits -Wno-missing-field-initializers
 
-build/header/$(CONFIG)/$(TYPE)/standard.h.gch: $(HEADERS) $(HEADERS_LIBS) ../build/header/$(CONFIG)/$(TYPE)/flare.h.gch
+build/header/$(CONFIG)/$(TYPE)/standard.h.gch: $(HEADERS) $(HEADERS_LIBS) ../build/header/$(CONFIG)/$(TYPE)/flare/flare.h.gch
 	@echo "Compiling: include/standard.h"
 	@$(CXX) $(COMPILE_FLAGS) $(INCLUDES) include/standard.h -o build/header/$(CONFIG)/$(TYPE)/standard.h.gch
 

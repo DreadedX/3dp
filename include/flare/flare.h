@@ -7,14 +7,17 @@
 #include <iostream>
 
 // System libraries
-#define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
 // Engine includes
+#include "typedef.h"
+
 #include "engine.h"
 #include "input.h"
+#include "render.h"
+#include "loader.h"
 
 #endif
 
