@@ -33,7 +33,7 @@ void flare::log::e(const char *format, ...) {
 
     va_list args;
     va_start(args, format);
-    fprintf(stderr, "[DEBUG] ");
+    fprintf(stderr, "[ERROR] ");
     vfprintf(stderr, format, args);
     va_end(args);
     fprintf(stderr, "\n");

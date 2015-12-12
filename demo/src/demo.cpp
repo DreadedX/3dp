@@ -4,7 +4,7 @@ int main() {
 
     flare::init();
 
-    flare::log::w("This is a demo program for the flare engine!");
+    flare::log::l("This is a demo program for the flare engine!");
 
     while (flare::isRunning()) {
 

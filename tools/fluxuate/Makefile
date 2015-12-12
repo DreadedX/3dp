@@ -57,7 +57,7 @@ $(NAME): $(OBJECTS_LIBS) $(OBJECTS)
 
 $(OBJECTS) : build/obj/$(CONFIG)/$(TYPE)/%.o : src/%.cpp build/header/$(CONFIG)/$(TYPE)/standard.h.gch
 	@echo "Compiling: $<"
-	@$(CXX) $(INCLUDES) $(LIBS) $(DEFS) $(COMPILE_FLAGS) -c -o $@ $<
+	$(CXX) $(INCLUDES) $(LIBS) $(DEFS) $(COMPILE_FLAGS) -c -o $@ $<
 
 $(OBJECTS_LIBS) : build/obj/$(CONFIG)/$(TYPE)/libs/%.o : libs/src/%.cpp
 	@echo "Compiling: $<"

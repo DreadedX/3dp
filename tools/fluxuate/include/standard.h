@@ -5,12 +5,16 @@
 
 // Standard library
 #include <iostream>
+#include <vector>
+#include <cstring>
+#include <dirent.h>
 
 // System libraries
 #include <png.h>
 
 // Fluxuate include
-#include "read_png.h"
+#include "flux.h"
+#include "pngl.h"
 
 #endif
 

@@ -40,7 +40,7 @@ FOLDERS_LIBS = $(subst libs/src,build/obj/$(CONFIG)/$(TYPE)/libs,$(shell find li
 
 ASSETS = $(shell find assets -name '*.*' -printf '%T@\t%p\n' | sort -k 1nr | cut -f2-)
 
-all: dirs build/header/$(CONFIG)/$(TYPE)/flare/flare.h.gch $(NAME) flare-demo 
+all: dirs build/header/$(CONFIG)/$(TYPE)/standard.h.gch $(NAME) flare-demo 
 
 flare-demo:
 	@cd demo && $(MAKE)
@@ -67,9 +67,9 @@ $(OBJECTS_LIBS) : build/obj/$(CONFIG)/$(TYPE)/libs/%.o : libs/src/%.cpp
 	@echo "Compiling: $<"
 	@$(CXX) $(INCLUDES) $(LIBS) $(DEFS) $(COMPILE_FLAGS) -c -o $@ $< -Wno-type-limits -Wno-missing-field-initializers
 
-build/header/$(CONFIG)/$(TYPE)/flare/flare.h.gch: $(HEADERS) $(HEADERS_LIBS)
-	@echo "Compiling: include/flare/flare.h"
-	@$(CXX) $(COMPILE_FLAGS) $(INCLUDES) include/flare/flare.h -o build/header/$(CONFIG)/$(TYPE)/flare/flare.h.gch
+build/header/$(CONFIG)/$(TYPE)/standard.h.gch: $(HEADERS) $(HEADERS_LIBS)
+	@echo "Compiling: include/standard.h"
+	@$(CXX) $(COMPILE_FLAGS) $(INCLUDES) include/standard.h -o build/header/$(CONFIG)/$(TYPE)/standard.h.gch
 
 run:
 	@cd demo && make run
