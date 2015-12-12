@@ -1,11 +1,11 @@
 #include "flare/flare.h"
 
 // TODO: Make this load from a external file, preferably a .cpp or .h file
-char *test_vsh = {"#version 150 core\nin vec2 position;\nvoid main() {\ngl_Position = vec4(position, 0.0, 1.0);\n}\n"};
-char *test_fsh = {"#version 150 core\nout vec4 outColor;\nvoid main() {\noutColor = vec4(1.0, 1.0, 1.0, 1.0);\n}\n"};
+const char *test_vsh = {"#version 150 core\nin vec2 position;\nin vec3 color;\nin vec2 texcoord;\nout vec3 Color;\nout vec2 Texcoord;\nvoid main() {\nColor = color;\nTexcoord = texcoord;\ngl_Position = vec4(position, 0.0, 1.0);\n}\n"};
+const char *test_fsh = {"#version 150 core\nin vec3 Color;\nin vec2 Texcoord;\nout vec4 outColor;\nuniform sampler2D tex;\nvoid main() {\noutColor = texture(tex, Texcoord) * vec4(Color, 1.0);\n}\n"};
 
 // TODO: Make this function accept argument in order to load other shaders
-GLuint flare::loadShader() {
+GLuint flare::shader::load() {
 
     // Load vertex shader
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -20,7 +20,7 @@ GLuint flare::loadShader() {
     if (vertexShader != GL_TRUE) {
 	char buffer[512];
 	glGetShaderInfoLog(vertexShader, 512, NULL, buffer);
-	printf("Vertex shader error: %s\n", buffer);
+	log::w("Vertex shader error: %s", buffer);
     }
     
     // Load fragment shader
@@ -36,7 +36,7 @@ GLuint flare::loadShader() {
     if (fragmentStatus != GL_TRUE) {
 	char buffer[512];
 	glGetShaderInfoLog(fragmentShader, 512, NULL, buffer);
-	printf("Fragment shader error: %s\n", buffer);
+	log::w("Fragment shader error: %s", buffer);
     }
 
     // Combine shaders
@@ -51,8 +51,31 @@ GLuint flare::loadShader() {
     if (programStatus != GL_TRUE) {
 	char buffer[512];
 	glGetProgramInfoLog(shaderProgram, 512, NULL, buffer);
-	printf("Shader link error: %s\n", buffer);
+	log::w("Shader link error: %s", buffer);
     }
 
     return shaderProgram;
+}
+
+GLuint flare::texture::load() {
+
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    // glGenerateMipmap(GL_TEXTURE_2D);
+
+    float pixels[] = {
+	0.0f, 0.0f, 0.0f,  1.0f, 1.0f, 1.0f,
+	1.0f, 1.0f, 1.0f,  0.0f, 0.0f, 0.0f
+    };
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_FLOAT, pixels);
+
+    return texture;
 }

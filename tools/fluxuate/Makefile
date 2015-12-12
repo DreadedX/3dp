@@ -22,8 +22,7 @@ LIBS = $(shell pkg-config --libs --cflags $(LIBS_EXTERN))
 endif
 COMPILE_FLAGS += -Wno-write-strings -std=c++14 -Wall -Wextra $(COMPILE_FLAGS_EXTRA) $(DEFS) -Winvalid-pch
 # TODO: Make this automated
-INCLUDES = -I build/header/$(CONFIG)/$(TYPE) -I include -I ../include
-STATIC_LIBS = ../bin/$(CONFIG)/$(TYPE)/flare.a
+INCLUDES = -I build/header/$(CONFIG)/$(TYPE) -I include
 # MAKEFLAGS = "-j 4"
 
 SOURCES = $(shell find src -name '*.cpp' -printf '%T@\t%p\n' | sort -k 1nr | cut -f2-)
@@ -52,7 +51,7 @@ ifneq ($(wildcard $(FOLDERS) $(FOLDERS_LIBS) build/header/$(CONFIG)/$(TYPE) bin/
 	@mkdir -p bin/$(CONFIG)/$(TYPE)
 endif
 
-$(NAME): $(OBJECTS_LIBS) $(OBJECTS) ../bin/$(CONFIG)/$(TYPE)/flare.a
+$(NAME): $(OBJECTS_LIBS) $(OBJECTS)
 	@echo "Linking: $(NAME)"
 	@$(CXX) $(INCLUDES) $(LIBS) $(DEFS) $(COMPILE_FLAGS) -o $@ $^ $(STATIC_LIBS) 
 
@@ -60,14 +59,13 @@ $(OBJECTS) : build/obj/$(CONFIG)/$(TYPE)/%.o : src/%.cpp build/header/$(CONFIG)/
 	@echo "Compiling: $<"
 	@$(CXX) $(INCLUDES) $(LIBS) $(DEFS) $(COMPILE_FLAGS) -c -o $@ $<
 
-$(OBJECTS_LIBS) : build/obj/$(CONFIG)/$(TYPE)/libs/%.o : libs/src/%.cpp ../build/header/$(CONFIG)/$(TYPE)/flare/flare.h.gch
+$(OBJECTS_LIBS) : build/obj/$(CONFIG)/$(TYPE)/libs/%.o : libs/src/%.cpp
 	@echo "Compiling: $<"
 	@$(CXX) $(INCLUDES) $(LIBS) $(DEFS) $(COMPILE_FLAGS) -c -o $@ $< -Wno-type-limits -Wno-missing-field-initializers
 
-build/header/$(CONFIG)/$(TYPE)/standard.h.gch: $(HEADERS) $(HEADERS_LIBS) ../build/header/$(CONFIG)/$(TYPE)/flare/flare.h.gch
-	@# TODO: Fix this
-	@#echo "Compiling: include/standard.h"
-	@# @$(CXX) $(COMPILE_FLAGS) $(INCLUDES) include/standard.h -o build/header/$(CONFIG)/$(TYPE)/standard.h.gch
+build/header/$(CONFIG)/$(TYPE)/standard.h.gch: $(HEADERS) $(HEADERS_LIBS)
+	@echo "Compiling: include/standard.h"
+	@$(CXX) $(COMPILE_FLAGS) $(INCLUDES) include/standard.h -o build/header/$(CONFIG)/$(TYPE)/standard.h.gch
 
 run:
 	@echo "Running: $(NAME)"

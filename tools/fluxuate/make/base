@@ -1,0 +1,7 @@
+PROGRAM_NAME = fluxuate
+
+LIBS_EXTERN = libpng16
+DEFS =
+
+COMPILE_FLAGS_EXTRA +=
+

@@ -3,7 +3,15 @@
 
 namespace flare {
 
-    GLuint loadShader();
+    namespace shader {
+
+	GLuint load();
+    }
+
+    namespace texture {
+
+	GLuint load();
+    }
 }
 
 #endif

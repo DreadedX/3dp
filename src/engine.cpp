@@ -3,8 +3,8 @@
 struct Settings {
 
     // NOTE: These are the default engine settigs.
-    char *name = "flare engine";
-    glm::ivec2 resolution = glm::ivec2(400, 400);
+    const char *name = "flare engine";
+    glm::ivec2 resolution = glm::ivec2(1280, 720);
     int swap = 0;
 };
 
@@ -16,12 +16,12 @@ void flare::init() {
     // TODO: The settings need to be passed in from somewhere else
     Settings settings;
 
-    printf("The current resolution is %i by %i\n", settings.resolution.x, settings.resolution.y);
+    log::d("The current resolution is %i by %i", settings.resolution.x, settings.resolution.y);
 
     if (!glfwInit()) {
 
 	// TODO: Use logger
-	printf("Failed to initialize glfw!\n");
+	log::e("Failed to initialize glfw!");
 	exit(-1);
     }
 
@@ -39,7 +39,7 @@ void flare::init() {
     // TODO: Make this work properly
     glfwSetWindowPos(window, (mode->width-settings.resolution.x)/2 + 1366, (mode->height-settings.resolution.y)/2);
 
-    glfwSetKeyCallback(window, flare::keyCallback);
+    glfwSetKeyCallback(window, input::keyCallback);
 
     glfwSwapInterval(settings.swap);
 
@@ -50,14 +50,16 @@ void flare::init() {
     if (glewStatus != GLEW_OK) {
 
 	// TODO: Use logger
-	printf("Failed to initialize glew: %s\n", glewGetErrorString(glewStatus));
+	log::e("Failed to initialize glew: %s", glewGetErrorString(glewStatus));
 	exit(-1);
     }
 
     glGetError();
 
     // Initialize other systems
-    initRender();
+    render::init();
+
+    log::d("Done initializing!");
 }
 
 bool flare::isRunning() {
@@ -68,13 +70,13 @@ bool flare::isRunning() {
 void flare::update() {
 
     // NOTE: This is temporary, keybindings should definitely be rebindable
-    if (flare::keyCheck(GLFW_KEY_ESCAPE)) {
+    if (input::keyCheck(GLFW_KEY_ESCAPE)) {
 
 	glfwSetWindowShouldClose(window, GL_TRUE);
     }
 
-    flare::updateRender();
-    // flare::updateTick();
+    render::update();
+    // tick::update();
 
     glfwSwapBuffers(window);
     glfwPollEvents();

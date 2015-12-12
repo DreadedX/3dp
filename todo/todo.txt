@@ -1,2 +1,3 @@
 (A) Create updated gaff-like file format and implement it
 (B) Implement logger instead of using printf for everything
+(C) Make sure glfw windows terminate properly

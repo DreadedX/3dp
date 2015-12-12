@@ -2,7 +2,7 @@
 
 bool keys[25536] = {false};
 
-void flare::keyCallback(GLFWwindow*, int key, int, int action, int) {
+void flare::input::keyCallback(GLFWwindow*, int key, int, int action, int) {
 
     if (action == GLFW_PRESS) {
 
@@ -15,12 +15,12 @@ void flare::keyCallback(GLFWwindow*, int key, int, int action, int) {
     }
 }
 
-bool flare::keyCheck(int key) {
+bool flare::input::keyCheck(int key) {
 
     return keys[key];
 }
 
-void flare::keySet(int key, bool state) {
+void flare::input::keySet(int key, bool state) {
 
     keys[key] = state;
 }
