@@ -8,9 +8,17 @@
 #include <vector>
 #include <cstring>
 #include <dirent.h>
+#include <assert.h>
+#include <algorithm>
 
 // System libraries
 #include <png.h>
+#include <zlib.h>
+
+// Debug
+#if DEBUG_MODE
+    #include "leakage/debug_new.h"
+#endif
 
 // Fluxuate include
 #include "flux.h"

@@ -1,7 +1,7 @@
 #include "standard.h"
 
 void getDir(std::string dir, std::vector<std::string> &files);
-void processFile(std::string fileName);
+void getFile(std::string fileName, flux::File *file);
 
 int main() {
 
@@ -9,11 +9,64 @@ int main() {
     std::vector<std::string> files = std::vector<std::string>();
 
     getDir(dir, files);
-    
+
+    flux::File *fluxFiles = new flux::File[files.size()];
+
     for (unsigned int i = 0; i < files.size(); ++i) {
 
-	processFile(files[i].c_str());
+	getFile(files[i].c_str(), &fluxFiles[i]);
     }
+
+    long unsigned int totalSize = 0;
+    long unsigned int bytes_written = 0;
+    // TODO: Determine the output file name based on the directory
+    FILE *file = fopen("base.flx", "wb");
+
+    long unsigned int dataLocation = 4;
+    for (unsigned int i = 0; i < files.size(); i++) {
+
+	dataLocation += sizeof(unsigned char);
+	dataLocation += fluxFiles[i].nameSize;
+	dataLocation += sizeof(unsigned int);
+	dataLocation += fluxFiles[i].extraSize;
+	dataLocation += sizeof(long unsigned int);
+	dataLocation += sizeof(long unsigned int);
+    }
+    totalSize += dataLocation;
+    for (unsigned int i = 0; i < files.size(); i++) {
+
+	fluxFiles[i].dataLocation = dataLocation;
+	dataLocation += fluxFiles[i].dataSize;
+    }
+    bytes_written += fwrite("FLX0", sizeof(unsigned char), 4, file);
+    for (unsigned int i = 0; i < files.size(); i++) {
+
+	bytes_written += fwrite(&fluxFiles[i].nameSize, sizeof(unsigned char), sizeof(unsigned char), file);
+	bytes_written += fwrite(fluxFiles[i].name.c_str(), sizeof(unsigned char), fluxFiles[i].nameSize, file);
+	bytes_written += fwrite(&fluxFiles[i].extraSize, sizeof(unsigned char), sizeof(unsigned int), file);
+	bytes_written += fwrite(fluxFiles[i].extra, sizeof(unsigned char), fluxFiles[i].extraSize, file);
+	bytes_written += fwrite(&fluxFiles[i].dataSize, sizeof(unsigned char), sizeof(long unsigned int), file);
+	bytes_written += fwrite(&fluxFiles[i].dataLocation, sizeof(unsigned char), sizeof(long unsigned int), file);
+    }
+    for (unsigned int i = 0; i < files.size(); i++) {
+
+	bytes_written += fwrite(fluxFiles[i].data, sizeof(unsigned char), fluxFiles[i].dataSize, file);
+
+	totalSize += fluxFiles[i].dataSize;
+    }
+    fclose(file);
+    assert(bytes_written == totalSize);
+    printf("Total data size: %lu\n", totalSize);
+
+    // Preventing memory leaks
+    for (unsigned int i = 0; i < files.size(); i++) {
+
+	delete[] fluxFiles[i].data;
+	fluxFiles[i].data = nullptr;
+	delete[] fluxFiles[i].extra;
+	fluxFiles[i].extra = nullptr;
+    }
+    delete[] fluxFiles;
 }
 
 void getDir(std::string dir, std::vector<std::string> &files) {
@@ -38,14 +91,14 @@ void getDir(std::string dir, std::vector<std::string> &files) {
     closedir(dp);
 }
 
-void processFile(std::string fileName) {
+void getFile(std::string fileName, flux::File *file) {
 
     std::string extension;
     std::string baseName;
     int length = fileName.length();
     int lastPoint = fileName.find_last_of(".");
 
-    flux::File file;
+    // flux::File file;
 
     if (lastPoint != 0) {
 
@@ -58,48 +111,84 @@ void processFile(std::string fileName) {
     }
 
     // TODO: This needs needs to go automatically (recursive directory)
-    std::string assetName = "base/image/" + baseName;
-    file.nameSize = assetName.size();
-    file.name = assetName.c_str();
+    std::string assetName = "base/" + baseName;
+    file->nameSize = assetName.size();
+    file->name = assetName;
 
     // TODO: Make this based on the actual filePath
     std::string filePath = "./assets/" + fileName;
 
+    // Images are a special case
+    // Now we don't need have to use libpng in the engine
     if (extension == "png") {
 
 	png::Data data = png::read(filePath.c_str());
 
-	file.extraSize = sizeof(int) * 2 + sizeof(unsigned char);
-	file.extra = new unsigned char[file.extraSize];
+	file->extraSize = sizeof(int) * 2 + sizeof(unsigned char);
+	file->extra = new unsigned char[file->extraSize];
 
 	for (unsigned int i = 0; i < sizeof(int); ++i) {
 
-	    file.extra[i] = data.width >> ((sizeof(int)-i-1)*8);
+	    file->extra[i] = data.width >> ((sizeof(int)-i-1)*8);
 	}
 	for (unsigned int i = sizeof(int); i < sizeof(int)*2; ++i) {
 
-	    file.extra[i] = data.height >> ((sizeof(int)-i-1)*8);
+	    file->extra[i] = data.height >> ((sizeof(int)-i-1)*8);
 	}
-	file.extra[sizeof(int)*2] = data.bytesPerPixel;
+	file->extra[sizeof(int)*2] = data.bytesPerPixel;
 
-	file.data = data.pixels;
-	file.dataSize = data.size;
+	file->data = data.pixels;
+	file->dataSize = data.size;
+    }
+    else {
 
-    } else {
+	FILE *sourceFile = fopen(filePath.c_str(), "rb");
+	assert(sourceFile != NULL);
 
-	// Unsupported file
-	return;
+	fseek(sourceFile, 0, SEEK_END);
+	file->dataSize = ftell(sourceFile);
+	fseek(sourceFile, 0, SEEK_SET);
+
+	file->data = new unsigned char[file->dataSize];
+	long unsigned int bytes_read = fread(file->data, sizeof(unsigned char), file->dataSize, sourceFile);
+
+	// Make sure it read all the data
+	assert(bytes_read == file->dataSize);
+	fclose(sourceFile);
     }
 
-    printf("- - - NEW ASSET - - -\n");
-    printf("Name: %s\n", file.name);
-    printf("Size: %i\n", file.dataSize);
-    printf("Extra: ");
-    for (int i = 0; i < file.extraSize; ++i) {
+    // Compress the data
+    long unsigned int uncompressedDataSize = file->dataSize;
+    unsigned char *uncompressedData = file->data;
+    // Temporary size
+    long unsigned int compressedDataSize = file->dataSize + 1024;
+    unsigned char *compressedData = new unsigned char[compressedDataSize];
 
-	printf("%x ", file.extra[i]);
+    int result = compress(compressedData, &compressedDataSize, uncompressedData, uncompressedDataSize);
+    if (result != Z_OK) {
+	printf("Compression of '%s' failed (%i)\n", file->name.c_str(), result);
+	exit(-1);
+    }
+
+    // Prevent memory leak
+    if (extension != "png") {
+
+	delete[] file->data;
+    }
+
+    file->dataSize = compressedDataSize;
+    file->data = compressedData;
+
+    printf("- - - - ASSET - - - -\n");
+    printf("Name: %s\n", file->name.c_str());
+    printf("Data adress: %p\n", file->data);
+    printf("Original size: %lu\n", uncompressedDataSize);
+    printf("Compressed size: %lu\n", file->dataSize);
+    printf("Extra: ");
+    for (unsigned int i = 0; i < file->extraSize; ++i) {
+
+	printf("%x ", file->extra[i]);
     }
 
     printf("\n\n");
-
 }

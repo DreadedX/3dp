@@ -22,7 +22,7 @@ LIBS = $(shell pkg-config --libs --cflags $(LIBS_EXTERN))
 endif
 COMPILE_FLAGS += -Wno-write-strings -std=c++14 -Wall -Wextra $(COMPILE_FLAGS_EXTRA) $(DEFS) -Winvalid-pch
 # TODO: Make this automated
-INCLUDES = -I build/header/$(CONFIG)/$(TYPE) -I include
+INCLUDES = -I build/header/$(CONFIG)/$(TYPE) -I include -I libs/include -I libs/include/leakage
 # MAKEFLAGS = "-j 4"
 
 SOURCES = $(shell find src -name '*.cpp' -printf '%T@\t%p\n' | sort -k 1nr | cut -f2-)
