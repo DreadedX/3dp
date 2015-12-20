@@ -66,6 +66,14 @@ GLuint flare::shader::load(std::string name) {
 
 GLuint flare::texture::load(flare::flux::File *textureFile) {
 
+    // TODO: What happens when multiple texture reload and free the same thing
+    static std::map<flux::File*, GLuint> map;
+    if (textureFile->inUse && map.find(textureFile) != map.end()) {
+
+	log::d("Texture '%s' already loaded", textureFile->name.c_str());
+	return map[textureFile];
+    }
+
     GLuint texture;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -96,6 +104,8 @@ GLuint flare::texture::load(flare::flux::File *textureFile) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 
     delete[] pixels;
+
+    map[textureFile] = texture;
 
     return texture;
 }
