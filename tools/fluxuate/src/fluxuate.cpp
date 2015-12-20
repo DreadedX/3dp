@@ -9,10 +9,11 @@ int main() {
     std::vector<std::string> files = std::vector<std::string>();
 
     getDir(dir, files);
+    unsigned int count = files.size();
 
-    flux::File *fluxFiles = new flux::File[files.size()];
+    flux::File *fluxFiles = new flux::File[count];
 
-    for (unsigned int i = 0; i < files.size(); ++i) {
+    for (unsigned int i = 0; i < count; ++i) {
 
 	getFile(files[i].c_str(), &fluxFiles[i]);
     }
@@ -22,8 +23,8 @@ int main() {
     // TODO: Determine the output file name based on the directory
     FILE *file = fopen("base.flx", "wb");
 
-    long unsigned int dataLocation = 4;
-    for (unsigned int i = 0; i < files.size(); i++) {
+    long unsigned int dataLocation = 4 + sizeof(unsigned int);
+    for (unsigned int i = 0; i < count; i++) {
 
 	dataLocation += sizeof(unsigned char);
 	dataLocation += fluxFiles[i].nameSize;
@@ -33,13 +34,14 @@ int main() {
 	dataLocation += sizeof(long unsigned int);
     }
     totalSize += dataLocation;
-    for (unsigned int i = 0; i < files.size(); i++) {
+    for (unsigned int i = 0; i < count; i++) {
 
 	fluxFiles[i].dataLocation = dataLocation;
 	dataLocation += fluxFiles[i].dataSize;
     }
     bytes_written += fwrite("FLX0", sizeof(unsigned char), 4, file);
-    for (unsigned int i = 0; i < files.size(); i++) {
+    bytes_written += fwrite(&count, sizeof(unsigned char), sizeof(unsigned int), file);
+    for (unsigned int i = 0; i < count; i++) {
 
 	bytes_written += fwrite(&fluxFiles[i].nameSize, sizeof(unsigned char), sizeof(unsigned char), file);
 	bytes_written += fwrite(fluxFiles[i].name.c_str(), sizeof(unsigned char), fluxFiles[i].nameSize, file);
@@ -48,7 +50,7 @@ int main() {
 	bytes_written += fwrite(&fluxFiles[i].dataSize, sizeof(unsigned char), sizeof(long unsigned int), file);
 	bytes_written += fwrite(&fluxFiles[i].dataLocation, sizeof(unsigned char), sizeof(long unsigned int), file);
     }
-    for (unsigned int i = 0; i < files.size(); i++) {
+    for (unsigned int i = 0; i < count; i++) {
 
 	bytes_written += fwrite(fluxFiles[i].data, sizeof(unsigned char), fluxFiles[i].dataSize, file);
 
@@ -59,7 +61,7 @@ int main() {
     printf("Total data size: %lu\n", totalSize);
 
     // Preventing memory leaks
-    for (unsigned int i = 0; i < files.size(); i++) {
+    for (unsigned int i = 0; i < count; i++) {
 
 	delete[] fluxFiles[i].data;
 	fluxFiles[i].data = nullptr;
@@ -129,11 +131,11 @@ void getFile(std::string fileName, flux::File *file) {
 
 	for (unsigned int i = 0; i < sizeof(int); ++i) {
 
-	    file->extra[i] = data.width >> ((sizeof(int)-i-1)*8);
+	    file->extra[i] = data.width >> (i*8);
 	}
 	for (unsigned int i = sizeof(int); i < sizeof(int)*2; ++i) {
 
-	    file->extra[i] = data.height >> ((sizeof(int)-i-1)*8);
+	    file->extra[i] = data.height >> (i*8);
 	}
 	file->extra[sizeof(int)*2] = data.bytesPerPixel;
 

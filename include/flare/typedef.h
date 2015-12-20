@@ -2,7 +2,8 @@
 #define FLARE_TYPEDEF_H
 
 typedef unsigned char byte;
-typedef unsigned int unit;
+typedef unsigned int uint;
+typedef long unsigned int luint;
 
 #endif
 

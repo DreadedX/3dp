@@ -56,6 +56,9 @@ void flare::init() {
 
     glGetError();
 
+    // Load all asset files
+    flux::load();
+
     // Initialize other systems
     render::init();
 
@@ -85,4 +88,6 @@ void flare::update() {
 void flare::terminate() {
 
     glfwTerminate();
+
+    flux::close();
 }

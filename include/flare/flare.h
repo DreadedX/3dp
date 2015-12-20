@@ -6,6 +6,7 @@
 // Standard library
 #include <iostream>
 #include <cstdarg>
+#include <cstring>
 
 // System libraries
 #include <GL/glew.h>
@@ -19,9 +20,10 @@
 #include "log.h"
 
 #include "engine.h"
+#include "flux.h"
+#include "loader.h"
 #include "input.h"
 #include "render.h"
-#include "loader.h"
 
 #endif
 
