@@ -1,13 +1,12 @@
 #include "flare/flare.h"
 
-// TODO: Make this load from a external file, preferably a .cpp or .h file
-// const char *test_vsh = {"#version 150 core\nin vec2 position;\nin vec3 color;\nin vec2 texcoord;\nout vec3 Color;\nout vec2 Texcoord;\nvoid main() {\nColor = color;\nTexcoord = texcoord;\ngl_Position = vec4(position, 0.0, 1.0);\n}\n"};
-// const char *test_fsh = {"#version 150 core\nin vec3 Color;\nin vec2 Texcoord;\nout vec4 outColor;\nuniform sampler2D tex;\nvoid main() {\noutColor = texture(tex, Texcoord) * vec4(Color, 1.0);\n}\n"};
-
 GLuint flare::shader::load(std::string name) {
 
+    // TODO: Shader never check if they have been updated
     flux::File *vertexFile = flux::get(name + "_vertex");
+    vertexFile->inUse = true;
     flux::File *fragmentFile = flux::get(name + "_fragment");
+    fragmentFile->inUse = true;
 
     const char *vertexSource = reinterpret_cast<const char*>(vertexFile->get());
     const char *fragmentSource = reinterpret_cast<const char*>(fragmentFile->get());
@@ -59,10 +58,13 @@ GLuint flare::shader::load(std::string name) {
 	log::w("Shader link error: %s", buffer);
     }
 
+    delete[] vertexSource;
+    delete[] fragmentSource;
+
     return shaderProgram;
 }
 
-GLuint flare::texture::load(std::string name) {
+GLuint flare::texture::load(flare::flux::File *textureFile) {
 
     GLuint texture;
     glGenTextures(1, &texture);
@@ -76,7 +78,7 @@ GLuint flare::texture::load(std::string name) {
 
     // glGenerateMipmap(GL_TEXTURE_2D);
 
-    flux::File *textureFile = flux::get(name);
+    textureFile->inUse = true;
     byte *pixels = textureFile->get();
 
     int width = 0;
@@ -92,6 +94,8 @@ GLuint flare::texture::load(std::string name) {
 
     // TODO: Check bytes per pixel
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+
+    delete[] pixels;
 
     return texture;
 }

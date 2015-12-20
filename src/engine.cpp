@@ -78,8 +78,17 @@ void flare::update() {
 	glfwSetWindowShouldClose(window, GL_TRUE);
     }
 
+    // NOTE: This is just to test asset reloading
+    if (input::keyCheck(GLFW_KEY_F5)) {
+
+	flux::reload();
+	input::keySet(GLFW_KEY_F5, false);
+    }
+
     render::update();
     // tick::update();
+    
+    flux::free();
 
     glfwSwapBuffers(window);
     glfwPollEvents();

@@ -19,6 +19,8 @@ namespace flare {
 
 	    Flux *parent;
 
+	    bool inUse = false;
+
 	    byte *get();
 	};
 
@@ -29,7 +31,7 @@ namespace flare {
 	    uint indexSize = 0;
 	    File *index = nullptr;
 
-	    bool open = false;
+	    bool valid = true;
 
 	    bool load(std::string name);
 	    void close();
@@ -38,6 +40,9 @@ namespace flare {
 	void load();
 	File *get(std::string name);
 	void close();
+
+	void free();
+	void reload();
     }
 }
 

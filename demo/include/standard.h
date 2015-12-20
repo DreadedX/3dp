@@ -10,7 +10,5 @@
 // Engine include
 #include "flare/flare.h"
 
-// Game include
-
 #endif
 

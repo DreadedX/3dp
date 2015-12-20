@@ -59,10 +59,24 @@ void flare::render::init() {
     GLuint tex;
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_2D, tex);
-    texture::load("base/logo");
 }
 
 void flare::render::update() {
+
+    // TODO: This should eventually move
+    static flux::File *textureFile = flux::get("base/logo");
+    static GLuint texture = texture::load(textureFile);
+    if (!textureFile->parent->valid) {
+
+	textureFile->inUse = false;
+	glDeleteTextures(1, &texture);
+
+	std::string name(textureFile->name);
+
+	log::d("Reloading texture: '%s'", name.c_str());
+	textureFile = flux::get(name);
+	texture = texture::load(textureFile);
+    }
 
     // glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

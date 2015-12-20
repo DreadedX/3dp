@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cstdarg>
 #include <cstring>
+#include <vector>
 #include <map>
 
 // System libraries

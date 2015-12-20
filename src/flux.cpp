@@ -1,6 +1,6 @@
 #include "flare/flare.h"
 
-flare::flux::Flux *files = nullptr;
+std::vector<flare::flux::Flux*> files;
 int count = 0;
 
 std::map<std::string, flare::flux::File*> map;
@@ -10,18 +10,18 @@ void flare::flux::load() {
     // TODO: Make it find all flux files automatically
     count = 1;
     std::string fileNames[] = {"base.flx"};
-    files = new Flux[count];
 
     for (int i = 0; i < count; i++) {
 
-	// files[i].setMap(&map);
+	flux::Flux *file = new flux::Flux;
+	files.push_back(file);
 
-	if (files[i].load(fileNames[i])) {
+	if (file->load(fileNames[i])) {
 
-	    log::d("File indexed: '%s'", files[i].name.c_str());
+	    log::d("File indexed: '%s'", file->name.c_str());
 	} else {
 
-	    log::w("Failed to open: '%s'", files[i].name.c_str());
+	    log::w("Failed to open: '%s'", file->name.c_str());
 	}
     }
 }
@@ -61,25 +61,23 @@ bool flare::flux::Flux::load(std::string name) {
 		fread(&index[i].dataLocation, sizeof(byte), sizeof(luint), fileHandle);
 
 		// TODO: DO NOT USE PRINTF
-		printf("\n");
-		log::d("- - - - ASSET - - - -");
-		log::d("Name: %s", index[i].name.c_str());
-		printf("[DEBUG] Extra: ");
-		for (uint j = 0; j < index[i].extraSize; j++) {
-		    printf("%x ", index[i].extra[j]);
-		}
-		printf("\n");
-		log::d("Size: %lu", index[i].dataSize);
-		log::d("Compressed size: %lu", index[i].compressedDataSize);
-		log::d("Location: %lu", index[i].dataLocation);
+		// printf("\n");
+		// log::d("- - - - ASSET - - - -");
+		// log::d("Name: %s", index[i].name.c_str());
+		// printf("[DEBUG] Extra: ");
+		// for (uint j = 0; j < index[i].extraSize; j++) {
+		//     printf("%x ", index[i].extra[j]);
+		// }
+		// printf("\n");
+		// log::d("Size: %lu", index[i].dataSize);
+		// log::d("Compressed size: %lu", index[i].compressedDataSize);
+		// log::d("Location: %lu", index[i].dataLocation);
 
 		map[index[i].name] = &index[i];
 		index[i].parent = this;
 	    }
 
-	    printf("\n");
-
-	    this->open = true;
+	    valid = true;
 	    return true;
 	}
     }
@@ -122,11 +120,11 @@ void flare::flux::close() {
 
     for (int i = 0; i < count; ++i) {
         
-	files[i].close();
+	files[i]->close();
     }
-    delete[] files;
 }
 
+// TODO: Check for memory leaks
 void flare::flux::Flux::close() {
 
     if (fileHandle != nullptr) {
@@ -138,5 +136,44 @@ void flare::flux::Flux::close() {
 	delete[] index;
 	index = nullptr;
     }
-    open = false;
+}
+
+void flare::flux::free() {
+
+    for (uint i = 0; i < files.size(); ++i) {
+	
+	bool remove = true;
+
+	if (!files[i]->valid) {
+
+	    for (uint j = 0; j < files[i]->indexSize; ++j) {
+
+		if (files[i]->index[j].inUse) {
+
+		    remove = false;
+		}
+	    }
+
+	    if (remove) {
+
+		log::d("Freeing memory");
+		files[i]->close();
+		delete files[i];
+		files.erase(files.begin()+i);
+	    }
+	}
+    } 
+}
+
+void flare::flux::reload() {
+
+    log::d("Reloading assets");
+
+    for (uint i = 0; i < files.size(); ++i) {
+
+	files[i]->valid = false;
+    }
+
+    map.clear();
+    load();
 }

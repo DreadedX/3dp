@@ -78,7 +78,7 @@ debug:
 	@cd demo && make debug
 
 valgrind:
-	@cd demo && valgrind
+	@cd demo && make valgrind
 
 clean:
 	@cd demo && make clean

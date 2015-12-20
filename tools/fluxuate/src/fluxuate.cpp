@@ -188,11 +188,7 @@ void getFile(std::string fileName, flux::File *file) {
 	exit(-1);
     }
 
-    // Prevent memory leak
-    if (extension != "png") {
-
-	delete[] file->data;
-    }
+    delete[] file->data;
 
     file->compressedDataSize = compressedDataSize;
     file->data = compressedData;

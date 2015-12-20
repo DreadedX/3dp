@@ -1,0 +1,1432 @@
+desc: (none)
+cmd: ../bin/default/debug/demo
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=9170181
+mem_heap_B=72704
+mem_heap_extra_B=8
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=2
+#-----------
+time=9488320
+mem_heap_B=109657
+mem_heap_extra_B=919
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=10080260
+mem_heap_B=138536
+mem_heap_extra_B=2648
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=4
+#-----------
+time=10686220
+mem_heap_B=331195
+mem_heap_extra_B=3917
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=5
+#-----------
+time=11053927
+mem_heap_B=734683
+mem_heap_extra_B=3925
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=11784449
+mem_heap_B=353181
+mem_heap_extra_B=163
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=7
+#-----------
+time=17088504
+mem_heap_B=353253
+mem_heap_extra_B=163
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=8
+#-----------
+time=17601114
+mem_heap_B=417591
+mem_heap_extra_B=881
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=9
+#-----------
+time=18473439
+mem_heap_B=460615
+mem_heap_extra_B=5993
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=19873747
+mem_heap_B=460063
+mem_heap_extra_B=5977
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=20366358
+mem_heap_B=464440
+mem_heap_extra_B=7320
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=12
+#-----------
+time=21767638
+mem_heap_B=462111
+mem_heap_extra_B=5985
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=22628673
+mem_heap_B=465832
+mem_heap_extra_B=7872
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=14
+#-----------
+time=23242938
+mem_heap_B=505102
+mem_heap_extra_B=8226
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=23981846
+mem_heap_B=505150
+mem_heap_extra_B=8250
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=16
+#-----------
+time=24786086
+mem_heap_B=505102
+mem_heap_extra_B=8226
+mem_stacks_B=0
+heap_tree=detailed
+n11: 505102 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 280087 0x51EFEF1: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n1: 279623 0x6A431FF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 279623 0x66D5EBF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 279623 0x51C49CB: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 279623 0x51CC1B7: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+      n1: 279623 0x519417D: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 279623 0x340700F238: call_init.part.0 (in /usr/lib/ld-2.22.so)
+        n1: 279623 0x340700F389: _dl_init (in /usr/lib/ld-2.22.so)
+         n0: 279623 0x3407000DB8: ??? (in /usr/lib/ld-2.22.so)
+  n0: 464 in 5 places, all below massif's threshold (1.00%)
+ n1: 72704 0x31BB28A17E: _GLOBAL__sub_I_eh_alloc.cc (eh_alloc.cc:117)
+  n1: 72704 0x340700F278: call_init.part.0 (in /usr/lib/ld-2.22.so)
+   n1: 72704 0x340700F389: _dl_init (in /usr/lib/ld-2.22.so)
+    n0: 72704 0x3407000DB8: ??? (in /usr/lib/ld-2.22.so)
+ n0: 48189 in 168 places, all below massif's threshold (1.00%)
+ n1: 21152 0x3408C0A75A: xcb_connect_to_fd (in /usr/lib/libxcb.so.1.1.0)
+  n1: 21152 0x3408C0E48F: xcb_connect_to_display_with_auth_info (in /usr/lib/libxcb.so.1.1.0)
+   n1: 21152 0x34094414B8: _XConnectXCB (in /usr/lib/libX11.so.6.3.0)
+    n1: 21152 0x34094321E0: XOpenDisplay (in /usr/lib/libX11.so.6.3.0)
+     n1: 21152 0x547F988: ??? (in /usr/lib/libglfw.so.3.1)
+      n1: 21152 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+       n1: 21152 0x4025AB: flare::init() (engine.cpp:21)
+        n0: 21152 0x4024FD: main (demo.cpp:5)
+ n1: 20502 0x340946C634: ??? (in /usr/lib/libX11.so.6.3.0)
+  n1: 20502 0x340946ACC7: _XimLocalOpenIM (in /usr/lib/libX11.so.6.3.0)
+   n1: 20502 0x340946925E: _XimOpenIM (in /usr/lib/libX11.so.6.3.0)
+    n1: 20502 0x5481078: ??? (in /usr/lib/libglfw.so.3.1)
+     n1: 20502 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+      n1: 20502 0x4025AB: flare::init() (engine.cpp:21)
+       n0: 20502 0x4024FD: main (demo.cpp:5)
+ n1: 16384 0x34094324E0: XOpenDisplay (in /usr/lib/libX11.so.6.3.0)
+  n1: 16384 0x547F988: ??? (in /usr/lib/libglfw.so.3.1)
+   n1: 16384 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+    n1: 16384 0x4025AB: flare::init() (engine.cpp:21)
+     n0: 16384 0x4024FD: main (demo.cpp:5)
+ n1: 12768 0x3409432800: XOpenDisplay (in /usr/lib/libX11.so.6.3.0)
+  n1: 12768 0x547F988: ??? (in /usr/lib/libglfw.so.3.1)
+   n1: 12768 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+    n1: 12768 0x4025AB: flare::init() (engine.cpp:21)
+     n0: 12768 0x4024FD: main (demo.cpp:5)
+ n1: 12288 0x340946CBDF: ??? (in /usr/lib/libX11.so.6.3.0)
+  n1: 12288 0x340946ACC7: _XimLocalOpenIM (in /usr/lib/libX11.so.6.3.0)
+   n1: 12288 0x340946925E: _XimOpenIM (in /usr/lib/libX11.so.6.3.0)
+    n1: 12288 0x5481078: ??? (in /usr/lib/libglfw.so.3.1)
+     n1: 12288 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+      n1: 12288 0x4025AB: flare::init() (engine.cpp:21)
+       n0: 12288 0x4024FD: main (demo.cpp:5)
+ n1: 8176 0x3409437890: ??? (in /usr/lib/libX11.so.6.3.0)
+  n1: 8176 0x3409437C44: _XrmInternalStringToQuark (in /usr/lib/libX11.so.6.3.0)
+   n1: 8176 0x340944972E: XrmInitialize (in /usr/lib/libX11.so.6.3.0)
+    n1: 8176 0x3409426A51: ??? (in /usr/lib/libX11.so.6.3.0)
+     n1: 8176 0x3409426C8C: XGetDefault (in /usr/lib/libX11.so.6.3.0)
+      n1: 8176 0x3413204806: _XcursorGetDisplayInfo (in /usr/lib/libXcursor.so.1.0.2)
+       n1: 8176 0x3413204847: XcursorSupportsARGB (in /usr/lib/libXcursor.so.1.0.2)
+        n1: 8176 0x3413202FAF: XcursorImageLoadCursor (in /usr/lib/libXcursor.so.1.0.2)
+         n1: 8176 0x547F8C5: ??? (in /usr/lib/libglfw.so.3.1)
+          n1: 8176 0x547F938: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 8176 0x548004A: ??? (in /usr/lib/libglfw.so.3.1)
+            n1: 8176 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+             n1: 8176 0x4025AB: flare::init() (engine.cpp:21)
+              n0: 8176 0x4024FD: main (demo.cpp:5)
+ n1: 7168 0x3409492C7F: _XkbReadGetMapReply (in /usr/lib/libX11.so.6.3.0)
+  n1: 7168 0x3409492D66: ??? (in /usr/lib/libX11.so.6.3.0)
+   n1: 7168 0x3409492DDE: XkbGetUpdatedMap (in /usr/lib/libX11.so.6.3.0)
+    n1: 7168 0x3409492E9B: XkbGetMap (in /usr/lib/libX11.so.6.3.0)
+     n1: 7168 0x340948F087: ??? (in /usr/lib/libX11.so.6.3.0)
+      n1: 7168 0x340948F55E: XkbKeycodeToKeysym (in /usr/lib/libX11.so.6.3.0)
+       n1: 7168 0x547FBA5: ??? (in /usr/lib/libglfw.so.3.1)
+        n1: 7168 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+         n1: 7168 0x4025AB: flare::init() (engine.cpp:21)
+          n0: 7168 0x4024FD: main (demo.cpp:5)
+ n1: 5684 0x3408C0A931: xcb_connect_to_fd (in /usr/lib/libxcb.so.1.1.0)
+  n1: 5684 0x3408C0E48F: xcb_connect_to_display_with_auth_info (in /usr/lib/libxcb.so.1.1.0)
+   n1: 5684 0x34094414B8: _XConnectXCB (in /usr/lib/libX11.so.6.3.0)
+    n1: 5684 0x34094321E0: XOpenDisplay (in /usr/lib/libX11.so.6.3.0)
+     n1: 5684 0x547F988: ??? (in /usr/lib/libglfw.so.3.1)
+      n1: 5684 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+       n1: 5684 0x4025AB: flare::init() (engine.cpp:21)
+        n0: 5684 0x4024FD: main (demo.cpp:5)
+#-----------
+snapshot=17
+#-----------
+time=25348547
+mem_heap_B=511246
+mem_heap_extra_B=8226
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=18
+#-----------
+time=25903801
+mem_heap_B=511334
+mem_heap_extra_B=8266
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=19
+#-----------
+time=26350861
+mem_heap_B=520462
+mem_heap_extra_B=8226
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=20
+#-----------
+time=26824294
+mem_heap_B=521022
+mem_heap_extra_B=8250
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=21
+#-----------
+time=27386275
+mem_heap_B=499910
+mem_heap_extra_B=8186
+mem_stacks_B=0
+heap_tree=detailed
+n10: 499910 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 280087 0x51EFEF1: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n1: 279623 0x6A431FF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 279623 0x66D5EBF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 279623 0x51C49CB: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 279623 0x51CC1B7: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+      n1: 279623 0x519417D: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 279623 0x340700F238: call_init.part.0 (in /usr/lib/ld-2.22.so)
+        n1: 279623 0x340700F389: _dl_init (in /usr/lib/ld-2.22.so)
+         n0: 279623 0x3407000DB8: ??? (in /usr/lib/ld-2.22.so)
+  n0: 464 in 5 places, all below massif's threshold (1.00%)
+ n1: 72704 0x31BB28A17E: _GLOBAL__sub_I_eh_alloc.cc (eh_alloc.cc:117)
+  n1: 72704 0x340700F278: call_init.part.0 (in /usr/lib/ld-2.22.so)
+   n1: 72704 0x340700F389: _dl_init (in /usr/lib/ld-2.22.so)
+    n0: 72704 0x3407000DB8: ??? (in /usr/lib/ld-2.22.so)
+ n0: 48139 in 172 places, all below massif's threshold (1.00%)
+ n1: 27648 0x340946CBDF: ??? (in /usr/lib/libX11.so.6.3.0)
+  n1: 27648 0x340946ACC7: _XimLocalOpenIM (in /usr/lib/libX11.so.6.3.0)
+   n1: 27648 0x340946925E: _XimOpenIM (in /usr/lib/libX11.so.6.3.0)
+    n1: 27648 0x5481078: ??? (in /usr/lib/libglfw.so.3.1)
+     n1: 27648 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+      n1: 27648 0x4025AB: flare::init() (engine.cpp:21)
+       n0: 27648 0x4024FD: main (demo.cpp:5)
+ n1: 21152 0x3408C0A75A: xcb_connect_to_fd (in /usr/lib/libxcb.so.1.1.0)
+  n1: 21152 0x3408C0E48F: xcb_connect_to_display_with_auth_info (in /usr/lib/libxcb.so.1.1.0)
+   n1: 21152 0x34094414B8: _XConnectXCB (in /usr/lib/libX11.so.6.3.0)
+    n1: 21152 0x34094321E0: XOpenDisplay (in /usr/lib/libX11.so.6.3.0)
+     n1: 21152 0x547F988: ??? (in /usr/lib/libglfw.so.3.1)
+      n1: 21152 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+       n1: 21152 0x4025AB: flare::init() (engine.cpp:21)
+        n0: 21152 0x4024FD: main (demo.cpp:5)
+ n1: 16384 0x34094324E0: XOpenDisplay (in /usr/lib/libX11.so.6.3.0)
+  n1: 16384 0x547F988: ??? (in /usr/lib/libglfw.so.3.1)
+   n1: 16384 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+    n1: 16384 0x4025AB: flare::init() (engine.cpp:21)
+     n0: 16384 0x4024FD: main (demo.cpp:5)
+ n1: 12768 0x3409432800: XOpenDisplay (in /usr/lib/libX11.so.6.3.0)
+  n1: 12768 0x547F988: ??? (in /usr/lib/libglfw.so.3.1)
+   n1: 12768 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+    n1: 12768 0x4025AB: flare::init() (engine.cpp:21)
+     n0: 12768 0x4024FD: main (demo.cpp:5)
+ n1: 8176 0x3409437890: ??? (in /usr/lib/libX11.so.6.3.0)
+  n1: 8176 0x3409437C44: _XrmInternalStringToQuark (in /usr/lib/libX11.so.6.3.0)
+   n1: 8176 0x340944972E: XrmInitialize (in /usr/lib/libX11.so.6.3.0)
+    n1: 8176 0x3409426A51: ??? (in /usr/lib/libX11.so.6.3.0)
+     n1: 8176 0x3409426C8C: XGetDefault (in /usr/lib/libX11.so.6.3.0)
+      n1: 8176 0x3413204806: _XcursorGetDisplayInfo (in /usr/lib/libXcursor.so.1.0.2)
+       n1: 8176 0x3413204847: XcursorSupportsARGB (in /usr/lib/libXcursor.so.1.0.2)
+        n1: 8176 0x3413202FAF: XcursorImageLoadCursor (in /usr/lib/libXcursor.so.1.0.2)
+         n1: 8176 0x547F8C5: ??? (in /usr/lib/libglfw.so.3.1)
+          n1: 8176 0x547F938: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 8176 0x548004A: ??? (in /usr/lib/libglfw.so.3.1)
+            n1: 8176 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+             n1: 8176 0x4025AB: flare::init() (engine.cpp:21)
+              n0: 8176 0x4024FD: main (demo.cpp:5)
+ n1: 7168 0x3409492C7F: _XkbReadGetMapReply (in /usr/lib/libX11.so.6.3.0)
+  n1: 7168 0x3409492D66: ??? (in /usr/lib/libX11.so.6.3.0)
+   n1: 7168 0x3409492DDE: XkbGetUpdatedMap (in /usr/lib/libX11.so.6.3.0)
+    n1: 7168 0x3409492E9B: XkbGetMap (in /usr/lib/libX11.so.6.3.0)
+     n1: 7168 0x340948F087: ??? (in /usr/lib/libX11.so.6.3.0)
+      n1: 7168 0x340948F55E: XkbKeycodeToKeysym (in /usr/lib/libX11.so.6.3.0)
+       n1: 7168 0x547FBA5: ??? (in /usr/lib/libglfw.so.3.1)
+        n1: 7168 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+         n1: 7168 0x4025AB: flare::init() (engine.cpp:21)
+          n0: 7168 0x4024FD: main (demo.cpp:5)
+ n1: 5684 0x3408C0A931: xcb_connect_to_fd (in /usr/lib/libxcb.so.1.1.0)
+  n1: 5684 0x3408C0E48F: xcb_connect_to_display_with_auth_info (in /usr/lib/libxcb.so.1.1.0)
+   n1: 5684 0x34094414B8: _XConnectXCB (in /usr/lib/libX11.so.6.3.0)
+    n1: 5684 0x34094321E0: XOpenDisplay (in /usr/lib/libX11.so.6.3.0)
+     n1: 5684 0x547F988: ??? (in /usr/lib/libglfw.so.3.1)
+      n1: 5684 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+       n1: 5684 0x4025AB: flare::init() (engine.cpp:21)
+        n0: 5684 0x4024FD: main (demo.cpp:5)
+#-----------
+snapshot=22
+#-----------
+time=28149341
+mem_heap_B=561940
+mem_heap_extra_B=10676
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=23
+#-----------
+time=28798673
+mem_heap_B=705311
+mem_heap_extra_B=12185
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=24
+#-----------
+time=29199760
+mem_heap_B=1187023
+mem_heap_extra_B=12193
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=25
+#-----------
+time=29880146
+mem_heap_B=588914
+mem_heap_extra_B=8342
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=26
+#-----------
+time=30217553
+mem_heap_B=588586
+mem_heap_extra_B=8326
+mem_stacks_B=0
+heap_tree=detailed
+n11: 588586 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 280087 0x51EFEF1: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n1: 279623 0x6A431FF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 279623 0x66D5EBF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 279623 0x51C49CB: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 279623 0x51CC1B7: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+      n1: 279623 0x519417D: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 279623 0x340700F238: call_init.part.0 (in /usr/lib/ld-2.22.so)
+        n1: 279623 0x340700F389: _dl_init (in /usr/lib/ld-2.22.so)
+         n0: 279623 0x3407000DB8: ??? (in /usr/lib/ld-2.22.so)
+  n0: 464 in 5 places, all below massif's threshold (1.00%)
+ n1: 72704 0x31BB28A17E: _GLOBAL__sub_I_eh_alloc.cc (eh_alloc.cc:117)
+  n1: 72704 0x340700F278: call_init.part.0 (in /usr/lib/ld-2.22.so)
+   n1: 72704 0x340700F389: _dl_init (in /usr/lib/ld-2.22.so)
+    n0: 72704 0x3407000DB8: ??? (in /usr/lib/ld-2.22.so)
+ n1: 59712 0x51C6B6A: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n1: 59712 0x51BCD4F: glXQueryExtension (in /usr/lib/nvidia/libGL.so.358.16)
+   n1: 59712 0x5486C4F: ??? (in /usr/lib/libglfw.so.3.1)
+    n1: 59712 0x5480063: ??? (in /usr/lib/libglfw.so.3.1)
+     n1: 59712 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+      n1: 59712 0x4025AB: flare::init() (engine.cpp:21)
+       n0: 59712 0x4024FD: main (demo.cpp:5)
+ n0: 55427 in 180 places, all below massif's threshold (1.00%)
+ n1: 27648 0x340946CBDF: ??? (in /usr/lib/libX11.so.6.3.0)
+  n1: 27648 0x340946ACC7: _XimLocalOpenIM (in /usr/lib/libX11.so.6.3.0)
+   n1: 27648 0x340946925E: _XimOpenIM (in /usr/lib/libX11.so.6.3.0)
+    n1: 27648 0x5481078: ??? (in /usr/lib/libglfw.so.3.1)
+     n1: 27648 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+      n1: 27648 0x4025AB: flare::init() (engine.cpp:21)
+       n0: 27648 0x4024FD: main (demo.cpp:5)
+ n1: 27360 0x51C644F: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n1: 27360 0x51BCD4F: glXQueryExtension (in /usr/lib/nvidia/libGL.so.358.16)
+   n1: 27360 0x5486C4F: ??? (in /usr/lib/libglfw.so.3.1)
+    n1: 27360 0x5480063: ??? (in /usr/lib/libglfw.so.3.1)
+     n1: 27360 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+      n1: 27360 0x4025AB: flare::init() (engine.cpp:21)
+       n0: 27360 0x4024FD: main (demo.cpp:5)
+ n1: 21152 0x3408C0A75A: xcb_connect_to_fd (in /usr/lib/libxcb.so.1.1.0)
+  n1: 21152 0x3408C0E48F: xcb_connect_to_display_with_auth_info (in /usr/lib/libxcb.so.1.1.0)
+   n1: 21152 0x34094414B8: _XConnectXCB (in /usr/lib/libX11.so.6.3.0)
+    n1: 21152 0x34094321E0: XOpenDisplay (in /usr/lib/libX11.so.6.3.0)
+     n1: 21152 0x547F988: ??? (in /usr/lib/libglfw.so.3.1)
+      n1: 21152 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+       n1: 21152 0x4025AB: flare::init() (engine.cpp:21)
+        n0: 21152 0x4024FD: main (demo.cpp:5)
+ n1: 16384 0x34094324E0: XOpenDisplay (in /usr/lib/libX11.so.6.3.0)
+  n1: 16384 0x547F988: ??? (in /usr/lib/libglfw.so.3.1)
+   n1: 16384 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+    n1: 16384 0x4025AB: flare::init() (engine.cpp:21)
+     n0: 16384 0x4024FD: main (demo.cpp:5)
+ n1: 12768 0x3409432800: XOpenDisplay (in /usr/lib/libX11.so.6.3.0)
+  n1: 12768 0x547F988: ??? (in /usr/lib/libglfw.so.3.1)
+   n1: 12768 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+    n1: 12768 0x4025AB: flare::init() (engine.cpp:21)
+     n0: 12768 0x4024FD: main (demo.cpp:5)
+ n1: 8176 0x3409437890: ??? (in /usr/lib/libX11.so.6.3.0)
+  n1: 8176 0x3409437C44: _XrmInternalStringToQuark (in /usr/lib/libX11.so.6.3.0)
+   n1: 8176 0x340944972E: XrmInitialize (in /usr/lib/libX11.so.6.3.0)
+    n1: 8176 0x3409426A51: ??? (in /usr/lib/libX11.so.6.3.0)
+     n1: 8176 0x3409426C8C: XGetDefault (in /usr/lib/libX11.so.6.3.0)
+      n1: 8176 0x3413204806: _XcursorGetDisplayInfo (in /usr/lib/libXcursor.so.1.0.2)
+       n1: 8176 0x3413204847: XcursorSupportsARGB (in /usr/lib/libXcursor.so.1.0.2)
+        n1: 8176 0x3413202FAF: XcursorImageLoadCursor (in /usr/lib/libXcursor.so.1.0.2)
+         n1: 8176 0x547F8C5: ??? (in /usr/lib/libglfw.so.3.1)
+          n1: 8176 0x547F938: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 8176 0x548004A: ??? (in /usr/lib/libglfw.so.3.1)
+            n1: 8176 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+             n1: 8176 0x4025AB: flare::init() (engine.cpp:21)
+              n0: 8176 0x4024FD: main (demo.cpp:5)
+ n1: 7168 0x3409492C7F: _XkbReadGetMapReply (in /usr/lib/libX11.so.6.3.0)
+  n1: 7168 0x3409492D66: ??? (in /usr/lib/libX11.so.6.3.0)
+   n1: 7168 0x3409492DDE: XkbGetUpdatedMap (in /usr/lib/libX11.so.6.3.0)
+    n1: 7168 0x3409492E9B: XkbGetMap (in /usr/lib/libX11.so.6.3.0)
+     n1: 7168 0x340948F087: ??? (in /usr/lib/libX11.so.6.3.0)
+      n1: 7168 0x340948F55E: XkbKeycodeToKeysym (in /usr/lib/libX11.so.6.3.0)
+       n1: 7168 0x547FBA5: ??? (in /usr/lib/libglfw.so.3.1)
+        n1: 7168 0x547CBCB: glfwInit (in /usr/lib/libglfw.so.3.1)
+         n1: 7168 0x4025AB: flare::init() (engine.cpp:21)
+          n0: 7168 0x4024FD: main (demo.cpp:5)
+#-----------
+snapshot=27
+#-----------
+time=30978868
+mem_heap_B=632362
+mem_heap_extra_B=8334
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=28
+#-----------
+time=31670801
+mem_heap_B=632362
+mem_heap_extra_B=8334
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=29
+#-----------
+time=32101738
+mem_heap_B=658914
+mem_heap_extra_B=8430
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=30
+#-----------
+time=36780885
+mem_heap_B=658914
+mem_heap_extra_B=8430
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=37842207
+mem_heap_B=655416
+mem_heap_extra_B=8424
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=32
+#-----------
+time=37980528
+mem_heap_B=645297
+mem_heap_extra_B=9511
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=33
+#-----------
+time=45618912
+mem_heap_B=666559
+mem_heap_extra_B=9617
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=34
+#-----------
+time=46063620
+mem_heap_B=1417735
+mem_heap_extra_B=10049
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=35
+#-----------
+time=46851921
+mem_heap_B=1155101
+mem_heap_extra_B=10499
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=36
+#-----------
+time=47449436
+mem_heap_B=1155725
+mem_heap_extra_B=10595
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=37
+#-----------
+time=47959953
+mem_heap_B=1198168
+mem_heap_extra_B=11400
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=38
+#-----------
+time=48675663
+mem_heap_B=3553099
+mem_heap_extra_B=19573
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=39
+#-----------
+time=49120249
+mem_heap_B=3554763
+mem_heap_extra_B=21309
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=40
+#-----------
+time=49766408
+mem_heap_B=3576337
+mem_heap_extra_B=21879
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=41
+#-----------
+time=50339396
+mem_heap_B=3818893
+mem_heap_extra_B=23523
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=42
+#-----------
+time=53861032
+mem_heap_B=3818261
+mem_heap_extra_B=23483
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=43
+#-----------
+time=54448202
+mem_heap_B=3888615
+mem_heap_extra_B=25169
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=44
+#-----------
+time=77200956
+mem_heap_B=6654187
+mem_heap_extra_B=25197
+mem_stacks_B=0
+heap_tree=detailed
+n5: 6654187 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 2758420 0x40392C: flare::flux::File::get() (flux.cpp:107)
+  n1: 2758420 0x406AA7: flare::texture::load(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (loader.cpp:82)
+   n1: 2758420 0x402FB5: flare::render::update() (render.cpp:66)
+    n1: 2758420 0x402784: flare::update() (engine.cpp:88)
+     n0: 2758420 0x40251A: main (demo.cpp:11)
+  n0: 0 in 2 places, all below massif's threshold (1.00%)
+ n8: 2143695 0x51EFEF1: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n1: 759864 0x6B6395A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 759864 0x6A65FC3: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 759864 0x6A66430: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 759864 0x6A553D0: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 759864 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 759864 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 759864 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 759864 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 759864 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 759864 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 759864 0x402634: flare::init() (engine.cpp:36)
+             n0: 759864 0x4024FD: main (demo.cpp:5)
+  n2: 303002 0x6A431FF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 279623 0x66D5EBF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 279623 0x51C49CB: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 279623 0x51CC1B7: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+      n1: 279623 0x519417D: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 279623 0x340700F238: call_init.part.0 (in /usr/lib/ld-2.22.so)
+        n1: 279623 0x340700F389: _dl_init (in /usr/lib/ld-2.22.so)
+         n0: 279623 0x3407000DB8: ??? (in /usr/lib/ld-2.22.so)
+   n0: 23379 in 14 places, all below massif's threshold (1.00%)
+  n1: 266296 0x5197BED: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+   n1: 266296 0x6A37FE8: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 266296 0x5197CE4: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 266296 0x51C4E2C: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+      n1: 266296 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 266296 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 266296 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+         n1: 266296 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+          n1: 266296 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+           n1: 266296 0x402634: flare::init() (engine.cpp:36)
+            n0: 266296 0x4024FD: main (demo.cpp:5)
+  n1: 239680 0x6A3AFC1: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 239680 0x51C5E2D: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+    n1: 239680 0x6A371C2: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 239680 0x6A38017: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 239680 0x5197CE4: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 239680 0x51C4E2C: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 239680 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 239680 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 239680 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 239680 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+            n1: 239680 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+             n1: 239680 0x402634: flare::init() (engine.cpp:36)
+              n0: 239680 0x4024FD: main (demo.cpp:5)
+  n0: 234389 in 66 places, all below massif's threshold (1.00%)
+  n1: 156400 0x696A016: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 156400 0x66C8358: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 156400 0x6A536FF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 156400 0x6A557E9: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 156400 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 156400 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 156400 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 156400 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 156400 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 156400 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 156400 0x402634: flare::init() (engine.cpp:36)
+             n0: 156400 0x4024FD: main (demo.cpp:5)
+  n2: 96000 0x66B2A1A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 73728 0x6A98EA8: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n0: 73728 in 6 places, all below massif's threshold (1.00%)
+   n0: 22272 in 6 places, all below massif's threshold (1.00%)
+  n1: 88064 0x6732185: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n0: 88064 in 8 places, all below massif's threshold (1.00%)
+ n4: 1337842 0x51F00B7: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n1: 819200 0x66556B6: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 819200 0x66C8CF4: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 819200 0x6A588D6: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 819200 0x6A31044: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 819200 0x5197347: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 819200 0x51C4C24: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 819200 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 819200 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 819200 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 819200 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+            n1: 819200 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+             n1: 819200 0x402634: flare::init() (engine.cpp:36)
+              n0: 819200 0x4024FD: main (demo.cpp:5)
+  n1: 262132 0x51C97BB: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+   n1: 262132 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+    n1: 262132 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+     n1: 262132 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+      n1: 262132 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+       n1: 262132 0x402634: flare::init() (engine.cpp:36)
+        n0: 262132 0x4024FD: main (demo.cpp:5)
+  n1: 131072 0x6AA2621: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 131072 0x6A660D4: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 131072 0x6A66430: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 131072 0x6A553D0: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 131072 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 131072 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 131072 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 131072 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 131072 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 131072 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 131072 0x402634: flare::init() (engine.cpp:36)
+             n0: 131072 0x4024FD: main (demo.cpp:5)
+  n0: 125438 in 160 places, all below massif's threshold (1.00%)
+ n0: 341526 in 272 places, all below massif's threshold (1.00%)
+ n1: 72704 0x31BB28A17E: _GLOBAL__sub_I_eh_alloc.cc (eh_alloc.cc:117)
+  n1: 72704 0x340700F278: call_init.part.0 (in /usr/lib/ld-2.22.so)
+   n1: 72704 0x340700F389: _dl_init (in /usr/lib/ld-2.22.so)
+    n0: 72704 0x3407000DB8: ??? (in /usr/lib/ld-2.22.so)
+#-----------
+snapshot=45
+#-----------
+time=77843580
+mem_heap_B=9372579
+mem_heap_extra_B=25245
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=46
+#-----------
+time=78189502
+mem_heap_B=9374215
+mem_heap_extra_B=25281
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=47
+#-----------
+time=78767132
+mem_heap_B=9373947
+mem_heap_extra_B=25357
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=48
+#-----------
+time=79171784
+mem_heap_B=9468287
+mem_heap_extra_B=30105
+mem_stacks_B=0
+heap_tree=detailed
+n4: 9468287 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n5: 4097609 0x51F00B7: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n2: 2759848 0x6A43195: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 2758443 0x6A310DB: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 2758443 0x51F137F: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 2758443 0x6B04674: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 2758443 0x6B04F68: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 2758443 0x67A30B7: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+        n1: 2758443 0x67AC092: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+         n1: 2758443 0x67B027F: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+          n1: 2758443 0x67CA1A5: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+           n1: 2758443 0x406B70: flare::texture::load(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (loader.cpp:96)
+            n1: 2758443 0x402FB5: flare::render::update() (render.cpp:66)
+             n1: 2758443 0x402784: flare::update() (engine.cpp:88)
+              n0: 2758443 0x40251A: main (demo.cpp:11)
+   n0: 1405 in 2 places, all below massif's threshold (1.00%)
+  n1: 819200 0x66556B6: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 819200 0x66C8CF4: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 819200 0x6A588D6: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 819200 0x6A31044: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 819200 0x5197347: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 819200 0x51C4C24: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 819200 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 819200 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 819200 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 819200 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+            n1: 819200 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+             n1: 819200 0x402634: flare::init() (engine.cpp:36)
+              n0: 819200 0x4024FD: main (demo.cpp:5)
+  n1: 262132 0x51C97BB: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+   n1: 262132 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+    n1: 262132 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+     n1: 262132 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+      n1: 262132 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+       n1: 262132 0x402634: flare::init() (engine.cpp:36)
+        n0: 262132 0x4024FD: main (demo.cpp:5)
+  n1: 131072 0x6AA2621: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 131072 0x6A660D4: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 131072 0x6A66430: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 131072 0x6A553D0: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 131072 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 131072 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 131072 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 131072 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 131072 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 131072 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 131072 0x402634: flare::init() (engine.cpp:36)
+             n0: 131072 0x4024FD: main (demo.cpp:5)
+  n0: 125357 in 162 places, all below massif's threshold (1.00%)
+ n2: 2758420 0x40392C: flare::flux::File::get() (flux.cpp:107)
+  n1: 2758420 0x406AA7: flare::texture::load(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (loader.cpp:82)
+   n1: 2758420 0x402FB5: flare::render::update() (render.cpp:66)
+    n1: 2758420 0x402784: flare::update() (engine.cpp:88)
+     n0: 2758420 0x40251A: main (demo.cpp:11)
+  n0: 0 in 2 places, all below massif's threshold (1.00%)
+ n7: 2146415 0x51EFEF1: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n1: 759864 0x6B6395A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 759864 0x6A65FC3: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 759864 0x6A66430: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 759864 0x6A553D0: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 759864 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 759864 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 759864 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 759864 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 759864 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 759864 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 759864 0x402634: flare::init() (engine.cpp:36)
+             n0: 759864 0x4024FD: main (demo.cpp:5)
+  n0: 325173 in 72 places, all below massif's threshold (1.00%)
+  n2: 303002 0x6A431FF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 279623 0x66D5EBF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 279623 0x51C49CB: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 279623 0x51CC1B7: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+      n1: 279623 0x519417D: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 279623 0x340700F238: call_init.part.0 (in /usr/lib/ld-2.22.so)
+        n1: 279623 0x340700F389: _dl_init (in /usr/lib/ld-2.22.so)
+         n0: 279623 0x3407000DB8: ??? (in /usr/lib/ld-2.22.so)
+   n0: 23379 in 14 places, all below massif's threshold (1.00%)
+  n1: 266296 0x5197BED: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+   n1: 266296 0x6A37FE8: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 266296 0x5197CE4: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 266296 0x51C4E2C: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+      n1: 266296 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 266296 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 266296 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+         n1: 266296 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+          n1: 266296 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+           n1: 266296 0x402634: flare::init() (engine.cpp:36)
+            n0: 266296 0x4024FD: main (demo.cpp:5)
+  n1: 239680 0x6A3AFC1: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 239680 0x51C5E2D: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+    n1: 239680 0x6A371C2: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 239680 0x6A38017: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 239680 0x5197CE4: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 239680 0x51C4E2C: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 239680 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 239680 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 239680 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 239680 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+            n1: 239680 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+             n1: 239680 0x402634: flare::init() (engine.cpp:36)
+              n0: 239680 0x4024FD: main (demo.cpp:5)
+  n1: 156400 0x696A016: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 156400 0x66C8358: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 156400 0x6A536FF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 156400 0x6A557E9: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 156400 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 156400 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 156400 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 156400 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 156400 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 156400 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 156400 0x402634: flare::init() (engine.cpp:36)
+             n0: 156400 0x4024FD: main (demo.cpp:5)
+  n1: 96000 0x66B2A1A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n0: 96000 in 7 places, all below massif's threshold (1.00%)
+ n0: 465843 in 274 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=49
+#-----------
+time=79568835
+mem_heap_B=9424619
+mem_heap_extra_B=27581
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=50
+#-----------
+time=80026894
+mem_heap_B=9420639
+mem_heap_extra_B=27465
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=51
+#-----------
+time=80486233
+mem_heap_B=9420843
+mem_heap_extra_B=27477
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=52
+#-----------
+time=80936995
+mem_heap_B=9420779
+mem_heap_extra_B=27469
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=53
+#-----------
+time=81118317
+mem_heap_B=9421083
+mem_heap_extra_B=27525
+mem_stacks_B=0
+heap_tree=detailed
+n4: 9421083 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n5: 4098073 0x51F00B7: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n2: 2759848 0x6A43195: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 2758443 0x6A310DB: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 2758443 0x51F137F: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 2758443 0x6B04674: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 2758443 0x6B04F68: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 2758443 0x67A30B7: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+        n1: 2758443 0x67AC092: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+         n1: 2758443 0x67B027F: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+          n1: 2758443 0x67CA1A5: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+           n1: 2758443 0x406B70: flare::texture::load(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (loader.cpp:96)
+            n1: 2758443 0x402FB5: flare::render::update() (render.cpp:66)
+             n1: 2758443 0x402784: flare::update() (engine.cpp:88)
+              n0: 2758443 0x40251A: main (demo.cpp:11)
+   n0: 1405 in 2 places, all below massif's threshold (1.00%)
+  n1: 819200 0x66556B6: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 819200 0x66C8CF4: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 819200 0x6A588D6: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 819200 0x6A31044: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 819200 0x5197347: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 819200 0x51C4C24: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 819200 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 819200 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 819200 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 819200 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+            n1: 819200 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+             n1: 819200 0x402634: flare::init() (engine.cpp:36)
+              n0: 819200 0x4024FD: main (demo.cpp:5)
+  n1: 262132 0x51C97BB: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+   n1: 262132 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+    n1: 262132 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+     n1: 262132 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+      n1: 262132 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+       n1: 262132 0x402634: flare::init() (engine.cpp:36)
+        n0: 262132 0x4024FD: main (demo.cpp:5)
+  n1: 131072 0x6AA2621: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 131072 0x6A660D4: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 131072 0x6A66430: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 131072 0x6A553D0: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 131072 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 131072 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 131072 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 131072 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 131072 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 131072 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 131072 0x402634: flare::init() (engine.cpp:36)
+             n0: 131072 0x4024FD: main (demo.cpp:5)
+  n0: 125821 in 162 places, all below massif's threshold (1.00%)
+ n2: 2758420 0x40392C: flare::flux::File::get() (flux.cpp:107)
+  n1: 2758420 0x406AA7: flare::texture::load(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (loader.cpp:82)
+   n1: 2758420 0x402FB5: flare::render::update() (render.cpp:66)
+    n1: 2758420 0x402784: flare::update() (engine.cpp:88)
+     n0: 2758420 0x40251A: main (demo.cpp:11)
+  n0: 0 in 2 places, all below massif's threshold (1.00%)
+ n7: 2147515 0x51EFEF1: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n1: 759864 0x6B6395A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 759864 0x6A65FC3: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 759864 0x6A66430: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 759864 0x6A553D0: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 759864 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 759864 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 759864 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 759864 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 759864 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 759864 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 759864 0x402634: flare::init() (engine.cpp:36)
+             n0: 759864 0x4024FD: main (demo.cpp:5)
+  n0: 326273 in 72 places, all below massif's threshold (1.00%)
+  n2: 303002 0x6A431FF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 279623 0x66D5EBF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 279623 0x51C49CB: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 279623 0x51CC1B7: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+      n1: 279623 0x519417D: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 279623 0x340700F238: call_init.part.0 (in /usr/lib/ld-2.22.so)
+        n1: 279623 0x340700F389: _dl_init (in /usr/lib/ld-2.22.so)
+         n0: 279623 0x3407000DB8: ??? (in /usr/lib/ld-2.22.so)
+   n0: 23379 in 14 places, all below massif's threshold (1.00%)
+  n1: 266296 0x5197BED: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+   n1: 266296 0x6A37FE8: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 266296 0x5197CE4: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 266296 0x51C4E2C: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+      n1: 266296 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 266296 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 266296 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+         n1: 266296 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+          n1: 266296 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+           n1: 266296 0x402634: flare::init() (engine.cpp:36)
+            n0: 266296 0x4024FD: main (demo.cpp:5)
+  n1: 239680 0x6A3AFC1: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 239680 0x51C5E2D: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+    n1: 239680 0x6A371C2: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 239680 0x6A38017: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 239680 0x5197CE4: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 239680 0x51C4E2C: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 239680 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 239680 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 239680 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 239680 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+            n1: 239680 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+             n1: 239680 0x402634: flare::init() (engine.cpp:36)
+              n0: 239680 0x4024FD: main (demo.cpp:5)
+  n1: 156400 0x696A016: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 156400 0x66C8358: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 156400 0x6A536FF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 156400 0x6A557E9: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 156400 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 156400 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 156400 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 156400 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 156400 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 156400 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 156400 0x402634: flare::init() (engine.cpp:36)
+             n0: 156400 0x4024FD: main (demo.cpp:5)
+  n1: 96000 0x66B2A1A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n0: 96000 in 7 places, all below massif's threshold (1.00%)
+ n0: 417075 in 275 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=54
+#-----------
+time=103937608
+mem_heap_B=12224209
+mem_heap_extra_B=27935
+mem_stacks_B=0
+heap_tree=detailed
+n4: 12224209 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 5516840 0x40392C: flare::flux::File::get() (flux.cpp:107)
+  n2: 5516840 0x406AA7: flare::texture::load(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (loader.cpp:82)
+   n1: 2758420 0x402FB5: flare::render::update() (render.cpp:66)
+    n1: 2758420 0x402784: flare::update() (engine.cpp:88)
+     n0: 2758420 0x40251A: main (demo.cpp:11)
+   n1: 2758420 0x403059: flare::render::update() (render.cpp:74)
+    n1: 2758420 0x402784: flare::update() (engine.cpp:88)
+     n0: 2758420 0x40251A: main (demo.cpp:11)
+  n0: 0 in 2 places, all below massif's threshold (1.00%)
+ n5: 4098073 0x51F00B7: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n2: 2759848 0x6A43195: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 2758443 0x6A310DB: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 2758443 0x51F137F: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 2758443 0x6B04674: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 2758443 0x6B04F68: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 2758443 0x67A30B7: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+        n1: 2758443 0x67AC092: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+         n1: 2758443 0x67B027F: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+          n1: 2758443 0x67CA1A5: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+           n1: 2758443 0x406B70: flare::texture::load(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (loader.cpp:96)
+            n1: 2758443 0x402FB5: flare::render::update() (render.cpp:66)
+             n1: 2758443 0x402784: flare::update() (engine.cpp:88)
+              n0: 2758443 0x40251A: main (demo.cpp:11)
+   n0: 1405 in 2 places, all below massif's threshold (1.00%)
+  n1: 819200 0x66556B6: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 819200 0x66C8CF4: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 819200 0x6A588D6: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 819200 0x6A31044: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 819200 0x5197347: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 819200 0x51C4C24: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 819200 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 819200 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 819200 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 819200 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+            n1: 819200 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+             n1: 819200 0x402634: flare::init() (engine.cpp:36)
+              n0: 819200 0x4024FD: main (demo.cpp:5)
+  n1: 262132 0x51C97BB: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+   n1: 262132 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+    n1: 262132 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+     n1: 262132 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+      n1: 262132 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+       n1: 262132 0x402634: flare::init() (engine.cpp:36)
+        n0: 262132 0x4024FD: main (demo.cpp:5)
+  n1: 131072 0x6AA2621: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 131072 0x6A660D4: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 131072 0x6A66430: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 131072 0x6A553D0: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 131072 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 131072 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 131072 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 131072 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 131072 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 131072 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 131072 0x402634: flare::init() (engine.cpp:36)
+             n0: 131072 0x4024FD: main (demo.cpp:5)
+  n0: 125821 in 162 places, all below massif's threshold (1.00%)
+ n6: 2150391 0x51EFEF1: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n1: 759864 0x6B6395A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 759864 0x6A65FC3: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 759864 0x6A66430: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 759864 0x6A553D0: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 759864 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 759864 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 759864 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 759864 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 759864 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 759864 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 759864 0x402634: flare::init() (engine.cpp:36)
+             n0: 759864 0x4024FD: main (demo.cpp:5)
+  n0: 425149 in 73 places, all below massif's threshold (1.00%)
+  n2: 303002 0x6A431FF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 279623 0x66D5EBF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 279623 0x51C49CB: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 279623 0x51CC1B7: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+      n1: 279623 0x519417D: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 279623 0x340700F238: call_init.part.0 (in /usr/lib/ld-2.22.so)
+        n1: 279623 0x340700F389: _dl_init (in /usr/lib/ld-2.22.so)
+         n0: 279623 0x3407000DB8: ??? (in /usr/lib/ld-2.22.so)
+   n0: 23379 in 14 places, all below massif's threshold (1.00%)
+  n1: 266296 0x5197BED: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+   n1: 266296 0x6A37FE8: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 266296 0x5197CE4: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 266296 0x51C4E2C: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+      n1: 266296 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 266296 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 266296 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+         n1: 266296 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+          n1: 266296 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+           n1: 266296 0x402634: flare::init() (engine.cpp:36)
+            n0: 266296 0x4024FD: main (demo.cpp:5)
+  n1: 239680 0x6A3AFC1: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 239680 0x51C5E2D: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+    n1: 239680 0x6A371C2: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 239680 0x6A38017: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 239680 0x5197CE4: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 239680 0x51C4E2C: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 239680 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 239680 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 239680 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 239680 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+            n1: 239680 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+             n1: 239680 0x402634: flare::init() (engine.cpp:36)
+              n0: 239680 0x4024FD: main (demo.cpp:5)
+  n1: 156400 0x696A016: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 156400 0x66C8358: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 156400 0x6A536FF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 156400 0x6A557E9: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 156400 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 156400 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 156400 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 156400 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 156400 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 156400 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 156400 0x402634: flare::init() (engine.cpp:36)
+             n0: 156400 0x4024FD: main (demo.cpp:5)
+ n0: 458905 in 275 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=55
+#-----------
+time=104573146
+mem_heap_B=14942293
+mem_heap_extra_B=27955
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=56
+#-----------
+time=104670069
+mem_heap_B=14944677
+mem_heap_extra_B=28075
+mem_stacks_B=0
+heap_tree=peak
+n4: 14944677 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n4: 6856580 0x51F00B7: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n2: 5518291 0x6A43195: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n2: 5516886 0x6A310DB: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 2758443 0x51F137F: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 2758443 0x6B04674: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 2758443 0x6B04F68: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 2758443 0x67A30B7: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+        n1: 2758443 0x67AC092: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+         n1: 2758443 0x67B027F: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+          n1: 2758443 0x67CA1A5: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+           n1: 2758443 0x406B70: flare::texture::load(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (loader.cpp:96)
+            n1: 2758443 0x402FB5: flare::render::update() (render.cpp:66)
+             n1: 2758443 0x402784: flare::update() (engine.cpp:88)
+              n0: 2758443 0x40251A: main (demo.cpp:11)
+    n1: 2758443 0x6B04674: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 2758443 0x6B04F68: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 2758443 0x67A30B7: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 2758443 0x67AC092: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+        n1: 2758443 0x67B027F: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+         n1: 2758443 0x67CA1A5: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+          n1: 2758443 0x406B70: flare::texture::load(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (loader.cpp:96)
+           n1: 2758443 0x403059: flare::render::update() (render.cpp:74)
+            n1: 2758443 0x402784: flare::update() (engine.cpp:88)
+             n0: 2758443 0x40251A: main (demo.cpp:11)
+   n0: 1405 in 2 places, all below massif's threshold (1.00%)
+  n1: 819200 0x66556B6: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 819200 0x66C8CF4: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 819200 0x6A588D6: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 819200 0x6A31044: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 819200 0x5197347: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 819200 0x51C4C24: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 819200 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 819200 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 819200 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 819200 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+            n1: 819200 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+             n1: 819200 0x402634: flare::init() (engine.cpp:36)
+              n0: 819200 0x4024FD: main (demo.cpp:5)
+  n1: 262132 0x51C97BB: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+   n1: 262132 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+    n1: 262132 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+     n1: 262132 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+      n1: 262132 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+       n1: 262132 0x402634: flare::init() (engine.cpp:36)
+        n0: 262132 0x4024FD: main (demo.cpp:5)
+  n0: 256957 in 163 places, all below massif's threshold (1.00%)
+ n2: 5516840 0x40392C: flare::flux::File::get() (flux.cpp:107)
+  n2: 5516840 0x406AA7: flare::texture::load(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (loader.cpp:82)
+   n1: 2758420 0x402FB5: flare::render::update() (render.cpp:66)
+    n1: 2758420 0x402784: flare::update() (engine.cpp:88)
+     n0: 2758420 0x40251A: main (demo.cpp:11)
+   n1: 2758420 0x403059: flare::render::update() (render.cpp:74)
+    n1: 2758420 0x402784: flare::update() (engine.cpp:88)
+     n0: 2758420 0x40251A: main (demo.cpp:11)
+  n0: 0 in 2 places, all below massif's threshold (1.00%)
+ n6: 2152887 0x51EFEF1: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n1: 759864 0x6B6395A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 759864 0x6A65FC3: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 759864 0x6A66430: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 759864 0x6A553D0: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 759864 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 759864 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 759864 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 759864 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 759864 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 759864 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 759864 0x402634: flare::init() (engine.cpp:36)
+             n0: 759864 0x4024FD: main (demo.cpp:5)
+  n0: 427645 in 73 places, all below massif's threshold (1.00%)
+  n2: 303002 0x6A431FF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 279623 0x66D5EBF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 279623 0x51C49CB: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 279623 0x51CC1B7: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+      n1: 279623 0x519417D: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 279623 0x340700F238: call_init.part.0 (in /usr/lib/ld-2.22.so)
+        n1: 279623 0x340700F389: _dl_init (in /usr/lib/ld-2.22.so)
+         n0: 279623 0x3407000DB8: ??? (in /usr/lib/ld-2.22.so)
+   n0: 23379 in 14 places, all below massif's threshold (1.00%)
+  n1: 266296 0x5197BED: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+   n1: 266296 0x6A37FE8: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 266296 0x5197CE4: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 266296 0x51C4E2C: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+      n1: 266296 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 266296 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 266296 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+         n1: 266296 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+          n1: 266296 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+           n1: 266296 0x402634: flare::init() (engine.cpp:36)
+            n0: 266296 0x4024FD: main (demo.cpp:5)
+  n1: 239680 0x6A3AFC1: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 239680 0x51C5E2D: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+    n1: 239680 0x6A371C2: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 239680 0x6A38017: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 239680 0x5197CE4: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 239680 0x51C4E2C: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 239680 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 239680 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 239680 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 239680 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+            n1: 239680 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+             n1: 239680 0x402634: flare::init() (engine.cpp:36)
+              n0: 239680 0x4024FD: main (demo.cpp:5)
+  n1: 156400 0x696A016: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 156400 0x66C8358: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 156400 0x6A536FF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 156400 0x6A557E9: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 156400 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 156400 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 156400 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 156400 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 156400 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 156400 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 156400 0x402634: flare::init() (engine.cpp:36)
+             n0: 156400 0x4024FD: main (demo.cpp:5)
+ n0: 418370 in 275 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=57
+#-----------
+time=105499127
+mem_heap_B=14941725
+mem_heap_extra_B=27963
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=58
+#-----------
+time=105765071
+mem_heap_B=14941276
+mem_heap_extra_B=27884
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=59
+#-----------
+time=106215384
+mem_heap_B=14941480
+mem_heap_extra_B=27896
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=60
+#-----------
+time=106560798
+mem_heap_B=14941516
+mem_heap_extra_B=27932
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=61
+#-----------
+time=106720342
+mem_heap_B=13974996
+mem_heap_extra_B=23148
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=62
+#-----------
+time=106865529
+mem_heap_B=13948780
+mem_heap_extra_B=22884
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=63
+#-----------
+time=107007585
+mem_heap_B=13931524
+mem_heap_extra_B=22620
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=64
+#-----------
+time=107149641
+mem_heap_B=13914268
+mem_heap_extra_B=22356
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=65
+#-----------
+time=107288105
+mem_heap_B=7823686
+mem_heap_extra_B=18010
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=66
+#-----------
+time=107428093
+mem_heap_B=7712339
+mem_heap_extra_B=14277
+mem_stacks_B=0
+heap_tree=detailed
+n4: 7712339 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 5516840 0x40392C: flare::flux::File::get() (flux.cpp:107)
+  n2: 5516840 0x406AA7: flare::texture::load(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (loader.cpp:82)
+   n1: 2758420 0x402FB5: flare::render::update() (render.cpp:66)
+    n1: 2758420 0x402784: flare::update() (engine.cpp:88)
+     n0: 2758420 0x40251A: main (demo.cpp:11)
+   n1: 2758420 0x403059: flare::render::update() (render.cpp:74)
+    n1: 2758420 0x402784: flare::update() (engine.cpp:88)
+     n0: 2758420 0x40251A: main (demo.cpp:11)
+  n0: 0 in 2 places, all below massif's threshold (1.00%)
+ n6: 1700907 0x51EFEF1: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n1: 759864 0x6B6395A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 759864 0x6A65FC3: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 759864 0x6A66430: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 759864 0x6A553D0: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 759864 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 759864 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 759864 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 759864 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 759864 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 759864 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 759864 0x402634: flare::init() (engine.cpp:36)
+             n0: 759864 0x4024FD: main (demo.cpp:5)
+  n2: 279623 0x6A431FF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 279623 0x66D5EBF: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 279623 0x51C49CB: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 279623 0x51CC1B7: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+      n1: 279623 0x519417D: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 279623 0x340700F238: call_init.part.0 (in /usr/lib/ld-2.22.so)
+        n1: 279623 0x340700F389: _dl_init (in /usr/lib/ld-2.22.so)
+         n0: 279623 0x3407000DB8: ??? (in /usr/lib/ld-2.22.so)
+   n0: 0 in 14 places, all below massif's threshold (1.00%)
+  n1: 266296 0x5197BED: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+   n1: 266296 0x6A37FE8: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 266296 0x5197CE4: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+     n1: 266296 0x51C4E2C: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+      n1: 266296 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 266296 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 266296 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+         n1: 266296 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+          n1: 266296 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+           n1: 266296 0x402634: flare::init() (engine.cpp:36)
+            n0: 266296 0x4024FD: main (demo.cpp:5)
+  n1: 239680 0x6A3AFC1: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 239680 0x51C5E2D: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+    n1: 239680 0x6A371C2: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 239680 0x6A38017: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 239680 0x5197CE4: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+       n1: 239680 0x51C4E2C: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 239680 0x51C9776: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 239680 0x51BC071: glXCreateContextAttribsARB (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 239680 0x5486680: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 239680 0x5483C25: ??? (in /usr/lib/libglfw.so.3.1)
+            n1: 239680 0x547ED78: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+             n1: 239680 0x402634: flare::init() (engine.cpp:36)
+              n0: 239680 0x4024FD: main (demo.cpp:5)
+  n1: 95232 0x66B2A1A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n0: 95232 in 7 places, all below massif's threshold (1.00%)
+  n0: 60212 in 75 places, all below massif's threshold (1.00%)
+ n0: 319515 in 275 places, all below massif's threshold (1.00%)
+ n2: 175077 0x51F00B7: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+  n1: 131072 0x6AA2621: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+   n1: 131072 0x6A660D4: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+    n1: 131072 0x6A66430: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+     n1: 131072 0x6A553D0: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+      n1: 131072 0x6A3243A: ??? (in /usr/lib/libnvidia-glcore.so.358.16)
+       n1: 131072 0x519668E: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+        n1: 131072 0x519685B: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+         n1: 131072 0x51C89E3: ??? (in /usr/lib/nvidia/libGL.so.358.16)
+          n1: 131072 0x5486949: ??? (in /usr/lib/libglfw.so.3.1)
+           n1: 131072 0x547ED88: glfwCreateWindow (in /usr/lib/libglfw.so.3.1)
+            n1: 131072 0x402634: flare::init() (engine.cpp:36)
+             n0: 131072 0x4024FD: main (demo.cpp:5)
+  n0: 44005 in 167 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=67
+#-----------
+time=107567309
+mem_heap_B=7242622
+mem_heap_extra_B=9338
+mem_stacks_B=0
+heap_tree=empty

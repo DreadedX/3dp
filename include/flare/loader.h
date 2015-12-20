@@ -10,7 +10,7 @@ namespace flare {
 
     namespace texture {
 
-	GLuint load(std::string name);
+	GLuint load(flux::File *textureFile);
     }
 }
 
