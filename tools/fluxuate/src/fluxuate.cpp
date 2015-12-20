@@ -32,6 +32,7 @@ int main() {
 	dataLocation += fluxFiles[i].extraSize;
 	dataLocation += sizeof(long unsigned int);
 	dataLocation += sizeof(long unsigned int);
+	dataLocation += sizeof(long unsigned int);
     }
     totalSize += dataLocation;
     for (unsigned int i = 0; i < count; i++) {
@@ -48,6 +49,7 @@ int main() {
 	bytes_written += fwrite(&fluxFiles[i].extraSize, sizeof(unsigned char), sizeof(unsigned int), file);
 	bytes_written += fwrite(fluxFiles[i].extra, sizeof(unsigned char), fluxFiles[i].extraSize, file);
 	bytes_written += fwrite(&fluxFiles[i].dataSize, sizeof(unsigned char), sizeof(long unsigned int), file);
+	bytes_written += fwrite(&fluxFiles[i].compressedDataSize, sizeof(unsigned char), sizeof(long unsigned int), file);
 	bytes_written += fwrite(&fluxFiles[i].dataLocation, sizeof(unsigned char), sizeof(long unsigned int), file);
     }
     for (unsigned int i = 0; i < count; i++) {
@@ -139,10 +141,24 @@ void getFile(std::string fileName, flux::File *file) {
 	}
 	file->extra[sizeof(int)*2] = data.bytesPerPixel;
 
-	file->data = data.pixels;
+	// file->data = data.pixels;
 	file->dataSize = data.size;
+	file->data = new unsigned char[file->dataSize];
+	for (int y = 0; y < data.height; y++) {
+	    for (int x = 0; x < data.width*data.bytesPerPixel; x++) {
+
+		file->data[x + y * (data.width*data.bytesPerPixel)] = data.pixels[x + (data.height-y-1) * (data.width*data.bytesPerPixel)];
+	    }
+	}
     }
     else {
+
+	if (extension == "vertex" || extension == "fragment") {
+
+	    std::string assetNameSpecial = assetName + "_" + extension;
+	    file->nameSize = assetNameSpecial.size();
+	    file->name = assetNameSpecial;
+	}
 
 	FILE *sourceFile = fopen(filePath.c_str(), "rb");
 	assert(sourceFile != NULL);
@@ -178,14 +194,14 @@ void getFile(std::string fileName, flux::File *file) {
 	delete[] file->data;
     }
 
-    file->dataSize = compressedDataSize;
+    file->compressedDataSize = compressedDataSize;
     file->data = compressedData;
 
     printf("- - - - ASSET - - - -\n");
     printf("Name: %s\n", file->name.c_str());
     printf("Data adress: %p\n", file->data);
-    printf("Original size: %lu\n", uncompressedDataSize);
-    printf("Compressed size: %lu\n", file->dataSize);
+    printf("Original size: %lu\n", file->dataSize);
+    printf("Compressed size: %lu\n", file->compressedDataSize);
     printf("Extra: ");
     for (unsigned int i = 0; i < file->extraSize; ++i) {
 

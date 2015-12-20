@@ -5,12 +5,12 @@ namespace flare {
 
     namespace shader {
 
-	GLuint load();
+	GLuint load(std::string name);
     }
 
     namespace texture {
 
-	GLuint load();
+	GLuint load(std::string name);
     }
 }
 

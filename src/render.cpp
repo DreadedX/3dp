@@ -2,9 +2,9 @@
 
 GLfloat vertices[] {
  // Position       Color              Texcoords
-    -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f, // top-left
-     0.5f,  0.5f,  0.0f, 1.0f, 0.0f,  1.0f, 0.0f, // top-right
-     0.5f, -0.5f,  0.0f, 0.0f, 1.0f,  1.0f, 1.0f, //bottom-right
+    -0.5f,  0.5f,  1.0f, 1.0f, 1.0f,  0.0f, 0.0f, // top-left
+     0.5f,  0.5f,  1.0f, 1.0f, 1.0f,  1.0f, 0.0f, // top-right
+     0.5f, -0.5f,  1.0f, 1.0f, 1.0f,  1.0f, 1.0f, //bottom-right
     -0.5f, -0.5f,  1.0f, 1.0f, 1.0f,  0.0f, 1.0f  //bottom-left
 };
 
@@ -40,7 +40,7 @@ void flare::render::init() {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
     // TODO: This needs to be moved out of here
-    GLuint shaderProgram = shader::load();
+    GLuint shaderProgram = shader::load("base/test");
     glUseProgram(shaderProgram);
     
     GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
@@ -56,7 +56,10 @@ void flare::render::init() {
     glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(5*sizeof(float)));
 
     // TODO: This is just for testing
-    texture::load();
+    GLuint tex;
+    glGenTextures(1, &tex);
+    glBindTexture(GL_TEXTURE_2D, tex);
+    texture::load("base/logo");
 }
 
 void flare::render::update() {

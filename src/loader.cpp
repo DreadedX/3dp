@@ -1,15 +1,20 @@
 #include "flare/flare.h"
 
 // TODO: Make this load from a external file, preferably a .cpp or .h file
-const char *test_vsh = {"#version 150 core\nin vec2 position;\nin vec3 color;\nin vec2 texcoord;\nout vec3 Color;\nout vec2 Texcoord;\nvoid main() {\nColor = color;\nTexcoord = texcoord;\ngl_Position = vec4(position, 0.0, 1.0);\n}\n"};
-const char *test_fsh = {"#version 150 core\nin vec3 Color;\nin vec2 Texcoord;\nout vec4 outColor;\nuniform sampler2D tex;\nvoid main() {\noutColor = texture(tex, Texcoord) * vec4(Color, 1.0);\n}\n"};
+// const char *test_vsh = {"#version 150 core\nin vec2 position;\nin vec3 color;\nin vec2 texcoord;\nout vec3 Color;\nout vec2 Texcoord;\nvoid main() {\nColor = color;\nTexcoord = texcoord;\ngl_Position = vec4(position, 0.0, 1.0);\n}\n"};
+// const char *test_fsh = {"#version 150 core\nin vec3 Color;\nin vec2 Texcoord;\nout vec4 outColor;\nuniform sampler2D tex;\nvoid main() {\noutColor = texture(tex, Texcoord) * vec4(Color, 1.0);\n}\n"};
 
-// TODO: Make this function accept argument in order to load other shaders
-GLuint flare::shader::load() {
+GLuint flare::shader::load(std::string name) {
+
+    flux::File *vertexFile = flux::get(name + "_vertex");
+    flux::File *fragmentFile = flux::get(name + "_fragment");
+
+    const char *vertexSource = reinterpret_cast<const char*>(vertexFile->get());
+    const char *fragmentSource = reinterpret_cast<const char*>(fragmentFile->get());
 
     // Load vertex shader
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &test_vsh, NULL);
+    glShaderSource(vertexShader, 1, &vertexSource, NULL);
 
     // Compile vertex shader
     glCompileShader(vertexShader);
@@ -25,7 +30,7 @@ GLuint flare::shader::load() {
     
     // Load fragment shader
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &test_fsh, NULL);
+    glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
 
     // Compile fragment shader
     glCompileShader(fragmentShader);
@@ -57,7 +62,7 @@ GLuint flare::shader::load() {
     return shaderProgram;
 }
 
-GLuint flare::texture::load() {
+GLuint flare::texture::load(std::string name) {
 
     GLuint texture;
     glGenTextures(1, &texture);
@@ -71,11 +76,22 @@ GLuint flare::texture::load() {
 
     // glGenerateMipmap(GL_TEXTURE_2D);
 
-    float pixels[] = {
-	0.0f, 0.0f, 0.0f,  1.0f, 1.0f, 1.0f,
-	1.0f, 1.0f, 1.0f,  0.0f, 0.0f, 0.0f
-    };
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_FLOAT, pixels);
+    flux::File *textureFile = flux::get(name);
+    byte *pixels = textureFile->get();
+
+    int width = 0;
+    int height = 0;
+    if (textureFile->extraSize >= 9) {
+	for (int i = 0; i < 4; ++i) {
+	    width += textureFile->extra[i] << (i*8);
+	}
+	for (int i = 0; i < 4; ++i) {
+	    height += textureFile->extra[i+4] << (i*8);
+	}
+    }
+
+    // TODO: Check bytes per pixel
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 
     return texture;
 }

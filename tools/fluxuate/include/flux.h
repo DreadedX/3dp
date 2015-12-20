@@ -12,6 +12,7 @@ namespace flux {
 	unsigned char *extra = nullptr;
 
 	long unsigned int dataSize = 0;
+	long unsigned int compressedDataSize = 0;
 	long unsigned int dataLocation = 0;
 	unsigned char *data = nullptr;
     };

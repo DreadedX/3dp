@@ -7,12 +7,13 @@
 #include <iostream>
 #include <cstdarg>
 #include <cstring>
+#include <map>
 
 // System libraries
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <SOIL/SOIL.h>
+#include <zlib.h>
 
 // Engine includes
 #include "typedef.h"
