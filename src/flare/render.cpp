@@ -73,7 +73,7 @@ void flare::render::update() {
 
 	std::string name(textureFile->name);
 
-	log::d("Reloading texture: '%s'", name.c_str());
+	print::d("Reloading texture: '%s'", name.c_str());
 	textureFile = flux::get(name);
 	texture = texture::load(textureFile);
     }

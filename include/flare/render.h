@@ -7,7 +7,7 @@ namespace flare {
 	void init();
 	void update();
 
-	void splash();
+	void _splash();
     }
 }
 

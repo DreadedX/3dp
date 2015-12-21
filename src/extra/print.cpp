@@ -1,6 +1,6 @@
-#include "flare/flare.h"
+#include "extra/extra.h"
 
-void flare::log::l(const char *format, ...) {
+void print::m(const char *format, ...) {
 
     va_list args;
     va_start(args, format);
@@ -9,7 +9,7 @@ void flare::log::l(const char *format, ...) {
     fprintf(stdout, "\n");
 }
 
-void flare::log::d(const char *format, ...) {
+void print::d(const char *format, ...) {
 
     va_list args;
     va_start(args, format);
@@ -19,7 +19,7 @@ void flare::log::d(const char *format, ...) {
     fprintf(stdout, "\n");
 }
 
-void flare::log::w(const char *format, ...) {
+void print::w(const char *format, ...) {
 
     va_list args;
     va_start(args, format);
@@ -29,7 +29,7 @@ void flare::log::w(const char *format, ...) {
     fprintf(stderr, "\n");
 }
 
-void flare::log::e(const char *format, ...) {
+void print::e(const char *format, ...) {
 
     va_list args;
     va_start(args, format);

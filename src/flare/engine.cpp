@@ -1,4 +1,6 @@
 #include "flare/flare.h"
+#include <thread>
+#include <chrono>
 
 struct Settings {
 
@@ -10,18 +12,20 @@ struct Settings {
 
 GLFWwindow *window = nullptr;
 
+double delta = 1/60;
+
 void flare::init() {
 
     // Initialize window
     // TODO: The settings need to be passed in from somewhere else
     Settings settings;
 
-    log::d("The current resolution is %i by %i", settings.resolution.x, settings.resolution.y);
+    print::d("The current resolution is %i by %i", settings.resolution.x, settings.resolution.y);
 
     if (!glfwInit()) {
 
 	// TODO: Use logger
-	log::e("Failed to initialize glfw!");
+	print::e("Failed to initialize glfw!");
 	exit(-1);
     }
 
@@ -39,7 +43,7 @@ void flare::init() {
     // TODO: Make this work properly
     glfwSetWindowPos(window, (mode->width-settings.resolution.x)/2 + 1366, (mode->height-settings.resolution.y)/2);
 
-    glfwSetKeyCallback(window, input::keyCallback);
+    glfwSetKeyCallback(window, input::_keyCallback);
 
     glfwSwapInterval(settings.swap);
 
@@ -50,7 +54,7 @@ void flare::init() {
     if (glewStatus != GLEW_OK) {
 
 	// TODO: Use logger
-	log::e("Failed to initialize glew: %s", glewGetErrorString(glewStatus));
+	print::e("Failed to initialize glew: %s", glewGetErrorString(glewStatus));
 	exit(-1);
     }
 
@@ -62,7 +66,7 @@ void flare::init() {
     // Initialize other systems
     render::init();
 
-    log::d("Done initializing!");
+    print::d("Done initializing!");
 }
 
 bool flare::isRunning() {
@@ -85,8 +89,20 @@ void flare::update() {
 	input::keySet(GLFW_KEY_F5, false);
     }
 
+    double timer = glfwGetTime();
+
+    // Run manager logic
+    fuse::update();
+    // Run renderer logic
     render::update();
-    // tick::update();
+    // Run entity render
+    fuse::draw();
+
+    // Simulate render time
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    double frameTime = (glfwGetTime() - timer) * 1000;
+    print::d("Frametime: %0.2fms", frameTime);
+
     
     flux::free();
 

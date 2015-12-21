@@ -24,7 +24,7 @@ GLuint flare::shader::load(std::string name) {
     if (vertexShader != GL_TRUE) {
 	char buffer[512];
 	glGetShaderInfoLog(vertexShader, 512, NULL, buffer);
-	log::w("Vertex shader error: %s", buffer);
+	print::w("Vertex shader error: %s", buffer);
     }
     
     // Load fragment shader
@@ -40,7 +40,7 @@ GLuint flare::shader::load(std::string name) {
     if (fragmentStatus != GL_TRUE) {
 	char buffer[512];
 	glGetShaderInfoLog(fragmentShader, 512, NULL, buffer);
-	log::w("Fragment shader error: %s", buffer);
+	print::w("Fragment shader error: %s", buffer);
     }
 
     // Combine shaders
@@ -55,7 +55,7 @@ GLuint flare::shader::load(std::string name) {
     if (programStatus != GL_TRUE) {
 	char buffer[512];
 	glGetProgramInfoLog(shaderProgram, 512, NULL, buffer);
-	log::w("Shader link error: %s", buffer);
+	print::w("Shader link error: %s", buffer);
     }
 
     delete[] vertexSource;
@@ -64,13 +64,13 @@ GLuint flare::shader::load(std::string name) {
     return shaderProgram;
 }
 
-GLuint flare::texture::load(flare::flux::File *textureFile) {
+GLuint flare::texture::load(flux::File *textureFile) {
 
     // TODO: What happens when multiple texture reload and free the same thing
     static std::map<flux::File*, GLuint> map;
     if (textureFile->inUse && map.find(textureFile) != map.end()) {
 
-	log::d("Texture '%s' already loaded", textureFile->name.c_str());
+	print::d("Texture '%s' already loaded", textureFile->name.c_str());
 	return map[textureFile];
     }
 

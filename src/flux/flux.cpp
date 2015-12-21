@@ -1,11 +1,11 @@
-#include "flare/flare.h"
+#include "flux/flux.h"
 
-std::vector<flare::flux::Flux*> files;
+std::vector<flux::Flux*> files;
 int count = 0;
 
-std::map<std::string, flare::flux::File*> map;
+std::map<std::string, flux::File*> map;
 
-void flare::flux::load() {
+void flux::load() {
 
     // TODO: Make it find all flux files automatically
     count = 1;
@@ -18,15 +18,15 @@ void flare::flux::load() {
 
 	if (file->load(fileNames[i])) {
 
-	    log::d("File indexed: '%s'", file->name.c_str());
+	    print::d("File indexed: '%s'", file->name.c_str());
 	} else {
 
-	    log::w("Failed to open: '%s'", file->name.c_str());
+	    print::w("Failed to open: '%s'", file->name.c_str());
 	}
     }
 }
 
-bool flare::flux::Flux::load(std::string name) {
+bool flux::Flux::load(std::string name) {
 
     this->name = name;
     fileHandle = fopen(name.c_str(), "rb");
@@ -38,7 +38,7 @@ bool flare::flux::Flux::load(std::string name) {
 	if (!strcmp(reinterpret_cast<const char*>(header), "FLX0"))  {
 
 	    fread(&indexSize, sizeof(byte), sizeof(uint), fileHandle);
-	    log::d("File count: %i", indexSize);
+	    print::d("File count: %i", indexSize);
 	    this->index = new File[indexSize];
 
 	    for (uint i = 0; i < indexSize; ++i) {
@@ -85,20 +85,20 @@ bool flare::flux::Flux::load(std::string name) {
     return false;
 }
 
-flare::flux::File *flare::flux::get(std::string name) {
+flux::File *flux::get(std::string name) {
 
     if (map.find(name) != map.end()) {
 
 	return map[name];
     }
 
-    log::e("Asset '%s' not found", name.c_str());
+    print::e("Asset '%s' not found", name.c_str());
     return nullptr;
 }
 
-byte *flare::flux::File::get() {
+byte *flux::File::get() {
 
-    log::d("Loading asset: '%s'", name.c_str());
+    print::d("Loading asset: '%s'", name.c_str());
 
     byte *compressedData = new byte[compressedDataSize];
     fseek(parent->fileHandle, dataLocation, SEEK_SET);
@@ -108,7 +108,7 @@ byte *flare::flux::File::get() {
     int result = uncompress(data, &dataSize, compressedData, compressedDataSize);
     if (result != Z_OK) {
 
-	log::e("Uncompression of '%s' failed (%i)", name.c_str(), result);
+	print::e("Uncompression of '%s' failed (%i)", name.c_str(), result);
     }
 
     delete[] compressedData;
@@ -116,7 +116,7 @@ byte *flare::flux::File::get() {
     return data;
 }
 
-void flare::flux::close() {
+void flux::close() {
 
     for (int i = 0; i < count; ++i) {
         
@@ -125,7 +125,7 @@ void flare::flux::close() {
 }
 
 // TODO: Check for memory leaks
-void flare::flux::Flux::close() {
+void flux::Flux::close() {
 
     if (fileHandle != nullptr) {
 
@@ -138,7 +138,7 @@ void flare::flux::Flux::close() {
     }
 }
 
-void flare::flux::free() {
+void flux::free() {
 
     for (uint i = 0; i < files.size(); ++i) {
 	
@@ -156,7 +156,7 @@ void flare::flux::free() {
 
 	    if (remove) {
 
-		log::d("Freeing memory");
+		print::d("Freeing memory");
 		files[i]->close();
 		delete files[i];
 		files.erase(files.begin()+i);
@@ -165,9 +165,9 @@ void flare::flux::free() {
     } 
 }
 
-void flare::flux::reload() {
+void flux::reload() {
 
-    log::d("Reloading assets");
+    print::d("Reloading assets");
 
     for (uint i = 0; i < files.size(); ++i) {
 
