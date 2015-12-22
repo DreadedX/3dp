@@ -12,20 +12,21 @@ namespace fuse {
 	std::array<Component*, MAX_COMPONENTS> componentArray;
 	std::bitset<MAX_COMPONENTS> componentBitset;
 
-	~Entity() {
+	std::vector<Entity*> children;
 
-	    for (Component *component : components) {
-
-		delete component;
-	    }
-	}
+	const char *name = "";
 
 	bool alive = true;
+	bool child = false;
+	Entity *parent = nullptr;
 
-	void destroy();
+	Entity(const char *name, Entity *entity);
+	~Entity();
 
+	Entity *createChild(const char *name = "Entity");
+	bool isChild();
+	void kill();
 	bool _isAlive();
-
 	void _update();
 	void _draw();
 

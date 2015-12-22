@@ -1,10 +1,17 @@
 #include "fuse/fuse.h"
 
-void fuse::Component::super(Entity *entity) {
+#pragma push_macro("super")
+#undef super
+
+void fuse::Component::super(Entity *entity, const char *name) {
+    
+    this->name = name;
 
     assert(parent == nullptr);
     parent = entity;
 };
+
+#pragma pop_macro("super")
 
 uint fuse::_getUniqueID() {
 

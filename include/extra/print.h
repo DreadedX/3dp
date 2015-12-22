@@ -7,6 +7,8 @@ namespace print {
     void d(const char *format, ...);
     void w(const char *format, ...);
     void e(const char *format, ...);
+
+    std::string format(const char *fmt, ...);
 }
 
 #endif

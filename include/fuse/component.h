@@ -4,15 +4,23 @@
 // TODO: Remove this
 #include <fuse/fuse.h>
 
+// NOTE: Components automatically get named
+#define super(parent) super(parent, __func__)
+
 namespace fuse {
 
     struct Entity;
 
     struct Component {
 
+	const char *name = "Component";
+
 	Entity *parent = nullptr;
 
-	void super(Entity *entity);
+	#pragma push_macro("super")
+	#undef super
+	void super(Entity *entity, const char *name);
+	#pragma pop_macro("super")
 
 	virtual void _update() {}
 	virtual void _draw() {}

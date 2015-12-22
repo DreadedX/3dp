@@ -14,6 +14,8 @@ GLFWwindow *window = nullptr;
 
 double delta = 1/60;
 
+void draw();
+
 void flare::init() {
 
     // Initialize window
@@ -58,6 +60,11 @@ void flare::init() {
 	exit(-1);
     }
 
+    #if DEBUG_MODE
+	// TODO: Install own callbacks
+	ImGui_ImplGlfwGL3_Init(window, true);
+    #endif
+
     glGetError();
 
     // Load all asset files
@@ -76,43 +83,64 @@ bool flare::isRunning() {
 
 void flare::update() {
 
-    // NOTE: This is temporary, keybindings should definitely be rebindable
-    if (input::keyCheck(GLFW_KEY_ESCAPE)) {
+    glfwPollEvents();
 
-	glfwSetWindowShouldClose(window, GL_TRUE);
+    // NOTE: Debug keybindings
+    {
+	if (input::keyCheck(GLFW_KEY_ESCAPE)) {
+
+	    glfwSetWindowShouldClose(window, GL_TRUE);
+	}
+
+	if (input::keyCheck(GLFW_KEY_F5)) {
+
+	    flux::reload();
+	    input::keySet(GLFW_KEY_F5, false);
+	}
     }
 
-    // NOTE: This is just to test asset reloading
-    if (input::keyCheck(GLFW_KEY_F5)) {
-
-	flux::reload();
-	input::keySet(GLFW_KEY_F5, false);
+    // TODO: This needs to run X times a second
+    {
+	// Run manager logic
+	fuse::update();
+	// Run renderer logic
+	render::update();
+	// Free asset memory
+	flux::free();
     }
 
-    double timer = glfwGetTime();
+    // Calculate the frametime
+    // double timer = glfwGetTime();
+    {
+	draw();
+    }
+    // double frameTime = (glfwGetTime() - timer) * 1000;
+    // print::d("Frametime: %0.2fms", frameTime);
+    
+}
 
-    // Run manager logic
-    fuse::update();
-    // Run renderer logic
-    render::update();
+void draw() {
+
     // Run entity render
     fuse::draw();
 
-    // Simulate render time
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    double frameTime = (glfwGetTime() - timer) * 1000;
-    print::d("Frametime: %0.2fms", frameTime);
-
-    
-    flux::free();
+    // This is for the debug interface
+    #if DEBUG_MODE
+	flare::debug::entityTree();
+    #endif
 
     glfwSwapBuffers(window);
-    glfwPollEvents();
+
 }
 
 void flare::terminate() {
 
+    // Kill and remove all remaining entities
+    fuse::killAll();
+    fuse::update();
+
     glfwTerminate();
 
+    // Close all open asset files
     flux::close();
 }

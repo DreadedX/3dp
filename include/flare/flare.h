@@ -5,17 +5,25 @@
 
 // Standard library
 #include <map>
+#include <string>
 
 // System libraries
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
+#if DEBUG_MODE
+    #include "imgui/imgui.h"
+    #include "imgui/imgui_impl_glfw_gl3.h"
+#endif
+
 // Engine includes
 #include "extra/extra.h"
 
 #include "flux/flux.h"
 #include "fuse/fuse.h"
+
+#include "flare/debug.h"
 
 #include "flare/engine.h"
 #include "flare/loader.h"

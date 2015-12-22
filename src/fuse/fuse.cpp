@@ -10,9 +10,8 @@ void fuse::update() {
 		[](Entity *entity) {
 
 		    if (!entity->_isAlive()) {
-
+			
 			delete entity;
-
 			return true;
 		    }
 
@@ -36,28 +35,23 @@ void fuse::draw() {
 }
 
 // Create a new entity, add it to the entity list and return a pointer
-fuse::Entity *fuse::createEntity() {
+fuse::Entity *fuse::createEntity(const char *name, Entity *parent) {
 
-    Entity *entity = new Entity;
+    Entity *entity = new Entity(name, parent);
     entities.push_back(entity);
-
-    print::d("Adding entity: '0x%x', entity count: %i", entity, entities.size());
 
     return entity;
 }
 
-// Remove the entity from the entity list and set the used pointer to a nullptr
-void fuse::removeEntity(fuse::Entity *entity) {
+void fuse::killAll() {
+    
+    for (Entity *entity : entities) {
 
-    std::vector<fuse::Entity*>::iterator location = std::find(entities.begin(), entities.end(), entity);
-
-    if (location != entities.end()) {
-
-	entities.erase(location);
-
-	print::d("Removing entity: '0x%x', entity count: %i", entity, entities.size());
-    } else {
-
-	print::w("Tried to remove non-existent entity: '0x%x'", entity);
+	entity->kill();
     }
+}
+
+std::vector<fuse::Entity*> *fuse::getEntities() {
+
+    return &entities;
 }

@@ -38,3 +38,24 @@ void print::e(const char *format, ...) {
     va_end(args);
     fprintf(stderr, "\n");
 }
+
+// TODO:: This should return a const char*
+std::string print::format(const char *fmt, ...) {
+    int size = 512;
+    char *buffer = 0;
+    buffer = new char[size];
+    va_list vl;
+    va_start(vl, fmt);
+    int nsize = vsnprintf(buffer, size, fmt, vl);
+    if(size <= nsize) {
+	delete[] buffer;
+	buffer = nullptr;
+	buffer = new char[nsize+1];
+	nsize = vsnprintf(buffer, size, fmt, vl);
+    }
+    std::string ret(buffer);
+    va_end(vl);
+    delete[] buffer;
+    buffer = nullptr;
+    return ret;
+}
