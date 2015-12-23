@@ -8,6 +8,11 @@ set(CMAKE_DEPENDS_CHECK_CXX
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
+# Preprocessor definitions for this target.
+set(CMAKE_TARGET_DEFINITIONS_CXX
+  "DEBUG_MODE"
+  )
+
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "include"
@@ -17,6 +22,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "extra/include"
   "flux/include"
   "fuse/include"
+  "imgui/include"
   "/usr/include/libdrm"
   )
 
@@ -26,6 +32,7 @@ set(CMAKE_TARGET_LINKED_INFO_FILES
   "/home/tim/Projects/cpp/flare/fuse/CMakeFiles/fuse.dir/DependInfo.cmake"
   "/home/tim/Projects/cpp/flare/flux/CMakeFiles/flux.dir/DependInfo.cmake"
   "/home/tim/Projects/cpp/flare/extra/CMakeFiles/extra.dir/DependInfo.cmake"
+  "/home/tim/Projects/cpp/flare/imgui/CMakeFiles/imgui.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

@@ -4,7 +4,7 @@
 # compile CXX with /usr/sbin/c++
 CXX_FLAGS =   -std=gnu++11
 
-CXX_DEFINES = 
+CXX_DEFINES = -DDEBUG_MODE
 
-CXX_INCLUDES = -I/home/tim/Projects/cpp/flare/include -I/home/tim/Projects/cpp/flare -I/home/tim/Projects/cpp/flare/demo/include -I/home/tim/Projects/cpp/flare/flare/include -I/home/tim/Projects/cpp/flare/extra/include -I/home/tim/Projects/cpp/flare/flux/include -I/home/tim/Projects/cpp/flare/fuse/include -I/usr/include/libdrm 
+CXX_INCLUDES = -I/home/tim/Projects/cpp/flare/include -I/home/tim/Projects/cpp/flare -I/home/tim/Projects/cpp/flare/demo/include -I/home/tim/Projects/cpp/flare/flare/include -I/home/tim/Projects/cpp/flare/extra/include -I/home/tim/Projects/cpp/flare/flux/include -I/home/tim/Projects/cpp/flare/fuse/include -I/home/tim/Projects/cpp/flare/imgui/include -I/usr/include/libdrm 
 

@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 project(fluxuate)
 
 set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include
+    ${leakage_INCLUDE_DIRS}
     CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
 
 include_directories(${${PROJECT_NAME}_INCLUDE_DIRS})
@@ -17,4 +18,5 @@ if (PNG_FOUND)
     target_link_libraries (${PROJECT_NAME} ${PNG_LIBRARIES})
 endif (PNG_FOUND)
 
+target_link_libraries(${PROJECT_NAME} leakage)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)

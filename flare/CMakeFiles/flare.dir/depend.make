@@ -15,6 +15,9 @@ flare/CMakeFiles/flare.dir/src/debug.cpp.o: flux/include/flux/flux.h
 flare/CMakeFiles/flare.dir/src/debug.cpp.o: fuse/include/fuse/component.h
 flare/CMakeFiles/flare.dir/src/debug.cpp.o: fuse/include/fuse/entity.h
 flare/CMakeFiles/flare.dir/src/debug.cpp.o: fuse/include/fuse/fuse.h
+flare/CMakeFiles/flare.dir/src/debug.cpp.o: imgui/include/imconfig.h
+flare/CMakeFiles/flare.dir/src/debug.cpp.o: imgui/include/imgui.h
+flare/CMakeFiles/flare.dir/src/debug.cpp.o: imgui/include/imgui_impl_glfw_gl3.h
 
 flare/CMakeFiles/flare.dir/src/engine.cpp.o: flare/src/engine.cpp
 flare/CMakeFiles/flare.dir/src/engine.cpp.o: extra/include/extra/extra.h
@@ -30,6 +33,9 @@ flare/CMakeFiles/flare.dir/src/engine.cpp.o: flux/include/flux/flux.h
 flare/CMakeFiles/flare.dir/src/engine.cpp.o: fuse/include/fuse/component.h
 flare/CMakeFiles/flare.dir/src/engine.cpp.o: fuse/include/fuse/entity.h
 flare/CMakeFiles/flare.dir/src/engine.cpp.o: fuse/include/fuse/fuse.h
+flare/CMakeFiles/flare.dir/src/engine.cpp.o: imgui/include/imconfig.h
+flare/CMakeFiles/flare.dir/src/engine.cpp.o: imgui/include/imgui.h
+flare/CMakeFiles/flare.dir/src/engine.cpp.o: imgui/include/imgui_impl_glfw_gl3.h
 
 flare/CMakeFiles/flare.dir/src/input.cpp.o: flare/src/input.cpp
 flare/CMakeFiles/flare.dir/src/input.cpp.o: extra/include/extra/extra.h
@@ -45,6 +51,9 @@ flare/CMakeFiles/flare.dir/src/input.cpp.o: flux/include/flux/flux.h
 flare/CMakeFiles/flare.dir/src/input.cpp.o: fuse/include/fuse/component.h
 flare/CMakeFiles/flare.dir/src/input.cpp.o: fuse/include/fuse/entity.h
 flare/CMakeFiles/flare.dir/src/input.cpp.o: fuse/include/fuse/fuse.h
+flare/CMakeFiles/flare.dir/src/input.cpp.o: imgui/include/imconfig.h
+flare/CMakeFiles/flare.dir/src/input.cpp.o: imgui/include/imgui.h
+flare/CMakeFiles/flare.dir/src/input.cpp.o: imgui/include/imgui_impl_glfw_gl3.h
 
 flare/CMakeFiles/flare.dir/src/loader.cpp.o: flare/src/loader.cpp
 flare/CMakeFiles/flare.dir/src/loader.cpp.o: extra/include/extra/extra.h
@@ -60,6 +69,9 @@ flare/CMakeFiles/flare.dir/src/loader.cpp.o: flux/include/flux/flux.h
 flare/CMakeFiles/flare.dir/src/loader.cpp.o: fuse/include/fuse/component.h
 flare/CMakeFiles/flare.dir/src/loader.cpp.o: fuse/include/fuse/entity.h
 flare/CMakeFiles/flare.dir/src/loader.cpp.o: fuse/include/fuse/fuse.h
+flare/CMakeFiles/flare.dir/src/loader.cpp.o: imgui/include/imconfig.h
+flare/CMakeFiles/flare.dir/src/loader.cpp.o: imgui/include/imgui.h
+flare/CMakeFiles/flare.dir/src/loader.cpp.o: imgui/include/imgui_impl_glfw_gl3.h
 
 flare/CMakeFiles/flare.dir/src/render.cpp.o: flare/src/render.cpp
 flare/CMakeFiles/flare.dir/src/render.cpp.o: extra/include/extra/extra.h
@@ -75,4 +87,7 @@ flare/CMakeFiles/flare.dir/src/render.cpp.o: flux/include/flux/flux.h
 flare/CMakeFiles/flare.dir/src/render.cpp.o: fuse/include/fuse/component.h
 flare/CMakeFiles/flare.dir/src/render.cpp.o: fuse/include/fuse/entity.h
 flare/CMakeFiles/flare.dir/src/render.cpp.o: fuse/include/fuse/fuse.h
+flare/CMakeFiles/flare.dir/src/render.cpp.o: imgui/include/imconfig.h
+flare/CMakeFiles/flare.dir/src/render.cpp.o: imgui/include/imgui.h
+flare/CMakeFiles/flare.dir/src/render.cpp.o: imgui/include/imgui_impl_glfw_gl3.h
 

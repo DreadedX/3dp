@@ -1,1 +1,1 @@
-/usr/sbin/c++      CMakeFiles/demo.dir/src/demo.cpp.o  -o ../build/demo -rdynamic -lGLU -lGL -lGLEW -lglfw -lz ../build/libflare.a ../build/libfuse.a ../build/libflux.a ../build/libextra.a 
+/usr/sbin/c++      CMakeFiles/demo.dir/src/demo.cpp.o  -o ../build/demo -rdynamic -lGLU -lGL -lGLEW -lglfw -lz ../build/libflare.a ../build/libfuse.a ../build/libflux.a ../build/libextra.a ../build/libimgui.a 

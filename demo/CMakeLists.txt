@@ -33,5 +33,5 @@ if (ZLIB_FOUND)
     target_link_libraries (${PROJECT_NAME} ${ZLIB_LIBRARIES})
 endif (ZLIB_FOUND)
 
-target_link_libraries(${PROJECT_NAME} flare fuse flux extra)
+target_link_libraries(${PROJECT_NAME} flare fuse flux extra imgui)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)

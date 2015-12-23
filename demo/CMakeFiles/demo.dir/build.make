@@ -98,6 +98,7 @@ build/demo: build/libflare.a
 build/demo: build/libfuse.a
 build/demo: build/libflux.a
 build/demo: build/libextra.a
+build/demo: build/libimgui.a
 build/demo: demo/CMakeFiles/demo.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tim/Projects/cpp/flare/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ../build/demo"
 	cd /home/tim/Projects/cpp/flare/demo && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/demo.dir/link.txt --verbose=$(VERBOSE)

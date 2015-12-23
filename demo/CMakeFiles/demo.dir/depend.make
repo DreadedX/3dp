@@ -16,4 +16,7 @@ demo/CMakeFiles/demo.dir/src/demo.cpp.o: flux/include/flux/flux.h
 demo/CMakeFiles/demo.dir/src/demo.cpp.o: fuse/include/fuse/component.h
 demo/CMakeFiles/demo.dir/src/demo.cpp.o: fuse/include/fuse/entity.h
 demo/CMakeFiles/demo.dir/src/demo.cpp.o: fuse/include/fuse/fuse.h
+demo/CMakeFiles/demo.dir/src/demo.cpp.o: imgui/include/imconfig.h
+demo/CMakeFiles/demo.dir/src/demo.cpp.o: imgui/include/imgui.h
+demo/CMakeFiles/demo.dir/src/demo.cpp.o: imgui/include/imgui_impl_glfw_gl3.h
 

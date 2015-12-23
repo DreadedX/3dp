@@ -1,11 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
-project(flare)
+project(imgui)
 
 set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include
-    ${extra_INCLUDE_DIRS}
-    ${flux_INCLUDE_DIRS}
-    ${fuse_INCLUDE_DIRS}
-    ${imgui_INCLUDE_DIRS}
     CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
 
 include_directories(${${PROJECT_NAME}_INCLUDE_DIRS})

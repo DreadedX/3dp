@@ -118,6 +118,7 @@ build/fluxuate: fluxuate/CMakeFiles/fluxuate.dir/src/pngl.cpp.o
 build/fluxuate: fluxuate/CMakeFiles/fluxuate.dir/build.make
 build/fluxuate: /usr/lib64/libpng.so
 build/fluxuate: /usr/lib64/libz.so
+build/fluxuate: build/libleakage.a
 build/fluxuate: fluxuate/CMakeFiles/fluxuate.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/tim/Projects/cpp/flare/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../build/fluxuate"
 	cd /home/tim/Projects/cpp/flare/fluxuate && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/fluxuate.dir/link.txt --verbose=$(VERBOSE)

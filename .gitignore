@@ -40,6 +40,9 @@ Session.vim
 *~
 
 ### Custom ###
+CMakeFiles
+CMakeCache.txt
+*.cmake
 build/*
 *~
 *.swp

@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.6)
 project(all)
 
+add_definitions(-DDEBUG_MODE)
+
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
  
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
@@ -15,11 +17,15 @@ if (WIN32)
   set(CMAKE_SHARED_LIBRARY_PREFIX "")
 endif ()
 
+add_subdirectory(leakage)
 add_subdirectory(fluxuate)
+
 add_subdirectory(extra)
 add_subdirectory(flux)
 add_subdirectory(fuse)
+add_subdirectory(imgui)
 add_subdirectory(flare)
+
 add_subdirectory(demo)
 
 add_custom_target(assets

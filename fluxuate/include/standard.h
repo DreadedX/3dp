@@ -17,7 +17,7 @@
 
 // Debug
 #if DEBUG_MODE
-    #include "leakage/debug_new.h"
+    #include "debug_new.h"
 #endif
 
 // Fluxuate include

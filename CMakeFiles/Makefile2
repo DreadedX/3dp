@@ -188,6 +188,61 @@ clean: CMakeFiles/run.dir/clean
 .PHONY : clean
 
 #=============================================================================
+# Directory level rules for directory leakage
+
+# Convenience name for "all" pass in the directory.
+leakage/all: leakage/CMakeFiles/leakage.dir/all
+
+.PHONY : leakage/all
+
+# Convenience name for "clean" pass in the directory.
+leakage/clean: leakage/CMakeFiles/leakage.dir/clean
+
+.PHONY : leakage/clean
+
+# Convenience name for "preinstall" pass in the directory.
+leakage/preinstall:
+
+.PHONY : leakage/preinstall
+
+#=============================================================================
+# Target rules for target leakage/CMakeFiles/leakage.dir
+
+# All Build rule for target.
+leakage/CMakeFiles/leakage.dir/all:
+	$(MAKE) -f leakage/CMakeFiles/leakage.dir/build.make leakage/CMakeFiles/leakage.dir/depend
+	$(MAKE) -f leakage/CMakeFiles/leakage.dir/build.make leakage/CMakeFiles/leakage.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tim/Projects/cpp/flare/CMakeFiles --progress-num=25,26,27,28,29 "Built target leakage"
+.PHONY : leakage/CMakeFiles/leakage.dir/all
+
+# Include target in all.
+all: leakage/CMakeFiles/leakage.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+leakage/CMakeFiles/leakage.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles 5
+	$(MAKE) -f CMakeFiles/Makefile2 leakage/CMakeFiles/leakage.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles 0
+.PHONY : leakage/CMakeFiles/leakage.dir/rule
+
+# Convenience name for target.
+leakage: leakage/CMakeFiles/leakage.dir/rule
+
+.PHONY : leakage
+
+# clean rule for target.
+leakage/CMakeFiles/leakage.dir/clean:
+	$(MAKE) -f leakage/CMakeFiles/leakage.dir/build.make leakage/CMakeFiles/leakage.dir/clean
+.PHONY : leakage/CMakeFiles/leakage.dir/clean
+
+# clean rule for target.
+clean: leakage/CMakeFiles/leakage.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
 # Directory level rules for directory fluxuate
 
 # Convenience name for "all" pass in the directory.
@@ -209,7 +264,7 @@ fluxuate/preinstall:
 # Target rules for target fluxuate/CMakeFiles/fluxuate.dir
 
 # All Build rule for target.
-fluxuate/CMakeFiles/fluxuate.dir/all:
+fluxuate/CMakeFiles/fluxuate.dir/all: leakage/CMakeFiles/leakage.dir/all
 	$(MAKE) -f fluxuate/CMakeFiles/fluxuate.dir/build.make fluxuate/CMakeFiles/fluxuate.dir/depend
 	$(MAKE) -f fluxuate/CMakeFiles/fluxuate.dir/build.make fluxuate/CMakeFiles/fluxuate.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tim/Projects/cpp/flare/CMakeFiles --progress-num=13,14,15 "Built target fluxuate"
@@ -222,7 +277,7 @@ all: fluxuate/CMakeFiles/fluxuate.dir/all
 
 # Build rule for subdir invocation for target.
 fluxuate/CMakeFiles/fluxuate.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles 8
 	$(MAKE) -f CMakeFiles/Makefile2 fluxuate/CMakeFiles/fluxuate.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles 0
 .PHONY : fluxuate/CMakeFiles/fluxuate.dir/rule
@@ -408,6 +463,61 @@ clean: fuse/CMakeFiles/fuse.dir/clean
 .PHONY : clean
 
 #=============================================================================
+# Directory level rules for directory imgui
+
+# Convenience name for "all" pass in the directory.
+imgui/all: imgui/CMakeFiles/imgui.dir/all
+
+.PHONY : imgui/all
+
+# Convenience name for "clean" pass in the directory.
+imgui/clean: imgui/CMakeFiles/imgui.dir/clean
+
+.PHONY : imgui/clean
+
+# Convenience name for "preinstall" pass in the directory.
+imgui/preinstall:
+
+.PHONY : imgui/preinstall
+
+#=============================================================================
+# Target rules for target imgui/CMakeFiles/imgui.dir
+
+# All Build rule for target.
+imgui/CMakeFiles/imgui.dir/all:
+	$(MAKE) -f imgui/CMakeFiles/imgui.dir/build.make imgui/CMakeFiles/imgui.dir/depend
+	$(MAKE) -f imgui/CMakeFiles/imgui.dir/build.make imgui/CMakeFiles/imgui.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tim/Projects/cpp/flare/CMakeFiles --progress-num=20,21,22,23,24 "Built target imgui"
+.PHONY : imgui/CMakeFiles/imgui.dir/all
+
+# Include target in all.
+all: imgui/CMakeFiles/imgui.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+imgui/CMakeFiles/imgui.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles 5
+	$(MAKE) -f CMakeFiles/Makefile2 imgui/CMakeFiles/imgui.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles 0
+.PHONY : imgui/CMakeFiles/imgui.dir/rule
+
+# Convenience name for target.
+imgui: imgui/CMakeFiles/imgui.dir/rule
+
+.PHONY : imgui
+
+# clean rule for target.
+imgui/CMakeFiles/imgui.dir/clean:
+	$(MAKE) -f imgui/CMakeFiles/imgui.dir/build.make imgui/CMakeFiles/imgui.dir/clean
+.PHONY : imgui/CMakeFiles/imgui.dir/clean
+
+# clean rule for target.
+clean: imgui/CMakeFiles/imgui.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
 # Directory level rules for directory flare
 
 # Convenience name for "all" pass in the directory.
@@ -487,6 +597,7 @@ demo/preinstall:
 demo/CMakeFiles/demo.dir/all: extra/CMakeFiles/extra.dir/all
 demo/CMakeFiles/demo.dir/all: flux/CMakeFiles/flux.dir/all
 demo/CMakeFiles/demo.dir/all: fuse/CMakeFiles/fuse.dir/all
+demo/CMakeFiles/demo.dir/all: imgui/CMakeFiles/imgui.dir/all
 demo/CMakeFiles/demo.dir/all: flare/CMakeFiles/flare.dir/all
 	$(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/depend
 	$(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/build
@@ -500,7 +611,7 @@ all: demo/CMakeFiles/demo.dir/all
 
 # Build rule for subdir invocation for target.
 demo/CMakeFiles/demo.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles 16
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles 21
 	$(MAKE) -f CMakeFiles/Makefile2 demo/CMakeFiles/demo.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles 0
 .PHONY : demo/CMakeFiles/demo.dir/rule
