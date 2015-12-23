@@ -28,7 +28,7 @@ namespace flux {
 
 	bool inUse = false;
 
-	byte *get();
+	byte *get(bool addNullTerminator = false);
     };
 
     struct Flux {

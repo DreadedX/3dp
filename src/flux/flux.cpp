@@ -28,6 +28,8 @@ void flux::load() {
 
 bool flux::Flux::load(std::string name) {
 
+    static_assert(sizeof(luint) == 8, "luint is not 8 bytes");
+
     this->name = name;
     fileHandle = fopen(name.c_str(), "rb");
 
@@ -96,7 +98,7 @@ flux::File *flux::get(std::string name) {
     return nullptr;
 }
 
-byte *flux::File::get() {
+byte *flux::File::get(bool addNullTerminator) {
 
     print::d("Loading asset: '%s'", name.c_str());
 
@@ -104,8 +106,23 @@ byte *flux::File::get() {
     fseek(parent->fileHandle, dataLocation, SEEK_SET);
     fread(compressedData, sizeof(byte), compressedDataSize, parent->fileHandle);
 
-    byte *data = new byte[dataSize];
-    int result = uncompress(data, &dataSize, compressedData, compressedDataSize);
+    byte *data = nullptr;
+    if (!addNullTerminator) {
+
+	data = new byte[dataSize];
+    } else {
+
+	data = new byte[dataSize+1];
+	data[dataSize] = 0x00;
+    }
+    // NOTE: This reinterpret_cast has no negative effect on linux, but does limit the file size to ~4GB on windows
+    // long unsigned int is 8 bytes in linux, but 4 bytes in windows
+    // TODO: Change the size to a uint to prevent this difference between windows and linux
+    int result = uncompress(data, reinterpret_cast<long unsigned int*>(&dataSize), compressedData, compressedDataSize);
+    if (addNullTerminator) {
+
+	print::d("%x", data[dataSize]);
+    }
     if (result != Z_OK) {
 
 	print::e("Uncompression of '%s' failed (%i)", name.c_str(), result);

@@ -3,7 +3,7 @@
 
 typedef unsigned char byte;
 typedef unsigned int uint;
-typedef long unsigned int luint;
+typedef long unsigned long luint;
 
 #endif
 

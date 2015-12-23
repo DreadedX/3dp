@@ -8,8 +8,8 @@ GLuint flare::shader::load(std::string name) {
     flux::File *fragmentFile = flux::get(name + "_fragment");
     fragmentFile->inUse = true;
 
-    const char *vertexSource = reinterpret_cast<const char*>(vertexFile->get());
-    const char *fragmentSource = reinterpret_cast<const char*>(fragmentFile->get());
+    const char *vertexSource = reinterpret_cast<const char*>(vertexFile->get(true));
+    const char *fragmentSource = reinterpret_cast<const char*>(fragmentFile->get(true));
 
     // Load vertex shader
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
