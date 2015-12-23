@@ -1,2 +1,0 @@
-/usr/sbin/ar qc ../build/libflux.a  CMakeFiles/flux.dir/src/flux.cpp.o
-/usr/sbin/ranlib ../build/libflux.a

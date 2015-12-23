@@ -39,10 +39,15 @@ Session.vim
 .netrwhist
 *~
 
-### Custom ###
-CMakeFiles
+### CMake ###
 CMakeCache.txt
-*.cmake
+CMakeFiles
+CMakeScripts
+Makefile
+cmake_install.cmake
+install_manifest.txt
+
+### Custom ###
 build/*
 *~
 *.swp
