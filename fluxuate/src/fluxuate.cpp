@@ -1,11 +1,19 @@
 #include "standard.h"
 
 void getDir(std::string dir, std::vector<std::string> &files);
-void getFile(std::string fileName, flux::File *file);
+void getFile(std::string basePath, std::string fileName, flux::File *file);
 
-int main() {
+int main(int argc, char* argv[]) {
 
-    std::string dir = "./assets";
+    std::string dir;
+    if (argc == 2) {
+
+	dir = argv[1];
+    } else {
+
+	printf("Please specify an asset folder!\n");
+	exit(-1);
+    }
     std::vector<std::string> files = std::vector<std::string>();
 
     getDir(dir, files);
@@ -15,7 +23,7 @@ int main() {
 
     for (unsigned int i = 0; i < count; ++i) {
 
-	getFile(files[i].c_str(), &fluxFiles[i]);
+	getFile(dir, files[i].c_str(), &fluxFiles[i]);
     }
 
     long unsigned int totalSize = 0;
@@ -95,7 +103,7 @@ void getDir(std::string dir, std::vector<std::string> &files) {
     closedir(dp);
 }
 
-void getFile(std::string fileName, flux::File *file) {
+void getFile(std::string basePath, std::string fileName, flux::File *file) {
 
     std::string extension;
     std::string baseName;
@@ -120,7 +128,7 @@ void getFile(std::string fileName, flux::File *file) {
     file->name = assetName;
 
     // TODO: Make this based on the actual filePath
-    std::string filePath = "./assets/" + fileName;
+    std::string filePath = basePath + "/" + fileName;
 
     // Images are a special case
     // Now we don't need have to use libpng in the engine
@@ -192,7 +200,7 @@ void getFile(std::string fileName, flux::File *file) {
 
     file->compressedDataSize = compressedDataSize;
     file->data = compressedData;
-
+#if 0
     printf("- - - - ASSET - - - -\n");
     printf("Name: %s\n", file->name.c_str());
     printf("Data adress: %p\n", file->data);
@@ -205,4 +213,5 @@ void getFile(std::string fileName, flux::File *file) {
     }
 
     printf("\n\n");
+#endif
 }

@@ -1,0 +1,2 @@
+/usr/sbin/ar qc ../build/libfuse.a  CMakeFiles/fuse.dir/src/fuse.cpp.o CMakeFiles/fuse.dir/src/component.cpp.o CMakeFiles/fuse.dir/src/entity.cpp.o
+/usr/sbin/ranlib ../build/libfuse.a

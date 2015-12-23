@@ -80,14 +80,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/tim/Projects/cpp/flare && $(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles /home/tim/Projects/cpp/flare/demo/CMakeFiles/progress.marks
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/all
+	cd /home/tim/Projects/cpp/flare && $(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles /home/tim/Projects/cpp/flare/fluxuate/CMakeFiles/progress.marks
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 fluxuate/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/clean
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 fluxuate/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,12 +97,12 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/preinstall
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 fluxuate/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/preinstall
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 fluxuate/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
@@ -111,46 +111,73 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-demo/CMakeFiles/demo.dir/rule:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/CMakeFiles/demo.dir/rule
-.PHONY : demo/CMakeFiles/demo.dir/rule
+fluxuate/CMakeFiles/fluxuate.dir/rule:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 fluxuate/CMakeFiles/fluxuate.dir/rule
+.PHONY : fluxuate/CMakeFiles/fluxuate.dir/rule
 
 # Convenience name for target.
-demo: demo/CMakeFiles/demo.dir/rule
+fluxuate: fluxuate/CMakeFiles/fluxuate.dir/rule
 
-.PHONY : demo
+.PHONY : fluxuate
 
 # fast build rule for target.
-demo/fast:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/build
-.PHONY : demo/fast
+fluxuate/fast:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fluxuate/CMakeFiles/fluxuate.dir/build.make fluxuate/CMakeFiles/fluxuate.dir/build
+.PHONY : fluxuate/fast
 
-src/demo.o: src/demo.cpp.o
+src/fluxuate.o: src/fluxuate.cpp.o
 
-.PHONY : src/demo.o
+.PHONY : src/fluxuate.o
 
 # target to build an object file
-src/demo.cpp.o:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/src/demo.cpp.o
-.PHONY : src/demo.cpp.o
+src/fluxuate.cpp.o:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fluxuate/CMakeFiles/fluxuate.dir/build.make fluxuate/CMakeFiles/fluxuate.dir/src/fluxuate.cpp.o
+.PHONY : src/fluxuate.cpp.o
 
-src/demo.i: src/demo.cpp.i
+src/fluxuate.i: src/fluxuate.cpp.i
 
-.PHONY : src/demo.i
+.PHONY : src/fluxuate.i
 
 # target to preprocess a source file
-src/demo.cpp.i:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/src/demo.cpp.i
-.PHONY : src/demo.cpp.i
+src/fluxuate.cpp.i:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fluxuate/CMakeFiles/fluxuate.dir/build.make fluxuate/CMakeFiles/fluxuate.dir/src/fluxuate.cpp.i
+.PHONY : src/fluxuate.cpp.i
 
-src/demo.s: src/demo.cpp.s
+src/fluxuate.s: src/fluxuate.cpp.s
 
-.PHONY : src/demo.s
+.PHONY : src/fluxuate.s
 
 # target to generate assembly for a file
-src/demo.cpp.s:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/src/demo.cpp.s
-.PHONY : src/demo.cpp.s
+src/fluxuate.cpp.s:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fluxuate/CMakeFiles/fluxuate.dir/build.make fluxuate/CMakeFiles/fluxuate.dir/src/fluxuate.cpp.s
+.PHONY : src/fluxuate.cpp.s
+
+src/pngl.o: src/pngl.cpp.o
+
+.PHONY : src/pngl.o
+
+# target to build an object file
+src/pngl.cpp.o:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fluxuate/CMakeFiles/fluxuate.dir/build.make fluxuate/CMakeFiles/fluxuate.dir/src/pngl.cpp.o
+.PHONY : src/pngl.cpp.o
+
+src/pngl.i: src/pngl.cpp.i
+
+.PHONY : src/pngl.i
+
+# target to preprocess a source file
+src/pngl.cpp.i:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fluxuate/CMakeFiles/fluxuate.dir/build.make fluxuate/CMakeFiles/fluxuate.dir/src/pngl.cpp.i
+.PHONY : src/pngl.cpp.i
+
+src/pngl.s: src/pngl.cpp.s
+
+.PHONY : src/pngl.s
+
+# target to generate assembly for a file
+src/pngl.cpp.s:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fluxuate/CMakeFiles/fluxuate.dir/build.make fluxuate/CMakeFiles/fluxuate.dir/src/pngl.cpp.s
+.PHONY : src/pngl.cpp.s
 
 # Help Target
 help:
@@ -160,10 +187,13 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... demo"
-	@echo "... src/demo.o"
-	@echo "... src/demo.i"
-	@echo "... src/demo.s"
+	@echo "... fluxuate"
+	@echo "... src/fluxuate.o"
+	@echo "... src/fluxuate.i"
+	@echo "... src/fluxuate.s"
+	@echo "... src/pngl.o"
+	@echo "... src/pngl.i"
+	@echo "... src/pngl.s"
 .PHONY : help
 
 

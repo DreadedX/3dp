@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/tim/Projects/cpp/flare/fluxuate/src/fluxuate.cpp
+standard.h
+/home/tim/Projects/cpp/flare/fluxuate/src/standard.h
+
+/home/tim/Projects/cpp/flare/fluxuate/src/pngl.cpp
+standard.h
+/home/tim/Projects/cpp/flare/fluxuate/src/standard.h
+
+fluxuate/include/flux.h
+
+fluxuate/include/pngl.h
+
+fluxuate/include/standard.h
+iostream
+-
+vector
+-
+cstring
+-
+dirent.h
+-
+assert.h
+-
+algorithm
+-
+png.h
+-
+zlib.h
+-
+leakage/debug_new.h
+fluxuate/include/leakage/debug_new.h
+flux.h
+fluxuate/include/flux.h
+pngl.h
+fluxuate/include/pngl.h
+

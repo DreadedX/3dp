@@ -1,0 +1,1 @@
+/usr/sbin/c++      CMakeFiles/fluxuate.dir/src/fluxuate.cpp.o CMakeFiles/fluxuate.dir/src/pngl.cpp.o  -o ../build/fluxuate -rdynamic -lpng -lz 

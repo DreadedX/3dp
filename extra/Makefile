@@ -80,14 +80,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/tim/Projects/cpp/flare && $(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles /home/tim/Projects/cpp/flare/demo/CMakeFiles/progress.marks
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/all
+	cd /home/tim/Projects/cpp/flare && $(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles /home/tim/Projects/cpp/flare/extra/CMakeFiles/progress.marks
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 extra/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/clean
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 extra/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,12 +97,12 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/preinstall
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 extra/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/preinstall
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 extra/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
@@ -111,46 +111,46 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-demo/CMakeFiles/demo.dir/rule:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/CMakeFiles/demo.dir/rule
-.PHONY : demo/CMakeFiles/demo.dir/rule
+extra/CMakeFiles/extra.dir/rule:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 extra/CMakeFiles/extra.dir/rule
+.PHONY : extra/CMakeFiles/extra.dir/rule
 
 # Convenience name for target.
-demo: demo/CMakeFiles/demo.dir/rule
+extra: extra/CMakeFiles/extra.dir/rule
 
-.PHONY : demo
+.PHONY : extra
 
 # fast build rule for target.
-demo/fast:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/build
-.PHONY : demo/fast
+extra/fast:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f extra/CMakeFiles/extra.dir/build.make extra/CMakeFiles/extra.dir/build
+.PHONY : extra/fast
 
-src/demo.o: src/demo.cpp.o
+src/print.o: src/print.cpp.o
 
-.PHONY : src/demo.o
+.PHONY : src/print.o
 
 # target to build an object file
-src/demo.cpp.o:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/src/demo.cpp.o
-.PHONY : src/demo.cpp.o
+src/print.cpp.o:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f extra/CMakeFiles/extra.dir/build.make extra/CMakeFiles/extra.dir/src/print.cpp.o
+.PHONY : src/print.cpp.o
 
-src/demo.i: src/demo.cpp.i
+src/print.i: src/print.cpp.i
 
-.PHONY : src/demo.i
+.PHONY : src/print.i
 
 # target to preprocess a source file
-src/demo.cpp.i:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/src/demo.cpp.i
-.PHONY : src/demo.cpp.i
+src/print.cpp.i:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f extra/CMakeFiles/extra.dir/build.make extra/CMakeFiles/extra.dir/src/print.cpp.i
+.PHONY : src/print.cpp.i
 
-src/demo.s: src/demo.cpp.s
+src/print.s: src/print.cpp.s
 
-.PHONY : src/demo.s
+.PHONY : src/print.s
 
 # target to generate assembly for a file
-src/demo.cpp.s:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/src/demo.cpp.s
-.PHONY : src/demo.cpp.s
+src/print.cpp.s:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f extra/CMakeFiles/extra.dir/build.make extra/CMakeFiles/extra.dir/src/print.cpp.s
+.PHONY : src/print.cpp.s
 
 # Help Target
 help:
@@ -160,10 +160,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... demo"
-	@echo "... src/demo.o"
-	@echo "... src/demo.i"
-	@echo "... src/demo.s"
+	@echo "... extra"
+	@echo "... src/print.o"
+	@echo "... src/print.i"
+	@echo "... src/print.s"
 .PHONY : help
 
 

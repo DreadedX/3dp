@@ -1,7 +1,0 @@
-PROGRAM_NAME = demo
-
-LIBS_EXTERN = glew glfw3 zlib
-DEFS =
-
-COMPILE_FLAGS_EXTRA += -lSOIL
-

@@ -1,0 +1,2 @@
+/usr/sbin/ar qc ../build/libflare.a  CMakeFiles/flare.dir/src/input.cpp.o CMakeFiles/flare.dir/src/engine.cpp.o CMakeFiles/flare.dir/src/loader.cpp.o CMakeFiles/flare.dir/src/render.cpp.o CMakeFiles/flare.dir/src/debug.cpp.o
+/usr/sbin/ranlib ../build/libflare.a

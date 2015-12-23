@@ -80,14 +80,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/tim/Projects/cpp/flare && $(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles /home/tim/Projects/cpp/flare/demo/CMakeFiles/progress.marks
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/all
+	cd /home/tim/Projects/cpp/flare && $(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles /home/tim/Projects/cpp/flare/fuse/CMakeFiles/progress.marks
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 fuse/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/clean
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 fuse/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,12 +97,12 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/preinstall
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 fuse/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/preinstall
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 fuse/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
@@ -111,46 +111,100 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-demo/CMakeFiles/demo.dir/rule:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/CMakeFiles/demo.dir/rule
-.PHONY : demo/CMakeFiles/demo.dir/rule
+fuse/CMakeFiles/fuse.dir/rule:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 fuse/CMakeFiles/fuse.dir/rule
+.PHONY : fuse/CMakeFiles/fuse.dir/rule
 
 # Convenience name for target.
-demo: demo/CMakeFiles/demo.dir/rule
+fuse: fuse/CMakeFiles/fuse.dir/rule
 
-.PHONY : demo
+.PHONY : fuse
 
 # fast build rule for target.
-demo/fast:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/build
-.PHONY : demo/fast
+fuse/fast:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fuse/CMakeFiles/fuse.dir/build.make fuse/CMakeFiles/fuse.dir/build
+.PHONY : fuse/fast
 
-src/demo.o: src/demo.cpp.o
+src/component.o: src/component.cpp.o
 
-.PHONY : src/demo.o
+.PHONY : src/component.o
 
 # target to build an object file
-src/demo.cpp.o:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/src/demo.cpp.o
-.PHONY : src/demo.cpp.o
+src/component.cpp.o:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fuse/CMakeFiles/fuse.dir/build.make fuse/CMakeFiles/fuse.dir/src/component.cpp.o
+.PHONY : src/component.cpp.o
 
-src/demo.i: src/demo.cpp.i
+src/component.i: src/component.cpp.i
 
-.PHONY : src/demo.i
+.PHONY : src/component.i
 
 # target to preprocess a source file
-src/demo.cpp.i:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/src/demo.cpp.i
-.PHONY : src/demo.cpp.i
+src/component.cpp.i:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fuse/CMakeFiles/fuse.dir/build.make fuse/CMakeFiles/fuse.dir/src/component.cpp.i
+.PHONY : src/component.cpp.i
 
-src/demo.s: src/demo.cpp.s
+src/component.s: src/component.cpp.s
 
-.PHONY : src/demo.s
+.PHONY : src/component.s
 
 # target to generate assembly for a file
-src/demo.cpp.s:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/src/demo.cpp.s
-.PHONY : src/demo.cpp.s
+src/component.cpp.s:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fuse/CMakeFiles/fuse.dir/build.make fuse/CMakeFiles/fuse.dir/src/component.cpp.s
+.PHONY : src/component.cpp.s
+
+src/entity.o: src/entity.cpp.o
+
+.PHONY : src/entity.o
+
+# target to build an object file
+src/entity.cpp.o:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fuse/CMakeFiles/fuse.dir/build.make fuse/CMakeFiles/fuse.dir/src/entity.cpp.o
+.PHONY : src/entity.cpp.o
+
+src/entity.i: src/entity.cpp.i
+
+.PHONY : src/entity.i
+
+# target to preprocess a source file
+src/entity.cpp.i:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fuse/CMakeFiles/fuse.dir/build.make fuse/CMakeFiles/fuse.dir/src/entity.cpp.i
+.PHONY : src/entity.cpp.i
+
+src/entity.s: src/entity.cpp.s
+
+.PHONY : src/entity.s
+
+# target to generate assembly for a file
+src/entity.cpp.s:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fuse/CMakeFiles/fuse.dir/build.make fuse/CMakeFiles/fuse.dir/src/entity.cpp.s
+.PHONY : src/entity.cpp.s
+
+src/fuse.o: src/fuse.cpp.o
+
+.PHONY : src/fuse.o
+
+# target to build an object file
+src/fuse.cpp.o:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fuse/CMakeFiles/fuse.dir/build.make fuse/CMakeFiles/fuse.dir/src/fuse.cpp.o
+.PHONY : src/fuse.cpp.o
+
+src/fuse.i: src/fuse.cpp.i
+
+.PHONY : src/fuse.i
+
+# target to preprocess a source file
+src/fuse.cpp.i:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fuse/CMakeFiles/fuse.dir/build.make fuse/CMakeFiles/fuse.dir/src/fuse.cpp.i
+.PHONY : src/fuse.cpp.i
+
+src/fuse.s: src/fuse.cpp.s
+
+.PHONY : src/fuse.s
+
+# target to generate assembly for a file
+src/fuse.cpp.s:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f fuse/CMakeFiles/fuse.dir/build.make fuse/CMakeFiles/fuse.dir/src/fuse.cpp.s
+.PHONY : src/fuse.cpp.s
 
 # Help Target
 help:
@@ -160,10 +214,16 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... demo"
-	@echo "... src/demo.o"
-	@echo "... src/demo.i"
-	@echo "... src/demo.s"
+	@echo "... fuse"
+	@echo "... src/component.o"
+	@echo "... src/component.i"
+	@echo "... src/component.s"
+	@echo "... src/entity.o"
+	@echo "... src/entity.i"
+	@echo "... src/entity.s"
+	@echo "... src/fuse.o"
+	@echo "... src/fuse.i"
+	@echo "... src/fuse.s"
 .PHONY : help
 
 

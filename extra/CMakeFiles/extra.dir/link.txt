@@ -1,0 +1,2 @@
+/usr/sbin/ar qc ../build/libextra.a  CMakeFiles/extra.dir/src/print.cpp.o
+/usr/sbin/ranlib ../build/libextra.a

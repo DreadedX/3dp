@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /home/tim/Projects/cpp/flare
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -78,16 +67,27 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
 # The main all target
 all: cmake_check_build_system
-	cd /home/tim/Projects/cpp/flare && $(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles /home/tim/Projects/cpp/flare/demo/CMakeFiles/progress.marks
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/all
+	cd /home/tim/Projects/cpp/flare && $(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles /home/tim/Projects/cpp/flare/flux/CMakeFiles/progress.marks
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 flux/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/tim/Projects/cpp/flare/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/clean
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 flux/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,12 +97,12 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/preinstall
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 flux/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/preinstall
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 flux/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
@@ -111,46 +111,46 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-demo/CMakeFiles/demo.dir/rule:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 demo/CMakeFiles/demo.dir/rule
-.PHONY : demo/CMakeFiles/demo.dir/rule
+flux/CMakeFiles/flux.dir/rule:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f CMakeFiles/Makefile2 flux/CMakeFiles/flux.dir/rule
+.PHONY : flux/CMakeFiles/flux.dir/rule
 
 # Convenience name for target.
-demo: demo/CMakeFiles/demo.dir/rule
+flux: flux/CMakeFiles/flux.dir/rule
 
-.PHONY : demo
+.PHONY : flux
 
 # fast build rule for target.
-demo/fast:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/build
-.PHONY : demo/fast
+flux/fast:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f flux/CMakeFiles/flux.dir/build.make flux/CMakeFiles/flux.dir/build
+.PHONY : flux/fast
 
-src/demo.o: src/demo.cpp.o
+src/flux.o: src/flux.cpp.o
 
-.PHONY : src/demo.o
+.PHONY : src/flux.o
 
 # target to build an object file
-src/demo.cpp.o:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/src/demo.cpp.o
-.PHONY : src/demo.cpp.o
+src/flux.cpp.o:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f flux/CMakeFiles/flux.dir/build.make flux/CMakeFiles/flux.dir/src/flux.cpp.o
+.PHONY : src/flux.cpp.o
 
-src/demo.i: src/demo.cpp.i
+src/flux.i: src/flux.cpp.i
 
-.PHONY : src/demo.i
+.PHONY : src/flux.i
 
 # target to preprocess a source file
-src/demo.cpp.i:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/src/demo.cpp.i
-.PHONY : src/demo.cpp.i
+src/flux.cpp.i:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f flux/CMakeFiles/flux.dir/build.make flux/CMakeFiles/flux.dir/src/flux.cpp.i
+.PHONY : src/flux.cpp.i
 
-src/demo.s: src/demo.cpp.s
+src/flux.s: src/flux.cpp.s
 
-.PHONY : src/demo.s
+.PHONY : src/flux.s
 
 # target to generate assembly for a file
-src/demo.cpp.s:
-	cd /home/tim/Projects/cpp/flare && $(MAKE) -f demo/CMakeFiles/demo.dir/build.make demo/CMakeFiles/demo.dir/src/demo.cpp.s
-.PHONY : src/demo.cpp.s
+src/flux.cpp.s:
+	cd /home/tim/Projects/cpp/flare && $(MAKE) -f flux/CMakeFiles/flux.dir/build.make flux/CMakeFiles/flux.dir/src/flux.cpp.s
+.PHONY : src/flux.cpp.s
 
 # Help Target
 help:
@@ -158,12 +158,12 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... demo"
-	@echo "... src/demo.o"
-	@echo "... src/demo.i"
-	@echo "... src/demo.s"
+	@echo "... edit_cache"
+	@echo "... flux"
+	@echo "... src/flux.o"
+	@echo "... src/flux.i"
+	@echo "... src/flux.s"
 .PHONY : help
 
 

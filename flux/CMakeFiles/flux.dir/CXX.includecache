@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/tim/Projects/cpp/flare/flux/src/flux.cpp
+flux/flux.h
+/home/tim/Projects/cpp/flare/flux/src/flux/flux.h
+
+extra/include/extra/extra.h
+iostream
+-
+cstdarg
+-
+extra/typedef.h
+extra/include/extra/extra/typedef.h
+extra/print.h
+extra/include/extra/extra/print.h
+
+extra/include/extra/print.h
+
+extra/include/extra/typedef.h
+
+flux/include/flux/flux.h
+vector
+-
+cstring
+-
+map
+-
+zlib.h
+-
+extra/extra.h
+flux/include/flux/extra/extra.h
+
