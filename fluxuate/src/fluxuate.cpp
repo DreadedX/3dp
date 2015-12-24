@@ -17,52 +17,52 @@ int main(int argc, char* argv[]) {
     std::vector<std::string> files = std::vector<std::string>();
 
     getDir(dir, files);
-    unsigned int count = files.size();
+    uint count = files.size();
 
     flux::File *fluxFiles = new flux::File[count];
 
-    for (unsigned int i = 0; i < count; ++i) {
+    for (uint i = 0; i < count; ++i) {
 
 	getFile(dir, files[i].c_str(), &fluxFiles[i]);
     }
 
-    long unsigned int totalSize = 0;
-    long unsigned int bytes_written = 0;
+    luint totalSize = 0;
+    luint bytes_written = 0;
     // TODO: Determine the output file name based on the directory
     FILE *file = fopen("base.flx", "wb");
 
-    long unsigned int dataLocation = 4 + sizeof(unsigned int);
-    for (unsigned int i = 0; i < count; i++) {
+    luint dataLocation = 4 + sizeof(uint);
+    for (uint i = 0; i < count; i++) {
 
-	dataLocation += sizeof(unsigned char);
+	dataLocation += sizeof(byte);
 	dataLocation += fluxFiles[i].nameSize;
-	dataLocation += sizeof(unsigned int);
+	dataLocation += sizeof(uint);
 	dataLocation += fluxFiles[i].extraSize;
-	dataLocation += sizeof(long unsigned int);
-	dataLocation += sizeof(long unsigned int);
-	dataLocation += sizeof(long unsigned int);
+	dataLocation += sizeof(luint);
+	dataLocation += sizeof(luint);
+	dataLocation += sizeof(luint);
     }
     totalSize += dataLocation;
-    for (unsigned int i = 0; i < count; i++) {
+    for (uint i = 0; i < count; i++) {
 
 	fluxFiles[i].dataLocation = dataLocation;
 	dataLocation += fluxFiles[i].dataSize;
     }
-    bytes_written += fwrite("FLX0", sizeof(unsigned char), 4, file);
-    bytes_written += fwrite(&count, sizeof(unsigned char), sizeof(unsigned int), file);
-    for (unsigned int i = 0; i < count; i++) {
+    bytes_written += fwrite("FLX0", sizeof(byte), 4, file);
+    bytes_written += fwrite(&count, sizeof(byte), sizeof(uint), file);
+    for (uint i = 0; i < count; i++) {
 
-	bytes_written += fwrite(&fluxFiles[i].nameSize, sizeof(unsigned char), sizeof(unsigned char), file);
-	bytes_written += fwrite(fluxFiles[i].name.c_str(), sizeof(unsigned char), fluxFiles[i].nameSize, file);
-	bytes_written += fwrite(&fluxFiles[i].extraSize, sizeof(unsigned char), sizeof(unsigned int), file);
-	bytes_written += fwrite(fluxFiles[i].extra, sizeof(unsigned char), fluxFiles[i].extraSize, file);
-	bytes_written += fwrite(&fluxFiles[i].dataSize, sizeof(unsigned char), sizeof(long unsigned int), file);
-	bytes_written += fwrite(&fluxFiles[i].compressedDataSize, sizeof(unsigned char), sizeof(long unsigned int), file);
-	bytes_written += fwrite(&fluxFiles[i].dataLocation, sizeof(unsigned char), sizeof(long unsigned int), file);
+	bytes_written += fwrite(&fluxFiles[i].nameSize, sizeof(byte), sizeof(byte), file);
+	bytes_written += fwrite(fluxFiles[i].name.c_str(), sizeof(byte), fluxFiles[i].nameSize, file);
+	bytes_written += fwrite(&fluxFiles[i].extraSize, sizeof(byte), sizeof(uint), file);
+	bytes_written += fwrite(fluxFiles[i].extra, sizeof(byte), fluxFiles[i].extraSize, file);
+	bytes_written += fwrite(&fluxFiles[i].dataSize, sizeof(byte), sizeof(luint), file);
+	bytes_written += fwrite(&fluxFiles[i].compressedDataSize, sizeof(byte), sizeof(luint), file);
+	bytes_written += fwrite(&fluxFiles[i].dataLocation, sizeof(byte), sizeof(luint), file);
     }
-    for (unsigned int i = 0; i < count; i++) {
+    for (uint i = 0; i < count; i++) {
 
-	bytes_written += fwrite(fluxFiles[i].data, sizeof(unsigned char), fluxFiles[i].dataSize, file);
+	bytes_written += fwrite(fluxFiles[i].data, sizeof(byte), fluxFiles[i].dataSize, file);
 
 	totalSize += fluxFiles[i].dataSize;
     }
@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
     printf("Total data size: %lu\n", totalSize);
 
     // Preventing memory leaks
-    for (unsigned int i = 0; i < count; i++) {
+    for (uint i = 0; i < count; i++) {
 
 	delete[] fluxFiles[i].data;
 	fluxFiles[i].data = nullptr;
@@ -136,14 +136,14 @@ void getFile(std::string basePath, std::string fileName, flux::File *file) {
 
 	png::Data data = png::read(filePath.c_str());
 
-	file->extraSize = sizeof(int) * 2 + sizeof(unsigned char);
-	file->extra = new unsigned char[file->extraSize];
+	file->extraSize = sizeof(int) * 2 + sizeof(byte);
+	file->extra = new byte[file->extraSize];
 
-	for (unsigned int i = 0; i < sizeof(int); ++i) {
+	for (uint i = 0; i < sizeof(int); ++i) {
 
 	    file->extra[i] = data.width >> (i*8);
 	}
-	for (unsigned int i = sizeof(int); i < sizeof(int)*2; ++i) {
+	for (uint i = sizeof(int); i < sizeof(int)*2; ++i) {
 
 	    file->extra[i] = data.height >> (i*8);
 	}
@@ -151,7 +151,7 @@ void getFile(std::string basePath, std::string fileName, flux::File *file) {
 
 	// file->data = data.pixels;
 	file->dataSize = data.size;
-	file->data = new unsigned char[file->dataSize];
+	file->data = new byte[file->dataSize];
 	for (int y = 0; y < data.height; y++) {
 	    for (int x = 0; x < data.width*data.bytesPerPixel; x++) {
 
@@ -175,8 +175,8 @@ void getFile(std::string basePath, std::string fileName, flux::File *file) {
 	file->dataSize = ftell(sourceFile);
 	fseek(sourceFile, 0, SEEK_SET);
 
-	file->data = new unsigned char[file->dataSize];
-	long unsigned int bytes_read = fread(file->data, sizeof(unsigned char), file->dataSize, sourceFile);
+	file->data = new byte[file->dataSize];
+	luint bytes_read = fread(file->data, sizeof(byte), file->dataSize, sourceFile);
 
 	// Make sure it read all the data
 	assert(bytes_read == file->dataSize);
@@ -184,11 +184,11 @@ void getFile(std::string basePath, std::string fileName, flux::File *file) {
     }
 
     // Compress the data
-    long unsigned int uncompressedDataSize = file->dataSize;
-    unsigned char *uncompressedData = file->data;
+    luint uncompressedDataSize = file->dataSize;
+    byte *uncompressedData = file->data;
     // Temporary size
-    long unsigned int compressedDataSize = file->dataSize + 1024;
-    unsigned char *compressedData = new unsigned char[compressedDataSize];
+    luint compressedDataSize = file->dataSize + 1024;
+    byte *compressedData = new byte[compressedDataSize];
 
     int result = compress(compressedData, &compressedDataSize, uncompressedData, uncompressedDataSize);
     if (result != Z_OK) {
@@ -207,7 +207,7 @@ void getFile(std::string basePath, std::string fileName, flux::File *file) {
     printf("Original size: %lu\n", file->dataSize);
     printf("Compressed size: %lu\n", file->compressedDataSize);
     printf("Extra: ");
-    for (unsigned int i = 0; i < file->extraSize; ++i) {
+    for (uint i = 0; i < file->extraSize; ++i) {
 
 	printf("%x ", file->extra[i]);
     }

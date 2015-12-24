@@ -3,6 +3,7 @@ project(fluxuate)
 
 set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include
     ${leakage_INCLUDE_DIRS}
+    ${extra_INCLUDE_DIRS}
     CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
 
 include_directories(${${PROJECT_NAME}_INCLUDE_DIRS})

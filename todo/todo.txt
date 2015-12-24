@@ -1,4 +1,0 @@
-x 2015-12-22 Create updated gaff-like file format and implement it
-x 2015-12-22 Implement logger instead of using printf for everything
-x 2015-12-22 Make sure glfw windows terminate properly
-(A) Make sure functions and variables that are not supposed to be accesed are not asccesible

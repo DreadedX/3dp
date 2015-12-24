@@ -1,12 +1,28 @@
 cmake_minimum_required(VERSION 2.6)
 project(all)
 
+# Make sure there is no in source build
+set(CMAKE_DISABLE_SOURCE_CHANGES ON)
+set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
+
+if ("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
+  message(SEND_ERROR "In-source builds are not allowed.")
+endif ()
+
+set(EXTA_FLAGS "-Wall -Wextra")
+
+# If compiling for windows statically link everything
+if (${CMAKE_SYSTEM_NAME} MATCHES Window)
+    set(EXTA_FLAGS "${EXTA_FLAGS} -static")
+endif()
+message("System name: ${CMAKE_SYSTEM_NAME}")
+
 # NOTE: Build flags by default are set to the debug flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG} ${EXTA_FLAGS}")
 # message("Default flags: ${CMAKE_CXX_FLAGS}")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${EXTRA_FLAGS}")
 # message("Debug flags: ${CMAKE_CXX_FLAGS_DEBUG}")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${EXTRA_FLAGS}")
 # message("Release flags: ${CMAKE_CXX_FLAGS_RELEASE}")
 
 message("Build type: ${CMAKE_BUILD_TYPE}")
@@ -25,15 +41,15 @@ if (WIN32)
   set(CMAKE_SHARED_LIBRARY_PREFIX "")
 endif ()
 
-add_subdirectory(leakage)
+add_subdirectory(libs/leakage)
+add_subdirectory(libs/imgui)
+
+add_subdirectory(core/extra)
+add_subdirectory(core/flux)
+add_subdirectory(core/fuse)
+add_subdirectory(core/flare)
+
 add_subdirectory(fluxuate)
-
-add_subdirectory(extra)
-add_subdirectory(flux)
-add_subdirectory(fuse)
-add_subdirectory(imgui)
-add_subdirectory(flare)
-
 add_subdirectory(game)
 
 add_custom_target(archive
@@ -66,7 +82,6 @@ if(UNIX)
 	cmake.check_cache
 	*.cmake
 	Makefile
-	core core.*
 	gmon.out
 	*~
 	)

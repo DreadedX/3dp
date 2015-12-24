@@ -20,6 +20,8 @@
     #include "debug_new.h"
 #endif
 
+#include "extra/extra.h"
+
 // Fluxuate include
 #include "flux.h"
 #include "pngl.h"
