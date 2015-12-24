@@ -28,16 +28,19 @@ void flux::load() {
 
 bool flux::Flux::load(std::string name) {
 
-    static_assert(sizeof(luint) == 8, "luint is not 8 bytes");
+    // static_assert(sizeof(luint) == 8, "luint is not 8 bytes");
 
     this->name = name;
     fileHandle = fopen(name.c_str(), "rb");
 
     if (fileHandle != nullptr) {
 
-	byte *header = new byte[4];
+	byte *header = new byte[6];
 	fread(header, sizeof(byte), 4, fileHandle);
-	if (!strcmp(reinterpret_cast<const char*>(header), "FLX0"))  {
+	header[4] = 0x00;
+	header[5] = 0x00;
+	// TODO: This does not work on windows, propably because it is not null terminated
+	if (std::string(reinterpret_cast<const char*>(header)) == "FLX0")  {
 
 	    fread(&indexSize, sizeof(byte), sizeof(uint), fileHandle);
 	    print::d("File count: %i", indexSize);
@@ -81,6 +84,9 @@ bool flux::Flux::load(std::string name) {
 
 	    valid = true;
 	    return true;
+	} else {
+
+	    print::e("'%s' is not a FLX0 file", name.c_str());
 	}
     }
 

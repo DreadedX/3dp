@@ -13,7 +13,7 @@ set(EXTA_FLAGS "-Wall -Wextra")
 
 # If compiling for windows statically link everything
 if (${CMAKE_SYSTEM_NAME} MATCHES Window)
-    set(EXTA_FLAGS "${EXTA_FLAGS} -static")
+    set(EXTA_FLAGS "${EXTA_FLAGS} -static-libgcc")
 endif()
 message("System name: ${CMAKE_SYSTEM_NAME}")
 
@@ -27,7 +27,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${EXTRA_FLAGS}")
 
 message("Build type: ${CMAKE_BUILD_TYPE}")
 
-set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build/${CMAKE_SYSTEM_NAME})
  
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
@@ -52,13 +52,9 @@ add_subdirectory(core/flare)
 add_subdirectory(fluxuate)
 add_subdirectory(game)
 
-add_custom_target(archive
-    COMMAND tar -zcvf ../release.tar.gz game base.flx
-    DEPENDS assets
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
-
+if(UNIX)
 add_custom_target(assets
-    COMMAND ./fluxuate ../game/assets
+    COMMAND ./fluxuate ${CMAKE_SOURCE_DIR}/game/assets
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 add_custom_target(run
@@ -70,27 +66,33 @@ add_custom_target(debug
     COMMAND gdb ./game -ex run -ex bt -ex quit --silent
     DEPENDS assets
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
-
-if(UNIX)
-    add_custom_target(distclean @echo cleaning for source distribution)
-    set(DISTCLEANED
-	build
-	release.tar.gz
-	cmake.depends
-	cmake.check_depends
-	CMakeCache.txt
-	cmake.check_cache
-	*.cmake
-	Makefile
-	gmon.out
-	*~
-	)
-
-    add_custom_command(
-	DEPENDS clean
-	COMMENT "distribution clean"
-	COMMAND rm
-	ARGS    -Rf CMakeTmp ${DISTCLEANED}
-	TARGET  distclean
-	)
 endif(UNIX)
+if(WIN32)
+add_custom_target(assets
+    COMMAND wine fluxuate.exe ${CMAKE_SOURCE_DIR}/game/assets
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+
+add_custom_target(run
+    COMMAND wine game.exe
+    DEPENDS assets
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+
+add_custom_target(debug
+    COMMAND wine game.exe
+    DEPENDS assets
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+endif(WIN32)
+
+add_custom_target(distclean @echo cleaning for source distribution)
+set(DISTCLEANED
+    ${CMAKE_SOURCE_DIR}/build
+    *
+    )
+
+add_custom_command(
+    DEPENDS clean
+    COMMENT "distribution clean"
+    COMMAND rm
+    ARGS	-rf ${DISTCLEANED}
+    TARGET  distclean
+    )
