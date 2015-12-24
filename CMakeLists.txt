@@ -1,7 +1,15 @@
 cmake_minimum_required(VERSION 2.6)
 project(all)
 
-add_definitions(-DDEBUG_MODE)
+# NOTE: Build flags by default are set to the debug flags
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra")
+# message("Default flags: ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wextra")
+# message("Debug flags: ${CMAKE_CXX_FLAGS_DEBUG}")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra")
+# message("Release flags: ${CMAKE_CXX_FLAGS_RELEASE}")
+
+message("Build type: ${CMAKE_BUILD_TYPE}")
 
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
  
@@ -26,19 +34,24 @@ add_subdirectory(fuse)
 add_subdirectory(imgui)
 add_subdirectory(flare)
 
-add_subdirectory(demo)
+add_subdirectory(game)
+
+add_custom_target(archive
+    COMMAND tar -zcvf ../release.tar.gz game base.flx
+    DEPENDS assets
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 add_custom_target(assets
-    COMMAND ./fluxuate ../demo/assets
+    COMMAND ./fluxuate ../game/assets
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 add_custom_target(run
-    COMMAND ./demo
+    COMMAND ./game
     DEPENDS assets
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 add_custom_target(debug
-    COMMAND gdb ./demo -ex run -ex bt -ex quit --silent
+    COMMAND gdb ./game -ex run -ex bt -ex quit --silent
     DEPENDS assets
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
@@ -46,6 +59,7 @@ if(UNIX)
     add_custom_target(distclean @echo cleaning for source distribution)
     set(DISTCLEANED
 	build
+	release.tar.gz
 	cmake.depends
 	cmake.check_depends
 	CMakeCache.txt

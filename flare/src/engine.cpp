@@ -60,7 +60,7 @@ void flare::init() {
 	exit(-1);
     }
 
-    #if DEBUG_MODE
+    #if !NDEBUG
 	// TODO: Install own callbacks
 	ImGui_ImplGlfwGL3_Init(window, true);
     #endif
@@ -125,7 +125,7 @@ void draw() {
     fuse::draw();
 
     // This is for the debug interface
-    #if DEBUG_MODE
+    #if !NDEBUG
 	flare::debug::entityTree();
     #endif
 

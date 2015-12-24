@@ -12,7 +12,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
-#if DEBUG_MODE
+#if !NDEBUG
     #include "imgui.h"
     #include "imgui_impl_glfw_gl3.h"
 #endif

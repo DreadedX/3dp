@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(demo)
+project(game)
 
 set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include
     ${flare_INCLUDE_DIRS}
