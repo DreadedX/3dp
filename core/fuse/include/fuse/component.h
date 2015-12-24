@@ -1,9 +1,6 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-// TODO: Remove this
-#include <fuse/fuse.h>
-
 // NOTE: Components automatically get named
 #define super(parent) super(parent, __func__)
 

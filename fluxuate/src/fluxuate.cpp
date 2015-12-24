@@ -26,21 +26,21 @@ int main(int argc, char* argv[]) {
 	getFile(dir, files[i].c_str(), &fluxFiles[i]);
     }
 
-    luint totalSize = 0;
-    luint bytes_written = 0;
+    llu totalSize = 0;
+    llu bytes_written = 0;
     // TODO: Determine the output file name based on the directory
     FILE *file = fopen("base.flx", "wb");
 
-    luint dataLocation = 4 + sizeof(uint);
+    llu dataLocation = 4 + sizeof(uint);
     for (uint i = 0; i < count; i++) {
 
 	dataLocation += sizeof(byte);
 	dataLocation += fluxFiles[i].nameSize;
 	dataLocation += sizeof(uint);
 	dataLocation += fluxFiles[i].extraSize;
-	dataLocation += sizeof(luint);
-	dataLocation += sizeof(luint);
-	dataLocation += sizeof(luint);
+	dataLocation += sizeof(uint);
+	dataLocation += sizeof(uint);
+	dataLocation += sizeof(llu);
     }
     totalSize += dataLocation;
     for (uint i = 0; i < count; i++) {
@@ -56,9 +56,9 @@ int main(int argc, char* argv[]) {
 	bytes_written += fwrite(fluxFiles[i].name.c_str(), sizeof(byte), fluxFiles[i].nameSize, file);
 	bytes_written += fwrite(&fluxFiles[i].extraSize, sizeof(byte), sizeof(uint), file);
 	bytes_written += fwrite(fluxFiles[i].extra, sizeof(byte), fluxFiles[i].extraSize, file);
-	bytes_written += fwrite(&fluxFiles[i].dataSize, sizeof(byte), sizeof(luint), file);
-	bytes_written += fwrite(&fluxFiles[i].compressedDataSize, sizeof(byte), sizeof(luint), file);
-	bytes_written += fwrite(&fluxFiles[i].dataLocation, sizeof(byte), sizeof(luint), file);
+	bytes_written += fwrite(&fluxFiles[i].dataSize, sizeof(byte), sizeof(uint), file);
+	bytes_written += fwrite(&fluxFiles[i].compressedDataSize, sizeof(byte), sizeof(uint), file);
+	bytes_written += fwrite(&fluxFiles[i].dataLocation, sizeof(byte), sizeof(llu), file);
     }
     for (uint i = 0; i < count; i++) {
 
@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
     }
     fclose(file);
     assert(bytes_written == totalSize);
-    printf("Total data size: %lu\n", totalSize);
+    printf("Total data size: %llu\n", totalSize);
 
     // Preventing memory leaks
     for (uint i = 0; i < count; i++) {
@@ -176,7 +176,7 @@ void getFile(std::string basePath, std::string fileName, flux::File *file) {
 	fseek(sourceFile, 0, SEEK_SET);
 
 	file->data = new byte[file->dataSize];
-	luint bytes_read = fread(file->data, sizeof(byte), file->dataSize, sourceFile);
+	llu bytes_read = fread(file->data, sizeof(byte), file->dataSize, sourceFile);
 
 	// Make sure it read all the data
 	assert(bytes_read == file->dataSize);
@@ -184,10 +184,10 @@ void getFile(std::string basePath, std::string fileName, flux::File *file) {
     }
 
     // Compress the data
-    luint uncompressedDataSize = file->dataSize;
+    uint uncompressedDataSize = file->dataSize;
     byte *uncompressedData = file->data;
     // Temporary size
-    luint compressedDataSize = file->dataSize + 1024;
+    uLongf compressedDataSize = file->dataSize + 1024;
     byte *compressedData = new byte[compressedDataSize];
 
     int result = compress(compressedData, &compressedDataSize, uncompressedData, uncompressedDataSize);

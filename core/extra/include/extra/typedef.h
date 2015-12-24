@@ -4,7 +4,7 @@
 typedef unsigned char byte;
 typedef unsigned int uint;
 // TODO: This has the wrong size on windows
-typedef long unsigned int luint;
+typedef long unsigned long llu;
 
 #endif
 

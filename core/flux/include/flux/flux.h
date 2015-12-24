@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstring>
 #include <map>
+#include <assert.h>
 
 #include <zlib.h>
 
@@ -20,9 +21,9 @@ namespace flux {
 	uint extraSize = 0;
 	byte *extra = nullptr;
 
-	luint dataSize = 0;
-	luint compressedDataSize = 0;
-	luint dataLocation = 0;
+	uint dataSize = 0;
+	uint compressedDataSize = 0;
+	llu dataLocation = 0;
 
 	Flux *parent;
 

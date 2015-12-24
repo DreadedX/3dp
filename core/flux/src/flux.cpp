@@ -61,9 +61,9 @@ bool flux::Flux::load(std::string name) {
 		fread(index[i].extra, sizeof(byte), index[i].extraSize, fileHandle);
 
 		// Read data size and location
-		fread(&index[i].dataSize, sizeof(byte), sizeof(luint), fileHandle);
-		fread(&index[i].compressedDataSize, sizeof(byte), sizeof(luint), fileHandle);
-		fread(&index[i].dataLocation, sizeof(byte), sizeof(luint), fileHandle);
+		fread(&index[i].dataSize, sizeof(byte), sizeof(uint), fileHandle);
+		fread(&index[i].compressedDataSize, sizeof(byte), sizeof(uint), fileHandle);
+		fread(&index[i].dataLocation, sizeof(byte), sizeof(llu), fileHandle);
 
 		// TODO: DO NOT USE PRINTF
 		// printf("\n");
@@ -121,10 +121,9 @@ byte *flux::File::get(bool addNullTerminator) {
 	data = new byte[dataSize+1];
 	data[dataSize] = 0x00;
     }
-    // NOTE: This reinterpret_cast has no negative effect on linux, but does limit the file size to ~4GB on windows
-    // long unsigned int is 8 bytes in linux, but 4 bytes in windows
-    // TODO: Change the size to a uint to prevent this difference between windows and linux
-    int result = uncompress(data, reinterpret_cast<long unsigned int*>(&dataSize), compressedData, compressedDataSize);
+    uLongf tempDataSize = dataSize;
+    int result = uncompress(data, &tempDataSize, compressedData, compressedDataSize);
+    assert(dataSize == tempDataSize);
     if (addNullTerminator) {
 
 	print::d("%x", data[dataSize]);

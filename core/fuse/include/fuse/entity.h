@@ -1,9 +1,6 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-// TODO: Remove this
-#include <fuse/fuse.h>
-
 namespace fuse {
 
     struct Entity {
