@@ -21,9 +21,9 @@
 #endif
 
 #include "extra/extra.h"
+#include "flux/flux.h"
 
 // Fluxuate include
-#include "flux.h"
 #include "pngl.h"
 
 #endif

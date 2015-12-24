@@ -3,9 +3,9 @@
 GLuint flare::shader::load(std::string name) {
 
     // TODO: Shader never check if they have been updated
-    flux::File *vertexFile = flux::get(name + "_vertex");
+    flux::FileLoad *vertexFile = flux::get(name + "_vertex");
     vertexFile->inUse = true;
-    flux::File *fragmentFile = flux::get(name + "_fragment");
+    flux::FileLoad *fragmentFile = flux::get(name + "_fragment");
     fragmentFile->inUse = true;
 
     const char *vertexSource = reinterpret_cast<const char*>(vertexFile->get(true));
@@ -64,10 +64,10 @@ GLuint flare::shader::load(std::string name) {
     return shaderProgram;
 }
 
-GLuint flare::texture::load(flux::File *textureFile) {
+GLuint flare::texture::load(flux::FileLoad *textureFile) {
 
     // TODO: What happens when multiple texture reload and free the same thing
-    static std::map<flux::File*, GLuint> map;
+    static std::map<flux::FileLoad*, GLuint> map;
     if (textureFile->inUse && map.find(textureFile) != map.end()) {
 
 	print::d("Texture '%s' already loaded", textureFile->name.c_str());

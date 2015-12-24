@@ -10,7 +10,7 @@ namespace flare {
 
     namespace texture {
 
-	GLuint load(flux::File *textureFile);
+	GLuint load(flux::FileLoad *textureFile);
     }
 }
 

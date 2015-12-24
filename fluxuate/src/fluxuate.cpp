@@ -1,7 +1,7 @@
 #include "standard.h"
 
 void getDir(std::string dir, std::vector<std::string> &files);
-void getFile(std::string basePath, std::string fileName, flux::File *file);
+void getFile(std::string basePath, std::string fileName, flux::FileWrite *file);
 
 int main(int argc, char* argv[]) {
 
@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
     getDir(dir, files);
     uint count = files.size();
 
-    flux::File *fluxFiles = new flux::File[count];
+    flux::FileWrite *fluxFiles = new flux::FileWrite[count];
 
     for (uint i = 0; i < count; ++i) {
 
@@ -103,7 +103,7 @@ void getDir(std::string dir, std::vector<std::string> &files) {
     closedir(dp);
 }
 
-void getFile(std::string basePath, std::string fileName, flux::File *file) {
+void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) {
 
     std::string extension;
     std::string baseName;

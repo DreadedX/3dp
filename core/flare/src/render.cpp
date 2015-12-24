@@ -64,7 +64,7 @@ void flare::render::init() {
 void flare::render::update() {
 
     // TODO: This should eventually move
-    static flux::File *textureFile = flux::get("base/logo");
+    static flux::FileLoad *textureFile = flux::get("base/logo");
     static GLuint texture = texture::load(textureFile);
     if (!textureFile->parent->valid) {
 

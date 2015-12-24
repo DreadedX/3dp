@@ -3,7 +3,7 @@
 std::vector<flux::Flux*> files;
 int count = 0;
 
-std::map<std::string, flux::File*> map;
+std::map<std::string, flux::FileLoad*> map;
 
 void flux::load() {
 
@@ -38,7 +38,7 @@ void flux::Flux::load(std::string name) {
 
 	    fread(&indexSize, sizeof(byte), sizeof(uint), fileHandle);
 	    print::d("File count: %i", indexSize);
-	    this->index = new File[indexSize];
+	    this->index = new FileLoad[indexSize];
 
 	    for (uint i = 0; i < indexSize; ++i) {
 
@@ -87,7 +87,7 @@ void flux::Flux::load(std::string name) {
     exit(-1);
 }
 
-flux::File *flux::get(std::string name) {
+flux::FileLoad *flux::get(std::string name) {
 
     if (map.find(name) != map.end()) {
 
@@ -98,7 +98,7 @@ flux::File *flux::get(std::string name) {
     exit(-1);
 }
 
-byte *flux::File::get(bool addNullTerminator) {
+byte *flux::FileLoad::get(bool addNullTerminator) {
 
     print::d("Loading asset: '%s'", name.c_str());
 

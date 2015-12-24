@@ -16,17 +16,7 @@
 
 #include "fuse/component.h"
 #include "fuse/entity.h"
-
-namespace fuse {
-
-    void update();
-    void draw();
-
-    Entity *createEntity(const char *name = "Entity", Entity *parent = nullptr);
-    void killAll();
-
-    std::vector<Entity *> *getEntities();
-}
+#include "fuse/manager.h"
 
 #endif
 
