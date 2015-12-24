@@ -41,7 +41,7 @@ namespace flux {
 
 	bool valid = true;
 
-	bool load(std::string name);
+	void load(std::string name);
 	void close();
     };
 

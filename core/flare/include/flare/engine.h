@@ -6,7 +6,7 @@ namespace flare {
     void init();
     bool isRunning();
     void update();
-    void terminate();
+    void terminate(int errorCode = 0);
 }
 
 #endif

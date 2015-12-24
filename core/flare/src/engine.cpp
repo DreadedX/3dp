@@ -133,7 +133,7 @@ void draw() {
 
 }
 
-void flare::terminate() {
+void flare::terminate(int errorCode) {
 
     // Kill and remove all remaining entities
     fuse::killAll();
@@ -143,4 +143,8 @@ void flare::terminate() {
 
     // Close all open asset files
     flux::close();
+
+    print::d("The engine is now exiting");
+
+    exit(errorCode);
 }

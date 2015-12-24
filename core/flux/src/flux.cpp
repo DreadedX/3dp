@@ -16,17 +16,11 @@ void flux::load() {
 	flux::Flux *file = new flux::Flux;
 	files.push_back(file);
 
-	if (file->load(fileNames[i])) {
-
-	    print::d("File indexed: '%s'", file->name.c_str());
-	} else {
-
-	    print::w("Failed to open: '%s'", file->name.c_str());
-	}
+	file->load(fileNames[i]);
     }
 }
 
-bool flux::Flux::load(std::string name) {
+void flux::Flux::load(std::string name) {
 
     // static_assert(sizeof(luint) == 8, "luint is not 8 bytes");
 
@@ -47,7 +41,7 @@ bool flux::Flux::load(std::string name) {
 	    this->index = new File[indexSize];
 
 	    for (uint i = 0; i < indexSize; ++i) {
-	        
+
 		// Read fileName
 		byte nameSize = 0;
 		fread(&nameSize, sizeof(byte), sizeof(byte), fileHandle);
@@ -82,15 +76,15 @@ bool flux::Flux::load(std::string name) {
 		index[i].parent = this;
 	    }
 
+	    print::d("File indexed: '%s'", name.c_str());
 	    valid = true;
-	    return true;
-	} else {
-
-	    print::e("'%s' is not a FLX0 file", name.c_str());
+	    return;
 	}
+	print::e("'%s' is not a FLX0 file", name.c_str());
+	return;
     }
-
-    return false;
+    print::e("Failed to open: '%s'", name.c_str());
+    exit(-1);
 }
 
 flux::File *flux::get(std::string name) {
@@ -101,7 +95,7 @@ flux::File *flux::get(std::string name) {
     }
 
     print::e("Asset '%s' not found", name.c_str());
-    return nullptr;
+    exit(-1);
 }
 
 byte *flux::File::get(bool addNullTerminator) {
@@ -131,6 +125,7 @@ byte *flux::File::get(bool addNullTerminator) {
     if (result != Z_OK) {
 
 	print::e("Uncompression of '%s' failed (%i)", name.c_str(), result);
+	exit(-1);
     }
 
     delete[] compressedData;
