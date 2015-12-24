@@ -26,7 +26,7 @@
 #include "flare/debug.h"
 
 #include "flare/engine.h"
-#include "flare/loader.h"
+#include "flare/asset.h"
 #include "flare/input.h"
 #include "flare/render.h"
 

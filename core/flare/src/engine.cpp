@@ -62,7 +62,7 @@ void flare::init() {
 
     #if !NDEBUG
 	// TODO: Install own callbacks
-	ImGui_ImplGlfwGL3_Init(window, true);
+	ImGui_ImplGlfwGL3_Init(window, false);
     #endif
 
     glGetError();
@@ -94,8 +94,9 @@ void flare::update() {
 
 	if (input::keyCheck(GLFW_KEY_F5)) {
 
-	    flux::reload();
-	    input::keySet(GLFW_KEY_F5, false);
+	    print::d("Reloading assets");
+	    flare::asset::reload();
+	    flare::input::keySet(GLFW_KEY_F5, false);
 	}
     }
 
@@ -105,8 +106,6 @@ void flare::update() {
 	fuse::update();
 	// Run renderer logic
 	render::update();
-	// Free asset memory
-	flux::free();
     }
 
     // Calculate the frametime

@@ -9,8 +9,6 @@ namespace flux {
 
 	Flux *parent;
 
-	bool inUse = false;
-
 	byte *get(bool addNullTerminator = false);
     };
 
@@ -31,7 +29,6 @@ namespace flux {
     FileLoad *get(std::string name);
     void close();
 
-    void free();
     void reload();
 }
 

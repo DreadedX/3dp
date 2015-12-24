@@ -115,13 +115,9 @@ byte *flux::FileLoad::get(bool addNullTerminator) {
 	data = new byte[dataSize+1];
 	data[dataSize] = 0x00;
     }
-    uLongf tempDataSize = dataSize;
+    uLongf tempDataSize = dataSize; 
     int result = uncompress(data, &tempDataSize, compressedData, compressedDataSize);
     assert(dataSize == tempDataSize);
-    if (addNullTerminator) {
-
-	print::d("%x", data[dataSize]);
-    }
     if (result != Z_OK) {
 
 	print::e("Uncompression of '%s' failed (%i)", name.c_str(), result);
@@ -155,40 +151,16 @@ void flux::Flux::close() {
     }
 }
 
-void flux::free() {
-
-    for (uint i = 0; i < files.size(); ++i) {
-	
-	bool remove = true;
-
-	if (!files[i]->valid) {
-
-	    for (uint j = 0; j < files[i]->indexSize; ++j) {
-
-		if (files[i]->index[j].inUse) {
-
-		    remove = false;
-		}
-	    }
-
-	    if (remove) {
-
-		print::d("Freeing memory");
-		files[i]->close();
-		delete files[i];
-		files.erase(files.begin()+i);
-	    }
-	}
-    } 
-}
-
 void flux::reload() {
 
-    print::d("Reloading assets");
+    print::d("Removing old asset list");
 
     for (uint i = 0; i < files.size(); ++i) {
 
-	files[i]->valid = false;
+	print::d("Freeing memory");
+	files[i]->close();
+	delete files[i];
+	files.erase(files.begin()+i);
     }
 
     map.clear();

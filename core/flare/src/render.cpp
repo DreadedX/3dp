@@ -40,18 +40,18 @@ void flare::render::init() {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
     // TODO: This needs to be moved out of here
-    GLuint shaderProgram = shader::load("base/test");
-    glUseProgram(shaderProgram);
+    asset::ShaderAsset *shader = asset::load<asset::ShaderAsset>("base/test");
+    glUseProgram(shader->id);
     
-    GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+    GLint posAttrib = glGetAttribLocation(shader->id, "position");
     glEnableVertexAttribArray(posAttrib);
     glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 7*sizeof(float), 0);
 
-    GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
+    GLint colAttrib = glGetAttribLocation(shader->id, "color");
     glEnableVertexAttribArray(colAttrib);
     glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(2*sizeof(float)));
 
-    GLint texAttrib = glGetAttribLocation(shaderProgram, "texcoord");
+    GLint texAttrib = glGetAttribLocation(shader->id, "texcoord");
     glEnableVertexAttribArray(texAttrib);
     glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(5*sizeof(float)));
 
@@ -64,19 +64,8 @@ void flare::render::init() {
 void flare::render::update() {
 
     // TODO: This should eventually move
-    static flux::FileLoad *textureFile = flux::get("base/logo");
-    static GLuint texture = texture::load(textureFile);
-    if (!textureFile->parent->valid) {
-
-	textureFile->inUse = false;
-	glDeleteTextures(1, &texture);
-
-	std::string name(textureFile->name);
-
-	print::d("Reloading texture: '%s'", name.c_str());
-	textureFile = flux::get(name);
-	texture = texture::load(textureFile);
-    }
+    static asset::TextureAsset *texture = asset::load<asset::TextureAsset>("base/logo");
+    glBindTexture(GL_TEXTURE_2D, texture->id);
 
     // glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

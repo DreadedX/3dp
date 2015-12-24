@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
     for (uint i = 0; i < count; i++) {
 
 	fluxFiles[i].dataLocation = dataLocation;
-	dataLocation += fluxFiles[i].dataSize;
+	dataLocation += fluxFiles[i].compressedDataSize;
     }
     bytes_written += fwrite("FLX0", sizeof(byte), 4, file);
     bytes_written += fwrite(&count, sizeof(byte), sizeof(uint), file);
@@ -62,9 +62,9 @@ int main(int argc, char* argv[]) {
     }
     for (uint i = 0; i < count; i++) {
 
-	bytes_written += fwrite(fluxFiles[i].data, sizeof(byte), fluxFiles[i].dataSize, file);
+	bytes_written += fwrite(fluxFiles[i].data, sizeof(byte), fluxFiles[i].compressedDataSize, file);
 
-	totalSize += fluxFiles[i].dataSize;
+	totalSize += fluxFiles[i].compressedDataSize;
     }
     fclose(file);
     assert(bytes_written == totalSize);
@@ -204,8 +204,8 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
     printf("- - - - ASSET - - - -\n");
     printf("Name: %s\n", file->name.c_str());
     printf("Data adress: %p\n", file->data);
-    printf("Original size: %lu\n", file->dataSize);
-    printf("Compressed size: %lu\n", file->compressedDataSize);
+    printf("Original size: %i\n", file->dataSize);
+    printf("Compressed size: %i\n", file->compressedDataSize);
     printf("Extra: ");
     for (uint i = 0; i < file->extraSize; ++i) {
 

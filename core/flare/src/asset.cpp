@@ -1,12 +1,23 @@
 #include "flare/flare.h"
 
-GLuint flare::shader::load(std::string name) {
+std::vector<flare::asset::Asset*> flare::asset::assetList;
+
+void flare::asset::reload() {
+    
+    flux::reload();
+
+    for (Asset *asset : assetList) {
+
+	print::d("Reloading asset: %s", asset->name.c_str());
+	asset->_load();
+    }
+}
+
+void flare::asset::ShaderAsset::_load() {
 
     // TODO: Shader never check if they have been updated
     flux::FileLoad *vertexFile = flux::get(name + "_vertex");
-    vertexFile->inUse = true;
     flux::FileLoad *fragmentFile = flux::get(name + "_fragment");
-    fragmentFile->inUse = true;
 
     const char *vertexSource = reinterpret_cast<const char*>(vertexFile->get(true));
     const char *fragmentSource = reinterpret_cast<const char*>(fragmentFile->get(true));
@@ -26,7 +37,7 @@ GLuint flare::shader::load(std::string name) {
 	glGetShaderInfoLog(vertexShader, 512, NULL, buffer);
 	print::w("Vertex shader error: %s", buffer);
     }
-    
+
     // Load fragment shader
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
@@ -44,39 +55,28 @@ GLuint flare::shader::load(std::string name) {
     }
 
     // Combine shaders
-    GLuint shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-    
+    id = glCreateProgram();
+    glAttachShader(id, vertexShader);
+    glAttachShader(id, fragmentShader);
+    glLinkProgram(id);
+
     // Check program status
     GLint programStatus;
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &programStatus);
+    glGetProgramiv(id, GL_LINK_STATUS, &programStatus);
     if (programStatus != GL_TRUE) {
 	char buffer[512];
-	glGetProgramInfoLog(shaderProgram, 512, NULL, buffer);
+	glGetProgramInfoLog(id, 512, NULL, buffer);
 	print::w("Shader link error: %s", buffer);
     }
 
     delete[] vertexSource;
     delete[] fragmentSource;
-
-    return shaderProgram;
 }
 
-GLuint flare::texture::load(flux::FileLoad *textureFile) {
+void flare::asset::TextureAsset::_load() {
 
-    // TODO: What happens when multiple texture reload and free the same thing
-    static std::map<flux::FileLoad*, GLuint> map;
-    if (textureFile->inUse && map.find(textureFile) != map.end()) {
-
-	print::d("Texture '%s' already loaded", textureFile->name.c_str());
-	return map[textureFile];
-    }
-
-    GLuint texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glGenTextures(1, &id);
+    glBindTexture(GL_TEXTURE_2D, id);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -85,8 +85,7 @@ GLuint flare::texture::load(flux::FileLoad *textureFile) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     // glGenerateMipmap(GL_TEXTURE_2D);
-
-    textureFile->inUse = true;
+    flux::FileLoad *textureFile = flux::get(name);
     byte *pixels = textureFile->get();
 
     int width = 0;
@@ -105,7 +104,4 @@ GLuint flare::texture::load(flux::FileLoad *textureFile) {
 
     delete[] pixels;
 
-    map[textureFile] = texture;
-
-    return texture;
 }
