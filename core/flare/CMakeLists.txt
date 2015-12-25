@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 project(flare)
 
 set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include
+    ${leakage_INCLUDE_DIRS}
     ${imgui_INCLUDE_DIRS}
     ${glm_INCLUDE_DIRS}
     ${extra_INCLUDE_DIRS}

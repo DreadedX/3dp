@@ -10,6 +10,8 @@ namespace flare {
 	    std::string name = "";
 
 	    virtual void _load()=0;
+
+	    virtual ~Asset() { }
 	};
 
 	extern std::vector<Asset*> assetList;
@@ -41,6 +43,7 @@ namespace flare {
 	}
 
 	void reload();
+	void close();
     }
 }
 

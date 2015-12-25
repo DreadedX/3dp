@@ -60,7 +60,7 @@ void flare::init() {
 	exit(-1);
     }
 
-    #if !NDEBUG
+    #ifndef NDEBUG
 	// TODO: Install own callbacks
 	ImGui_ImplGlfwGL3_Init(window, false);
     #endif
@@ -94,6 +94,10 @@ void flare::update() {
 
 	if (input::keyCheck(GLFW_KEY_F5)) {
 
+	    // NOTE: This only works on linux and for testing only
+	    // TODO: Build in fluxuate, needs to move to the editor in the future
+	    system("cd ../../CMake/default && make assets");
+
 	    print::d("Reloading assets");
 	    flare::asset::reload();
 	    flare::input::keySet(GLFW_KEY_F5, false);
@@ -124,7 +128,7 @@ void draw() {
     fuse::draw();
 
     // This is for the debug interface
-    #if !NDEBUG
+    #ifndef NDEBUG
 	flare::debug::entityTree();
     #endif
 
@@ -141,7 +145,7 @@ void flare::terminate(int errorCode) {
     glfwTerminate();
 
     // Close all open asset files
-    flux::close();
+    asset::close();
 
     print::d("The engine is now exiting");
 

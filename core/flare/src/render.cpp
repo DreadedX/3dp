@@ -15,7 +15,6 @@ GLuint elements[] {
 
 GLuint uniColor;
 
-// TODO: Make sure this code gets cleaned up properly
 void flare::render::init() {
 
     // Generating and binding vao
@@ -38,27 +37,6 @@ void flare::render::init() {
     // Binding ebo
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
-
-    // TODO: This needs to be moved out of here
-    asset::ShaderAsset *shader = asset::load<asset::ShaderAsset>("base/test");
-    glUseProgram(shader->id);
-    
-    GLint posAttrib = glGetAttribLocation(shader->id, "position");
-    glEnableVertexAttribArray(posAttrib);
-    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 7*sizeof(float), 0);
-
-    GLint colAttrib = glGetAttribLocation(shader->id, "color");
-    glEnableVertexAttribArray(colAttrib);
-    glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(2*sizeof(float)));
-
-    GLint texAttrib = glGetAttribLocation(shader->id, "texcoord");
-    glEnableVertexAttribArray(texAttrib);
-    glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(5*sizeof(float)));
-
-    // TODO: This is just for testing
-    GLuint tex;
-    glGenTextures(1, &tex);
-    glBindTexture(GL_TEXTURE_2D, tex);
 }
 
 void flare::render::update() {
@@ -66,6 +44,8 @@ void flare::render::update() {
     // TODO: This should eventually move
     static asset::TextureAsset *texture = asset::load<asset::TextureAsset>("base/logo");
     glBindTexture(GL_TEXTURE_2D, texture->id);
+    static asset::ShaderAsset *shader = asset::load<asset::ShaderAsset>("base/test");
+    glUseProgram(shader->id);
 
     // glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

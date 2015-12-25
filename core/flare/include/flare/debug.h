@@ -1,4 +1,4 @@
-#if !NDEBUG
+#ifndef NDEBUG
 #ifndef DEBUG_H
 #define DEBUG_H
 
@@ -11,4 +11,4 @@ namespace flare {
 }
 
 #endif
-#endif // !NDEBUG
+#endif // NDEBUG

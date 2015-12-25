@@ -1,4 +1,4 @@
-#if !NDEBUG
+#ifndef NDEBUG
 #include "flare/flare.h"
 
 void flare::debug::entityTree() {
@@ -43,4 +43,4 @@ void flare::debug::entityTreeNode(fuse::Entity *entity, bool showChildren) {
     }
 }
 
-#endif // !NDEBUG
+#endif // NDEBUG

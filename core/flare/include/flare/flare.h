@@ -10,26 +10,27 @@
 // System libraries
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 
-#if !NDEBUG
+#ifndef NDEBUG
     #include "imgui.h"
     #include "imgui_impl_glfw_gl3.h"
 #endif
 
 // Engine includes
 #include "extra/extra.h"
-
 #include "flux/flux.h"
 #include "fuse/fuse.h"
 
-#include "flare/debug.h"
+#ifndef NDEBUG
+    #include "debug_new.h"
+    #include "flare/debug.h"
+#endif
 
 #include "flare/engine.h"
 #include "flare/asset.h"
 #include "flare/input.h"
 #include "flare/render.h"
-
 
 #endif
 

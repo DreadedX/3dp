@@ -16,7 +16,7 @@
 #include <zlib.h>
 
 // Debug
-#if !NDEBUG
+#ifndef NDEBUG
     #include "debug_new.h"
 #endif
 

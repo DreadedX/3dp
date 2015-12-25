@@ -113,7 +113,7 @@
 #ifdef _WIN32
 #define _DEBUG_NEW_FILENAME_LEN 0
 #else
-#define _DEBUG_NEW_FILENAME_LEN 44
+#define _DEBUG_NEW_FILENAME_LEN 0
 #endif
 #endif
 

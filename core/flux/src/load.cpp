@@ -34,7 +34,9 @@ void flux::Flux::load(std::string name) {
 	header[4] = 0x00;
 	header[5] = 0x00;
 	// TODO: This does not work on windows, propably because it is not null terminated
-	if (std::string(reinterpret_cast<const char*>(header)) == "FLX0")  {
+	std::string headerString(reinterpret_cast<const char*>(header));
+	delete[] header;
+	if (headerString == "FLX0")  {
 
 	    fread(&indexSize, sizeof(byte), sizeof(uint), fileHandle);
 	    print::d("File count: %i", indexSize);
@@ -48,6 +50,7 @@ void flux::Flux::load(std::string name) {
 		char *name = new char[nameSize];
 		fread(name, sizeof(byte), nameSize, fileHandle);
 		index[i].name = std::string(name, nameSize);
+		delete[] name;
 
 		// Read extra data
 		fread(&index[i].extraSize, sizeof(byte), sizeof(uint), fileHandle);
@@ -134,6 +137,7 @@ void flux::close() {
     for (int i = 0; i < count; ++i) {
         
 	files[i]->close();
+	delete files[i];
     }
 }
 
@@ -142,9 +146,15 @@ void flux::Flux::close() {
 
     if (fileHandle != nullptr) {
 
-	fclose(fileHandle);
+	// TODO: This causes a SEGFAULT ???
+	// fclose(fileHandle);
     }
     if (index != nullptr) {
+
+	for (uint i = 0; i < indexSize; i++) {
+
+	    delete[] index[i].extra;
+	}
 
 	delete[] index;
 	index = nullptr;
@@ -153,13 +163,14 @@ void flux::Flux::close() {
 
 void flux::reload() {
 
+    close();
+
     print::d("Removing old asset list");
 
     for (uint i = 0; i < files.size(); ++i) {
 
 	print::d("Freeing memory");
 	files[i]->close();
-	delete files[i];
 	files.erase(files.begin()+i);
     }
 
