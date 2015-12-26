@@ -6,27 +6,8 @@ int main() {
 
     print::m("This is a demo program for the flare engine!");
 
-    struct PlayerComponent : fuse::Component {
-	
-	PlayerComponent(fuse::Entity *parent) {
-	    super(parent);
-	}
-    };
-    struct WeaponComponent : fuse::Component {
-	
-	WeaponComponent(fuse::Entity *parent) {
-	    super(parent);
-	}
-    };
-
     fuse::Entity *player = fuse::createEntity("Player");
-    player->addComponent<PlayerComponent>();
-    fuse::Entity *weapon = player->createChild("Weapon");
-    weapon->addComponent<WeaponComponent>();
-
-    fuse::createEntity("Enemy");
-    fuse::createEntity("Enemy");
-    fuse::createEntity();
+    player->addComponent<flare::component::Camera>();
 
     while (flare::isRunning()) {
 

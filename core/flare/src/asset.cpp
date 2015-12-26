@@ -14,6 +14,7 @@ void flare::asset::reload() {
 }
 
 // TODO: If the compile fails it uses a lot of memory
+// TODO: This should bind the correct vao before doing anything, I think (?)
 void flare::asset::ShaderAsset::_load() {
 
     if (id != 0) {
@@ -75,18 +76,28 @@ void flare::asset::ShaderAsset::_load() {
 	print::w("Shader link error: %s", buffer);
     }
 
-    // Shader setup stuff, needs to be configureable
-    GLint posAttrib = glGetAttribLocation(id, "position");
-    glEnableVertexAttribArray(posAttrib);
-    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 7*sizeof(float), 0);
+    // Shader setup stuff
+    // TODO: This needs to be configurable
+    // TODO: This probably doesn't get removed
+    locations.position = glGetAttribLocation(id, "position");
+    glEnableVertexAttribArray(locations.position);
+    glVertexAttribPointer(locations.position, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)0);
 
-    GLint colAttrib = glGetAttribLocation(id, "color");
-    glEnableVertexAttribArray(colAttrib);
-    glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(2*sizeof(float)));
+    locations.normal = glGetAttribLocation(id, "normal");
+    glEnableVertexAttribArray(locations.normal);
+    glVertexAttribPointer(locations.normal, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(3*sizeof(float)));
 
-    GLint texAttrib = glGetAttribLocation(id, "texcoord");
-    glEnableVertexAttribArray(texAttrib);
-    glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(5*sizeof(float)));
+    locations.texture = glGetAttribLocation(id, "texcoord");
+    glEnableVertexAttribArray(locations.texture);
+    glVertexAttribPointer(locations.texture, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(6*sizeof(float)));
+
+    locations.lightColor = glGetUniformLocation(id, "lightColor");
+    locations.diffuseLocation = glGetUniformLocation(id, "diffuseLocation");
+    locations.specularLocation = glGetUniformLocation(id, "specularLocation");
+
+    locations.model = glGetUniformLocation(id, "model");
+    locations.view = glGetUniformLocation(id, "view");
+    locations.projection = glGetUniformLocation(id, "projection");
 }
 
 void flare::asset::TextureAsset::_load() {

@@ -3,19 +3,14 @@
 
 void flare::debug::entityTree() {
 
-    ImGui_ImplGlfwGL3_NewFrame();
-    {
-	ImGui::Begin("Entities");
+    ImGui::Begin("Entities");
 
-	for (fuse::Entity *entity : *fuse::getEntities()) {
+    for (fuse::Entity *entity : *fuse::getEntities()) {
 
-	    entityTreeNode(entity);
-	}
-
-	ImGui::End();
+	entityTreeNode(entity);
     }
 
-    ImGui::Render();
+    ImGui::End();
 }
 
 void flare::debug::entityTreeNode(fuse::Entity *entity, bool showChildren) {

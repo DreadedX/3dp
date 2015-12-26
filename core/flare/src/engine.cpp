@@ -2,15 +2,8 @@
 #include <thread>
 #include <chrono>
 
-struct Settings {
-
-    // NOTE: These are the default engine settigs.
-    const char *name = "flare engine";
-    glm::ivec2 resolution = glm::ivec2(1280, 720);
-    int swap = 0;
-};
-
 GLFWwindow *window = nullptr;
+flare::Settings *settings = new flare::Settings();
 
 double delta = 1/60;
 
@@ -20,9 +13,9 @@ void flare::init() {
 
     // Initialize window
     // TODO: The settings need to be passed in from somewhere else
-    Settings settings;
+    // TODO: Part of this should propably move into the renderer
 
-    print::d("The current resolution is %i by %i", settings.resolution.x, settings.resolution.y);
+    print::d("The current resolution is %i by %i", settings->resolution.x, settings->resolution.y);
 
     if (!glfwInit()) {
 
@@ -36,18 +29,20 @@ void flare::init() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
+    // 16x MSAA
+    glfwWindowHint(GLFW_SAMPLES, 16);
+
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
     // NOTE: First nullptr to glfwGetPrimaryMonitor for fullscreen
-    window = glfwCreateWindow(settings.resolution.x, settings.resolution.y, settings.name, nullptr, nullptr);
+    window = glfwCreateWindow(settings->resolution.x, settings->resolution.y, settings->name, nullptr, nullptr);
 
     const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
     // TODO: Make this work properly
-    glfwSetWindowPos(window, (mode->width-settings.resolution.x)/2 + 1366, (mode->height-settings.resolution.y)/2);
+    glfwSetWindowPos(window, (mode->width - settings->resolution.x) / 2 + 1366, (mode->height - settings->resolution.y) / 2);
 
     glfwSetKeyCallback(window, input::_keyCallback);
-
-    glfwSwapInterval(settings.swap);
+    glfwSetCursorPosCallback(window, input::_mouseCallback);
 
     glfwMakeContextCurrent(window);
 
@@ -62,8 +57,11 @@ void flare::init() {
 
     #ifndef NDEBUG
 	// TODO: Install own callbacks
+	// TODO: This sets things like swap, that needs to be disabled
 	ImGui_ImplGlfwGL3_Init(window, false);
     #endif
+
+    glfwSwapInterval(settings->swap);
 
     glGetError();
 
@@ -112,31 +110,39 @@ void flare::update() {
 	render::update();
     }
 
-    // Calculate the frametime
-    // double timer = glfwGetTime();
-    {
-	draw();
-    }
-    // double frameTime = (glfwGetTime() - timer) * 1000;
-    // print::d("Frametime: %0.2fms", frameTime);
-    
+    draw();
 }
 
 void draw() {
 
+    // Calculate the deltaTime
+    static float lastFrame = 0;
+    float currentFrame = glfwGetTime();
+    flare::render::getState()->deltaTime = (currentFrame - lastFrame);
+    lastFrame = currentFrame;
+
     // Run entity render
-    fuse::draw();
+    // TODO: This does not do anything yet, this is all done in render::update()
+    //fuse::draw();
 
     // This is for the debug interface
     #ifndef NDEBUG
-	flare::debug::entityTree();
+	ImGui_ImplGlfwGL3_NewFrame();
+	{
+	    ImGui::Text("Delta time: %.2fms", flare::render::getState()->deltaTime * 1000);
+	    ImGui::Text("Mouse position: %.2f, %.2f", flare::input::getMouse()->position.x, flare::input::getMouse()->position.y);
+	    ImGui::Text("Yaw/Pitch: %.2f, %.2f", flare::input::getMouse()->yaw, flare::input::getMouse()->pitch);
+	    flare::debug::entityTree();
+	}
+	ImGui::Render();
     #endif
 
     glfwSwapBuffers(window);
-
 }
 
 void flare::terminate(int errorCode) {
+
+    delete settings;
 
     // Kill and remove all remaining entities
     fuse::killAll();
@@ -150,4 +156,9 @@ void flare::terminate(int errorCode) {
     print::d("The engine is now exiting");
 
     exit(errorCode);
+}
+
+flare::Settings *flare::getSettings() {
+
+    return settings;
 }

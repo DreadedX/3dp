@@ -16,9 +16,26 @@ namespace flare {
 
 	extern std::vector<Asset*> assetList;
 
+	// TODO: Find a better solution to storing all attrib and uniform locators
 	struct ShaderAsset : Asset {
 
 	    GLuint id;
+
+	    struct {
+
+		GLuint position = 0;
+		GLuint texture = 0;
+		GLuint normal = 0;
+
+		GLuint lightColor = 0;
+		GLuint diffuseLocation = 0;
+		GLuint specularLocation = 0;
+
+		GLuint model = 0;
+		GLuint view = 0;
+		GLuint projection = 0;
+
+	    } locations;
 
 	    void _load() override;
 	};
