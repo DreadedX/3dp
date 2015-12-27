@@ -103,7 +103,7 @@ flux::FileLoad *flux::get(std::string name) {
 
 byte *flux::FileLoad::get(bool addNullTerminator) {
 
-    print::d("Loading asset: '%s'", name.c_str());
+    print::d("Loading file: '%s'", name.c_str());
 
     byte *compressedData = new byte[compressedDataSize];
     fseek(parent->fileHandle, dataLocation, SEEK_SET);

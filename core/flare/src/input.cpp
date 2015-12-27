@@ -39,8 +39,11 @@ void flare::input::_mouseCallback(GLFWwindow*, double xpos, double ypos) {
 	mouse._first = false;
     }
 
-    mouse.yaw += (xpos - mouse.position.x) * getSettings()->mouseSensitivity;
-    mouse.pitch += (mouse.position.y - ypos) * getSettings()->mouseSensitivity;
+    if (keyCheck(GLFW_KEY_SPACE)) {
+
+	mouse.yaw += (xpos - mouse.position.x) * getSettings()->mouseSensitivity;
+	mouse.pitch += (mouse.position.y - ypos) * getSettings()->mouseSensitivity;
+    }
 
     mouse.position = glm::vec2(xpos, ypos);
 }

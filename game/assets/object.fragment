@@ -1,31 +1,53 @@
-#version 150 core
+#version 330 core
 
-in vec3 FragLocation;
+struct Material {
+    sampler2D diffuse;
+    sampler2D normal;
+    sampler2D specular;
+    float shininess;
+};
+
+struct Light {
+    vec3 position;
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
+
+in vec3 FragPosition;
 in vec3 Normal;
 in vec2 Texcoord;
 
 out vec4 color;
 
-uniform vec3 lightColor;
-uniform vec3 diffuseLocation;
-uniform vec3 specularLocation;
-uniform sampler2D tex;
+uniform Material material;
+uniform Light light;
+uniform vec3 viewPosition;
 
 void main() {
 
-    float ambientStrength = 0.1f;
-    float specularStrength = 0.5f;
+    // Ambient
+    vec3 ambient = light.ambient * texture(material.diffuse, Texcoord).rgb;
 
-    vec3 ambient = ambientStrength * lightColor;
-
+    // Normal
     vec3 norm = normalize(Normal);
-    vec3 lightDir = normalize(diffuseLocation - FragLocation);
-    vec3 diffuse = max(dot(norm, lightDir), 0.0) * lightColor;
 
-    vec3 viewDir = normalize(specularLocation - FragLocation);
+    // Diffuse
+    vec3 lightDir = normalize(light.position - FragPosition);
+    float diff = max(dot(norm, lightDir), 0.0);
+    vec3 diffuse =  light.diffuse * diff * texture(material.diffuse, Texcoord).rgb;
+
+    // Specular
+    vec3 viewDir = normalize(viewPosition - FragPosition);
+    vec3 halfwayDir = normalize(lightDir + viewDir);
     vec3 reflectDir = reflect(-lightDir, norm);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-    vec3 specular = specularStrength * spec * lightColor;
+    float spec = pow(max(dot(norm, halfwayDir), 0.0), material.shininess);
+    vec3 specular = light.specular * spec * texture(material.specular, Texcoord).rgb;
 
-    color = texture(tex, Texcoord) * vec4(ambient + diffuse + specular, 1.0);
+    color = vec4(ambient + diffuse + specular, 1.0);
+    //color = texture(material.specular, Texcoord);
+
+    // Gamma correction
+    float gamma = 2.2;
+    color.rgb = pow(color.rgb, vec3(1.0/gamma));
 }

@@ -7,8 +7,6 @@ flare::Settings *settings = new flare::Settings();
 
 double delta = 1/60;
 
-void draw();
-
 void flare::init() {
 
     // Initialize window
@@ -25,7 +23,7 @@ void flare::init() {
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
@@ -58,7 +56,7 @@ void flare::init() {
     #ifndef NDEBUG
 	// TODO: Install own callbacks
 	// TODO: This sets things like swap, that needs to be disabled
-	ImGui_ImplGlfwGL3_Init(window, false);
+	// ImGui_ImplGlfwGL3_Init(window, false);
     #endif
 
     glfwSwapInterval(settings->swap);
@@ -80,6 +78,12 @@ bool flare::isRunning() {
 }
 
 void flare::update() {
+    
+    // Calculate the deltaTime
+    static float lastFrame = 0;
+    float currentFrame = glfwGetTime();
+    flare::render::getState()->deltaTime = (currentFrame - lastFrame);
+    lastFrame = currentFrame;
 
     glfwPollEvents();
 
@@ -102,39 +106,24 @@ void flare::update() {
 	}
     }
 
-    // TODO: This needs to run X times a second
-    {
-	// Run manager logic
-	fuse::update();
-	// Run renderer logic
-	render::update();
-    }
-
-    draw();
-}
-
-void draw() {
-
-    // Calculate the deltaTime
-    static float lastFrame = 0;
-    float currentFrame = glfwGetTime();
-    flare::render::getState()->deltaTime = (currentFrame - lastFrame);
-    lastFrame = currentFrame;
+    // Run manager logic
+    fuse::update();
+    // Run renderer logic
+    render::update();
 
     // Run entity render
-    // TODO: This does not do anything yet, this is all done in render::update()
-    //fuse::draw();
-
+    fuse::draw();
+    
     // This is for the debug interface
     #ifndef NDEBUG
-	ImGui_ImplGlfwGL3_NewFrame();
-	{
-	    ImGui::Text("Delta time: %.2fms", flare::render::getState()->deltaTime * 1000);
-	    ImGui::Text("Mouse position: %.2f, %.2f", flare::input::getMouse()->position.x, flare::input::getMouse()->position.y);
-	    ImGui::Text("Yaw/Pitch: %.2f, %.2f", flare::input::getMouse()->yaw, flare::input::getMouse()->pitch);
-	    flare::debug::entityTree();
-	}
-	ImGui::Render();
+	// ImGui_ImplGlfwGL3_NewFrame();
+	// {
+	//     ImGui::Text("Delta time: %.2fms", render::getState()->deltaTime * 1000);
+	//     ImGui::Text("Mouse position: %.2f, %.2f", flare::input::getMouse()->position.x, input::getMouse()->position.y);
+	//     ImGui::Text("Yaw/Pitch: %.2f, %.2f", flare::input::getMouse()->yaw, input::getMouse()->pitch);
+	//     debug::entityTree();
+	// }
+	// ImGui::Render();
     #endif
 
     glfwSwapBuffers(window);

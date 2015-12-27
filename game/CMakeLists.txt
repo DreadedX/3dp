@@ -35,7 +35,7 @@ if (ZLIB_FOUND)
     target_link_libraries (${PROJECT_NAME} ${ZLIB_LIBRARIES})
 endif (ZLIB_FOUND)
 
-target_link_libraries(${PROJECT_NAME} flare fuse flux extra imgui leakage)
+target_link_libraries(${PROJECT_NAME} flare fuse flux extra imgui leakage assimp)
 if(WIN32)
     target_link_libraries(${PROJECT_NAME} glfw3 opengl32 imm32)
 endif(WIN32)

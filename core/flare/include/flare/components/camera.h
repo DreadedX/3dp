@@ -6,7 +6,7 @@ namespace flare {
 
 	struct Camera : fuse::Component {
 
-	    void _update();
+	    void _update() override;
 
 	    Camera(fuse::Entity *parent) {
 		super(parent);

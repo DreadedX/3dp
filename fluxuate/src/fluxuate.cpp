@@ -11,7 +11,7 @@ int main(int argc, char* argv[]) {
 	dir = argv[1];
     } else {
 
-	printf("Please specify an asset folder!\n");
+	print::e("Please specify an asset folder!\n");
 	exit(-1);
     }
     std::vector<std::string> files = std::vector<std::string>();
@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
     }
     fclose(file);
     assert(bytes_written == totalSize);
-    printf("Total data size: %llu\n", totalSize);
+    print::m("Total data size: %llu\n", totalSize);
 
     // Preventing memory leaks
     for (uint i = 0; i < count; i++) {
@@ -88,7 +88,7 @@ void getDir(std::string dir, std::vector<std::string> &files) {
 
     if ((dp = opendir(dir.c_str())) == NULL) {
 	
-	fprintf(stderr, "Error (%i) while opening %s\n", errno, dir.c_str());
+	print::e("Error (%i) while opening %s\n", errno, dir.c_str());
 	return;
     }
 
@@ -126,6 +126,8 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
     std::string assetName = "base/" + baseName;
     file->nameSize = assetName.size();
     file->name = assetName;
+
+    print::m("Loading file: %s", assetName.c_str());
 
     // TODO: Make this based on the actual filePath
     std::string filePath = basePath + "/" + fileName;
@@ -192,7 +194,7 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
 
     int result = compress(compressedData, &compressedDataSize, uncompressedData, uncompressedDataSize);
     if (result != Z_OK) {
-	printf("Compression of '%s' failed (%i)\n", file->name.c_str(), result);
+	print::e("Compression of '%s' failed (%i)\n", file->name.c_str(), result);
 	exit(-1);
     }
 

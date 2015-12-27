@@ -7,19 +7,19 @@ void flare::component::Camera::_update() {
 
     if (input::keyCheck(GLFW_KEY_W)) {
 
-	camera->posiion += speed * camera->front;
+	camera->position += speed * camera->front;
     }
     if (input::keyCheck(GLFW_KEY_S)) {
 
-	camera->posiion -= speed * camera->front;
+	camera->position -= speed * camera->front;
     }
     if (input::keyCheck(GLFW_KEY_A)) {
 
-	camera->posiion -= glm::normalize(glm::cross(camera->front, camera->up)) * speed;
+	camera->position -= glm::normalize(glm::cross(camera->front, camera->up)) * speed;
     }
     if (input::keyCheck(GLFW_KEY_D)) {
 
-	camera->posiion += glm::normalize(glm::cross(camera->front, camera->up)) * speed;
+	camera->position += glm::normalize(glm::cross(camera->front, camera->up)) * speed;
     }
 
     input::Mouse *mouse = input::getMouse();

@@ -9,9 +9,15 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+
+#include "jsoncons/json.hpp"
 
 #ifndef NDEBUG
     #include "imgui.h"
@@ -28,11 +34,12 @@
 #endif
 
 #include "flare/engine.h"
-#include "flare/asset.h"
 #include "flare/input.h"
-#include "flare/render.h"
 
+#include "flare/assets.h"
 #include "flare/components.h"
+
+#include "flare/render.h"
 
 #endif
 
