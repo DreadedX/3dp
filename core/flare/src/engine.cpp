@@ -56,7 +56,7 @@ void flare::init() {
     #ifndef NDEBUG
 	// TODO: Install own callbacks
 	// TODO: This sets things like swap, that needs to be disabled
-	// ImGui_ImplGlfwGL3_Init(window, false);
+	ImGui_ImplGlfwGL3_Init(window, false);
     #endif
 
     glfwSwapInterval(settings->swap);
@@ -101,8 +101,21 @@ void flare::update() {
 	    system("cd ../../CMake/default && make assets");
 
 	    print::d("Reloading assets");
-	    flare::asset::reload();
-	    flare::input::keySet(GLFW_KEY_F5, false);
+	    asset::reload();
+	    input::keySet(GLFW_KEY_F5, false);
+	}
+
+	if (input::keyCheck(GLFW_KEY_Z)) {
+	    static bool wireframe = false;
+
+	    if (wireframe) {
+		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+		wireframe = false;
+	    } else {
+		glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+		wireframe = true;
+	    }
+	    input::keySet(GLFW_KEY_Z, false);
 	}
     }
 
@@ -116,14 +129,14 @@ void flare::update() {
     
     // This is for the debug interface
     #ifndef NDEBUG
-	// ImGui_ImplGlfwGL3_NewFrame();
-	// {
-	//     ImGui::Text("Delta time: %.2fms", render::getState()->deltaTime * 1000);
-	//     ImGui::Text("Mouse position: %.2f, %.2f", flare::input::getMouse()->position.x, input::getMouse()->position.y);
-	//     ImGui::Text("Yaw/Pitch: %.2f, %.2f", flare::input::getMouse()->yaw, input::getMouse()->pitch);
-	//     debug::entityTree();
-	// }
-	// ImGui::Render();
+	ImGui_ImplGlfwGL3_NewFrame();
+	{
+	    ImGui::Text("Delta time: %.2fms", render::getState()->deltaTime * 1000);
+	    ImGui::Text("Mouse position: %.2f, %.2f", flare::input::getMouse()->position.x, input::getMouse()->position.y);
+	    ImGui::Text("Yaw/Pitch: %.2f, %.2f", flare::input::getMouse()->yaw, input::getMouse()->pitch);
+	    debug::entityTree();
+	}
+	ImGui::Render();
     #endif
 
     glfwSwapBuffers(window);

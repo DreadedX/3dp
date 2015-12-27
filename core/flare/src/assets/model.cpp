@@ -44,55 +44,6 @@ GLfloat verticesOld[] = {
     -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
 };
 
-void flare::asset::Model::draw(Shader *shader, Material *material, component::Object *parent) {
-
-    // render::setModel(model);
-    render::setShader(shader);
-    render::setMaterial(material);
-
-    for (model::Mesh *mesh : meshes) {
-
-	mesh->_draw(shader, material, parent);
-    }
-}
-
-void flare::asset::model::Mesh::_draw(Shader *shader, Material *material, component::Object *parent) {
-    
-    glBindVertexArray(vao);
-    // glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    // glBindBuffer(GL_ARRAY_BUFFER, ebo);
-
-    // print::d("%f, %f, %f", vertices[0].position.x, vertices[0].position.y, vertices[0].position.z);
-    // print::d("%s", shader->name.c_str());
-
-    flare::render::State *state = flare::render::getState();
-
-    {
-	glUniformMatrix4fv(shader->locations.view, 1, GL_FALSE, glm::value_ptr(state->view));
-	glUniformMatrix4fv(shader->locations.projection, 1, GL_FALSE, glm::value_ptr(state->projection));
-
-	glUniform3fv(shader->locations.light.position, 1, glm::value_ptr(state->light.position));
-	glUniform3fv(shader->locations.light.ambient, 1, glm::value_ptr(state->light.ambient));
-	glUniform3fv(shader->locations.light.diffuse, 1, glm::value_ptr(state->light.diffuse));
-	glUniform3fv(shader->locations.light.specular, 1, glm::value_ptr(state->light.specular));
-
-	glUniform3fv(shader->locations.viewPosition, 1, glm::value_ptr(render::getCamera()->position));
-
-	glUniform1f(shader->locations.material.shininess, material->shininess);
-    }
-
-    glm::mat4 modelMatrix;
-    modelMatrix = glm::translate(modelMatrix, parent->position->position);
-    if (parent->rotation != nullptr) {
-
-	modelMatrix = glm::rotate(modelMatrix, parent->rotation->rotation, parent->rotation->rotationAxis);  
-    }
-    glUniformMatrix4fv(shader->locations.model, 1, GL_FALSE, glm::value_ptr(modelMatrix));
-
-    // glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-}
-
 void processNode(aiNode *node, const aiScene *scene, flare::asset::Model *model) {
 
     print::d("Name: %s", node->mName.C_Str());
@@ -111,8 +62,6 @@ void processNode(aiNode *node, const aiScene *scene, flare::asset::Model *model)
 	    position.y = meshAi->mVertices[i].y;
 	    position.z = meshAi->mVertices[i].z;
 	    vertex.position = position;
-
-	    print::d("Vertex (%i): %f, %f, %f", i, meshAi->mVertices[i].x, meshAi->mVertices[i].y, meshAi->mVertices[i].z);
 
 	    glm::vec3 normal;
 	    normal.x = meshAi->mNormals[i].x;
@@ -143,25 +92,8 @@ void processNode(aiNode *node, const aiScene *scene, flare::asset::Model *model)
 	    }
 	}
 
-	if (mesh->vao != 0) {
-
-	    glDeleteVertexArrays(1, &mesh->vao);
-	    mesh->vao = 0;
-	}
 	glGenVertexArrays(1, &mesh->vao);
-
-	if (mesh->vbo != 0) {
-
-	    glDeleteBuffers(1, &mesh->vbo);
-	    mesh->vbo = 0;
-	}
 	glGenBuffers(1, &mesh->vbo);
-
-	if (mesh->ebo != 0) {
-
-	    glDeleteBuffers(1, &mesh->ebo);
-	    mesh->ebo = 0;
-	}
 	glGenBuffers(1, &mesh->ebo);
 
 	glBindVertexArray(mesh->vao);
@@ -198,12 +130,27 @@ void flare::asset::Model::_load() {
     // }
 
     // Generating and binding vao for the object
+    std::string fileName = "./" + name + ".obj";
     Assimp::Importer import;
-    const aiScene* scene = import.ReadFile("./cube.obj", aiProcess_Triangulate || !scene->mRootNode);
+    const aiScene* scene = import.ReadFile(fileName, aiProcess_Triangulate || !scene->mRootNode);
     if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
 	print::e("AssImp error: %s", import.GetErrorString());
 	exit(-1);
     }
+
+    for (model::Mesh *mesh : meshes) {
+	if (mesh->vao != 0) {
+	    glDeleteVertexArrays(1, &mesh->vao);
+	}
+	if (mesh->vbo != 0) {
+	    glDeleteBuffers(1, &mesh->vbo);
+	}
+	if (mesh->ebo != 0) {
+	    glDeleteBuffers(1, &mesh->ebo);
+	}
+	delete mesh;
+    }
+    meshes.clear();
 
     processNode(scene->mRootNode, scene, this);
 }

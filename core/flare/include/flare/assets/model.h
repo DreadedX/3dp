@@ -1,13 +1,6 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-// TODO: This is really bad
-namespace flare {
-    namespace component {
-	struct Object;
-    }
-}
-
 namespace flare {
 
     namespace asset {
@@ -30,8 +23,6 @@ namespace flare {
 
 		std::vector<model::Vertex> vertices;
 		std::vector<GLuint> indices;
-
-		void _draw(Shader *shader, Material *material, component::Object *parent);
 	    };
 	}
 
@@ -39,9 +30,15 @@ namespace flare {
 
 	    std::vector<model::Mesh*> meshes;
 
-	    void draw(Shader *shader, Material *material, component::Object *parent);
-
 	    void _load() override;
+
+	    ~Model() {
+
+		for (model::Mesh *mesh : meshes) {
+
+		    delete mesh;
+		}
+	    }
 	};
     }
 }
