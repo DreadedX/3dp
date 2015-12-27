@@ -42,7 +42,7 @@ int main() {
 
     for (int i = 0; i < 9; ++i) {
 
-	fuse::Entity *cube = fuse::createEntity("Containter");
+	fuse::Entity *cube = fuse::createEntity("Container");
 	cube->addComponent<flare::component::Position>(cubePositions[i]);
 	cube->addComponent<flare::component::Rotation>(glm::radians(20.0f * i), glm::vec3(0.5f, 1.0f, 0.0f));
 	cube->addComponent<flare::component::Object>("cube", "base/object", "base/container");
@@ -51,7 +51,7 @@ int main() {
     fuse::Entity *cube = fuse::createEntity("Container");
     cube->addComponent<flare::component::Position>(cubePositions[9]);
     cube->addComponent<flare::component::Rotation>(glm::radians(20.0f * 9), glm::vec3(0.5f, 1.0f, 0.0f));
-    cube->addComponent<flare::component::Object>("nanosuit", "base/object", "base/container");
+    cube->addComponent<flare::component::Object>("cube", "base/object", "base/container");
 
     fuse::Entity *lamp = fuse::createEntity("Lamp");
     lamp->addComponent<flare::component::Position>(flare::render::getState()->light.position);

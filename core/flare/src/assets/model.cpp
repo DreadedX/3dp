@@ -69,6 +69,12 @@ void processNode(aiNode *node, const aiScene *scene, flare::asset::Model *model)
 	    normal.z = meshAi->mNormals[i].z;
 	    vertex.normal = normal;
 
+	    glm::vec3 tangent;
+	    tangent.x = meshAi->mTangents[i].x;
+	    tangent.y = meshAi->mTangents[i].y;
+	    tangent.z = meshAi->mTangents[i].z;
+	    vertex.tangent = tangent;
+
 	    if (meshAi->mTextureCoords[0]) {
 
 		glm::vec2 vec;
@@ -111,7 +117,10 @@ void processNode(aiNode *node, const aiScene *scene, flare::asset::Model *model)
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(flare::asset::model::Vertex), (GLvoid*)offsetof(flare::asset::model::Vertex, normal));
 
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(flare::asset::model::Vertex), (GLvoid*)offsetof(flare::asset::model::Vertex, texCoords));
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(flare::asset::model::Vertex), (GLvoid*)offsetof(flare::asset::model::Vertex, tangent));
+
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(flare::asset::model::Vertex), (GLvoid*)offsetof(flare::asset::model::Vertex, texCoords));
 
 	model->meshes.push_back(mesh);
     }
@@ -132,7 +141,7 @@ void flare::asset::Model::_load() {
     // Generating and binding vao for the object
     std::string fileName = "./" + name + ".obj";
     Assimp::Importer import;
-    const aiScene* scene = import.ReadFile(fileName, aiProcess_Triangulate || !scene->mRootNode);
+    const aiScene* scene = import.ReadFile(fileName, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
     if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
 	print::e("AssImp error: %s", import.GetErrorString());
 	exit(-1);
