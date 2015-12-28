@@ -11,10 +11,11 @@ void flare::render::init() {
     glEnable(GL_DEPTH_TEST);
     
     // glm::vec3(1.0f, 0.9f, 0.7f);
-    state.light.position = glm::vec3(25.0f, 50.0f, -25.0f);
+    // state.light.direction = glm::vec3(-0.2f, -1.0f, -0.3f);
+    state.light.direction = glm::vec3(-50.0f, -50.0f, -50.0f);
 
     state.light.ambient = glm::vec3(0.02f, 0.02f, 0.02f);
-    state.light.diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
+    state.light.diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
     state.light.specular = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 

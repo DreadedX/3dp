@@ -22,6 +22,10 @@ namespace flare {
 		GLuint vbo = 0;
 		GLuint ebo = 0;
 
+		Texture *diffuse = nullptr;
+		Texture *normal = nullptr;
+		Texture *specular = nullptr;
+
 		std::vector<model::Vertex> vertices;
 		std::vector<GLuint> indices;
 	    };

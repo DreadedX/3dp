@@ -74,10 +74,12 @@ void flare::asset::Shader::_load() {
 
     locations.material.shininess = glGetUniformLocation(id, "material.shininess");
 
-    locations.light.position = glGetUniformLocation(id, "light.position");
+    locations.light.direction = glGetUniformLocation(id, "light.direction");
     locations.light.ambient = glGetUniformLocation(id, "light.ambient");
     locations.light.diffuse = glGetUniformLocation(id, "light.diffuse");
     locations.light.specular = glGetUniformLocation(id, "light.specular");
 
     locations.viewPosition = glGetUniformLocation(id, "viewPosition");
+
+    locations.toggle = glGetUniformLocation(id, "toggle");
 }

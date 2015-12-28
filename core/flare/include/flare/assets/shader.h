@@ -27,12 +27,13 @@ namespace flare {
 		} material;
 
 		struct {
-		    GLuint position = 0;
+		    GLuint direction = 0;
 		    GLuint ambient = 0;
 		    GLuint diffuse = 0;
 		    GLuint specular = 0;
 		} light;
 
+		GLuint toggle = 0;
 	    } locations;
 
 	    void _load() override;

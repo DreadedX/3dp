@@ -39,5 +39,6 @@ void flare::asset::Texture::_load() {
     // TODO: Check bytes per pixel
     // Check if color space is linear or sRGB
     glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+    // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
     delete[] pixels;
 }

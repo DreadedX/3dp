@@ -31,6 +31,18 @@ struct Spin : fuse::Component {
     }
 };
 
+struct RotateLight : fuse::Component {
+
+    void _update() override {
+
+	flare::render::getState()->light.direction = glm::vec3(sin(glfwGetTime()), -1.0f, cos(glfwGetTime()));
+    }
+
+    RotateLight(fuse::Entity *parent) {
+	super(parent);
+    }
+};
+
 int main() {
 
     flare::init();
@@ -40,7 +52,8 @@ int main() {
     fuse::Entity *player = fuse::createEntity("Player");
     player->addComponent<flare::component::Camera>();
 
-    for (int i = 0; i < 9; ++i) {
+#if 0
+    for (int i = 0; i < 10; ++i) {
 
 	fuse::Entity *cube = fuse::createEntity("Container");
 	cube->addComponent<flare::component::Position>(cubePositions[i]);
@@ -48,14 +61,16 @@ int main() {
 	cube->addComponent<flare::component::Object>("cube", "base/object", "base/container");
 	cube->addComponent<Spin>();
     }
-    fuse::Entity *cube = fuse::createEntity("Container");
-    cube->addComponent<flare::component::Position>(cubePositions[9]);
-    cube->addComponent<flare::component::Rotation>(glm::radians(20.0f * 9), glm::vec3(0.5f, 1.0f, 0.0f));
-    cube->addComponent<flare::component::Object>("cube", "base/object", "base/container");
+#else
+    fuse::Entity *object = fuse::createEntity("Object");
+    object->addComponent<flare::component::Position>(glm::vec3(0.0f));
+    object->addComponent<flare::component::Rotation>(0, glm::vec3(0.0f, 1.0f, 0.0f));
+    object->addComponent<flare::component::Object>("nanosuit", "base/object", "base/container");
+    object->addComponent<Spin>();
+#endif
 
-    fuse::Entity *lamp = fuse::createEntity("Lamp");
-    lamp->addComponent<flare::component::Position>(flare::render::getState()->light.position);
-    lamp->addComponent<flare::component::Object>("cube", "base/lamp", "");
+    //fuse::Entity *lamp = fuse::createEntity("Lamp");
+    // lamp->addComponent<RotateLight>();
 
     while (flare::isRunning()) {
 
