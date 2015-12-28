@@ -11,12 +11,10 @@ namespace flare {
 
 	    asset::Model *model = nullptr;
 	    asset::Shader *shader = nullptr;
-	    asset::Material *material = nullptr;
-	    asset::Texture *texture = nullptr;
 
 	    void _draw() override;
 
-	    Object(fuse::Entity *parent, std::string model, std::string shader, std::string material) {
+	    Object(fuse::Entity *parent, std::string model, std::string shader) {
 		super(parent);
 
 		this->position = parent->getComponent<Position>();
@@ -27,7 +25,6 @@ namespace flare {
 
 		this->model = asset::load<asset::Model>(model);
 		this->shader = asset::load<asset::Shader>(shader);
-		this->material = asset::load<asset::Material>(material);
 	    }
 	};
     }

@@ -1,6 +1,0 @@
-{
-    "diffuse": "base/container_diffuse",
-    "normal": "base/container_normal",
-    "specular": "base/container_specular",
-    "shininess": 32
-}

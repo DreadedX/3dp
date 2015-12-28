@@ -20,7 +20,19 @@ struct Spin : fuse::Component {
 
     void _update() override {
 
-	rotation->rotation = rotationBase + glm::radians(glfwGetTime() * 20.0f);
+	static bool toggle = true;
+	if (flare::input::keyCheck(GLFW_KEY_F)) {
+
+	    if (toggle) {
+		toggle = false;
+	    } else {
+		toggle = true;
+	    }
+	    flare::input::keySet(GLFW_KEY_F, false);
+	}
+	if (toggle) {
+	    rotation->rotation = rotationBase + glm::radians(glfwGetTime() * 20.0f);
+	}
     }
 
     Spin(fuse::Entity *parent) {
@@ -28,18 +40,6 @@ struct Spin : fuse::Component {
 
 	rotation = parent->getComponent<flare::component::Rotation>();
 	rotationBase = rotation->rotation;
-    }
-};
-
-struct RotateLight : fuse::Component {
-
-    void _update() override {
-
-	flare::render::getState()->light.direction = glm::vec3(sin(glfwGetTime()), -1.0f, cos(glfwGetTime()));
-    }
-
-    RotateLight(fuse::Entity *parent) {
-	super(parent);
     }
 };
 
@@ -58,14 +58,14 @@ int main() {
 	fuse::Entity *cube = fuse::createEntity("Container");
 	cube->addComponent<flare::component::Position>(cubePositions[i]);
 	cube->addComponent<flare::component::Rotation>(glm::radians(20.0f * i), glm::vec3(0.5f, 1.0f, 0.0f));
-	cube->addComponent<flare::component::Object>("cube", "base/object", "base/container");
+	cube->addComponent<flare::component::Object>("cube", "base/object");
 	cube->addComponent<Spin>();
     }
 #else
     fuse::Entity *object = fuse::createEntity("Object");
     object->addComponent<flare::component::Position>(glm::vec3(0.0f));
     object->addComponent<flare::component::Rotation>(0, glm::vec3(0.0f, 1.0f, 0.0f));
-    object->addComponent<flare::component::Object>("nanosuit", "base/object", "base/container");
+    object->addComponent<flare::component::Object>("nanosuit", "base/object");
     object->addComponent<Spin>();
 #endif
 

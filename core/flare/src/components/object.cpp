@@ -2,9 +2,7 @@
 
 void flare::component::Object::_draw() {
 
-    // model->draw(shader, material, this);
     render::setShader(shader);
-    // render::setMaterial(material);
 
     for (asset::model::Mesh *mesh : model->meshes) {
 
@@ -25,11 +23,6 @@ void flare::component::Object::_draw() {
 	}
 
 	glBindVertexArray(mesh->vao);
-	// glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	// glBindBuffer(GL_ARRAY_BUFFER, ebo);
-
-	// print::d("%f, %f, %f", vertices[0].position.x, vertices[0].position.y, vertices[0].position.z);
-	// print::d("%s", shader->name.c_str());
 
 	flare::render::State *state = flare::render::getState();
 
@@ -44,7 +37,8 @@ void flare::component::Object::_draw() {
 
 	    glUniform3fv(shader->locations.viewPosition, 1, glm::value_ptr(render::getCamera()->position));
 
-	    glUniform1f(shader->locations.material.shininess, material->shininess);
+	    // TODO: This should also be loaded from the obj
+	    glUniform1f(shader->locations.material.shininess, 16);
 	}
 
 	static bool toggle = true;
@@ -56,7 +50,6 @@ void flare::component::Object::_draw() {
 		toggle = true;
 	    }
 	    input::keySet(GLFW_KEY_T, false);
-	    print::d("Shader toggle: %i", toggle);
 	}
 	glUniform1i(shader->locations.toggle, toggle ? 1 : 0);
 
@@ -69,7 +62,6 @@ void flare::component::Object::_draw() {
 	}
 	glUniformMatrix4fv(shader->locations.model, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
-	// glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
     }
 }

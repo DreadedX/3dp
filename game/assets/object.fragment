@@ -51,8 +51,11 @@ void main() {
     float spec = energyConservation * pow(max(dot(norm, halfwayDir), 0.0), material.shininess);
     vec3 specular = light.specular * spec * texture(material.specular, fs_in.Texcoord).rgb;
 
-    outColor = vec4(ambient + diffuse + specular, 1.0);
-    //outColor = texture(material.diffuse, fs_in.Texcoord);
+    if (toggle) {
+	outColor = vec4(ambient + diffuse + specular, 1.0);
+    } else {
+	outColor = texture(material.diffuse, fs_in.Texcoord);
+    }
 
     // Gamma correction
     float gamma = 2.2;
