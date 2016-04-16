@@ -1,42 +1,14 @@
 #include "extra/extra.h"
 
-void print::m(const char *format, ...) {
+void printTime(FILE *stdName) {
 
-    va_list args;
-    va_start(args, format);
-    vfprintf(stdout, format, args);
-    va_end(args);
-    fprintf(stdout, "\n");
-}
+	time_t rawtime;
+	time(&rawtime);
 
-void print::d(const char *format, ...) {
+	char *p = ctime(&rawtime);
+	int len = strlen(p);
 
-    va_list args;
-    va_start(args, format);
-    fprintf(stdout, "[DEBUG] ");
-    vfprintf(stdout, format, args);
-    va_end(args);
-    fprintf(stdout, "\n");
-}
-
-void print::w(const char *format, ...) {
-
-    va_list args;
-    va_start(args, format);
-    fprintf(stderr, "[WARNING] ");
-    vfprintf(stderr, format, args);
-    va_end(args);
-    fprintf(stderr, "\n");
-}
-
-void print::e(const char *format, ...) {
-
-    va_list args;
-    va_start(args, format);
-    fprintf(stderr, "[ERROR] ");
-    vfprintf(stderr, format, args);
-    va_end(args);
-    fprintf(stderr, "\n");
+    fprintf(stdName, "%.*s  ", len - 1, p);
 }
 
 // TODO:: This should return a const char*
@@ -58,4 +30,52 @@ std::string print::format(const char *fmt, ...) {
     delete[] buffer;
     buffer = nullptr;
     return ret;
+}
+
+void print::logm(const char *name, int line, const char *format, ...) {
+
+    va_list args;
+    va_start(args, format);
+    fprintf(stdout, "\033[39m%-9s" , "MESSAGE");
+	printTime(stdout);
+    fprintf(stdout, "%-*s", FILENAME_LENGTH, print::format("%s:%i", name, line).c_str());
+    vfprintf(stdout, format, args);
+    va_end(args);
+    fprintf(stdout, "\033[39m\n");
+}
+
+void print::logd(const char *name, int line, const char *format, ...) {
+
+    va_list args;
+    va_start(args, format);
+    fprintf(stdout, "\033[37m%-9s" , "DEBUG");
+	printTime(stdout);
+    fprintf(stdout, "%-*s", FILENAME_LENGTH, print::format("%s:%i", name, line).c_str());
+    vfprintf(stdout, format, args);
+    va_end(args);
+    fprintf(stdout, "\033[39m\n");
+}
+
+void print::logw(const char *name, int line, const char *format, ...) {
+
+    va_list args;
+    va_start(args, format);
+    fprintf(stderr, "\033[33m%-9s" , "WARNING");
+	printTime(stderr);
+    fprintf(stderr, "%-*s", FILENAME_LENGTH, print::format("%s:%i", name, line).c_str());
+    vfprintf(stderr, format, args);
+    va_end(args);
+    fprintf(stderr, "\033[39m\n");
+}
+
+void print::loge(const char *name, int line, const char *format, ...) {
+
+    va_list args;
+    va_start(args, format);
+    fprintf(stderr, "\033[31m%-9s" , "ERROR");
+	printTime(stderr);
+    fprintf(stderr, "%-*s", FILENAME_LENGTH, print::format("%s:%i", name, line).c_str());
+    vfprintf(stderr, format, args);
+    va_end(args);
+    fprintf(stderr, "\033[39m\n");
 }

@@ -52,20 +52,20 @@ void flare::render::setShader(flare::asset::Shader *shader) {
 //     state.vao = model->vao;
 // }
 
-void flare::render::setMaterial(flare::asset::Material *material) {
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, material->diffuse->id);
-
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, material->normal->id);
-
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, material->specular->id);
-
-	// glActiveTexture(GL_TEXTURE3);
-	// glBindTexture(GL_TEXTURE_2D, material->emission->id);
-}
+// void flare::render::setMaterial(flare::asset::Material *material) {
+//
+// 	glActiveTexture(GL_TEXTURE0);
+// 	glBindTexture(GL_TEXTURE_2D, material->diffuse->id);
+//
+// 	glActiveTexture(GL_TEXTURE1);
+// 	glBindTexture(GL_TEXTURE_2D, material->normal->id);
+//
+// 	glActiveTexture(GL_TEXTURE2);
+// 	glBindTexture(GL_TEXTURE_2D, material->specular->id);
+//
+// 	// glActiveTexture(GL_TEXTURE3);
+// 	// glBindTexture(GL_TEXTURE_2D, material->emission->id);
+// }
 
 flare::render::State *flare::render::getState() {
     return &state;

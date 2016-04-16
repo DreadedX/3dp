@@ -3,6 +3,10 @@
 
 // This header file includes all game engine include.
 
+#ifndef GIT_VERSION
+#define GIT_VERSION "Unknown"
+#endif
+
 #include <map>
 #include <string>
 

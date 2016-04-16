@@ -34,26 +34,30 @@ const float kShininess = 16.0;
 
 void main() {
 
-    float energyConservation = (8.0 + material.shininess) / (8.0 * kPi);
-
-    // Ambient
-    vec3 ambient = light.ambient * texture(material.diffuse, fs_in.Texcoord).rgb;
-
-    // Diffuse
-    vec3 norm = normalize(fs_in.Normal);
-    vec3 lightDir = normalize(-light.direction);
-    float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, fs_in.Texcoord));
-
-    // Specular
-    vec3 viewDir = normalize(viewPosition - fs_in.FragPosition);
-    vec3 halfwayDir = normalize(lightDir + viewDir);
-    float spec = energyConservation * pow(max(dot(norm, halfwayDir), 0.0), material.shininess);
-    vec3 specular = light.specular * spec * texture(material.specular, fs_in.Texcoord).rgb;
-
     if (toggle) {
+	float energyConservation = (8.0 + material.shininess) / (8.0 * kPi);
+
+	vec3 color = texture(material.diffuse, fs_in.Texcoord).rgb;
+
+	// Ambient
+	vec3 ambient = light.ambient * color;
+
+	// Diffuse
+	vec3 norm = normalize(fs_in.Normal);
+	vec3 lightDir = normalize(-light.direction);
+	float diff = max(dot(norm, lightDir), 0.0);
+	vec3 diffuse = light.diffuse * diff * color;
+
+	// Specular
+	vec3 viewDir = normalize(viewPosition - fs_in.FragPosition);
+	vec3 halfwayDir = normalize(lightDir + viewDir);
+	float spec = energyConservation * pow(max(dot(norm, halfwayDir), 0.0), material.shininess);
+	vec3 specular = light.specular * spec * texture(material.specular, fs_in.Texcoord).rgb;
+
 	outColor = vec4(ambient + diffuse + specular, 1.0);
+	//outColor = vec4(ambient + diffuse, 1.0);
     } else {
+
 	outColor = texture(material.diffuse, fs_in.Texcoord);
     }
 

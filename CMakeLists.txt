@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 2.6)
 project(all)
 
+execute_process(COMMAND git describe --tags --dirty OUTPUT_STRIP_TRAILING_WHITESPACE OUTPUT_VARIABLE GIT_VERSION)
+add_definitions(-DGIT_VERSION="${GIT_VERSION}")
+
 # Make sure there is no in source build
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
@@ -13,7 +16,7 @@ set(EXTA_FLAGS "-Wall -Wextra")
 
 # If compiling for windows statically link everything
 if (${CMAKE_SYSTEM_NAME} MATCHES Window)
-    set(EXTA_FLAGS "${EXTA_FLAGS} -static-libgcc")
+	set(EXTA_FLAGS "${EXTA_FLAGS} -static-libgcc -static-libstdc++")
 endif()
 message("System name: ${CMAKE_SYSTEM_NAME}")
 
@@ -49,7 +52,8 @@ add_subdirectory(core/flux)
 add_subdirectory(core/fuse)
 add_subdirectory(core/flare)
 
-add_subdirectory(fluxuate)
+add_subdirectory(tools/fluxuate)
+
 add_subdirectory(game)
 
 if(UNIX)

@@ -35,6 +35,12 @@ if (ZLIB_FOUND)
     target_link_libraries (${PROJECT_NAME} ${ZLIB_LIBRARIES})
 endif (ZLIB_FOUND)
 
+# find_package (Lua REQUIRED)
+# if (LUA_FOUND)
+#     include_directories(${LUA_INCLUDE_DIR})
+#     target_link_libraries(${PROJECT_NAME} ${LUA_LIBRARIES})
+# endif (LUA_FOUND)
+
 target_link_libraries(${PROJECT_NAME} flare fuse flux extra imgui leakage assimp)
 if(WIN32)
     target_link_libraries(${PROJECT_NAME} glfw3 opengl32 imm32)

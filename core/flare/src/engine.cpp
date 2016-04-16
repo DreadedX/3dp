@@ -9,6 +9,10 @@ double delta = 1/60;
 
 void flare::init() {
 
+	print::d("%-12s %s %s", "Compiled on:", __DATE__, __TIME__);
+	print::d("%-12s %s", "Version:", GIT_VERSION);
+	print::d("%-12s %i", "C++ Version:", __cplusplus);
+
     // Initialize window
     // TODO: The settings need to be passed in from somewhere else
     // TODO: Part of this should propably move into the renderer
@@ -96,10 +100,6 @@ void flare::update() {
 
 	if (input::keyCheck(GLFW_KEY_F5)) {
 
-	    // NOTE: This only works on linux and for testing only
-	    // TODO: Build in fluxuate, needs to move to the editor in the future
-	    system("cd ../../CMake/default && make assets");
-
 	    print::d("Reloading assets");
 	    asset::reload();
 	    input::keySet(GLFW_KEY_F5, false);
@@ -132,8 +132,9 @@ void flare::update() {
 	ImGui_ImplGlfwGL3_NewFrame();
 	{
 	    ImGui::Text("Delta time: %.2fms", render::getState()->deltaTime * 1000);
-	    ImGui::Text("Mouse position: %.2f, %.2f", flare::input::getMouse()->position.x, input::getMouse()->position.y);
-	    ImGui::Text("Yaw/Pitch: %.2f, %.2f", flare::input::getMouse()->yaw, input::getMouse()->pitch);
+	    ImGui::Text("Mouse position: %.2f, %.2f", input::getMouse()->position.x, input::getMouse()->position.y);
+	    ImGui::Text("Yaw/Pitch: %.2f, %.2f", input::getMouse()->yaw, input::getMouse()->pitch);
+	    ImGui::Text("Camera position: %.2f, %.2f, %.2f", flare::render::getCamera()->position.x, render::getCamera()->position.y, render::getCamera()->position.z);
 	    debug::entityTree();
 	}
 	ImGui::Render();

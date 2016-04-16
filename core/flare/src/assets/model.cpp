@@ -10,8 +10,8 @@ std::string getTexture(aiMaterial *material, aiTextureType type) {
 	// if (mesh->diffuse != nullptr) {
 	//     mesh->diffuse = flare::asset::load<flare::asset::Texture>("");
 	// }
+	print::d("Texture: %s", baseName.c_str());
 	if (baseName != "") {
-	    print::d("Texture: %s", baseName.c_str());
 	    baseName = "base/" + baseName;
 	}
 	// TODO: What happens when this is empty
@@ -75,7 +75,7 @@ void processNode(aiNode *node, const aiScene *scene, flare::asset::Model *model)
 	aiMaterial* material = scene->mMaterials[meshAi->mMaterialIndex];
 	
 	mesh->diffuse = flare::asset::load<flare::asset::Texture>(getTexture(material, aiTextureType_DIFFUSE));
-	mesh->normal = flare::asset::load<flare::asset::Texture>(getTexture(material, aiTextureType_NORMALS));
+	mesh->normal = flare::asset::load<flare::asset::Texture>(getTexture(material, aiTextureType_HEIGHT));
 	mesh->specular = flare::asset::load<flare::asset::Texture>(getTexture(material, aiTextureType_SPECULAR));
 
 	glGenVertexArrays(1, &mesh->vao);
@@ -121,7 +121,7 @@ void flare::asset::Model::_load() {
     // Generating and binding vao for the object
     std::string fileName = "./" + name + ".obj";
     Assimp::Importer import;
-    const aiScene* scene = import.ReadFile(fileName, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+    const aiScene* scene = import.ReadFile(fileName, aiProcessPreset_TargetRealtime_MaxQuality);
     if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
 	print::e("AssImp error: %s", import.GetErrorString());
 	exit(-1);
