@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 2.6)
 project(all)
 
+find_program(CCACHE_FOUND ccache)
+if(CCACHE_FOUND)
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
+endif(CCACHE_FOUND)
+
 execute_process(COMMAND git describe --tags --dirty OUTPUT_STRIP_TRAILING_WHITESPACE OUTPUT_VARIABLE GIT_VERSION)
 add_definitions(-DGIT_VERSION="${GIT_VERSION}")
 

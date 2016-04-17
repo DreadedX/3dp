@@ -9,6 +9,7 @@ double delta = 1/60;
 
 void flare::init() {
 
+	// TODO: Put this in a seperate file that get recompiled every time something has changed
 	print::d("%-12s %s %s", "Compiled on:", __DATE__, __TIME__);
 	print::d("%-12s %s", "Version:", GIT_VERSION);
 	print::d("%-12s %i", "C++ Version:", __cplusplus);
