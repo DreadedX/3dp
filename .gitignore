@@ -49,6 +49,9 @@ install_manifest.txt
 
 ### Custom ###
 build/*
+docs/*
+CMake/*
+!Cmake/toolchains
 *~
 *.swp
 imgui.ini

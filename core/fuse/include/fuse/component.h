@@ -1,39 +1,57 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-// NOTE: Components automatically get named
+/** This macro makes it so components are automatically named
+	@note Only used for in-engine entity-component tree */
 #define super(parent) super(parent, __func__)
 
 namespace fuse {
 
-    struct Entity;
+	struct Entity;
 
-    struct Component {
+	/** @brief Basic component template */
+	struct Component {
 
-	const char *name = "Component";
+		/** @brief Store the name of the component
+		  @note Only used for in-engine entity-component tree */
+		const char *name = "Component";
 
-	Entity *parent = nullptr;
+		/** @brief Pointer to parent entity */
+		Entity *parent = nullptr;
 
-	#pragma push_macro("super")
-	#undef super
-	void super(Entity *entity, const char *name);
-	#pragma pop_macro("super")
+		#pragma push_macro("super")
+		#undef super
+		/** @brief Sets the parent entity of the component
+			@param entity - Pointer to parent entity
+			@param name - Name of the component */
+		void super(Entity *entity, const char *name);
+		#pragma pop_macro("super")
 
-	virtual void _update() {}
-	virtual void _draw() {}
+		/** @brief Update component logic */
+		virtual void _update() {}
+		/** @brief Component render code */
+		virtual void _draw() {}
 
-	virtual ~Component() {}
-    };
+		/** @brief Virtual constructor */
+		virtual ~Component() {}
+	};
 
-    uint _getUniqueID();
-    template<typename T>
-    uint _getTypeID() {
+	/** @brief Generate a unique id
+		@returns Unique id */
+	uint _getUniqueID();
 
-	static_assert(std::is_base_of<Component, T>::value, "T must inherit from Component");
+	/** @brief Generate a unique id for each component
+		@tparam T - Component that requires an id
+		@returns Unique component id
+		@note The component much inherit from Component */
+	template<typename T>
+		uint _getTypeID() {
 
-	static uint id = _getUniqueID();
-	return id;
-    }
+			static_assert(std::is_base_of<Component, T>::value, "T must inherit from Component");
+
+			static uint id = _getUniqueID();
+			return id;
+		}
 
 }
 

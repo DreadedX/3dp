@@ -1,5 +1,6 @@
 #include "fuse/fuse.h"
 
+/** @brief List of all entities */
 std::vector<fuse::Entity*> entities;
 
 void fuse::update() {
@@ -34,7 +35,7 @@ void fuse::draw() {
     }
 }
 
-// Create a new entity, add it to the entity list and return a pointer
+/** Create a new entity, add it to the entity list and return a pointer */
 fuse::Entity *fuse::createEntity(const char *name, Entity *parent) {
 
     Entity *entity = new Entity(name, parent);

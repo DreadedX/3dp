@@ -3,18 +3,27 @@
 
 namespace flux {
 
-    struct FileBase {
-	
-	unsigned char nameSize = 0;
-	std::string name = "";
+	/** @brief FLX single file header */
+	struct FileBase {
 
-	unsigned int extraSize = 0;
-	unsigned char *extra = nullptr;
+		/** @brief Length of the file name */
+		unsigned char nameSize = 0;
+		/** @brief File name
+			@todo This could probably be a char* */
+		std::string name = "";
 
-	uint dataSize = 0;
-	uint compressedDataSize = 0;
-	llu dataLocation = 0;
-    };
+		/** @brief Size of the extra bytes */
+		unsigned int extraSize = 0;
+		/** @brief Array containing extra bytes */
+		unsigned char *extra = nullptr;
+
+		/** @brief Uncompressed data size */
+		uint dataSize = 0;
+		/** @brief Compressed data size */
+		uint compressedDataSize = 0;
+		/** @brief Location of compressed data in container */
+		llu dataLocation = 0;
+	};
 
 }
 

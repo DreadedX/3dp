@@ -2,17 +2,21 @@
 #define CAMERA_H
 
 namespace flare {
-    namespace component {
+	namespace component {
 
-	struct Camera : fuse::Component {
+		/** @brief Component that allows you to move around with wasd and have mouselook
+			@todo This should not be part of the game engine */
+		struct Camera : fuse::Component {
 
-	    void _update() override;
+			/** @brief Update camera logic */
+			void _update() override;
 
-	    Camera(fuse::Entity *parent) {
-		super(parent);
-	    }
-	};
-    }
+			/** Camera Component constructor */
+			Camera(fuse::Entity *parent) {
+				super(parent);
+			}
+		};
+	}
 }
 
 #endif

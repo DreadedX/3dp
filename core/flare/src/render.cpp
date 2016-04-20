@@ -1,5 +1,6 @@
 #include "flare/flare.h"
 
+/** @brief Store the render state */
 flare::render::State state;
 
 void flare::render::init() {
@@ -9,6 +10,10 @@ void flare::render::init() {
 
     // Enable depth testing
     glEnable(GL_DEPTH_TEST);
+
+	// Enable transparency
+    glEnable(GL_BLEND);
+	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     // glm::vec3(1.0f, 0.9f, 0.7f);
     // state.light.direction = glm::vec3(-0.2f, -1.0f, -0.3f);
@@ -23,7 +28,7 @@ void flare::render::update() {
 
     state.view = glm::lookAt(state.camera.position, state.camera.position + state.camera.front, state.camera.up);
 
-    state.projection = glm::perspectiveFov(glm::radians(90.0f), (float)getSettings()->resolution.x, (float)getSettings()->resolution.y , 0.1f, 100.0f);
+    state.projection = glm::perspectiveFov(glm::radians(90.0f), (float)getSettings()->resolution.x, (float)getSettings()->resolution.y , 0.1f, 1000.0f);
 
     // glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

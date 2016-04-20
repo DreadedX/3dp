@@ -2,64 +2,64 @@
 
 fuse::Entity::Entity(const char *name, fuse::Entity *entity) {
 
-    this->name = name;
+	this->name = name;
 
-    if (entity != nullptr) {
+	if (entity != nullptr) {
 
-	parent = entity;
-	child = true;
-    }
+		parent = entity;
+		child = true;
+	}
 }
 
 fuse::Entity::~Entity() {
 
-    for (Entity *child : children) {
+	for (Entity *child : children) {
 
-	child->kill();
-    }
+		child->kill();
+	}
 
-    for (Component *component : components) {
+	for (Component *component : components) {
 
-	delete component;
-    }
+		delete component;
+	}
 }
 
 bool fuse::Entity::isChild() {
 
-    return child;
+	return child;
 }
 
-// TODO: Make a list of all the children, that get killed when the parent gets killed
+/** @todo Make a list of all the children, that get killed when the parent gets killed */
 fuse::Entity *fuse::Entity::createChild(const char *name) {
 
-    Entity *child = fuse::createEntity(name, this);
-    children.push_back(child);
-    return child;
+	Entity *child = fuse::createEntity(name, this);
+	children.push_back(child);
+	return child;
 }
 
 
 void fuse::Entity::kill() {
 
-    alive = false;
+	alive = false;
 }
 
 bool fuse::Entity::_isAlive() {
 
-    return alive;
+	return alive;
 }
 
 void fuse::Entity::_update() {
 
-    for (Component *component : components) {
-        
-	component->_update();
-    }
+	for (Component *component : components) {
+
+		component->_update();
+	}
 }
 
 void fuse::Entity::_draw() {
 
-    for (Component *component : components) {
-        
-	component->_draw();
-    }
+	for (Component *component : components) {
+
+		component->_draw();
+	}
 }

@@ -3,11 +3,13 @@
 #define DEBUG_H
 
 namespace flare {
-    namespace debug {
 
-	void entityTree();
-	void entityTreeNode(fuse::Entity *entity, bool showChildren = false);
-    }
+	/** @brief Debug functions */
+	namespace debug {
+
+		/** Use imgui to create a browsable entity-component tree */
+		void entityTree();
+	}
 }
 
 #endif

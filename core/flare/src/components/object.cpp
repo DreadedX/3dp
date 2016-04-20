@@ -37,7 +37,7 @@ void flare::component::Object::_draw() {
 
 	    glUniform3fv(shader->locations.viewPosition, 1, glm::value_ptr(render::getCamera()->position));
 
-	    // TODO: This should also be loaded from the obj
+	    /** @todo This should also be loaded from the obj */
 	    glUniform1f(shader->locations.material.shininess, 16);
 	}
 
@@ -62,6 +62,12 @@ void flare::component::Object::_draw() {
 	}
 	glUniformMatrix4fv(shader->locations.model, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
+	// Draw all non transparant
+	glUniform1i(shader->locations.toggle, true);
+	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
+
+	// Draw transparant
+	glUniform1i(shader->locations.toggle, false);
 	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
     }
 }

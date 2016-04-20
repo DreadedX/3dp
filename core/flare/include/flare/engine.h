@@ -3,22 +3,46 @@
 
 namespace flare {
 
-    struct Settings {
+	/** @brief Stores the engine settings, it is initialized with the default engine settings */
+	struct Settings {
 
-	// NOTE: These are the default engine settigs.
-	const char *name = "flare engine";
-	glm::ivec2 resolution = glm::ivec2(1280, 720);
-	float mouseSensitivity = 0.5f;
-	int swap = 0;
-    };
+		/** @brief Window name */
+		const char *name = "flare engine";
+		/** @brief Window resolution */
+		glm::ivec2 resolution = glm::ivec2(1280, 720);
+		/** @brief Sensitity of the mouselook
+			@todo Camera controls should not be part of the engine */
+		float mouseSensitivity = 0.5f;
 
-    void init();
-    bool isRunning();
-    void update();
+		/** @brief All possible swap values */
+		enum {
+			/** @brief No v-sync */
+			VSYNC_OFF = 0,
+			/** @brief Normal v-sync */
+			VSYNC_ON,
+			/** @brief Half refresh rate v-sync */
+			VSYNC_HALF
+		};
+		/** @brief V-Sync settings */
+		int swap = VSYNC_ON;
+	};
 
-    Settings *getSettings();
+	/** @brief This function is called to initialize the Flare Engine
+		*/
+	void init();
+	/** @brief Check if the engine should still be running
+		@return True if the engine should still be running */
+	bool isRunning();
+	/** @brief Execute all logic and render everything to the screen */
+	void update();
 
-    void terminate(int errorCode = 0);
+	/** @brief Request the engine settings
+		@return A pointer to the engine settings */
+	Settings *getSettings();
+
+	/** @brief Called after the ending the main loop, makes sure everything get properly unloaded
+		@param errorCode - The error code the application should give after shutdown */
+	void terminate(int errorCode = 0);
 }
 
 #endif

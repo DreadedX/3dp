@@ -3,7 +3,7 @@
 
 typedef unsigned char byte;
 typedef unsigned int uint;
-// TODO: This has the wrong size on windows
+/** @bug This has the wrong size on windows (Is still the case when using MinGW?) */
 typedef long unsigned long llu;
 
 #endif

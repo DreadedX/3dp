@@ -3,49 +3,72 @@
 
 namespace flare {
 
-    namespace asset {
+	namespace asset {
 
-	struct Model;
+		struct Model;
 
-	namespace model {
+		/** @brief Structs needed for models */
+		namespace model {
 
-	    struct Vertex {
-		glm::vec3 position;
-		glm::vec3 normal;
-		glm::vec3 tangent;
-		glm::vec2 texCoords;
-	    };
+			/** @brief Vertex data */
+			struct Vertex {
+				/** @brief Vertex position */
+				glm::vec3 position;
+				/** @brief Vertex normal */
+				glm::vec3 normal;
+				/** @brief Vertex tangent
+					@note These are not needed for basic rendering */
+				glm::vec3 tangent;
+				/** @brief Vertex texture coords */
+				glm::vec2 texCoords;
+			};
 
-	    struct Mesh {
+			/** @brief Mesh data
+				@todo Make this use a material instead of storing the texture on its own */
+			struct Mesh {
 
-		GLuint vao = 0;
-		GLuint vbo = 0;
-		GLuint ebo = 0;
+				/** @brief Id of vertex array object */
+				GLuint vao = 0;
+				/** @brief Id of vertex buffer object */
+				GLuint vbo = 0;
+				/** @brief Id of idex buffer object */
+				GLuint ebo = 0;
 
-		Texture *diffuse = nullptr;
-		Texture *normal = nullptr;
-		Texture *specular = nullptr;
+				/** @brief Pointer to the diffuse Texture Asset */
+				Texture *diffuse = nullptr;
+				/** @brief Pointer to the normal Texture Asset */
+				Texture *normal = nullptr;
+				/** @brief Pointer to the specular Texture Asset */
+				Texture *specular = nullptr;
 
-		std::vector<model::Vertex> vertices;
-		std::vector<GLuint> indices;
-	    };
-	}
-
-	struct Model : Asset {
-
-	    std::vector<model::Mesh*> meshes;
-
-	    void _load() override;
-
-	    ~Model() {
-
-		for (model::Mesh *mesh : meshes) {
-
-		    delete mesh;
+				/** @brief List of all the vertices in this mesh */
+				std::vector<model::Vertex> vertices;
+				/** @brief List of all the indices in this mesh */
+				std::vector<GLuint> indices;
+			};
 		}
-	    }
-	};
-    }
+
+		/** @brief Asset struct containing 3d model info */
+		struct Model : Asset {
+
+			/** @brief List of all meshes in this model */
+			std::vector<model::Mesh*> meshes;
+
+			/** @brief Load model data */
+			void _load() override;
+
+			/** @brief Model destructor
+				Makes sure all meshes get deleted properly */
+			~Model() {
+
+				/** @todo Should probably also delete opengl buffers (this currently only gets called on shutdown, so causes no issues */
+				for (model::Mesh *mesh : meshes) {
+
+					delete mesh;
+				}
+			}
+		};
+	}
 }
 
 #endif

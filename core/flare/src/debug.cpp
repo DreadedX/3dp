@@ -1,41 +1,43 @@
 #ifndef NDEBUG
 #include "flare/flare.h"
 
-void flare::debug::entityTree() {
+/** @brief Draw Entity-Component node
+	@todo Figure out if showChildren is neccesary */
+void entityTreeNode(fuse::Entity *entity, bool showChildren = false) {
 
-    ImGui::Begin("Entities");
+	if (!entity->isChild() || showChildren) {
 
-    for (fuse::Entity *entity : *fuse::getEntities()) {
+		if (ImGui::TreeNode(print::format("%s (%p)", entity->name, entity).c_str())) {
 
-	entityTreeNode(entity);
-    }
+			if (ImGui::TreeNode("Components")) {
+				for (fuse::Component *component : entity->components) {
 
-    ImGui::End();
+					ImGui::BulletText("%s (%p)", component->name, component);
+				}
+				ImGui::TreePop();
+			}
+			if (ImGui::TreeNode("Children")) {
+				for (fuse::Entity *child : entity->children) {
+
+					entityTreeNode(child, true);
+				}
+				ImGui::TreePop();
+			}
+			ImGui::TreePop();
+		}
+	}
 }
 
-void flare::debug::entityTreeNode(fuse::Entity *entity, bool showChildren) {
+void flare::debug::entityTree() {
 
-    if (!entity->isChild() || showChildren) {
+	ImGui::Begin("Entities");
 
-	if (ImGui::TreeNode(print::format("%s (%p)", entity->name, entity).c_str())) {
+	for (fuse::Entity *entity : *fuse::getEntities()) {
 
-	    if (ImGui::TreeNode("Components")) {
-		for (fuse::Component *component : entity->components) {
-
-		    ImGui::BulletText("%s (%p)", component->name, component);
-		}
-		ImGui::TreePop();
-	    }
-	    if (ImGui::TreeNode("Childeren")) {
-		for (fuse::Entity *child : entity->children) {
-
-		    entityTreeNode(child, true);
-		}
-		ImGui::TreePop();
-	    }
-	    ImGui::TreePop();
+		entityTreeNode(entity);
 	}
-    }
+
+	ImGui::End();
 }
 
 #endif // NDEBUG

@@ -74,7 +74,7 @@ struct JoyCamera : fuse::Component {
 	void _update() override {
 
 		flare::render::Camera *camera = flare::render::getCamera();
-		GLfloat speed = 5.0f * flare::render::getDeltaTime();
+		GLfloat speed = 50.0f * flare::render::getDeltaTime();
 
 		// TODO: Create easier controller support in engine
 		int countAxes;
@@ -88,8 +88,8 @@ struct JoyCamera : fuse::Component {
 		flare::input::Mouse *mouse = flare::input::getMouse();
 
 		// TODO: Add sensitivity
-		mouse->pitch -= 100 * speed * axes[3];
-		mouse->yaw += 100 * speed * axes[2];
+		mouse->pitch -= 10 * speed * axes[3];
+		mouse->yaw += 10 * speed * axes[2];
 
 		mouse->pitch = nfmod(mouse->pitch, 360);
 		mouse->yaw = nfmod(mouse->yaw, 360);
@@ -138,6 +138,8 @@ struct JoyDebugControl : fuse::Component {
 // TODO: Controllers cause some issues on wine, they are detected, but are null
 int main() {
 
+	// exit(0);
+
 	print::m("This is a message");
 	print::d("This is a debug");
 	print::w("This is a warning");
@@ -168,14 +170,18 @@ int main() {
 		player->addComponent<JoyDebugControl>();
 	}
 
-    for (int i = 0; i < 10; ++i) {
-
-	fuse::Entity *cube = fuse::createEntity("Container");
-	cube->addComponent<flare::component::Position>(cubePositions[i]);
-	cube->addComponent<flare::component::Rotation>(glm::radians(20.0f * i), glm::vec3(0.5f, 1.0f, 0.0f));
-	cube->addComponent<flare::component::Object>("cube", "base/object");
-	cube->addComponent<Spin>();
-    }
+    // for (int i = 0; i < 10; ++i) {
+    //
+	// fuse::Entity *cube = fuse::createEntity("Container");
+	// cube->addComponent<flare::component::Position>(cubePositions[i]);
+	// cube->addComponent<flare::component::Rotation>(glm::radians(20.0f * i), glm::vec3(0.5f, 1.0f, 0.0f));
+	// cube->addComponent<flare::component::Object>("cube", "base/object");
+	// cube->addComponent<Spin>();
+    // }
+	
+	fuse::Entity *house = fuse::createEntity("Rungholt");
+	house->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
+	house->addComponent<flare::component::Object>("rungholt", "base/object");
 
     // fuse::Entity *test = fuse::createEntity("Test");
     // test->addComponent<LuaTest>();

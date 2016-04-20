@@ -10,7 +10,12 @@
 
 #include "extra/extra.h"
 
+/** @brief Entity-component system */
+namespace fuse {};
+
 #ifndef MAX_COMPONENTS
+	/** @brief Maximum allowed components
+		@todo This should propably get bigger in the future (Maybe automatically?) */
     #define MAX_COMPONENTS 32
 #endif
 

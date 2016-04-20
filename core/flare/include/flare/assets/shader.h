@@ -3,42 +3,56 @@
 
 namespace flare {
 
-    namespace asset {
+	namespace asset {
 
-	// TODO: Find a better solution to storing all attrib and uniform locators
-	struct Shader : Asset {
+		/** @brief Asset struct containing shader info
+			@todo Find a better solution to storing all attrib and uniform locators (Maybe an array and using an enum to get the correct value) */
+		struct Shader : Asset {
 
-	    GLuint id = 0;
+			/** @brief Shader id */
+			GLuint id = 0;
 
-	    struct {
+			struct {
 
-		GLuint position = 0;
-		GLuint texture = 0;
-		GLuint normal = 0;
+				// GLuint position = 0;
+				// GLuint texture = 0;
+				// GLuint normal = 0;
 
-		GLuint model = 0;
-		GLuint view = 0;
-		GLuint projection = 0;
+				/** @brief Uniform location of model matrix */
+				GLuint model = 0;
+				/** @brief Uniform location of view matrix */
+				GLuint view = 0;
+				/** @brief Uniform location of projection matrix */
+				GLuint projection = 0;
 
-		GLuint viewPosition = 0;
-		
-		struct {
-		    GLuint shininess = 0;
-		} material;
+				/** @brief Uniform location of view position */
+				GLuint viewPosition = 0;
 
-		struct {
-		    GLuint direction = 0;
-		    GLuint ambient = 0;
-		    GLuint diffuse = 0;
-		    GLuint specular = 0;
-		} light;
+				struct {
+					/** @brief Material shininess
+						@todo This should propably use Material Asset (?) */
+					GLuint shininess = 0;
+				} material;
 
-		GLuint toggle = 0;
-	    } locations;
+				struct {
+					/** @brief Uniform location of light direction vector */
+					GLuint direction = 0;
+					/** @brief Uniform location of ambient light color */
+					GLuint ambient = 0;
+					/** @brief Uniform location of diffuse light color */
+					GLuint diffuse = 0;
+					/** @brief Uniform location of specular light color */
+					GLuint specular = 0;
+				} light;
 
-	    void _load() override;
-	};
-    }
+				/** @brief Uniform location of a toggle that can be used in the shader for testing */
+				GLuint toggle = 0;
+			} locations;
+
+			/** @brief Load shader */
+			void _load() override;
+		};
+	}
 }
 
 #endif

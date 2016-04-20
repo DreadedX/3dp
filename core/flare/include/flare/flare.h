@@ -23,10 +23,19 @@
 
 #include "jsoncons/json.hpp"
 
+#include "tinyobjloader/tiny_obj_loader.h"
+
 #ifndef NDEBUG
     #include "imgui.h"
     #include "imgui_impl_glfw_gl3.h"
 #endif
+
+/** @brief Flare engine interface */
+namespace flare{
+
+	/** @brief Components used by the flare engine */
+	namespace component {};
+};
 
 #include "extra/extra.h"
 #include "flux/flux.h"

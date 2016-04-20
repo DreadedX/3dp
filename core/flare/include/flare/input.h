@@ -2,24 +2,52 @@
 #define FLARE_INPUT_H
 
 namespace flare {
-    namespace input {
 
-	bool keyCheck(int key);
-	void keySet(int key, bool state);
-	void _keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
+	/** @brief Input handling */
+	namespace input {
 
-	struct Mouse {
+		/** @brief Check the state of a key
+			@param key - GLFW key id for the key you want to check
+			@returns True if the key is pressed */
+		bool keyCheck(int key);
 
-	    glm::vec2 position = glm::vec2(0.0f, 0.0f);
-	    float yaw = -90.0f;
-	    float pitch = 0.0f;
+		/** @brief Set the state of a key
+			This is used to make single press functions
+			@param key - GLFW key id for the key you want to set
+			@param state - True = key is pressed, False = key is not pressed */
+		void keySet(int key, bool state);
 
-	    bool _first = true;
-	};
+		/** @brief Install key callback
+			@note For internal usage only */
+		void _keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
 
-	void _mouseCallback(GLFWwindow *window, double xpos, double ypos);
-	Mouse *getMouse();
-    }
+		/** @brief Stores mouse info
+			@todo This is propably not really needed, especially when pich and yaw are moved */
+		struct Mouse {
+
+			/** @brief Current mouse location, relative to the window */
+			glm::vec2 position = glm::vec2(0.0f, 0.0f);
+
+			/** @brief Mouse yaw
+				@todo This should be in the render camera */
+			float yaw = -90.0f;
+			/** @brief Mouse pitch
+				@todo This should be in the render camera */
+			float pitch = 0.0f;
+
+			/** @brief Is this the first time polling mouse location
+				@note This is used to not make the mouse not make a huge movement the first time the mouse is polled */
+			bool _first = true;
+		};
+
+		/** @brief Install mouse callback
+			@note For internal usage only */
+		void _mouseCallback(GLFWwindow *window, double xpos, double ypos);
+
+		/** @brief Get a pointer to the mouse object
+			@returns Pointer to the mouse object */
+		Mouse *getMouse();
+	}
 }
 
 #endif

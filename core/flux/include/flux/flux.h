@@ -10,6 +10,9 @@
 
 #include "extra/extra.h"
 
+/** @brief Flux is a FLX file reader/writer */
+namespace flux{};
+
 #include "flux/file.h"
 #include "flux/load.h"
 #include "flux/write.h"

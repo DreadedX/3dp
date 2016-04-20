@@ -1,5 +1,10 @@
 #include "extra/extra.h"
 
+/** Define the max filename length for spacing */
+#define FILENAME_LENGTH 30
+
+/** @brief Print a timestamp
+	@param stdName - Where to write the timestamp to */
 void printTime(FILE *stdName) {
 
 	time_t rawtime;
@@ -11,7 +16,7 @@ void printTime(FILE *stdName) {
     fprintf(stdName, "%.*s  ", len - 1, p);
 }
 
-// TODO:: This should return a const char*
+/** @todo This should return a const char* */
 std::string print::format(const char *fmt, ...) {
     int size = 512;
     char *buffer = 0;
@@ -46,6 +51,7 @@ void print::logm(const char *name, int line, const char *format, ...) {
 
 void print::logd(const char *name, int line, const char *format, ...) {
 
+#ifndef NDEBUG
     va_list args;
     va_start(args, format);
     fprintf(stdout, "\033[37m%-9s" , "DEBUG");
@@ -54,6 +60,7 @@ void print::logd(const char *name, int line, const char *format, ...) {
     vfprintf(stdout, format, args);
     va_end(args);
     fprintf(stdout, "\033[39m\n");
+#endif
 }
 
 void print::logw(const char *name, int line, const char *format, ...) {

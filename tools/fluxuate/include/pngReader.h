@@ -1,5 +1,5 @@
-#ifndef READ_PNG_H
-#define READ_PNG_H
+#ifndef PNG_READER_H
+#define PNG_READER_H
 
 namespace png {
 

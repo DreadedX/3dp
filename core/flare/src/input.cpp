@@ -1,7 +1,10 @@
 #include "flare/flare.h"
 
+/** @brief List of all possible keys and if they are pressed or not */
 bool keys[25536] = {false};
 
+/** @brief Mouse object
+	@note Might not be neccesairy in the future */
 flare::input::Mouse mouse;
 
 bool flare::input::keyCheck(int key) {

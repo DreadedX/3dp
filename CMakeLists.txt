@@ -7,6 +7,21 @@ if(CCACHE_FOUND)
     set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
 endif(CCACHE_FOUND)
 
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+	file(GLOB_RECURSE DOXYGEN_INPUT ${CMAKE_CURRENT_SOURCE_DIR}/core/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/core/*.h)
+	file(GLOB_RECURSE DOXYGEN_INPUT ${DOXYGEN_INPUT} ${CMAKE_CURRENT_SOURCE_DIR}/tools/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/tools/*.h)
+	# file(GLOB_RECURSE DOXYGEN_INPUT ${DOXYGEN_INPUT} ${CMAKE_CURRENT_SOURCE_DIR}/game/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/game/*.h)
+	string(REPLACE ".cpp" ".cpp " DOXYGEN_INPUT ${DOXYGEN_INPUT})
+	string(REPLACE ".h" ".h " DOXYGEN_INPUT ${DOXYGEN_INPUT})
+	configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
+	add_custom_target(doc
+		${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+		COMMENT "Generating API documentation with Doxygen" VERBATIM
+		)
+endif(DOXYGEN_FOUND)
+
 execute_process(COMMAND git describe --tags --dirty OUTPUT_STRIP_TRAILING_WHITESPACE OUTPUT_VARIABLE GIT_VERSION)
 add_definitions(-DGIT_VERSION="${GIT_VERSION}")
 
@@ -18,16 +33,16 @@ if ("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
   message(SEND_ERROR "In-source builds are not allowed.")
 endif ()
 
-set(EXTA_FLAGS "-Wall -Wextra")
+set(EXTRA_FLAGS "-Wall -Wextra -Wno-unknown-pragmas")
 
 # If compiling for windows statically link everything
 if (${CMAKE_SYSTEM_NAME} MATCHES Window)
-	set(EXTA_FLAGS "${EXTA_FLAGS} -static-libgcc -static-libstdc++")
+	set(EXTRA_FLAGS "${EXTRA_FLAGS} -static-libgcc -static-libstdc++")
 endif()
 message("System name: ${CMAKE_SYSTEM_NAME}")
 
 # NOTE: Build flags by default are set to the debug flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG} ${EXTA_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG} ${EXTRA_FLAGS}")
 # message("Default flags: ${CMAKE_CXX_FLAGS}")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${EXTRA_FLAGS}")
 # message("Debug flags: ${CMAKE_CXX_FLAGS_DEBUG}")
@@ -52,6 +67,7 @@ endif ()
 
 add_subdirectory(libs/leakage)
 add_subdirectory(libs/imgui)
+add_subdirectory(libs/tinyobjloader)
 
 add_subdirectory(core/extra)
 add_subdirectory(core/flux)

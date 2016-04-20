@@ -3,15 +3,18 @@
 
 namespace flare {
 
-    namespace asset {
+	namespace asset {
 
-	struct Texture : Asset {
+		/** @brief Asset struct containing texture info */
+		struct Texture : Asset {
 
-	    GLuint id = 0;
+			/** @brief Texture id */
+			GLuint id = 0;
 
-	    void _load() override;
-	};
-    }
+			/** @brief Load texture */
+			void _load() override;
+		};
+	}
 }
 
 #endif

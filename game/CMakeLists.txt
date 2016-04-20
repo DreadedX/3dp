@@ -7,7 +7,7 @@ set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include
 
 include_directories(${${PROJECT_NAME}_INCLUDE_DIRS})
 
-file(GLOB CPP_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
+file(GLOB_RECURSE CPP_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
 add_executable(${PROJECT_NAME} ${CPP_FILES})
 
@@ -41,7 +41,7 @@ endif (ZLIB_FOUND)
 #     target_link_libraries(${PROJECT_NAME} ${LUA_LIBRARIES})
 # endif (LUA_FOUND)
 
-target_link_libraries(${PROJECT_NAME} flare fuse flux extra imgui leakage assimp)
+target_link_libraries(${PROJECT_NAME} flare fuse flux extra imgui leakage tinyobjloader)
 if(WIN32)
     target_link_libraries(${PROJECT_NAME} glfw3 opengl32 imm32)
 endif(WIN32)

@@ -2,84 +2,83 @@
 
 void flare::asset::Shader::_load() {
 
-    if (id != 0) {
+	if (id != 0) {
 
-	glDeleteProgram(id);
-	id = 0;
-    }
-    
-    flux::FileLoad *shaderConfigFile = flux::get(name);
-    const char *shaderConfig = reinterpret_cast<const char*>(shaderConfigFile->get(true));
+		glDeleteProgram(id);
+		id = 0;
+	}
 
-    jsoncons::json configJson = jsoncons::json::parse_string(shaderConfig);
-    delete[] shaderConfig;
+	flux::FileLoad *shaderConfigFile = flux::get(name);
+	const char *shaderConfig = reinterpret_cast<const char*>(shaderConfigFile->get(true));
 
-    // TODO: Shader never check if they have been updated
-    flux::FileLoad *vertexFile = flux::get(configJson.get("vertex", "Unknown Vertex Shader").as<std::string>());
-    flux::FileLoad *fragmentFile = flux::get(configJson.get("fragment", "Unknown Fragment Shader").as<std::string>());
+	jsoncons::json configJson = jsoncons::json::parse_string(shaderConfig);
+	delete[] shaderConfig;
 
-    const char *vertexSource = reinterpret_cast<const char*>(vertexFile->get(true));
-    const char *fragmentSource = reinterpret_cast<const char*>(fragmentFile->get(true));
+	flux::FileLoad *vertexFile = flux::get(configJson.get("vertex", "Unknown Vertex Shader").as<std::string>());
+	flux::FileLoad *fragmentFile = flux::get(configJson.get("fragment", "Unknown Fragment Shader").as<std::string>());
 
-    // Load shader source
-    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexSource, NULL);
-    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
+	const char *vertexSource = reinterpret_cast<const char*>(vertexFile->get(true));
+	const char *fragmentSource = reinterpret_cast<const char*>(fragmentFile->get(true));
 
-    // Compile shader
-    glCompileShader(vertexShader);
-    glCompileShader(fragmentShader);
-    delete[] vertexSource;
-    delete[] fragmentSource;
+	// Load shader source
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &vertexSource, NULL);
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
 
-    // Check compile status
-    GLint vertexStatus;
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vertexStatus);
-    if (vertexStatus != GL_TRUE) {
-	char buffer[512];
-	glGetShaderInfoLog(vertexShader, 512, NULL, buffer);
-	print::w("Vertex shader error: %s", buffer);
-	return;
-    }
+	// Compile shader
+	glCompileShader(vertexShader);
+	glCompileShader(fragmentShader);
+	delete[] vertexSource;
+	delete[] fragmentSource;
 
-    GLint fragmentStatus;
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &fragmentStatus);
-    if (fragmentStatus != GL_TRUE) {
-	char buffer[512];
-	glGetShaderInfoLog(fragmentShader, 512, NULL, buffer);
-	print::w("Fragment shader error: %s", buffer);
-	return;
-    }
+	// Check compile status
+	GLint vertexStatus;
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vertexStatus);
+	if (vertexStatus != GL_TRUE) {
+		char buffer[512];
+		glGetShaderInfoLog(vertexShader, 512, NULL, buffer);
+		print::w("Vertex shader error: %s", buffer);
+		return;
+	}
 
-    // Combine shaders
-    id = glCreateProgram();
-    glAttachShader(id, vertexShader);
-    glAttachShader(id, fragmentShader);
-    glLinkProgram(id);
+	GLint fragmentStatus;
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &fragmentStatus);
+	if (fragmentStatus != GL_TRUE) {
+		char buffer[512];
+		glGetShaderInfoLog(fragmentShader, 512, NULL, buffer);
+		print::w("Fragment shader error: %s", buffer);
+		return;
+	}
 
-    // Check program status
-    GLint programStatus;
-    glGetProgramiv(id, GL_LINK_STATUS, &programStatus);
-    if (programStatus != GL_TRUE) {
-	char buffer[512];
-	glGetProgramInfoLog(id, 512, NULL, buffer);
-	print::w("Shader link error: %s", buffer);
-    }
+	// Combine shaders
+	id = glCreateProgram();
+	glAttachShader(id, vertexShader);
+	glAttachShader(id, fragmentShader);
+	glLinkProgram(id);
 
-    // Shader setup stuff
-    locations.model = glGetUniformLocation(id, "model");
-    locations.view = glGetUniformLocation(id, "view");
-    locations.projection = glGetUniformLocation(id, "projection");
+	// Check program status
+	GLint programStatus;
+	glGetProgramiv(id, GL_LINK_STATUS, &programStatus);
+	if (programStatus != GL_TRUE) {
+		char buffer[512];
+		glGetProgramInfoLog(id, 512, NULL, buffer);
+		print::w("Shader link error: %s", buffer);
+	}
 
-    locations.material.shininess = glGetUniformLocation(id, "material.shininess");
+	// Shader setup stuff
+	locations.model = glGetUniformLocation(id, "model");
+	locations.view = glGetUniformLocation(id, "view");
+	locations.projection = glGetUniformLocation(id, "projection");
 
-    locations.light.direction = glGetUniformLocation(id, "light.direction");
-    locations.light.ambient = glGetUniformLocation(id, "light.ambient");
-    locations.light.diffuse = glGetUniformLocation(id, "light.diffuse");
-    locations.light.specular = glGetUniformLocation(id, "light.specular");
+	locations.material.shininess = glGetUniformLocation(id, "material.shininess");
 
-    locations.viewPosition = glGetUniformLocation(id, "viewPosition");
+	locations.light.direction = glGetUniformLocation(id, "light.direction");
+	locations.light.ambient = glGetUniformLocation(id, "light.ambient");
+	locations.light.diffuse = glGetUniformLocation(id, "light.diffuse");
+	locations.light.specular = glGetUniformLocation(id, "light.specular");
 
-    locations.toggle = glGetUniformLocation(id, "toggle");
+	locations.viewPosition = glGetUniformLocation(id, "viewPosition");
+
+	locations.toggle = glGetUniformLocation(id, "toggle");
 }

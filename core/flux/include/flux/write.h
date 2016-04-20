@@ -3,10 +3,12 @@
 
 namespace flux {
 
-    struct FileWrite : FileBase {
+	/** @brief FLX single file header variant for writing data, stores pointer to data that needs to be written */
+	struct FileWrite : FileBase {
 
-	unsigned char *data = nullptr;
-    };
+		/** @brief Pointer to the data that needs to be stored */
+		unsigned char *data = nullptr;
+	};
 }
 
 #endif
