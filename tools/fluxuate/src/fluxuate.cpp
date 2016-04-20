@@ -311,6 +311,7 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
             //
 			// printf("\n");
 
+			/** @bug This fails on windows (MinGW) */
 			assert(offset == file->dataSize);
 
 		} else {
