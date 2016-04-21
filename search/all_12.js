@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['tangent',['tangent',['../structflare_1_1asset_1_1model_1_1Vertex.html#acffc87be237c533e5e85eb99114c0112',1,'flare::asset::model::Vertex']]],
   ['terminate',['terminate',['../namespaceflare.html#a15a28d5e60fa73acbc1cac984d266829',1,'flare']]],
   ['texcoords',['texCoords',['../structflare_1_1asset_1_1model_1_1Vertex.html#a4797c3c936abe27f8ed9a922e001befb',1,'flare::asset::model::Vertex']]],
   ['texture',['Texture',['../structflare_1_1asset_1_1Texture.html',1,'flare::asset']]],

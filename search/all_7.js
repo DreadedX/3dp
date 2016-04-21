@@ -9,6 +9,7 @@ var searchData=
   ['getentities',['getEntities',['../namespacefuse.html#ac9c1466a2f4f3ccc6583744f6cc647bd',1,'fuse']]],
   ['getfile',['getFile',['../fluxuate_8cpp.html#a84761dc3632dd7821ba646bf359e6c6b',1,'fluxuate.cpp']]],
   ['getmouse',['getMouse',['../namespaceflare_1_1input.html#a25dd6abac8ded384a4591feb90e228f7',1,'flare::input']]],
+  ['getplugin',['getPlugin',['../plugin__obj_8cpp.html#a9747acb6489087733c8654ff01c5ba7d',1,'getPlugin():&#160;plugin_obj.cpp'],['../plugin__png_8cpp.html#a9747acb6489087733c8654ff01c5ba7d',1,'getPlugin():&#160;plugin_png.cpp']]],
   ['getsettings',['getSettings',['../namespaceflare.html#a770b82ab9d112d41fbe4a05246be3f82',1,'flare']]],
   ['getstate',['getState',['../namespaceflare_1_1render.html#ad60a4eaf189895d3aa224075b7dcf87c',1,'flare::render']]],
   ['gg',['GG',['../md5_8h.html#a685f32faa2a66e743850b990a13b8bfa',1,'md5.h']]],

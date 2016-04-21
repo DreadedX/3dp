@@ -81,6 +81,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
+<dt><a class="anchor" id="_todo000040"></a>Member <a class="el" href="fluxuate_8cpp.html#a1bca21a68aedc2fc40932c885879fb7f">compareHash</a>  (std::string filePath)</dt>
+<dd>This needs to be in a seperate file  </dd>
 <dt><a class="anchor" id="_todo000013"></a>Member <a class="el" href="debug_8cpp.html#ae52c8389bf2931a97086f90b93a1827f">entityTreeNode</a>  (<a class="el" href="structfuse_1_1Entity.html" title="This is really a container for a group of components. ">fuse::Entity</a> *entity, bool showChildren=false)</dt>
 <dd>Figure out if showChildren is neccesary  </dd>
 <dt><a class="anchor" id="_todo000032"></a>Member <a class="el" href="namespaceflare_1_1asset.html#ab214908ebe098d00b79855592135daff">flare::asset::assetList</a>  </dt>
@@ -94,7 +96,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dt><a class="anchor" id="_todo000009"></a>Member <a class="el" href="structflare_1_1asset_1_1Model.html#a0b7cac38cf0587c7b81f8c665e466669">flare::asset::Model::_load</a>  () override</dt>
 <dd><p class="startdd">The majority of this code should move into fluxuate, in order to store the raw data for faster parsing at runtime </p>
 <p>This needs to be loaded from the mtl file </p>
-<p class="enddd">Figure out a way to generate these, if they are even needed  </p>
+<p>Figure out a way to generate these, if they are even needed </p>
+<p class="enddd">Figure out which of these are really needed  </p>
 </dd>
 <dt><a class="anchor" id="_todo000020"></a>Class <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html">flare::asset::model::Mesh</a>  </dt>
 <dd>Make this use a material instead of storing the texture on its own  </dd>
@@ -141,8 +144,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dd>Make it find all flux files automatically  </dd>
 <dt><a class="anchor" id="_todo000004"></a>Member <a class="el" href="structfuse_1_1Entity.html#a72f32dee4c5c86c353b9032a91bf9d30">fuse::Entity::createChild</a>  (const char *name="Entity")</dt>
 <dd>Make a list of all the children, that get killed when the parent gets killed  </dd>
+<dt><a class="anchor" id="_todo000038"></a>Member <a class="el" href="fluxuate_8cpp.html#a84761dc3632dd7821ba646bf359e6c6b">getFile</a>  (std::string basePath, std::string fileName, <a class="el" href="structflux_1_1FileWrite.html" title="FLX single file header variant for writing data, stores pointer to data that needs to be written...">flux::FileWrite</a> *file)</dt>
+<dd><p class="startdd">This should be in a seperate function </p>
+<p class="enddd">This function has a kind of weird name  </p>
+</dd>
+<dt><a class="anchor" id="_todo000036"></a>Member <a class="el" href="plugin__obj_8cpp.html#ac297617a02f3e71a45a8e4108f69f725">load</a>  (std::string filePath, <a class="el" href="structflux_1_1FileWrite.html" title="FLX single file header variant for writing data, stores pointer to data that needs to be written...">flux::FileWrite</a> *file)</dt>
+<dd>Should this really be stored in extra  </dd>
 <dt><a class="anchor" id="_todo000017"></a>Member <a class="el" href="fuse_8h.html#a6d8c910a1fdb6d4762a05f7250e64322">MAX_COMPONENTS</a>  </dt>
 <dd>This should propably get bigger in the future (Maybe automatically?)  </dd>
+<dt><a class="anchor" id="_todo000037"></a>Member <a class="el" href="namespacepng.html#a4fa4c6bd6e677186d8809930f7b84f5a">png::read</a>  (const char *name)</dt>
+<dd>Figure out which of these are really needed  </dd>
 <dt><a class="anchor" id="_todo000016"></a>Member <a class="el" href="namespaceprint.html#a25195489d24a8a5a962ee8fef7aff5c6">print::format</a>  (const char *fmt,...)</dt>
 <dd><p class="startdd">Pretty sure this is not used anywhere or even that useful, so it should propably be removed </p>
 <p>This should return a const char* </p>
