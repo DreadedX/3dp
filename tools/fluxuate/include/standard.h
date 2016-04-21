@@ -13,6 +13,9 @@
 #include <algorithm>
 #include <ctime>
 
+/** @todo This only works on linux */
+#include <dlfcn.h>
+
 // System libraries
 #include <png.h>
 #include <zlib.h>
@@ -33,9 +36,7 @@
 #include "extra/extra.h"
 #include "flux/flux.h"
 
-// Fluxuate include
-#include "pngReader.h"
-#include "objReader.h"
+#include "plugin.h"
 
 #endif
 

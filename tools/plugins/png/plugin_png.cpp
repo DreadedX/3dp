@@ -1,4 +1,35 @@
-#include "standard.h"
+/** @todo Figure out which of these are really needed */
+// Standard library
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <cstring>
+#include <dirent.h>
+#include <assert.h>
+#include <algorithm>
+#include <ctime>
+
+// System libraries
+#include <png.h>
+#include <zlib.h>
+
+#include "jsoncons/json.hpp"
+
+#include "tinyobjloader/tiny_obj_loader.h"
+
+// Needed to be able to store assets in the same format as flare
+#include "flare/flare.h"
+
+// Debug
+// #ifndef NDEBUG
+//     #include "debug_new.h"
+// #endif
+
+#include "extra/extra.h"
+#include "flux/flux.h"
+
+#include "plugin_png.h"
+#include "plugin.h"
 
 png::Data png::read(const char *name) {
 
@@ -66,3 +97,43 @@ png::Data png::read(const char *name) {
 
     return data;
 }
+
+void load(std::string filePath, flux::FileWrite *file) {
+
+	png::Data data = png::read(filePath.c_str());
+
+	file->extraSize = sizeof(int) * 2 + sizeof(byte);
+	file->extra = new byte[file->extraSize];
+
+	for (uint i = 0; i < sizeof(int); ++i) {
+
+		file->extra[i] = data.width >> (i*8);
+	}
+	for (uint i = 0; i < sizeof(int); ++i) {
+
+		file->extra[i+sizeof(int)] = data.height >> (i*8);
+	}
+	file->extra[sizeof(int)*2] = data.bytesPerPixel;
+
+	// file->data = data.pixels;
+	file->dataSize = data.size;
+	file->data = new byte[file->dataSize];
+	for (int y = 0; y < data.height; y++) {
+		for (int x = 0; x < data.width*data.bytesPerPixel; x++) {
+
+			// file->data[x + y * (data.width*data.bytesPerPixel)] = data.pixels[x + (data.height-y-1) * (data.width*data.bytesPerPixel)];
+			file->data[x + y * (data.width*data.bytesPerPixel)] = data.pixels[x + y * (data.width*data.bytesPerPixel)];
+		}
+	}
+}
+
+Plugin plugin("PNG Plugin", "Allows fluxuate to pack png files in a format compatible with Flare", load);
+
+extern "C" {
+
+	Plugin getPlugin() {
+
+		return plugin;
+	}
+}
+

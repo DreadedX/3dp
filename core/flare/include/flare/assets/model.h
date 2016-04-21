@@ -18,7 +18,7 @@ namespace flare {
 				glm::vec3 normal;
 				/** @brief Vertex tangent
 					@note These are not needed for basic rendering */
-				glm::vec3 tangent;
+				// glm::vec3 tangent;
 				/** @brief Vertex texture coords */
 				glm::vec2 texCoords;
 			};

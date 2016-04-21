@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.6)
 project(all)
 
+set( CMAKE_POSITION_INDEPENDENT_CODE ON )
+
 find_program(CCACHE_FOUND ccache)
 if(CCACHE_FOUND)
     set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
@@ -75,6 +77,9 @@ add_subdirectory(core/fuse)
 add_subdirectory(core/flare)
 
 add_subdirectory(tools/fluxuate)
+
+add_subdirectory(tools/plugins/png)
+add_subdirectory(tools/plugins/obj)
 
 add_subdirectory(game)
 

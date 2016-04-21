@@ -23,8 +23,6 @@
 
 #include "jsoncons/json.hpp"
 
-#include "tinyobjloader/tiny_obj_loader.h"
-
 #ifndef NDEBUG
     #include "imgui.h"
     #include "imgui_impl_glfw_gl3.h"

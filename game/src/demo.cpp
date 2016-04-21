@@ -181,7 +181,7 @@ int main() {
 	
 	fuse::Entity *house = fuse::createEntity("Rungholt");
 	house->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
-	house->addComponent<flare::component::Object>("rungholt", "base/object");
+	house->addComponent<flare::component::Object>("house", "base/object");
 
     // fuse::Entity *test = fuse::createEntity("Test");
     // test->addComponent<LuaTest>();

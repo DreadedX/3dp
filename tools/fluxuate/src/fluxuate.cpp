@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
 	flux::FileWrite *fluxFiles = new flux::FileWrite[count];
 
 	// NOTE: Uncomment to enable caching
-	hashesOld = jsoncons::json::parse_file("cache/cache.json");
+	// hashesOld = jsoncons::json::parse_file("cache/cache.json");
 
 	for (uint i = 0; i < count; ++i) {
 
@@ -160,161 +160,33 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
 
 		print::m("Packing: %s (%s)", assetName.c_str(), extension.c_str());
 
-		// Images are a special case
-		// Now we don't need have to use libpng in the engine
-		if (extension == "png") {
+		/** @todo This should be in a seperate function */
+		typedef Plugin (*getPluginPointer)();
 
-			png::Data data = png::read(filePath.c_str());
+		std::string pluginName = "./libplugin_" + extension + ".so";
+		void *handle = dlopen(pluginName.c_str(), RTLD_NOW);
+		char *error = dlerror();
+		if (error == nullptr) {
 
-			file->extraSize = sizeof(int) * 2 + sizeof(byte);
-			file->extra = new byte[file->extraSize];
+			getPluginPointer getPlugin = (getPluginPointer)dlsym(handle, "getPlugin");
+			error = dlerror();
+			if (error != nullptr) {
 
-			for (uint i = 0; i < sizeof(int); ++i) {
-
-				file->extra[i] = data.width >> (i*8);
-			}
-			for (uint i = 0; i < sizeof(int); ++i) {
-
-				file->extra[i+sizeof(int)] = data.height >> (i*8);
-			}
-			file->extra[sizeof(int)*2] = data.bytesPerPixel;
-
-			// file->data = data.pixels;
-			file->dataSize = data.size;
-			file->data = new byte[file->dataSize];
-			for (int y = 0; y < data.height; y++) {
-				for (int x = 0; x < data.width*data.bytesPerPixel; x++) {
-
-					// file->data[x + y * (data.width*data.bytesPerPixel)] = data.pixels[x + (data.height-y-1) * (data.width*data.bytesPerPixel)];
-					file->data[x + y * (data.width*data.bytesPerPixel)] = data.pixels[x + y * (data.width*data.bytesPerPixel)];
-				}
-			}
-		} else if(extension == "obj") {
-
-			// TESTING
-			flare::asset::Model model = obj::read(filePath.c_str());
-
-			// TODO: Should this really be stored in extra
-			unsigned long meshCount = model.meshes.size();
-			file->extraSize = sizeof(unsigned long) + meshCount * (sizeof(unsigned long) + sizeof(unsigned long));
-			file->extra = new byte[file->extraSize];
-
-			for (uint i = 0; i < sizeof(unsigned long); ++i) {
-
-				file->extra[i] = meshCount >> (i*8);
+				print::e(error);
+				exit(-1);
 			}
 
-			uint offset = sizeof(unsigned long);
+			/** @todo This function has a kind of weird name */
+			Plugin plugin = getPlugin();
 
-			print::d("Mesh count: %i", meshCount);
-			for (unsigned long j = 0; j < meshCount; ++j) {
+			print::d("Plugin name: %s", plugin.name);
+			print::d("Plugin desc: %s", plugin.description);
 
-				unsigned long vertexCount = model.meshes[j]->vertices.size();
-				unsigned long indexCount = model.meshes[j]->indices.size();
-
-				print::d("Vertex count: %i", vertexCount);
-				print::d("Index count: %i", indexCount);
-
-				file->dataSize += vertexCount * sizeof(flare::asset::model::Vertex);
-				file->dataSize += indexCount * sizeof(GLuint);
-
-				for (uint i = 0; i < sizeof(unsigned long); ++i) {
-
-					file->extra[i + offset] = vertexCount >> (i*8);
-				}
-				for (uint i = 0; i < sizeof(unsigned long); ++i) {
-
-					file->extra[i + offset + sizeof(unsigned long)] = indexCount >> (i*8);
-				}
-
-				offset += 2*sizeof(unsigned long);
-			}
-
-			offset = 0;
-
-			file->data = new byte[file->dataSize];
-
-			for (uint i = 0; i < file->dataSize; ++i) {
-
-				file->data[i] = 0x0;
-			}
-
-			for (unsigned long j = 0; j < meshCount; ++j) {
-
-				unsigned long vertexCount = model.meshes[j]->vertices.size();
-				unsigned long indexCount = model.meshes[j]->indices.size();
-
-				for (uint i = 0; i < vertexCount; ++i) {
-
-					glm::vec3 position = model.meshes[j]->vertices[i].position;
-					glm::vec3 normal = model.meshes[j]->vertices[i].normal;
-					glm::vec2 texCoords = model.meshes[j]->vertices[i].texCoords;
-
-					// TODO: This is system depended (byte order)
-					// Write position
-					byte *tempData = new byte[sizeof(glm::vec3)];
-					memcpy(tempData, &position, sizeof(glm::vec3));
-
-					for (uint n = 0; n < sizeof(glm::vec3); ++n) {
-
-						file->data[n + offset] = tempData[n];
-					}
-					offset += sizeof(glm::vec3);
-					delete[] tempData;
-					
-					// Write normal
-					tempData = new byte[sizeof(glm::vec3)];
-					memcpy(tempData, &normal, sizeof(glm::vec3));
-
-					for (uint n = 0; n < sizeof(glm::vec3); ++n) {
-
-						file->data[n + offset] = tempData[n];
-					}
-					offset += sizeof(glm::vec3);
-					delete[] tempData;
-					
-					// Write texCoords
-					tempData = new byte[sizeof(glm::vec2)];
-					memcpy(tempData, &texCoords, sizeof(glm::vec2));
-
-					for (uint n = 0; n < sizeof(glm::vec2); ++n) {
-
-						file->data[n + offset] = tempData[n];
-					}
-					offset += sizeof(glm::vec2);
-					delete[] tempData;
-				}
-				for (uint i = 0; i < indexCount; ++i) {
-
-					GLuint index = model.meshes[j]->indices[i];
-
-					// Write index
-					for (uint n = 0; n < sizeof(GLuint); ++n) {
-
-						file->data[n + offset] = index >> (n*8);
-					}
-
-					offset += sizeof(GLuint);
-				}
-			}
-
-			// print::d("OBJ hex:");
-            //
-			// for (uint i = 0; i < file->dataSize; ++i) {
-            //
-			// 	if (i % 32 == 0 && i != 0) {
-			// 		printf("\n");
-			// 	}
-            //
-			// 	printf("0x%02X ", file->data[i]);
-			// }
-            //
-			// printf("\n");
-
-			/** @bug This fails on windows (MinGW) */
-			assert(offset == file->dataSize);
+			plugin.load(filePath.c_str(), file);
 
 		} else {
+
+			print::d("No plugin found for file format: %s", extension.c_str());
 
 			if (extension == "vertex" || extension == "fragment") {
 
@@ -380,6 +252,7 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
 #endif
 }
 
+/** @todo This needs to be in a seperate file */
 bool compareHash(std::string filePath) {
 
 	MD5 md5;
