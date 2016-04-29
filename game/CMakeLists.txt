@@ -43,6 +43,6 @@ endif (ZLIB_FOUND)
 
 target_link_libraries(${PROJECT_NAME} flare fuse flux extra imgui leakage tinyobjloader)
 if(WIN32)
-    target_link_libraries(${PROJECT_NAME} glfw3 opengl32 imm32)
+    target_link_libraries(${PROJECT_NAME} glew32 glfw3 opengl32 imm32)
 endif(WIN32)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)

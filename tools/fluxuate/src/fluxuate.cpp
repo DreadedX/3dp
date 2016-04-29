@@ -65,7 +65,8 @@ int main(int argc, char* argv[]) {
 		fluxFiles[i].dataLocation = dataLocation;
 		dataLocation += fluxFiles[i].compressedDataSize;
 	}
-	bytes_written += fwrite("FLX0", sizeof(byte), 4, file);
+	/** @todo This needs to move into flux */
+	bytes_written += fwrite("FLX1", sizeof(byte), 4, file);
 	bytes_written += fwrite(&count, sizeof(byte), sizeof(uint), file);
 	for (uint i = 0; i < count; i++) {
 

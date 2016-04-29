@@ -39,7 +39,7 @@ void flux::Flux::load(std::string name) {
 		/** @bug This does not work on windows, propably because it is not null terminated (Is this still the case when using MinGW?) */
 		std::string headerString(reinterpret_cast<const char*>(header));
 		delete[] header;
-		if (headerString == "FLX0")  {
+		if (headerString == "FLX1")  {
 
 			fread(&indexSize, sizeof(byte), sizeof(uint), fileHandle);
 			print::d("File count: %i", indexSize);

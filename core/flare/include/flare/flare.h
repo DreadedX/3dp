@@ -52,5 +52,7 @@ namespace flare{
 
 #include "flare/render.h"
 
+#include "flare/info.h"
+
 #endif
 

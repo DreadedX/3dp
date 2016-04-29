@@ -39,7 +39,7 @@ set(EXTRA_FLAGS "-Wall -Wextra -Wno-unknown-pragmas")
 
 # If compiling for windows statically link everything
 if (${CMAKE_SYSTEM_NAME} MATCHES Window)
-	set(EXTRA_FLAGS "${EXTRA_FLAGS} -static-libgcc -static-libstdc++")
+	set(EXTRA_FLAGS "${EXTRA_FLAGS} -static-libgcc -static-libstdc++ -static -DGLEW_STATIC")
 endif()
 message("System name: ${CMAKE_SYSTEM_NAME}")
 
@@ -53,7 +53,8 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${EXTRA_FLAGS}")
 
 message("Build type: ${CMAKE_BUILD_TYPE}")
 
-set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build/${CMAKE_SYSTEM_NAME})
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build/${CMAKE_SYSTEM_NAME}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/${CMAKE_SYSTEM_NAME}/lib)
  
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
@@ -83,42 +84,47 @@ add_subdirectory(tools/plugins/obj)
 
 add_subdirectory(game)
 
+# add_custom_target(info
+# 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+# 	COMMAND touch ./core/flare/src/info.cpp
+# 	DEPENDS core/flare)
+
 if(UNIX)
-add_custom_target(assets
-    COMMAND ./fluxuate ${CMAKE_SOURCE_DIR}/game/assets
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+	add_custom_target(assets
+		COMMAND ./fluxuate ${CMAKE_SOURCE_DIR}/game/assets
+		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
-add_custom_target(run
-    COMMAND ./game
-    DEPENDS assets
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+	add_custom_target(run
+		COMMAND ./game
+		DEPENDS assets
+		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
-add_custom_target(debug
-    COMMAND gdb ./game -ex run -ex bt -ex quit --silent
-    DEPENDS assets
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+	add_custom_target(debug
+		COMMAND gdb ./game -ex run -ex bt -ex quit --silent
+		DEPENDS assets
+		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 endif(UNIX)
 if(WIN32)
-add_custom_target(assets
-    COMMAND wine fluxuate.exe ${CMAKE_SOURCE_DIR}/game/assets
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+	add_custom_target(assets
+		COMMAND wine fluxuate.exe ${CMAKE_SOURCE_DIR}/game/assets
+		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
-add_custom_target(run
-    COMMAND wine game.exe
-    DEPENDS assets
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+	add_custom_target(run
+		COMMAND wine game.exe
+		DEPENDS assets
+		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
-add_custom_target(debug
-    COMMAND wine game.exe
-    DEPENDS assets
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+	add_custom_target(debug
+		COMMAND wine game.exe
+		DEPENDS assets
+		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 endif(WIN32)
 
 add_custom_target(distclean @echo cleaning for source distribution)
-set(DISTCLEANED
-    ${CMAKE_SOURCE_DIR}/build
-    *
-    )
+	set(DISTCLEANED
+		${CMAKE_SOURCE_DIR}/build
+		*
+		)
 
 add_custom_command(
     DEPENDS clean

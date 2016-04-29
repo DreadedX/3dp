@@ -11,10 +11,7 @@ flare::Settings *settings = new flare::Settings();
 
 void flare::init() {
 
-	/** @todo Put this in a seperate file that get recompiled every time something has changed */
-	print::d("%-12s %s %s", "Compiled on:", __DATE__, __TIME__);
-	print::d("%-12s %s", "Version:", GIT_VERSION);
-	print::d("%-12s %i", "C++ Version:", __cplusplus);
+	info::print();
 
 	// Initialize window
 	/** @todo Part of this should propably move into the renderer */
