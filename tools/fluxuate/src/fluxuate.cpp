@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
 	flux::FileWrite *fluxFiles = new flux::FileWrite[count];
 
 	// NOTE: Uncomment to enable caching
-	// cacheOld = jsoncons::json::parse_file("cache/cache.json");
+	cacheOld = jsoncons::json::parse_file("cache/cache.json");
 
 	for (uint i = 0; i < count; ++i) {
 
@@ -169,16 +169,15 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
 		std::string pluginName = "./plugin_" + extension + ".dll";
 		HINSTANCE dll = LoadLibraryA(pluginName.c_str());
 		DWORD error = GetLastError();
-		print::d("%li", error);
-		if (dll != nullptr) {
+		if (error == 0) {
 
 			getPluginPointer getPlugin = (getPluginPointer)GetProcAddress(dll, "getPlugin");
-			// error = dlerror();
-			// if (error != nullptr) {
-            //
-			// 	print::e(error);
-			// 	exit(-1);
-			// }
+			DWORD error = GetLastError();
+			if (error != 0) {
+
+				print::e("Invalid plugin (%li)", error);
+				exit(-1);
+			}
 #else
 		std::string pluginName = "./libplugin_" + extension + ".so";
 		void *handle = dlopen(pluginName.c_str(), RTLD_NOW);
@@ -189,6 +188,7 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
 			error = dlerror();
 			if (error != nullptr) {
 
+				print::e("Invalid plugin: ", error);
 				print::e(error);
 				exit(-1);
 			}
@@ -197,14 +197,19 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
 			/** @todo This function has a kind of weird name */
 			Plugin plugin = getPlugin();
 
-			print::d("Plugin name: %s", plugin.name);
-			print::d("Plugin desc: %s", plugin.description);
+			print::m("Plugin name: %s", plugin.name);
+			print::m("Plugin desc: %s", plugin.description);
 
 			plugin.load(filePath.c_str(), file);
 
 		} else {
 
-			print::d("No plugin found for file format: %s", extension.c_str());
+			print::m("No plugin found for file format: %s", extension.c_str());
+#if WIN32
+			print::d("%li", error);
+#else
+			print::d("%s", error);
+#endif
 
 			if (extension == "vertex" || extension == "fragment") {
 
