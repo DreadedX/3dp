@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
 	ulong totalSize = 0;
 	ulong bytes_written = 0;
 	// TODO: Determine the output file name based on the directory
-	FILE *file = fopen("base.flx", "wb");
+	FILE *file = fopen("base.flx", "w+b");
 
 	ulong dataLocation = 4 + sizeof(uint);
 	for (uint i = 0; i < count; i++) {
@@ -84,7 +84,46 @@ int main(int argc, char* argv[]) {
 
 		totalSize += fluxFiles[i].compressedDataSize;
 	}
+
+	fseek(file, 0, SEEK_END);
+	ulong fileSize = ftell(file);
+	fseek(file, 0, SEEK_SET);
+
+	uLong adler = adler32(0L, Z_NULL, 0);
+
+	uint length = 1024;
+	byte *buffer = nullptr;
+
+	bool shouldContinue = true;
+
+	while(shouldContinue) {
+
+		ulong currentPosition = ftell(file);
+
+		if (fileSize - currentPosition < length) {
+
+			length = static_cast<uint>(fileSize - currentPosition);
+
+			shouldContinue = false;
+		}
+
+		buffer = new byte[length];
+
+		uint read = fread(buffer, sizeof(byte), length, file);
+		assert(length == read);
+		adler = adler32(adler, buffer, length);
+
+		delete[] buffer;
+		buffer = nullptr;
+
+	}
+
+	/** @todo Make this not hardcoded */
+	bytes_written += fwrite(&adler, sizeof(byte), sizeof(uint), file);
+	totalSize += sizeof(uint);
+
 	fclose(file);
+
 	assert(bytes_written == totalSize);
 	print::m("Total data size: %llu\n", totalSize);
 

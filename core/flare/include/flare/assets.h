@@ -34,11 +34,11 @@ namespace flare {
 
 				if (assetMap.find(name) != assetMap.end()) {
 
-					print::d("'%s' already loaded", name.c_str());
+					// print::d("'%s' already loaded", name.c_str());
 					return reinterpret_cast<T*>(assetMap[name]);
 				}
 
-				print::d("Loading '%s'", name.c_str());
+				print::d("Loading asset '%s'", name.c_str());
 
 				T *asset = new T();
 				asset->name = name;

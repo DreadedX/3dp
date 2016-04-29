@@ -24,6 +24,7 @@ void flux::load() {
 	}
 }
 
+/** @todo Should the file be closed again */
 void flux::Flux::load(std::string name) {
 
 	this->name = name;
@@ -32,17 +33,56 @@ void flux::Flux::load(std::string name) {
 
 	if (fileHandle != nullptr) {
 
+		fseek(fileHandle, 0, SEEK_END);
+		ulong fileSize = ftell(fileHandle) - 4;
+		fseek(fileHandle, 0, SEEK_SET);
+
+		uint adler = adler32(0L, Z_NULL, 0);
+
+		uint length = 1024;
+		byte *buffer = nullptr;
+
+		bool shouldContinue = true;
+
+		while(shouldContinue) {
+
+			ulong currentPosition = ftell(fileHandle);
+
+			if (fileSize - currentPosition < length) {
+
+				length = static_cast<uint>(fileSize - currentPosition);
+
+				shouldContinue = false;
+			}
+
+			buffer = new byte[length];
+
+			fread(buffer, sizeof(byte), length, fileHandle);
+			adler = adler32(adler, buffer, length);
+
+			delete[] buffer;
+			buffer = nullptr;
+			
+		}
+
+		uint checksum;
+		fread(&checksum, sizeof(byte), sizeof(uint), fileHandle);
+
+		fseek(fileHandle, 0, SEEK_SET);
+
 		byte *header = new byte[6];
 		fread(header, sizeof(byte), 4, fileHandle);
+		// Make string null terminated
 		header[4] = 0x00;
 		header[5] = 0x00;
-		/** @bug This does not work on windows, propably because it is not null terminated (Is this still the case when using MinGW?) */
+
 		std::string headerString(reinterpret_cast<const char*>(header));
 		delete[] header;
-		if (headerString == "FLX1")  {
+
+		if (headerString == "FLX1" && checksum == adler)  {
 
 			fread(&indexSize, sizeof(byte), sizeof(uint), fileHandle);
-			print::d("File count: %i", indexSize);
+			print::d("FLX Container '%s' contains %i files", name.c_str(), indexSize);
 			this->index = new FileLoad[indexSize];
 
 			for (uint i = 0; i < indexSize; ++i) {
@@ -81,11 +121,19 @@ void flux::Flux::load(std::string name) {
 				index[i].parent = this;
 			}
 
-			print::d("File indexed: '%s'", name.c_str());
+			print::d("FLX Container '%s' indexed", name.c_str());
 			valid = true;
+
 			return;
 		}
-		print::e("'%s' is not a FLX0 file", name.c_str());
+
+		if (checksum != adler) {
+
+			print::w("'%s' is corrupted", name.c_str());
+		} else {
+			
+			print::w("'%s' is not a valid FLX1 file", name.c_str());
+		}
 		return;
 	}
 	print::e("Failed to open: '%s'", name.c_str());
@@ -103,6 +151,7 @@ flux::FileLoad *flux::get(std::string name) {
 	exit(-1);
 }
 
+/** @todo addNullTerminator should be removed */
 byte *flux::FileLoad::get(bool addNullTerminator) {
 
 	print::d("Loading file: '%s'", name.c_str());

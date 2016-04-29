@@ -34,8 +34,6 @@ void flare::asset::Model::_load() {
 	}
 	offset += sizeof(ulong);
 
-	print::d("Mesh count: %i", meshCount);
-
 	ulong *vertexCount = new ulong[meshCount];
 	ulong *indexCount = new ulong[meshCount];
 
@@ -55,9 +53,6 @@ void flare::asset::Model::_load() {
 			indexCount[i] = indexCount[i] + (modelFile->extra[j + offset] << (j*8));
 		}
 		offset += sizeof(ulong);
-
-		print::d("Vertex count: %i", vertexCount[i]);
-		print::d("Index count: %i", indexCount[i]);
 	}
 
 
@@ -162,5 +157,5 @@ void flare::asset::Model::_load() {
 	delete[] modelData;
 
 	double delta = glfwGetTime() - timer;
-	print::d("Load time: %f", delta);
+	print::d("Model loaded in %f seconds", delta);
 }

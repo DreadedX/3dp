@@ -138,14 +138,9 @@ struct JoyDebugControl : fuse::Component {
 // TODO: Controllers cause some issues on wine, they are detected, but are null
 int main() {
 
-	// exit(0);
-
-	print::m("This is a message");
-	print::d("This is a debug");
-	print::w("This is a warning");
-	print::e("This is a error");
-
     flare::init();
+
+    print::m("Welcome to Flare Engine");
 
 	// NOTE: This is code to test joystick input
 	int present = glfwJoystickPresent(GLFW_JOYSTICK_2);
@@ -158,8 +153,6 @@ int main() {
 
 	}
 	// END
-
-    print::m("This is a demo program for the flare engine!");
 
     fuse::Entity *player = fuse::createEntity("Player");
     player->addComponent<flare::component::Camera>();

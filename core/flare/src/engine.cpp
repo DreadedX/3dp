@@ -70,7 +70,7 @@ void flare::init() {
 	// Initialize other systems
 	render::init();
 
-	print::d("Done initializing!");
+	print::d("Engine initialized");
 }
 
 bool flare::isRunning() {

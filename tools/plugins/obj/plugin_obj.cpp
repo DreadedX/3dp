@@ -104,14 +104,10 @@ void load(std::string filePath, flux::FileWrite *file) {
 
 	uint offset = sizeof(ulong);
 
-	print::d("Mesh count: %i", meshCount);
 	for (ulong j = 0; j < meshCount; ++j) {
 
 		ulong vertexCount = model.meshes[j]->vertices.size();
 		ulong indexCount = model.meshes[j]->indices.size();
-
-		print::d("Vertex count: %i", vertexCount);
-		print::d("Index count: %i", indexCount);
 
 		file->dataSize += vertexCount * sizeof(flare::asset::model::Vertex);
 		file->dataSize += indexCount * sizeof(GLuint);
