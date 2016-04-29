@@ -2,13 +2,13 @@
 
 void getDir(std::string dir, std::vector<std::string> &files);
 void getFile(std::string basePath, std::string fileName, flux::FileWrite *file);
-bool compareHash(std::string filePath);
+bool hasChanged(std::string filePath);
 
 void writeCache(flux::FileWrite *file, std::string fileName);
 void readCache(flux::FileWrite *file, std::string fileName);
 
-jsoncons::json hashes;
-jsoncons::json hashesOld;
+jsoncons::json cache;
+jsoncons::json cacheOld;
 
 int main(int argc, char* argv[]) {
 
@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
 	flux::FileWrite *fluxFiles = new flux::FileWrite[count];
 
 	// NOTE: Uncomment to enable caching
-	// hashesOld = jsoncons::json::parse_file("cache/cache.json");
+	cacheOld = jsoncons::json::parse_file("cache/cache.json");
 
 	for (uint i = 0; i < count; ++i) {
 
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	std::ofstream os("cache/cache.json");
-	os << hashes;
+	os << cache;
 
 	llu totalSize = 0;
 	llu bytes_written = 0;
@@ -150,7 +150,7 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
 	// TODO: Make this based on the actual filePath
 	std::string filePath = basePath + "/" + fileName;
 
-	if (compareHash(filePath)) {
+	if (hasChanged(filePath)) {
 
 		print::m("Loading from cache: %s (%s)", assetName.c_str(), extension.c_str());
 
@@ -252,22 +252,53 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
 #endif
 }
 
-/** @todo This needs to be in a seperate file */
-bool compareHash(std::string filePath) {
+/** @todo This needs to be in a seperate file 
+	@todo Clean up this function */
+bool hasChanged(std::string filePath) {
+
+	struct stat attr;
+	stat(filePath.c_str(), &attr);
+
+	// The file has not been modified since...
+	if (cacheOld.has_member(filePath) && cacheOld.get(filePath).get("modified").as<time_t>() == attr.st_mtime) {
+
+		print::d("File has not changed! (date)");
+
+		jsoncons::json file;
+		file.set("hash", cacheOld.get(filePath).get("hash").as<std::string>());
+		file.set("modified", attr.st_mtime);
+
+		cache.set(filePath, file);
+
+		return true;
+	}
 
 	MD5 md5;
 
 	std::string hash(md5.digestFile(strdup(filePath.c_str())));
-	std::string hashOld = hashesOld.get(filePath).as<std::string>();
-	hashes.set(filePath, std::string(hash));
 
-	print::d("OLD: %s NEW: %s", hashOld.c_str(), hash.c_str());
+	jsoncons::json file;
+	file.set("hash", hash);
+	file.set("modified", attr.st_mtime);
 
-	if (hash == hashOld) {
+	cache.set(filePath, file);
 
-		print::d("File has not changed!");
+	if (cacheOld.has_member(filePath)) {
 
-		return true;
+		std::string hashOld = cacheOld.get(filePath).get("hash").as<std::string>();
+
+		if (hashOld == hash) {
+
+			print::d("File has not changed! (hash)");
+
+			return true;
+		} else {
+
+			print::d("OLD: %s NEW: %s", hashOld.c_str(), hash.c_str());
+			print::d("File has changed!");
+
+			return false;
+		}
 	} else {
 
 		print::d("File has changed!");

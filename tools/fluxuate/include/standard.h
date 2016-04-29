@@ -12,6 +12,7 @@
 #include <assert.h>
 #include <algorithm>
 #include <ctime>
+#include <sys/stat.h>
 
 /** @todo This only works on linux */
 #include <dlfcn.h>
