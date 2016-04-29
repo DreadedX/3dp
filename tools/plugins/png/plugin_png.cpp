@@ -37,7 +37,7 @@ png::Data png::read(const char *name) {
 
     png_structp png_ptr;
     png_infop info_ptr;
-    unsigned int sig_read = 0;
+    uint sig_read = 0;
     int color_type;
     int interlace_type;
     FILE *fp;
@@ -74,8 +74,8 @@ png::Data png::read(const char *name) {
     int bit_depth;
     png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, &interlace_type, NULL, NULL);
 
-    unsigned int row_bytes = png_get_rowbytes(png_ptr, info_ptr);
-    data.pixels = (unsigned char*) malloc(row_bytes * height);
+    uint row_bytes = png_get_rowbytes(png_ptr, info_ptr);
+    data.pixels = (byte*) malloc(row_bytes * height);
     data.size = row_bytes * height;
 
     png_bytepp row_pointers = png_get_rows(png_ptr, info_ptr);

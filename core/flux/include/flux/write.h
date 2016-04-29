@@ -7,7 +7,7 @@ namespace flux {
 	struct FileWrite : FileBase {
 
 		/** @brief Pointer to the data that needs to be stored */
-		unsigned char *data = nullptr;
+		byte *data = nullptr;
 	};
 }
 

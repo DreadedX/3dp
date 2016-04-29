@@ -15,7 +15,11 @@
 #include <sys/stat.h>
 
 /** @todo This only works on linux */
-#include <dlfcn.h>
+#if WIN32
+	#include <windows.h>
+#else
+	#include <dlfcn.h>
+#endif
 
 // System libraries
 #include <png.h>

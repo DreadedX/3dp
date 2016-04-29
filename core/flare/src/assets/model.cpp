@@ -28,33 +28,33 @@ void flare::asset::Model::_load() {
 
 	uint offset = 0;
 
-	unsigned long meshCount = 0;
-	for (unsigned long i = 0; i < sizeof(unsigned long); ++i) {
+	ulong meshCount = 0;
+	for (ulong i = 0; i < sizeof(ulong); ++i) {
 		meshCount += modelFile->extra[i] << (i*8);
 	}
-	offset += sizeof(unsigned long);
+	offset += sizeof(ulong);
 
 	print::d("Mesh count: %i", meshCount);
 
-	unsigned long *vertexCount = new long unsigned[meshCount];
-	unsigned long *indexCount = new long unsigned[meshCount];
+	ulong *vertexCount = new ulong[meshCount];
+	ulong *indexCount = new ulong[meshCount];
 
-	for (unsigned long i = 0; i < meshCount; ++i) {
+	for (ulong i = 0; i < meshCount; ++i) {
 		vertexCount[i] = 0;
 		indexCount[i] = 0;
 	}
 
-	for (unsigned long i = 0; i < meshCount; ++i) {
+	for (ulong i = 0; i < meshCount; ++i) {
 		
-		for (unsigned long j = 0; j < sizeof(unsigned long); ++j) {
+		for (ulong j = 0; j < sizeof(ulong); ++j) {
 			vertexCount[i] = vertexCount[i] + (modelFile->extra[j + offset] << (j*8));
 		}
-		offset += sizeof(unsigned long);
+		offset += sizeof(ulong);
 
-		for (unsigned long j = 0; j < sizeof(unsigned long); ++j) {
+		for (ulong j = 0; j < sizeof(ulong); ++j) {
 			indexCount[i] = indexCount[i] + (modelFile->extra[j + offset] << (j*8));
 		}
-		offset += sizeof(unsigned long);
+		offset += sizeof(ulong);
 
 		print::d("Vertex count: %i", vertexCount[i]);
 		print::d("Index count: %i", indexCount[i]);
@@ -62,12 +62,12 @@ void flare::asset::Model::_load() {
 
 
 	offset = 0;
-	for (unsigned long i = 0; i < meshCount; ++i) {
+	for (ulong i = 0; i < meshCount; ++i) {
 
 		model::Mesh *mesh = new model::Mesh;
 		meshes.push_back(mesh);
 
-		for (unsigned long j = 0; j < vertexCount[i]; ++j) {
+		for (ulong j = 0; j < vertexCount[i]; ++j) {
 
 			model::Vertex vertex;
 
@@ -97,7 +97,7 @@ void flare::asset::Model::_load() {
 
 			mesh->vertices.push_back(vertex);
 		}
-		for (unsigned long j = 0; j < indexCount[i]; ++j) {
+		for (ulong j = 0; j < indexCount[i]; ++j) {
 
 			GLuint index = 0;
 

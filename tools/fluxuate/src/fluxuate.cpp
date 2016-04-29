@@ -12,6 +12,8 @@ jsoncons::json cacheOld;
 
 int main(int argc, char* argv[]) {
 
+	static_assert(sizeof(glm::vec3) == 12, "ERROR");
+
 	clock_t t = clock();
 
 	std::string dir;
@@ -31,7 +33,7 @@ int main(int argc, char* argv[]) {
 	flux::FileWrite *fluxFiles = new flux::FileWrite[count];
 
 	// NOTE: Uncomment to enable caching
-	cacheOld = jsoncons::json::parse_file("cache/cache.json");
+	// cacheOld = jsoncons::json::parse_file("cache/cache.json");
 
 	for (uint i = 0; i < count; ++i) {
 
@@ -41,12 +43,12 @@ int main(int argc, char* argv[]) {
 	std::ofstream os("cache/cache.json");
 	os << cache;
 
-	llu totalSize = 0;
-	llu bytes_written = 0;
+	ulong totalSize = 0;
+	ulong bytes_written = 0;
 	// TODO: Determine the output file name based on the directory
 	FILE *file = fopen("base.flx", "wb");
 
-	llu dataLocation = 4 + sizeof(uint);
+	ulong dataLocation = 4 + sizeof(uint);
 	for (uint i = 0; i < count; i++) {
 
 		dataLocation += sizeof(byte);
@@ -55,7 +57,7 @@ int main(int argc, char* argv[]) {
 		dataLocation += fluxFiles[i].extraSize;
 		dataLocation += sizeof(uint);
 		dataLocation += sizeof(uint);
-		dataLocation += sizeof(llu);
+		dataLocation += sizeof(ulong);
 	}
 	totalSize += dataLocation;
 	for (uint i = 0; i < count; i++) {
@@ -73,7 +75,7 @@ int main(int argc, char* argv[]) {
 		bytes_written += fwrite(fluxFiles[i].extra, sizeof(byte), fluxFiles[i].extraSize, file);
 		bytes_written += fwrite(&fluxFiles[i].dataSize, sizeof(byte), sizeof(uint), file);
 		bytes_written += fwrite(&fluxFiles[i].compressedDataSize, sizeof(byte), sizeof(uint), file);
-		bytes_written += fwrite(&fluxFiles[i].dataLocation, sizeof(byte), sizeof(llu), file);
+		bytes_written += fwrite(&fluxFiles[i].dataLocation, sizeof(byte), sizeof(ulong), file);
 	}
 	for (uint i = 0; i < count; i++) {
 
@@ -163,6 +165,21 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
 		/** @todo This should be in a seperate function */
 		typedef Plugin (*getPluginPointer)();
 
+#if WIN32
+		std::string pluginName = "./plugin_" + extension + ".dll";
+		HINSTANCE dll = LoadLibraryA(pluginName.c_str());
+		DWORD error = GetLastError();
+		print::d("%li", error);
+		if (dll != nullptr) {
+
+			getPluginPointer getPlugin = (getPluginPointer)GetProcAddress(dll, "getPlugin");
+			// error = dlerror();
+			// if (error != nullptr) {
+            //
+			// 	print::e(error);
+			// 	exit(-1);
+			// }
+#else
 		std::string pluginName = "./libplugin_" + extension + ".so";
 		void *handle = dlopen(pluginName.c_str(), RTLD_NOW);
 		char *error = dlerror();
@@ -175,6 +192,7 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
 				print::e(error);
 				exit(-1);
 			}
+#endif
 
 			/** @todo This function has a kind of weird name */
 			Plugin plugin = getPlugin();
@@ -210,7 +228,7 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
 			fseek(sourceFile, 0, SEEK_SET);
 
 			file->data = new byte[file->dataSize];
-			llu bytes_read = fread(file->data, sizeof(byte), file->dataSize, sourceFile);
+			ulong bytes_read = fread(file->data, sizeof(byte), file->dataSize, sourceFile);
 
 			// Make sure it read all the data
 			assert(bytes_read == file->dataSize);

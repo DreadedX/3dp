@@ -93,22 +93,22 @@ void load(std::string filePath, flux::FileWrite *file) {
 	flare::asset::Model model = obj::read(filePath.c_str());
 
 	/** @todo Should this really be stored in extra */
-	unsigned long meshCount = model.meshes.size();
-	file->extraSize = sizeof(unsigned long) + meshCount * (sizeof(unsigned long) + sizeof(unsigned long));
+	ulong meshCount = model.meshes.size();
+	file->extraSize = sizeof(ulong) + meshCount * (sizeof(ulong) + sizeof(ulong));
 	file->extra = new byte[file->extraSize];
 
-	for (uint i = 0; i < sizeof(unsigned long); ++i) {
+	for (uint i = 0; i < sizeof(ulong); ++i) {
 
 		file->extra[i] = meshCount >> (i*8);
 	}
 
-	uint offset = sizeof(unsigned long);
+	uint offset = sizeof(ulong);
 
 	print::d("Mesh count: %i", meshCount);
-	for (unsigned long j = 0; j < meshCount; ++j) {
+	for (ulong j = 0; j < meshCount; ++j) {
 
-		unsigned long vertexCount = model.meshes[j]->vertices.size();
-		unsigned long indexCount = model.meshes[j]->indices.size();
+		ulong vertexCount = model.meshes[j]->vertices.size();
+		ulong indexCount = model.meshes[j]->indices.size();
 
 		print::d("Vertex count: %i", vertexCount);
 		print::d("Index count: %i", indexCount);
@@ -116,16 +116,16 @@ void load(std::string filePath, flux::FileWrite *file) {
 		file->dataSize += vertexCount * sizeof(flare::asset::model::Vertex);
 		file->dataSize += indexCount * sizeof(GLuint);
 
-		for (uint i = 0; i < sizeof(unsigned long); ++i) {
+		for (uint i = 0; i < sizeof(ulong); ++i) {
 
 			file->extra[i + offset] = vertexCount >> (i*8);
 		}
-		for (uint i = 0; i < sizeof(unsigned long); ++i) {
+		for (uint i = 0; i < sizeof(ulong); ++i) {
 
-			file->extra[i + offset + sizeof(unsigned long)] = indexCount >> (i*8);
+			file->extra[i + offset + sizeof(ulong)] = indexCount >> (i*8);
 		}
 
-		offset += 2*sizeof(unsigned long);
+		offset += 2*sizeof(ulong);
 	}
 
 	offset = 0;
@@ -137,10 +137,10 @@ void load(std::string filePath, flux::FileWrite *file) {
 		file->data[i] = 0x0;
 	}
 
-	for (unsigned long j = 0; j < meshCount; ++j) {
+	for (ulong j = 0; j < meshCount; ++j) {
 
-		unsigned long vertexCount = model.meshes[j]->vertices.size();
-		unsigned long indexCount = model.meshes[j]->indices.size();
+		ulong vertexCount = model.meshes[j]->vertices.size();
+		ulong indexCount = model.meshes[j]->indices.size();
 
 		for (uint i = 0; i < vertexCount; ++i) {
 

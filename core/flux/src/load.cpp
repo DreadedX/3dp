@@ -26,9 +26,6 @@ void flux::load() {
 
 void flux::Flux::load(std::string name) {
 
-	/** @note This assert does pass on Windows because luint is a different size */
-	static_assert(sizeof(llu) == 8, "llu is not 8 bytes");
-
 	this->name = name;
 	valid = true;
 	fileHandle = fopen(name.c_str(), "rb");
@@ -66,7 +63,7 @@ void flux::Flux::load(std::string name) {
 				// Read data size and location
 				fread(&index[i].dataSize, sizeof(byte), sizeof(uint), fileHandle);
 				fread(&index[i].compressedDataSize, sizeof(byte), sizeof(uint), fileHandle);
-				fread(&index[i].dataLocation, sizeof(byte), sizeof(llu), fileHandle);
+				fread(&index[i].dataLocation, sizeof(byte), sizeof(ulong), fileHandle);
 
 				// printf("\n");
 				// log::d("- - - - ASSET - - - -");

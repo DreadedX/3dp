@@ -26,5 +26,5 @@ if (PNG_FOUND)
     target_link_libraries (${PROJECT_NAME} ${PNG_LIBRARIES})
 endif (PNG_FOUND)
 
-target_link_libraries(${PROJECT_NAME} flux extra)
+target_link_libraries(${PROJECT_NAME} flux extra leakage)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)
