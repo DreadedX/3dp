@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['cache',['cache',['../fluxuate_8cpp.html#ad554823599d49bc623fe700e8b342b1f',1,'fluxuate.cpp']]],
+  ['cacheold',['cacheOld',['../fluxuate_8cpp.html#a9baab582ba2bce4538e0023319f2db4a',1,'fluxuate.cpp']]],
   ['camera',['Camera',['../structflare_1_1component_1_1Camera.html',1,'flare::component']]],
   ['camera',['Camera',['../structflare_1_1render_1_1Camera.html',1,'flare::render']]],
   ['camera',['Camera',['../structflare_1_1component_1_1Camera.html#af0df3e791ca17cc9d8df60e67214bddc',1,'flare::component::Camera::Camera()'],['../structflare_1_1render_1_1State.html#adb8756da458f1a6f3eec91bf6aa08e39',1,'flare::render::State::camera()']]],
@@ -8,7 +10,6 @@ var searchData=
   ['child',['child',['../structfuse_1_1Entity.html#ace244bd3c988b125b1514a65513d1ac6',1,'fuse::Entity']]],
   ['children',['children',['../structfuse_1_1Entity.html#a0abce41b43cd997299944c5758cb7641',1,'fuse::Entity']]],
   ['close',['close',['../structflux_1_1Flux.html#a085a1a8ef9d2c41db3a984cda9e55354',1,'flux::Flux::close()'],['../namespaceflux.html#a6c42b28c985eaad565b1c7dc2a92bcba',1,'flux::close()'],['../namespaceflare_1_1asset.html#ac87a056608ed046382f9a6dd06bfa1bd',1,'flare::asset::close()']]],
-  ['comparehash',['compareHash',['../fluxuate_8cpp.html#a1bca21a68aedc2fc40932c885879fb7f',1,'fluxuate.cpp']]],
   ['component',['Component',['../structfuse_1_1Component.html',1,'fuse']]],
   ['component_2ecpp',['component.cpp',['../component_8cpp.html',1,'']]],
   ['component_2eh',['component.h',['../component_8h.html',1,'']]],

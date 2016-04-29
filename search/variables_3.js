@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['cache',['cache',['../fluxuate_8cpp.html#ad554823599d49bc623fe700e8b342b1f',1,'fluxuate.cpp']]],
+  ['cacheold',['cacheOld',['../fluxuate_8cpp.html#a9baab582ba2bce4538e0023319f2db4a',1,'fluxuate.cpp']]],
   ['camera',['camera',['../structflare_1_1render_1_1State.html#adb8756da458f1a6f3eec91bf6aa08e39',1,'flare::render::State']]],
   ['child',['child',['../structfuse_1_1Entity.html#ace244bd3c988b125b1514a65513d1ac6',1,'fuse::Entity']]],
   ['children',['children',['../structfuse_1_1Entity.html#a0abce41b43cd997299944c5758cb7641',1,'fuse::Entity']]],

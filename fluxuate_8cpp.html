@@ -103,8 +103,8 @@ Functions</h2></td></tr>
 <tr class="separator:a36e36ee34ba7582b13e40be358da86c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84761dc3632dd7821ba646bf359e6c6b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#a84761dc3632dd7821ba646bf359e6c6b">getFile</a> (std::string basePath, std::string fileName, <a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> *file)</td></tr>
 <tr class="separator:a84761dc3632dd7821ba646bf359e6c6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1bca21a68aedc2fc40932c885879fb7f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#a1bca21a68aedc2fc40932c885879fb7f">compareHash</a> (std::string filePath)</td></tr>
-<tr class="separator:a1bca21a68aedc2fc40932c885879fb7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeec218b94efed11e56af00e35e2a16fc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#aeec218b94efed11e56af00e35e2a16fc">hasChanged</a> (std::string filePath)</td></tr>
+<tr class="separator:aeec218b94efed11e56af00e35e2a16fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad49709405d1b8e7239450e6d8ba63966"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#ad49709405d1b8e7239450e6d8ba63966">writeCache</a> (<a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> *file, std::string fileName)</td></tr>
 <tr class="separator:ad49709405d1b8e7239450e6d8ba63966"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c026dac22cd3ef7196986811eb69066"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#a6c026dac22cd3ef7196986811eb69066">readCache</a> (<a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> *file, std::string fileName)</td></tr>
@@ -114,31 +114,12 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a9e9313d04dc2eb74e511c2ed3113259a"><td class="memItemLeft" align="right" valign="top">jsoncons::json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#a9e9313d04dc2eb74e511c2ed3113259a">hashes</a></td></tr>
-<tr class="separator:a9e9313d04dc2eb74e511c2ed3113259a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf647628e4068934db5d60c3e1b80dca"><td class="memItemLeft" align="right" valign="top">jsoncons::json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#aaf647628e4068934db5d60c3e1b80dca">hashesOld</a></td></tr>
-<tr class="separator:aaf647628e4068934db5d60c3e1b80dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad554823599d49bc623fe700e8b342b1f"><td class="memItemLeft" align="right" valign="top">jsoncons::json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#ad554823599d49bc623fe700e8b342b1f">cache</a></td></tr>
+<tr class="separator:ad554823599d49bc623fe700e8b342b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9baab582ba2bce4538e0023319f2db4a"><td class="memItemLeft" align="right" valign="top">jsoncons::json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#a9baab582ba2bce4538e0023319f2db4a">cacheOld</a></td></tr>
+<tr class="separator:a9baab582ba2bce4538e0023319f2db4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a1bca21a68aedc2fc40932c885879fb7f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool compareHash </td>
-          <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>filePath</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000040">Todo:</a></b></dt><dd>This needs to be in a seperate file </dd></dl>
-
-<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00256">256</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a36e36ee34ba7582b13e40be358da86c6"></a>
 <div class="memitem">
 <div class="memproto">
@@ -203,6 +184,27 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aeec218b94efed11e56af00e35e2a16fc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool hasChanged </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>filePath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000040">Todo:</a></b></dt><dd><p class="startdd">This needs to be in a seperate file </p>
+<p class="enddd">Clean up this function </p>
+</dd></dl>
+
+<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00257">257</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a0ddf1224851353fc92bfbff6f499fa97"></a>
 <div class="memitem">
 <div class="memproto">
@@ -255,7 +257,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00295">295</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
+<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00326">326</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
 
 </div>
 </div>
@@ -283,17 +285,17 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00279">279</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
+<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00310">310</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="a9e9313d04dc2eb74e511c2ed3113259a"></a>
+<a class="anchor" id="ad554823599d49bc623fe700e8b342b1f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">jsoncons::json hashes</td>
+          <td class="memname">jsoncons::json cache</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -302,12 +304,12 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aaf647628e4068934db5d60c3e1b80dca"></a>
+<a class="anchor" id="a9baab582ba2bce4538e0023319f2db4a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">jsoncons::json hashesOld</td>
+          <td class="memname">jsoncons::json cacheOld</td>
         </tr>
       </table>
 </div><div class="memdoc">
