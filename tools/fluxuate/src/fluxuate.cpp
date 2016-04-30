@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
 	ulong fileSize = ftell(file);
 	fseek(file, 0, SEEK_SET);
 
-	uLong adler = adler32(0L, Z_NULL, 0);
+	uint adler = adler32(0L, Z_NULL, 0);
 
 	uint length = 1024;
 	byte *buffer = nullptr;
@@ -115,10 +115,10 @@ int main(int argc, char* argv[]) {
 
 		delete[] buffer;
 		buffer = nullptr;
-
 	}
 
-	/** @todo Make this not hardcoded */
+	fseek(file, 0, SEEK_END);
+
 	bytes_written += fwrite(&adler, sizeof(byte), sizeof(uint), file);
 	totalSize += sizeof(uint);
 

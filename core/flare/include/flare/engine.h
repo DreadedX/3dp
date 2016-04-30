@@ -24,7 +24,7 @@ namespace flare {
 			VSYNC_HALF
 		};
 		/** @brief V-Sync settings */
-		int swap = VSYNC_ON;
+		int swap = VSYNC_OFF;
 	};
 
 	/** @brief This function is called to initialize the Flare Engine

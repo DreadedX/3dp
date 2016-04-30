@@ -41,9 +41,19 @@ flare::asset::Model obj::read(const char *name) {
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> materials;
 
-	std::string err;
-	bool succes = tinyobj::LoadObj(shapes, materials, err, name);
+	std::string basePath;
+	const size_t last_slash_idx = std::string(name).rfind('/');
+	if (std::string::npos != last_slash_idx)
+	{
+		basePath = std::string(name).substr(0, last_slash_idx);
+	}
+	basePath += "/";
 
+	print::d("%s", basePath.c_str());
+
+	std::string err;
+	/** @todo Make this not hardcoded */
+	bool succes = tinyobj::LoadObj(shapes, materials, err, name, basePath.c_str());
 	if (!succes) {
 		print::e(err.c_str());
 		exit(1);
@@ -81,6 +91,32 @@ flare::asset::Model obj::read(const char *name) {
 
 			mesh->indices.push_back(shapes[i].mesh.indices[f]);
 		}
+	}
+	
+	print::d("Materials: %i", materials.size());
+
+	for (size_t i = 0; i < materials.size(); i++) {
+
+		// printf("material[%ld].name = %s\n", i, materials[i].name.c_str());
+		// printf("  material.Ka = (%f, %f ,%f)\n", materials[i].ambient[0], materials[i].ambient[1], materials[i].ambient[2]);
+		// printf("  material.Kd = (%f, %f ,%f)\n", materials[i].diffuse[0], materials[i].diffuse[1], materials[i].diffuse[2]);
+		// printf("  material.Ks = (%f, %f ,%f)\n", materials[i].specular[0], materials[i].specular[1], materials[i].specular[2]);
+		// printf("  material.Tr = (%f, %f ,%f)\n", materials[i].transmittance[0], materials[i].transmittance[1], materials[i].transmittance[2]);
+		// printf("  material.Ke = (%f, %f ,%f)\n", materials[i].emission[0], materials[i].emission[1], materials[i].emission[2]);
+		// printf("  material.Ns = %f\n", materials[i].shininess);
+		// printf("  material.Ni = %f\n", materials[i].ior);
+		// printf("  material.dissolve = %f\n", materials[i].dissolve);
+		// printf("  material.illum = %d\n", materials[i].illum);
+		// printf("  material.map_Ka = %s\n", materials[i].ambient_texname.c_str());
+		// printf("  material.map_Kd = %s\n", materials[i].diffuse_texname.c_str());
+		// printf("  material.map_Ks = %s\n", materials[i].specular_texname.c_str());
+		// printf("  material.map_Ns = %s\n", materials[i].specular_highlight_texname.c_str());
+		// std::map<std::string, std::string>::const_iterator it(materials[i].unknown_parameter.begin());
+		// std::map<std::string, std::string>::const_iterator itEnd(materials[i].unknown_parameter.end());
+		// for (; it != itEnd; it++) {
+		// 	printf("  material.%s = %s\n", it->first.c_str(), it->second.c_str());
+		// }
+		// printf("\n");
 	}
 
 	return model;
