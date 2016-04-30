@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
 	flux::FileWrite *fluxFiles = new flux::FileWrite[count];
 
 	// NOTE: Uncomment to enable caching
-	cacheOld = jsoncons::json::parse_file("cache/cache.json");
+	// cacheOld = jsoncons::json::parse_file("cache/cache.json");
 
 	for (uint i = 0; i < count; ++i) {
 
@@ -54,8 +54,6 @@ int main(int argc, char* argv[]) {
 		dataLocation += sizeof(byte);
 		dataLocation += fluxFiles[i].nameSize;
 		dataLocation += sizeof(uint);
-		dataLocation += fluxFiles[i].extraSize;
-		dataLocation += sizeof(uint);
 		dataLocation += sizeof(uint);
 		dataLocation += sizeof(ulong);
 	}
@@ -72,8 +70,6 @@ int main(int argc, char* argv[]) {
 
 		bytes_written += fwrite(&fluxFiles[i].nameSize, sizeof(byte), sizeof(byte), file);
 		bytes_written += fwrite(fluxFiles[i].name.c_str(), sizeof(byte), fluxFiles[i].nameSize, file);
-		bytes_written += fwrite(&fluxFiles[i].extraSize, sizeof(byte), sizeof(uint), file);
-		bytes_written += fwrite(fluxFiles[i].extra, sizeof(byte), fluxFiles[i].extraSize, file);
 		bytes_written += fwrite(&fluxFiles[i].dataSize, sizeof(byte), sizeof(uint), file);
 		bytes_written += fwrite(&fluxFiles[i].compressedDataSize, sizeof(byte), sizeof(uint), file);
 		bytes_written += fwrite(&fluxFiles[i].dataLocation, sizeof(byte), sizeof(ulong), file);
@@ -132,8 +128,6 @@ int main(int argc, char* argv[]) {
 
 		delete[] fluxFiles[i].data;
 		fluxFiles[i].data = nullptr;
-		delete[] fluxFiles[i].extra;
-		fluxFiles[i].extra = nullptr;
 	}
 	delete[] fluxFiles;
 
@@ -377,8 +371,6 @@ void writeCache(flux::FileWrite *file, std::string fileName) {
 
 	os.write(reinterpret_cast<const char*>(&file->nameSize), sizeof(file->nameSize));
 	os.write(file->name.c_str(), file->nameSize);
-	os.write(reinterpret_cast<const char*>(&file->extraSize), sizeof(file->extraSize));
-	os.write(reinterpret_cast<const char*>(file->extra), file->extraSize);
 	os.write(reinterpret_cast<const char*>(&file->dataSize), sizeof(file->dataSize));
 	os.write(reinterpret_cast<const char*>(&file->compressedDataSize), sizeof(file->compressedDataSize));
 	// TODO: Data location needs to be calculated when packaging
@@ -399,10 +391,6 @@ void readCache(flux::FileWrite *file, std::string fileName) {
 	file->name = std::string(name);
 	delete[] name;
 	
-	is.read(reinterpret_cast<char*>(&file->extraSize), sizeof(file->extraSize));
-	file->extra = new byte[file->extraSize];
-	is.read(reinterpret_cast<char*>(file->extra), file->extraSize);
-
 	is.read(reinterpret_cast<char*>(&file->dataSize), sizeof(file->dataSize));
 	is.read(reinterpret_cast<char*>(&file->compressedDataSize), sizeof(file->compressedDataSize));
 	file->data = new byte[file->compressedDataSize];

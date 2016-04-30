@@ -23,22 +23,28 @@ void flare::asset::Texture::_load() {
 
 	// glGenerateMipmap(GL_TEXTURE_2D);
 	flux::FileLoad *textureFile = flux::get(name);
-	byte *pixels = textureFile->get();
+	byte *textureData = textureFile->get();
 
 	int width = 0;
 	int height = 0;
-	if (textureFile->extraSize >= 9) {
-		for (int i = 0; i < 4; ++i) {
-			width += textureFile->extra[i] << (i*8);
-		}
-		for (int i = 0; i < 4; ++i) {
-			height += textureFile->extra[i+4] << (i*8);
-		}
+
+	uint offset = 0;
+	for (uint i = 0; i < sizeof(int); ++i) {
+		width += textureData[i] << (i*8);
 	}
+	offset += sizeof(int);
+
+	for (uint i = 0; i < sizeof(int); ++i) {
+		height += textureData[i + offset] << (i*8);
+	}
+	offset += sizeof(int);
+
+	// byte bytesPerPixel = textureData[offset];
+	offset += sizeof(byte);
 
 	/** @todo Check bytes per pixel */
 	// Check if color space is linear or sRGB
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData + offset);
 	// glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-	delete[] pixels;
+	delete[] textureData;
 }

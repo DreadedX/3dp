@@ -30,7 +30,7 @@ void flare::asset::Model::_load() {
 
 	ulong meshCount = 0;
 	for (ulong i = 0; i < sizeof(ulong); ++i) {
-		meshCount += modelFile->extra[i] << (i*8);
+		meshCount += modelData[i] << (i*8);
 	}
 	offset += sizeof(ulong);
 
@@ -45,18 +45,16 @@ void flare::asset::Model::_load() {
 	for (ulong i = 0; i < meshCount; ++i) {
 		
 		for (ulong j = 0; j < sizeof(ulong); ++j) {
-			vertexCount[i] = vertexCount[i] + (modelFile->extra[j + offset] << (j*8));
+			vertexCount[i] = vertexCount[i] + (modelData[j + offset] << (j*8));
 		}
 		offset += sizeof(ulong);
 
 		for (ulong j = 0; j < sizeof(ulong); ++j) {
-			indexCount[i] = indexCount[i] + (modelFile->extra[j + offset] << (j*8));
+			indexCount[i] = indexCount[i] + (modelData[j + offset] << (j*8));
 		}
 		offset += sizeof(ulong);
 	}
 
-
-	offset = 0;
 	for (ulong i = 0; i < meshCount; ++i) {
 
 		model::Mesh *mesh = new model::Mesh;
@@ -105,10 +103,7 @@ void flare::asset::Model::_load() {
 			mesh->indices.push_back(index);
 		}
 
-		/** @todo This needs to be loaded from the mtl file */
-		mesh->diffuse = load<Texture>("base/rungholt-RGBA");
-		mesh->specular = load<Texture>("base/rungholt-specular");
-		// mesh->normal = load<Texture>("base/container_normal");
+		mesh->material = load<Material>("base/" + name);
 
 		glGenVertexArrays(1, &mesh->vao);
 		glGenBuffers(1, &mesh->vbo);

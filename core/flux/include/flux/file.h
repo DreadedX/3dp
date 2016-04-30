@@ -12,11 +12,6 @@ namespace flux {
 			@todo This could probably be a char* */
 		std::string name = "";
 
-		/** @brief Size of the extra bytes */
-		uint extraSize = 0;
-		/** @brief Array containing extra bytes */
-		byte *extra = nullptr;
-
 		/** @brief Uncompressed data size */
 		uint dataSize = 0;
 		/** @brief Compressed data size */

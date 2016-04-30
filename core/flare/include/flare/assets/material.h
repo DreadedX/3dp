@@ -5,20 +5,25 @@ namespace flare {
 
     namespace asset {
 
-	/** @brief Asset struct containing material data
-		@todo This is currently not used */
+	/** @brief Asset struct containing material data */
 	struct Material : Asset {
 
+		// diffuse color				Kd
+		// diffuse specular color		Kd
+		// shininess					Ns
+		// diffuse map					map_Kd
+		// specular map					map_Ks
+		
+		/** @brief The diffuse color of the material */
+		glm::vec3 diffuseColor = glm::vec3(1.0f, 1.0f, 1.0f);
+		/** @brief The specular color of the material */
+		glm::vec3 specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+		/** @brief The shininess of the material */
+	    GLfloat shininess = 0.0f;
 		/** @brief Pointer to diffuse Texture Asset */
 	    Texture *diffuse = nullptr;
 		/** @brief Pointer to specular Texture Asset */
 	    Texture *specular = nullptr;
-		/** @brief Pointer to normal Texture Asset */
-	    Texture *normal = nullptr;
-		/** @brief Pointer to emission Texture Asset */
-	    Texture *emission = nullptr;
-		/** @brief The shininess of the material */
-	    GLfloat shininess = 32.0f;
 
 		/** @brief Load material data */
 	    void _load() override;

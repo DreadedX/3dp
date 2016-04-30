@@ -26,6 +26,7 @@ uniform Material material;
 uniform Light light;
 uniform vec3 viewPosition;
 
+// This is currently used to enable two pass rendering
 uniform bool toggle;
 
 const float kPi = 3.14159265;

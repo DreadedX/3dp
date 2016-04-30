@@ -59,6 +59,8 @@ flare::asset::Model obj::read(const char *name) {
 		exit(1);
 	}
 
+	print::d("Meshes: %i", shapes.size());
+
 	for (size_t i = 0; i < shapes.size(); i++) {
 
 		flare::asset::model::Mesh *mesh = new flare::asset::model::Mesh;
@@ -93,9 +95,13 @@ flare::asset::Model obj::read(const char *name) {
 		}
 	}
 	
-	print::d("Materials: %i", materials.size());
-
 	for (size_t i = 0; i < materials.size(); i++) {
+
+		// diffuse color				Kd
+		// diffuse specular color		Kd
+		// shininess					Ns
+		// diffuse map					map_Kd
+		// specular map					map_Ks
 
 		// printf("material[%ld].name = %s\n", i, materials[i].name.c_str());
 		// printf("  material.Ka = (%f, %f ,%f)\n", materials[i].ambient[0], materials[i].ambient[1], materials[i].ambient[2]);
@@ -130,15 +136,7 @@ void load(std::string filePath, flux::FileWrite *file) {
 
 	/** @todo Should this really be stored in extra */
 	ulong meshCount = model.meshes.size();
-	file->extraSize = sizeof(ulong) + meshCount * (sizeof(ulong) + sizeof(ulong));
-	file->extra = new byte[file->extraSize];
-
-	for (uint i = 0; i < sizeof(ulong); ++i) {
-
-		file->extra[i] = meshCount >> (i*8);
-	}
-
-	uint offset = sizeof(ulong);
+	file->dataSize = sizeof(ulong) + meshCount * (sizeof(ulong) + sizeof(ulong));
 
 	for (ulong j = 0; j < meshCount; ++j) {
 
@@ -147,26 +145,36 @@ void load(std::string filePath, flux::FileWrite *file) {
 
 		file->dataSize += vertexCount * sizeof(flare::asset::model::Vertex);
 		file->dataSize += indexCount * sizeof(GLuint);
+	}
+
+	file->data = new byte[file->dataSize];
+	uint offset = sizeof(ulong);
+
+	for (uint i = 0; i < sizeof(ulong); ++i) {
+
+		file->data[i] = meshCount >> (i*8);
+	}
+
+	for (ulong j = 0; j < meshCount; ++j) {
+
+		ulong vertexCount = model.meshes[j]->vertices.size();
+		ulong indexCount = model.meshes[j]->indices.size();
 
 		for (uint i = 0; i < sizeof(ulong); ++i) {
 
-			file->extra[i + offset] = vertexCount >> (i*8);
+			file->data[i + offset] = vertexCount >> (i*8);
 		}
 		for (uint i = 0; i < sizeof(ulong); ++i) {
 
-			file->extra[i + offset + sizeof(ulong)] = indexCount >> (i*8);
+			file->data[i + offset + sizeof(ulong)] = indexCount >> (i*8);
 		}
 
 		offset += 2*sizeof(ulong);
 	}
 
-	offset = 0;
+	for (uint i = 0; i < file->dataSize - offset; ++i) {
 
-	file->data = new byte[file->dataSize];
-
-	for (uint i = 0; i < file->dataSize; ++i) {
-
-		file->data[i] = 0x0;
+		file->data[i + offset] = 0x0;
 	}
 
 	for (ulong j = 0; j < meshCount; ++j) {
@@ -229,16 +237,16 @@ void load(std::string filePath, flux::FileWrite *file) {
 	}
 
 	// print::d("OBJ hex:");
-	//
-	// for (uint i = 0; i < file->dataSize; ++i) {
-	//
+    //
+	// for (uint i = 0; i < 128; ++i) {
+    //
 	// 	if (i % 32 == 0 && i != 0) {
 	// 		printf("\n");
 	// 	}
-	//
+    //
 	// 	printf("0x%02X ", file->data[i]);
 	// }
-	//
+    //
 	// printf("\n");
 
 	assert(offset == file->dataSize);

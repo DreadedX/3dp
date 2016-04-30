@@ -172,7 +172,7 @@ int main() {
 	// cube->addComponent<Spin>();
     // }
 	
-	fuse::Entity *house = fuse::createEntity("Rungholt");
+	fuse::Entity *house = fuse::createEntity("Test Object");
 	house->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
 	house->addComponent<flare::component::Object>("house", "base/object");
 

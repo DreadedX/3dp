@@ -34,12 +34,14 @@ namespace flare {
 				/** @brief Id of idex buffer object */
 				GLuint ebo = 0;
 
-				/** @brief Pointer to the diffuse Texture Asset */
-				Texture *diffuse = nullptr;
-				/** @brief Pointer to the normal Texture Asset */
-				Texture *normal = nullptr;
-				/** @brief Pointer to the specular Texture Asset */
-				Texture *specular = nullptr;
+				// #<{(|* @brief Pointer to the diffuse Texture Asset |)}>#
+				// Texture *diffuse = nullptr;
+				// #<{(|* @brief Pointer to the normal Texture Asset |)}>#
+				// Texture *normal = nullptr;
+				// #<{(|* @brief Pointer to the specular Texture Asset |)}>#
+				// Texture *specular = nullptr;
+				
+				Material *material = nullptr;
 
 				/** @brief List of all the vertices in this mesh */
 				std::vector<model::Vertex> vertices;

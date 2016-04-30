@@ -95,11 +95,6 @@ void flux::Flux::load(std::string name) {
 				index[i].name = std::string(name, nameSize);
 				delete[] name;
 
-				// Read extra data
-				fread(&index[i].extraSize, sizeof(byte), sizeof(uint), fileHandle);
-				index[i].extra = new byte[index[i].extraSize];
-				fread(index[i].extra, sizeof(byte), index[i].extraSize, fileHandle);
-
 				// Read data size and location
 				fread(&index[i].dataSize, sizeof(byte), sizeof(uint), fileHandle);
 				fread(&index[i].compressedDataSize, sizeof(byte), sizeof(uint), fileHandle);
@@ -201,11 +196,6 @@ void flux::Flux::close() {
 		// fclose(fileHandle);
 	}
 	if (index != nullptr) {
-
-		for (uint i = 0; i < indexSize; i++) {
-
-			delete[] index[i].extra;
-		}
 
 		delete[] index;
 		index = nullptr;

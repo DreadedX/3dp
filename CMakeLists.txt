@@ -96,7 +96,7 @@ if(UNIX)
 
 	add_custom_target(run
 		COMMAND ./game
-		DEPENDS assets
+		# DEPENDS assets
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 	add_custom_target(debug

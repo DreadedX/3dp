@@ -6,20 +6,20 @@ void flare::component::Object::_draw() {
 
     for (asset::model::Mesh *mesh : model->meshes) {
 
-	if (mesh->diffuse != nullptr) {
+	if (mesh->material->diffuse != nullptr) {
 
 	    glActiveTexture(GL_TEXTURE0);
-	    glBindTexture(GL_TEXTURE_2D, mesh->diffuse->id);
+	    glBindTexture(GL_TEXTURE_2D, mesh->material->diffuse->id);
 	}
-	if (mesh->normal != nullptr) {
-
-	    glActiveTexture(GL_TEXTURE1);
-	    glBindTexture(GL_TEXTURE_2D, mesh->normal->id);
-	}
-	if (mesh->specular != nullptr) {
+	// if (mesh->material->normal != nullptr) {
+    //
+	//     glActiveTexture(GL_TEXTURE1);
+	//     glBindTexture(GL_TEXTURE_2D, mesh->normal->id);
+	// }
+	if (mesh->material->specular != nullptr) {
 
 	    glActiveTexture(GL_TEXTURE2);
-	    glBindTexture(GL_TEXTURE_2D, mesh->specular->id);
+	    glBindTexture(GL_TEXTURE_2D, mesh->material->specular->id);
 	}
 
 	glBindVertexArray(mesh->vao);
@@ -44,12 +44,14 @@ void flare::component::Object::_draw() {
 	static bool toggle = true;
 	if (input::keyCheck(GLFW_KEY_T)) {
 
-	    if (toggle) {
-		toggle = false;
-	    } else {
-		toggle = true;
-	    }
-	    input::keySet(GLFW_KEY_T, false);
+		print::d("Toggle");
+
+		if (toggle) {
+			toggle = false;
+		} else {
+			toggle = true;
+		}
+		input::keySet(GLFW_KEY_T, false);
 	}
 	glUniform1i(shader->locations.toggle, toggle ? 1 : 0);
 

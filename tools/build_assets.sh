@@ -1,3 +1,3 @@
 #!/bin/bash
-cd ../build/Linux
-./fluxuate ../../game/assets
+cd ../build/Linux/bin
+./fluxuate ../../../game/assets
