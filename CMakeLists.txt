@@ -103,6 +103,12 @@ if(UNIX)
 		COMMAND gdb ./game -ex run -ex bt -ex quit --silent
 		DEPENDS assets
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+	add_custom_target(dist
+		COMMAND mkdir -p ${CMAKE_SOURCE_DIR}/dist
+		COMMAND tar -cvf ${CMAKE_SOURCE_DIR}/dist/release-${CMAKE_SYSTEM_NAME}.tar game base.flx
+		COMMAND gzip ${CMAKE_SOURCE_DIR}/dist/release-${CMAKE_SYSTEM_NAME}.tar
+		DEPENDS assets
+		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 endif(UNIX)
 if(WIN32)
 	add_custom_target(assets
@@ -116,6 +122,11 @@ if(WIN32)
 
 	add_custom_target(debug
 		COMMAND wine game.exe
+		DEPENDS assets
+		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+	add_custom_target(dist
+		COMMAND mkdir -p ${CMAKE_SOURCE_DIR}/dist
+		COMMAND zip ${CMAKE_SOURCE_DIR}/dist/release-${CMAKE_SYSTEM_NAME} game.exe base.flx
 		DEPENDS assets
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 endif(WIN32)

@@ -51,6 +51,7 @@ install_manifest.txt
 build/*
 docs/*
 CMake/*
+dist/*
 !Cmake/toolchains
 *~
 *.swp
