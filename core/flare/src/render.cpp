@@ -35,7 +35,6 @@ void flare::render::init() {
     // state.light.direction = glm::vec3(-0.2f, -1.0f, -0.3f);
     state.light.direction = glm::vec3(50.0f, -50.0f, 50.0f);
 
-	// glm::vec3 color = glm::vec3(0.05f, 0.05f, 0.1f);
 	glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
     state.light.ambient = glm::vec3(0.02f, 0.02f, 0.02f) * color;
@@ -60,15 +59,6 @@ void flare::render::init() {
 
 	for (uint i = 0; i < GBUFFER_NUM_TEXTURES; ++i) {
 
-		// glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, state.textures[i]);
-        //
-		// glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 16, GL_RGB32F, getSettings()->resolution.x, getSettings()->resolution.y, GL_TRUE);
-        //
-		// glTexParameterf(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        // glTexParameterf(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        //
-		// glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D_MULTISAMPLE, state.textures[i], 0);
-		
 		glBindTexture(GL_TEXTURE_2D, state.textures[i]);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, getSettings()->resolution.x, getSettings()->resolution.y, 0, GL_RGB, GL_FLOAT, NULL);
@@ -83,7 +73,7 @@ void flare::render::init() {
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, getSettings()->resolution.x, getSettings()->resolution.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, state.depthTexture, 0);
 
-	GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 }; 
+	GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5, GL_COLOR_ATTACHMENT6 }; 
 	glDrawBuffers(GBUFFER_NUM_TEXTURES, drawBuffers);
 
 	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
@@ -113,7 +103,7 @@ void debugRender() {
 		GLsizei width = (GLsizei)flare::getSettings()->resolution.x;
 		GLsizei height = (GLsizei)flare::getSettings()->resolution.y;
 
-		glReadBuffer(GL_COLOR_ATTACHMENT0);
+		glReadBuffer(GL_COLOR_ATTACHMENT2);
 		glBlitFramebuffer(0, 0, width, height,
 				0, 0, width/2, height/2, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
@@ -121,11 +111,11 @@ void debugRender() {
 		glBlitFramebuffer(0, 0, width, height, 
 				0, height/2, width/2, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-		glReadBuffer(GL_COLOR_ATTACHMENT2);
+		glReadBuffer(GL_COLOR_ATTACHMENT5);
 		glBlitFramebuffer(0, 0, width, height, 
 				width/2, height/2, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-		glReadBuffer(GL_COLOR_ATTACHMENT3);
+		glReadBuffer(GL_COLOR_ATTACHMENT6);
 		glBlitFramebuffer(0, 0, width, height, 
 				width/2, 0, width, height/2, GL_COLOR_BUFFER_BIT, GL_LINEAR); 
 }
@@ -185,11 +175,6 @@ void directionalLightPass() {
 
 			glUniform3fv(state->directionalShader->locations.light.direction, 1, glm::value_ptr(state->light.direction));
 			glUniform3fv(state->directionalShader->locations.light.ambient, 1, glm::value_ptr(state->light.ambient));
-			// glUniform3fv(shader->locations.light.diffuse, 1, glm::value_ptr(state->light.diffuse));
-			// glUniform3fv(shader->locations.light.specular, 1, glm::value_ptr(state->light.specular));
-
-			glUniform3fv(state->directionalShader->locations.light.diffuse, 1, glm::value_ptr(mesh->diffuseColor * state->light.diffuse));
-			glUniform3fv(state->directionalShader->locations.light.specular, 1, glm::value_ptr(mesh->specularColor * state->light.specular));
 
 			glUniform3fv(state->directionalShader->locations.viewPosition, 1, glm::value_ptr(flare::render::getCamera()->position));
 
@@ -217,12 +202,37 @@ void flare::render::update() {
 
 		print::d("Toggling debug render");
 
-		if (toggle) {
-			toggle = false;
-		} else {
-			toggle = true;
-		}
+		toggle = !toggle;
 		input::keySet(GLFW_KEY_F1, false);
+	}
+	static bool night = false;
+	if (input::keyCheck(GLFW_KEY_N)) {
+
+		print::d("Toggling day/night");
+
+		if (night) {
+			glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
+
+			state.light.ambient = glm::vec3(0.02f, 0.02f, 0.02f) * color;
+			state.light.diffuse = glm::vec3(1.0f, 1.0f, 1.0f) * color;
+			state.light.specular = glm::vec3(1.0f, 1.0f, 1.0f) * color;
+
+			state.light.direction = glm::vec3(50.0f, -50.0f, 50.0f);
+
+			night = false;
+		} else {
+
+			glm::vec3 color = glm::vec3(0.05f, 0.05f, 0.25f);
+
+			state.light.ambient = glm::vec3(0.02f, 0.02f, 0.02f) * color;
+			state.light.diffuse = glm::vec3(1.0f, 1.0f, 1.0f) * color;
+			state.light.specular = glm::vec3(1.0f, 1.0f, 1.0f) * color;
+
+			state.light.direction = glm::vec3(-35.0f, -50.0f, 25.0f);
+
+			night = true;
+		}
+		input::keySet(GLFW_KEY_N, false);
 	}
 
 	if (toggle) {
@@ -248,6 +258,9 @@ void flare::render::setShader(flare::asset::Shader *shader) {
 	glUniform1i(glGetUniformLocation(shader->id, "gColorMap"), 1);
 	glUniform1i(glGetUniformLocation(shader->id, "gNormalMap"), 2);
 	glUniform1i(glGetUniformLocation(shader->id, "gTexCoordMap"), 3);
+	glUniform1i(glGetUniformLocation(shader->id, "gMaterialMap"), 4);
+	glUniform1i(glGetUniformLocation(shader->id, "gDiffuseColorMap"), 5);
+	glUniform1i(glGetUniformLocation(shader->id, "gSpecularColorMap"), 6);
 	// glUniform1i(glGetUniformLocation(shader->id, "material.emission"), 3);
 	state.shader = shader->id;
 	

@@ -180,26 +180,24 @@ int main() {
 		player->addComponent<JoyDebugControl>();
 	}
 
-	// for (int i = 0; i < 10; ++i) {
-    //
-	// 	fuse::Entity *cube = fuse::createEntity("Container");
-	// 	cube->addComponent<flare::component::Position>(cubePositions[i]);
-	// 	cube->addComponent<flare::component::Rotation>(glm::radians(20.0f * i), glm::vec3(0.5f, 1.0f, 0.0f));
-	// 	cube->addComponent<flare::component::Object>("cube", "base/object");
-	// 	cube->addComponent<Spin>();
-	// }
+#if 0
+	for (int i = 0; i < 10; ++i) {
 
-	// fuse::Entity *cube = fuse::createEntity("Cube");
-	// cube->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
-	// cube->addComponent<flare::component::Object>("cube", "base/object");
-
+		fuse::Entity *cube = fuse::createEntity("Container");
+		cube->addComponent<flare::component::Position>(cubePositions[i]);
+		cube->addComponent<flare::component::Rotation>(glm::radians(20.0f * i), glm::vec3(0.5f, 1.0f, 0.0f));
+		cube->addComponent<flare::component::Object>("cube");
+		cube->addComponent<Spin>();
+	}
+#elif 1
 	fuse::Entity *house = fuse::createEntity("House");
 	house->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
 	house->addComponent<flare::component::Object>("house");
-
-	// fuse::Entity *rungholt = fuse::createEntity("Rungholt");
-	// rungholt->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
-	// rungholt->addComponent<flare::component::Object>("rungholt");
+#elif 0
+	fuse::Entity *rungholt = fuse::createEntity("Rungholt");
+	rungholt->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
+	rungholt->addComponent<flare::component::Object>("rungholt");
+#endif
 
     // fuse::Entity *test = fuse::createEntity("Test");
     // test->addComponent<LuaTest>();
