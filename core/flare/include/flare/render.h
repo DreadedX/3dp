@@ -6,6 +6,17 @@ namespace flare {
 	/** @brief Render code */
 	namespace render {
 
+		enum GBUFFER_TEXTURE_TYPE {
+			GBUFFER_TEXTURE_TYPE_POSITION,
+			GBUFFER_TEXTURE_TYPE_DIFFUSE,
+			GBUFFER_TEXTURE_TYPE_NORMAL,
+			GBUFFER_TEXTURE_TYPE_TEXCOORD,
+			GBUFFER_NUM_TEXTURES
+		};
+
+		enum RENDER_PASSES {
+			GEOMETRY
+		};
 		/** @brief Camera data
 			@todo Move pitch and yaw from mouse to here
 			@todo This needs an initializer */
@@ -50,6 +61,18 @@ namespace flare {
 			GLuint vao = 0;
 			/** @brief The currently used shader */
 			GLuint shader = 0;
+
+			asset::Model *quad = nullptr;
+
+			asset::Shader *geometryShader = nullptr;
+			asset::Shader *directionalShader = nullptr;
+
+			uint pass = GEOMETRY;
+
+			/** @brief fbo used for geometry pass */
+			GLuint fbo = 0;
+			GLuint textures[GBUFFER_NUM_TEXTURES];
+			GLuint depthTexture = 0;
 
 			struct {
 				GLuint diffuse = 0;

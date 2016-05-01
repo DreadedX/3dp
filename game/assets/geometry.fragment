@@ -1,0 +1,41 @@
+#version 330 core
+struct Material {
+	sampler2D diffuse;
+	sampler2D normal;
+	sampler2D specular;
+	float shininess;
+};
+
+struct Light {
+	vec3 direction;
+
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+};
+
+in VS_OUT {
+	vec3 FragPosition;
+	vec2 Texcoord;
+	vec3 Normal;
+} fs_in;
+
+layout (location = 0) out vec3 WorldPosOut;
+layout (location = 1) out vec3 DiffuseOut;
+layout (location = 2) out vec3 NormalOut;
+layout (location = 3) out vec3 TexCoordOut;
+
+uniform Material material;
+uniform Light light;
+uniform vec3 viewPosition;
+
+// This is currently used to enable two pass rendering
+uniform bool toggle;
+
+void main() {
+
+	WorldPosOut = fs_in.FragPosition;
+	DiffuseOut = texture(material.diffuse, fs_in.Texcoord).xyz;
+	NormalOut = normalize(fs_in.Normal);
+	TexCoordOut = vec3(fs_in.Texcoord, 0.0);
+}

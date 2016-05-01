@@ -16,8 +16,6 @@ namespace flare {
 
 			/** @brief Pointer to Model Asset */
 			asset::Model *model = nullptr;
-			/** @brief Pointer to Shader Asset */
-			asset::Shader *shader = nullptr;
 
 			/** Draw the object to the screen */
 			void _draw() override;
@@ -27,7 +25,7 @@ namespace flare {
 				@param model - Name of the model to load
 				@param shader - Name of the shader to load
 				@todo It is propably a good idea to remove the shader and just use a global shader */
-			Object(fuse::Entity *parent, std::string model, std::string shader) {
+			Object(fuse::Entity *parent, std::string model) {
 				super(parent);
 
 				this->position = parent->getComponent<Position>();
@@ -38,7 +36,6 @@ namespace flare {
 				}
 
 				this->model = asset::load<asset::Model>(model);
-				this->shader = asset::load<asset::Shader>(shader);
 			}
 		};
 	}

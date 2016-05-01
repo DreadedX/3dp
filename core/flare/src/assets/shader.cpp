@@ -38,7 +38,7 @@ void flare::asset::Shader::_load() {
 	if (vertexStatus != GL_TRUE) {
 		char buffer[512];
 		glGetShaderInfoLog(vertexShader, 512, NULL, buffer);
-		print::w("Vertex shader error: %s", buffer);
+		print::w("Vertex shader error: %s (%s)", buffer, name.c_str());
 		return;
 	}
 
@@ -47,7 +47,7 @@ void flare::asset::Shader::_load() {
 	if (fragmentStatus != GL_TRUE) {
 		char buffer[512];
 		glGetShaderInfoLog(fragmentShader, 512, NULL, buffer);
-		print::w("Fragment shader error: %s", buffer);
+		print::w("Fragment shader error: %s (%s)", buffer, name.c_str());
 		return;
 	}
 

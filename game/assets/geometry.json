@@ -1,0 +1,4 @@
+{
+    "vertex": "base/geometry_vertex",
+    "fragment": "base/geometry_fragment"
+}

@@ -71,6 +71,7 @@ struct JoyCamera : fuse::Component {
 		super(parent);
 
 		// TESTING
+#if 0
 		flare::render::Camera *camera = flare::render::getCamera();
 		camera->position = glm::vec3(377, 115, -246);
 		
@@ -84,6 +85,7 @@ struct JoyCamera : fuse::Component {
 		camera->front.y = sin(glm::radians(mouse->pitch));
 		camera->front.z = sin(glm::radians(mouse->yaw)) * cos(glm::radians(mouse->pitch));
 		camera->front = glm::normalize(camera->front);
+#endif
 	}
 
 	void _update() override {
@@ -191,13 +193,13 @@ int main() {
 	// cube->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
 	// cube->addComponent<flare::component::Object>("cube", "base/object");
 
-	// fuse::Entity *house = fuse::createEntity("House");
-	// house->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
-	// house->addComponent<flare::component::Object>("house", "base/object");
+	fuse::Entity *house = fuse::createEntity("House");
+	house->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
+	house->addComponent<flare::component::Object>("house");
 
-	fuse::Entity *rungholt = fuse::createEntity("Rungholt");
-	rungholt->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
-	rungholt->addComponent<flare::component::Object>("rungholt", "base/object");
+	// fuse::Entity *rungholt = fuse::createEntity("Rungholt");
+	// rungholt->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
+	// rungholt->addComponent<flare::component::Object>("rungholt");
 
     // fuse::Entity *test = fuse::createEntity("Test");
     // test->addComponent<LuaTest>();

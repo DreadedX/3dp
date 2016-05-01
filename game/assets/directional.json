@@ -1,0 +1,4 @@
+{
+    "vertex": "base/directional_vertex",
+    "fragment": "base/directional_fragment"
+}

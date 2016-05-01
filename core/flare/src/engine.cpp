@@ -29,8 +29,7 @@ void flare::init() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-	// 16x MSAA
-	glfwWindowHint(GLFW_SAMPLES, 16);
+	// glfwWindowHint(GLFW_SAMPLES, 4);
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
@@ -120,9 +119,6 @@ void flare::update() {
 	fuse::update();
 	// Run renderer logic
 	render::update();
-
-	// Run entity render
-	fuse::draw();
 
 	// This is for the debug interface
 #ifndef NDEBUG

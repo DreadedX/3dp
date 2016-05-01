@@ -128,8 +128,6 @@ void flare::asset::Model::_load() {
 
 		mesh->shininess = mesh->shininess == 0 ? 1.0f : mesh->shininess;
 
-		print::d("%f", mesh->shininess);
-
 		delete[] tempData;
 
 		byte length = modelData[offset];
@@ -142,8 +140,6 @@ void flare::asset::Model::_load() {
 		tempData[length] = 0x00;
 		tempData[length + 1] = 0x00;
 		// if (length != 0) {
-
-			print::d("%s", reinterpret_cast<const char*>(tempData));
 
 			mesh->diffuse = load<Texture>(reinterpret_cast<const char*>(tempData));
 		// }
@@ -161,8 +157,6 @@ void flare::asset::Model::_load() {
 		tempData[length + 1] = 0x00;
 		// if (length != 0) {
 		
-			print::d("%s", reinterpret_cast<const char*>(tempData));
-
 			mesh->specular = load<Texture>(reinterpret_cast<const char*>(tempData));
 		// }
 		delete[] tempData;

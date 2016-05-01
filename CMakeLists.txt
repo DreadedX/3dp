@@ -96,12 +96,10 @@ if(UNIX)
 
 	add_custom_target(run
 		COMMAND ./game
-		# DEPENDS assets
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 	add_custom_target(debug
 		COMMAND gdb ./game -ex run -ex bt -ex quit --silent
-		DEPENDS assets
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 	add_custom_target(dist
 		COMMAND mkdir -p ${CMAKE_SOURCE_DIR}/dist
