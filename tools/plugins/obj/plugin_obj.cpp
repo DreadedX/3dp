@@ -31,12 +31,9 @@
 #include "plugin_obj.h"
 #include "plugin.h"
 
-/** @note This only exists to make sure everything compiles */
-void flare::asset::Model::_load() {}
+obj::Model obj::read(const char *name) {
 
-flare::asset::Model obj::read(const char *name) {
-
-	flare::asset::Model model;
+	Model model;
 
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> materials;
@@ -63,7 +60,7 @@ flare::asset::Model obj::read(const char *name) {
 
 	for (size_t i = 0; i < shapes.size(); i++) {
 
-		flare::asset::model::Mesh *mesh = new flare::asset::model::Mesh;
+		model::Mesh *mesh = new model::Mesh;
 		model.meshes.push_back(mesh);
 
 		assert((shapes[i].mesh.indices.size() % 3) == 0);
@@ -93,36 +90,26 @@ flare::asset::Model obj::read(const char *name) {
 
 			mesh->indices.push_back(shapes[i].mesh.indices[f]);
 		}
-	}
-	
-	for (size_t i = 0; i < materials.size(); i++) {
 
-		// diffuse color				Kd
-		// diffuse specular color		Kd
-		// shininess					Ns
-		// diffuse map					map_Kd
-		// specular map					map_Ks
+		// I assume each mesh can only have one material
+		int materialId = shapes[i].mesh.material_ids[0];
 
-		// printf("material[%ld].name = %s\n", i, materials[i].name.c_str());
-		// printf("  material.Ka = (%f, %f ,%f)\n", materials[i].ambient[0], materials[i].ambient[1], materials[i].ambient[2]);
-		// printf("  material.Kd = (%f, %f ,%f)\n", materials[i].diffuse[0], materials[i].diffuse[1], materials[i].diffuse[2]);
-		// printf("  material.Ks = (%f, %f ,%f)\n", materials[i].specular[0], materials[i].specular[1], materials[i].specular[2]);
-		// printf("  material.Tr = (%f, %f ,%f)\n", materials[i].transmittance[0], materials[i].transmittance[1], materials[i].transmittance[2]);
-		// printf("  material.Ke = (%f, %f ,%f)\n", materials[i].emission[0], materials[i].emission[1], materials[i].emission[2]);
-		// printf("  material.Ns = %f\n", materials[i].shininess);
-		// printf("  material.Ni = %f\n", materials[i].ior);
-		// printf("  material.dissolve = %f\n", materials[i].dissolve);
-		// printf("  material.illum = %d\n", materials[i].illum);
-		// printf("  material.map_Ka = %s\n", materials[i].ambient_texname.c_str());
-		// printf("  material.map_Kd = %s\n", materials[i].diffuse_texname.c_str());
-		// printf("  material.map_Ks = %s\n", materials[i].specular_texname.c_str());
-		// printf("  material.map_Ns = %s\n", materials[i].specular_highlight_texname.c_str());
-		// std::map<std::string, std::string>::const_iterator it(materials[i].unknown_parameter.begin());
-		// std::map<std::string, std::string>::const_iterator itEnd(materials[i].unknown_parameter.end());
-		// for (; it != itEnd; it++) {
-		// 	printf("  material.%s = %s\n", it->first.c_str(), it->second.c_str());
-		// }
-		// printf("\n");
+		if (materialId >= 0) {
+
+			tinyobj::material_t material = materials[materialId];
+
+			mesh->diffuseColor = glm::vec3(material.diffuse[0], material.diffuse[1], material.diffuse[2]);
+			mesh->specularColor = glm::vec3(material.specular[0], material.specular[1], material.specular[2]);
+			mesh->shininess = material.shininess;
+
+			print::d("%f", material.shininess);
+
+			mesh->diffuseMap = material.diffuse_texname;
+			mesh->specularMap = material.specular_texname;
+		} else {
+
+			print::w("Model '%s' is missing a material", name);
+		}
 	}
 
 	return model;
@@ -132,7 +119,7 @@ void load(std::string filePath, flux::FileWrite *file) {
 
 	print::d(file->name.c_str());
 
-	flare::asset::Model model = obj::read(filePath.c_str());
+	obj::Model model = obj::read(filePath.c_str());
 
 	/** @todo Should this really be stored in extra */
 	ulong meshCount = model.meshes.size();
@@ -145,6 +132,13 @@ void load(std::string filePath, flux::FileWrite *file) {
 
 		file->dataSize += vertexCount * sizeof(flare::asset::model::Vertex);
 		file->dataSize += indexCount * sizeof(GLuint);
+		file->dataSize += sizeof(glm::vec3);
+		file->dataSize += sizeof(glm::vec3);
+		file->dataSize += sizeof(GLfloat);
+		file->dataSize += sizeof(byte);
+		file->dataSize += model.meshes[j]->diffuseMap.length();
+		file->dataSize += sizeof(byte);
+		file->dataSize += model.meshes[j]->specularMap.length();
 	}
 
 	file->data = new byte[file->dataSize];
@@ -168,13 +162,8 @@ void load(std::string filePath, flux::FileWrite *file) {
 
 			file->data[i + offset + sizeof(ulong)] = indexCount >> (i*8);
 		}
-
+		
 		offset += 2*sizeof(ulong);
-	}
-
-	for (uint i = 0; i < file->dataSize - offset; ++i) {
-
-		file->data[i + offset] = 0x0;
 	}
 
 	for (ulong j = 0; j < meshCount; ++j) {
@@ -184,6 +173,7 @@ void load(std::string filePath, flux::FileWrite *file) {
 
 		for (uint i = 0; i < vertexCount; ++i) {
 
+			/** @todo Why am i copying this? */
 			glm::vec3 position = model.meshes[j]->vertices[i].position;
 			glm::vec3 normal = model.meshes[j]->vertices[i].normal;
 			glm::vec2 texCoords = model.meshes[j]->vertices[i].texCoords;
@@ -234,11 +224,56 @@ void load(std::string filePath, flux::FileWrite *file) {
 
 			offset += sizeof(GLuint);
 		}
+
+		byte *tempData = new byte[sizeof(glm::vec3)];
+		memcpy(tempData, &model.meshes[j]->diffuseColor, sizeof(glm::vec3));
+		for (uint n = 0; n < sizeof(glm::vec3); ++n) {
+
+			file->data[n + offset] = tempData[n];
+		}
+		offset += sizeof(glm::vec3);
+		delete[] tempData;
+
+		tempData = new byte[sizeof(glm::vec3)];
+		memcpy(tempData, &model.meshes[j]->specularColor, sizeof(glm::vec3));
+		for (uint n = 0; n < sizeof(glm::vec3); ++n) {
+
+			file->data[n + offset] = tempData[n];
+		}
+		offset += sizeof(glm::vec3);
+		delete[] tempData;
+
+		tempData = new byte[sizeof(GLfloat)];
+		memcpy(tempData, &model.meshes[j]->shininess, sizeof(GLfloat));
+		for (uint n = 0; n < sizeof(GLfloat); ++n) {
+
+			file->data[n + offset] = tempData[n];
+		}
+		offset += sizeof(GLfloat);
+		delete[] tempData;
+
+		file->data[offset] = static_cast<byte>(model.meshes[j]->diffuseMap.length());
+		offset += sizeof(byte);
+
+		for (uint n = 0; n < model.meshes[j]->diffuseMap.length(); ++n) {
+
+			file->data[n + offset] = model.meshes[j]->diffuseMap[n];
+		}
+		offset += model.meshes[j]->diffuseMap.length();
+
+		file->data[offset] = static_cast<byte>(model.meshes[j]->specularMap.length());
+		offset += sizeof(byte);
+
+		for (uint n = 0; n < model.meshes[j]->specularMap.length(); ++n) {
+
+			file->data[n + offset] = model.meshes[j]->specularMap[n];
+		}
+		offset += model.meshes[j]->specularMap.length();
 	}
 
 	// print::d("OBJ hex:");
     //
-	// for (uint i = 0; i < 128; ++i) {
+	// for (uint i = 0; i < file->dataSize; ++i) {
     //
 	// 	if (i % 32 == 0 && i != 0) {
 	// 		printf("\n");

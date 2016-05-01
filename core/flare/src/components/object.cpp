@@ -6,20 +6,20 @@ void flare::component::Object::_draw() {
 
     for (asset::model::Mesh *mesh : model->meshes) {
 
-	if (mesh->material->diffuse != nullptr) {
+	if (mesh->diffuse != nullptr) {
 
 	    glActiveTexture(GL_TEXTURE0);
-	    glBindTexture(GL_TEXTURE_2D, mesh->material->diffuse->id);
+	    glBindTexture(GL_TEXTURE_2D, mesh->diffuse->id);
 	}
 	// if (mesh->material->normal != nullptr) {
     //
 	//     glActiveTexture(GL_TEXTURE1);
 	//     glBindTexture(GL_TEXTURE_2D, mesh->normal->id);
 	// }
-	if (mesh->material->specular != nullptr) {
+	if (mesh->specular != nullptr) {
 
 	    glActiveTexture(GL_TEXTURE2);
-	    glBindTexture(GL_TEXTURE_2D, mesh->material->specular->id);
+	    glBindTexture(GL_TEXTURE_2D, mesh->specular->id);
 	}
 
 	glBindVertexArray(mesh->vao);
@@ -32,13 +32,15 @@ void flare::component::Object::_draw() {
 
 	    glUniform3fv(shader->locations.light.direction, 1, glm::value_ptr(state->light.direction));
 	    glUniform3fv(shader->locations.light.ambient, 1, glm::value_ptr(state->light.ambient));
-	    glUniform3fv(shader->locations.light.diffuse, 1, glm::value_ptr(state->light.diffuse));
-	    glUniform3fv(shader->locations.light.specular, 1, glm::value_ptr(state->light.specular));
+	    // glUniform3fv(shader->locations.light.diffuse, 1, glm::value_ptr(state->light.diffuse));
+	    // glUniform3fv(shader->locations.light.specular, 1, glm::value_ptr(state->light.specular));
+
+	    glUniform3fv(shader->locations.light.diffuse, 1, glm::value_ptr(mesh->diffuseColor * state->light.diffuse));
+	    glUniform3fv(shader->locations.light.specular, 1, glm::value_ptr(mesh->specularColor * state->light.specular));
 
 	    glUniform3fv(shader->locations.viewPosition, 1, glm::value_ptr(render::getCamera()->position));
 
-	    /** @todo This should also be loaded from the obj */
-	    glUniform1f(shader->locations.material.shininess, 16);
+	    glUniform1f(shader->locations.material.shininess, mesh->shininess);
 	}
 
 	static bool toggle = true;

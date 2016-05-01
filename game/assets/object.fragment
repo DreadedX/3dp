@@ -30,39 +30,37 @@ uniform vec3 viewPosition;
 uniform bool toggle;
 
 const float kPi = 3.14159265;
-const float kShininess = 16.0;
 
 void main() {
 
 	// if (toggle) {
 		float energyConservation = (8.0 + material.shininess) / (8.0 * kPi);
-
+        
 		vec4 color = texture(material.diffuse, fs_in.Texcoord);
-
+        
 		if (color.a < 1.0 && toggle) {
 			discard;
 		}
-
+        
 		if ((color.a == 1.0 || color.a == 0.0) && !toggle) {
 			discard;
 		}
-
+        
 		// Ambient
 		vec4 ambient = vec4(light.ambient, 1.0) * color;
-
+        
 		// Diffuse
 		vec3 norm = normalize(fs_in.Normal);
 		vec3 lightDir = normalize(-light.direction);
 		float diff = max(dot(norm, lightDir), 0.0);
 		vec4 diffuse = vec4(light.diffuse, 1.0) * diff * color;
-
+        
 		// Specular
 		vec3 viewDir = normalize(viewPosition - fs_in.FragPosition);
 		vec3 halfwayDir = normalize(lightDir + viewDir);
 		float spec = energyConservation * pow(max(dot(norm, halfwayDir), 0.0), material.shininess);
-		//vec4 specular = vec4(light.specular, 1.0) * spec * texture(material.specular, fs_in.Texcoord);
 		vec4 specular = vec4(light.specular, 1.0) * spec * texture(material.specular, fs_in.Texcoord);
-
+        
 		outColor = ambient + diffuse + specular;
 		//outColor = vec4(ambient + diffuse, 1.0);
 	// } else {

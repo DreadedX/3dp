@@ -2,10 +2,6 @@
 
 void flare::asset::Texture::_load() {
 
-	if (name == "") {
-		return;
-	}
-
 	if (id != 0) {
 
 		glDeleteTextures(1, &id);
@@ -21,30 +17,51 @@ void flare::asset::Texture::_load() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	// glGenerateMipmap(GL_TEXTURE_2D);
-	flux::FileLoad *textureFile = flux::get(name);
-	byte *textureData = textureFile->get();
+	if (name != "") {
+		flux::FileLoad *textureFile = flux::get(name);
+		byte *textureData = textureFile->get();
 
-	int width = 0;
-	int height = 0;
+		int width = 0;
+		int height = 0;
 
-	uint offset = 0;
-	for (uint i = 0; i < sizeof(int); ++i) {
-		width += textureData[i] << (i*8);
+		uint offset = 0;
+		for (uint i = 0; i < sizeof(int); ++i) {
+			width += textureData[i] << (i*8);
+		}
+		offset += sizeof(int);
+
+		for (uint i = 0; i < sizeof(int); ++i) {
+			height += textureData[i + offset] << (i*8);
+		}
+		offset += sizeof(int);
+
+		byte bytesPerPixel = textureData[offset];
+		offset += sizeof(byte);
+
+		/** @todo Check bytes per pixel */
+		// Check if color space is linear or sRGB
+		if (bytesPerPixel == 0x04) {
+
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData + offset);
+		} else if (bytesPerPixel == 0x03) {
+
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData + offset);
+		} else {
+
+			print::w("'%s' contains an invalid amount of bytes per pixel (%X)", name.c_str(), bytesPerPixel);
+		}
+
+		/** @todo Figure out how this works */
+		// glGenerateMipmap(GL_TEXTURE_2D);
+
+		delete[] textureData;
+	} else {
+
+		print::d("Generating empty texture");
+
+		byte textureData[] =  {0x00, 0x00, 0x00, 0x00};
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData);
+
 	}
-	offset += sizeof(int);
-
-	for (uint i = 0; i < sizeof(int); ++i) {
-		height += textureData[i + offset] << (i*8);
-	}
-	offset += sizeof(int);
-
-	// byte bytesPerPixel = textureData[offset];
-	offset += sizeof(byte);
-
-	/** @todo Check bytes per pixel */
-	// Check if color space is linear or sRGB
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData + offset);
-	// glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-	delete[] textureData;
 }

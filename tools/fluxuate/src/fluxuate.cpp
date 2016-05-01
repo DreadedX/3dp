@@ -12,8 +12,6 @@ jsoncons::json cacheOld;
 
 int main(int argc, char* argv[]) {
 
-	static_assert(sizeof(glm::vec3) == 12, "ERROR");
-
 	clock_t t = clock();
 
 	std::string dir;
@@ -33,7 +31,7 @@ int main(int argc, char* argv[]) {
 	flux::FileWrite *fluxFiles = new flux::FileWrite[count];
 
 	// NOTE: Uncomment to enable caching
-	// cacheOld = jsoncons::json::parse_file("cache/cache.json");
+	cacheOld = jsoncons::json::parse_file("cache/cache.json");
 
 	for (uint i = 0; i < count; ++i) {
 

@@ -72,7 +72,7 @@ newmtl Stationary_Water
 Ns 0
 Ka 0.0321569 0.0729412 0.199216
 Kd 0.160784 0.364706 0.996078
-Ks 0 0 0
+Ks 1 1 1
 map_Ka rungholt-RGBA.png
 map_Kd rungholt-RGBA.png
 map_d rungholt-Alpha.png

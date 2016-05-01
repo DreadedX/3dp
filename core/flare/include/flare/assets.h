@@ -60,7 +60,6 @@ namespace flare {
 
 #include "assets/shader.h"
 #include "assets/texture.h"
-#include "assets/material.h"
 #include "assets/model.h"
 
 #endif

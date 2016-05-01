@@ -3,7 +3,7 @@
 #
 # http://graphics.cs.williams.edu/data
 
-newmtl default
+newmtl cube
   Ns 10.0000
   Ni 1.5000
   Tr 0  0
@@ -12,6 +12,6 @@ newmtl default
   Kd 1 1 1
   Ks 0.2 0.2 0.2
   Ke 0 0 0
-  map_Kd container_diffuse.png
-  map_Bump container_normal.png
-  map_Ks container_specular.png
+  map_Kd base/container_diffuse
+  map_Bump base/container_normal
+  map_Ks base/container_specular

@@ -72,12 +72,6 @@ namespace flare {
 		/** @brief Set the shader
 			@param shader - Pointer to Shader Asset to use */
 		void setShader(asset::Shader *shader);
-		/** @brief Set the model to render
-			@param model - Pointer to Model Asset to use */
-		void setModel(asset::Model *model);
-		/** @brief Set the material
-			@todo This needs to be intergrated into object.cpp, because right now it is not used */
-		void setMaterial(asset::Material *material);
 
 		/** @brief Get the current OpenGL state
 			@returns Pointer to the state */

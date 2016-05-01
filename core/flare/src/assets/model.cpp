@@ -103,7 +103,70 @@ void flare::asset::Model::_load() {
 			mesh->indices.push_back(index);
 		}
 
-		mesh->material = load<Material>("base/" + name);
+		byte *tempData = new byte[sizeof(glm::vec3)];
+		for (uint n = 0; n < sizeof(glm::vec3); ++n) {
+			tempData[n] = modelData[n + offset];
+		}
+		offset += sizeof(glm::vec3);
+		memcpy(&mesh->diffuseColor, tempData, sizeof(glm::vec3));
+		delete[] tempData;
+
+		tempData = new byte[sizeof(glm::vec3)];
+		for (uint n = 0; n < sizeof(glm::vec3); ++n) {
+			tempData[n] = modelData[n + offset];
+		}
+		offset += sizeof(glm::vec3);
+		memcpy(&mesh->specularColor, tempData, sizeof(glm::vec3));
+		delete[] tempData;
+
+		tempData = new byte[sizeof(GLfloat)];
+		for (uint n = 0; n < sizeof(GLfloat); ++n) {
+			tempData[n] = modelData[n + offset];
+		}
+		offset += sizeof(GLfloat);
+		memcpy(&mesh->shininess, tempData, sizeof(GLfloat));
+
+		mesh->shininess = mesh->shininess == 0 ? 1.0f : mesh->shininess;
+
+		print::d("%f", mesh->shininess);
+
+		delete[] tempData;
+
+		byte length = modelData[offset];
+		offset += sizeof(byte);
+
+		tempData = new byte[length + 2];
+		for (uint n = 0; n < length; ++n) {
+			tempData[n] = modelData[n + offset];
+		}
+		tempData[length] = 0x00;
+		tempData[length + 1] = 0x00;
+		// if (length != 0) {
+
+			print::d("%s", reinterpret_cast<const char*>(tempData));
+
+			mesh->diffuse = load<Texture>(reinterpret_cast<const char*>(tempData));
+		// }
+		delete[] tempData;
+		offset += length;
+
+		length = modelData[offset];
+		offset += sizeof(byte);
+
+		tempData = new byte[length + 2];
+		for (uint n = 0; n < length; ++n) {
+			tempData[n] = modelData[n + offset];
+		}
+		tempData[length] = 0x00;
+		tempData[length + 1] = 0x00;
+		// if (length != 0) {
+		
+			print::d("%s", reinterpret_cast<const char*>(tempData));
+
+			mesh->specular = load<Texture>(reinterpret_cast<const char*>(tempData));
+		// }
+		delete[] tempData;
+		offset += length;
 
 		glGenVertexArrays(1, &mesh->vao);
 		glGenBuffers(1, &mesh->vbo);

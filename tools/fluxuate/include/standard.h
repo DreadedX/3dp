@@ -30,7 +30,7 @@
 #include "tinyobjloader/tiny_obj_loader.h"
 
 // Needed to be able to store assets in the same format as flare
-#include "flare/flare.h"
+// #include "flare/assets.h"
 
 // Debug
 #ifndef NDEBUG

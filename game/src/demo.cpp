@@ -69,6 +69,21 @@ struct JoyCamera : fuse::Component {
 
 	JoyCamera(fuse::Entity *parent) {
 		super(parent);
+
+		// TESTING
+		flare::render::Camera *camera = flare::render::getCamera();
+		camera->position = glm::vec3(377, 115, -246);
+		
+		flare::input::Mouse *mouse = flare::input::getMouse();
+
+		// TODO: Add sensitivity
+		mouse->pitch = 344.0f;
+		mouse->yaw = 157.0f;
+
+		camera->front.x = cos(glm::radians(mouse->yaw)) * cos(glm::radians(mouse->pitch));
+		camera->front.y = sin(glm::radians(mouse->pitch));
+		camera->front.z = sin(glm::radians(mouse->yaw)) * cos(glm::radians(mouse->pitch));
+		camera->front = glm::normalize(camera->front);
 	}
 
 	void _update() override {
@@ -163,18 +178,26 @@ int main() {
 		player->addComponent<JoyDebugControl>();
 	}
 
-    // for (int i = 0; i < 10; ++i) {
+	// for (int i = 0; i < 10; ++i) {
     //
-	// fuse::Entity *cube = fuse::createEntity("Container");
-	// cube->addComponent<flare::component::Position>(cubePositions[i]);
-	// cube->addComponent<flare::component::Rotation>(glm::radians(20.0f * i), glm::vec3(0.5f, 1.0f, 0.0f));
+	// 	fuse::Entity *cube = fuse::createEntity("Container");
+	// 	cube->addComponent<flare::component::Position>(cubePositions[i]);
+	// 	cube->addComponent<flare::component::Rotation>(glm::radians(20.0f * i), glm::vec3(0.5f, 1.0f, 0.0f));
+	// 	cube->addComponent<flare::component::Object>("cube", "base/object");
+	// 	cube->addComponent<Spin>();
+	// }
+
+	// fuse::Entity *cube = fuse::createEntity("Cube");
+	// cube->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
 	// cube->addComponent<flare::component::Object>("cube", "base/object");
-	// cube->addComponent<Spin>();
-    // }
-	
-	fuse::Entity *house = fuse::createEntity("Test Object");
-	house->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
-	house->addComponent<flare::component::Object>("house", "base/object");
+
+	// fuse::Entity *house = fuse::createEntity("House");
+	// house->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
+	// house->addComponent<flare::component::Object>("house", "base/object");
+
+	fuse::Entity *rungholt = fuse::createEntity("Rungholt");
+	rungholt->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
+	rungholt->addComponent<flare::component::Object>("rungholt", "base/object");
 
     // fuse::Entity *test = fuse::createEntity("Test");
     // test->addComponent<LuaTest>();
