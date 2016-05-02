@@ -18,11 +18,15 @@ void flare::init() {
 
 	print::d("The current resolution is %i by %i", settings->resolution.x, settings->resolution.y);
 
+	print::d("!");
+
 	if (!glfwInit()) {
 
 		print::e("Failed to initialize glfw!");
 		exit(-1);
 	}
+
+	print::d("!");
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

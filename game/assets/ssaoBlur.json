@@ -1,0 +1,4 @@
+{
+    "vertex": "base/ssaoBlur_vertex",
+    "fragment": "base/ssaoBlur_fragment"
+}

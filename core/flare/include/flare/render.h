@@ -11,7 +11,6 @@ namespace flare {
 			GBUFFER_TEXTURE_TYPE_DIFFUSE,
 			GBUFFER_TEXTURE_TYPE_NORMAL,
 			GBUFFER_TEXTURE_TYPE_TEXCOORD,
-			GBUFFER_TEXTURE_TYPE_MATERIAL,
 			GBUFFER_TEXTURE_TYPE_DIFFUSE_LIGHT,
 			GBUFFER_TEXTURE_TYPE_SPECULAR_LIGHT,
 			GBUFFER_NUM_TEXTURES
@@ -68,14 +67,23 @@ namespace flare {
 			asset::Model *quad = nullptr;
 
 			asset::Shader *geometryShader = nullptr;
-			asset::Shader *directionalShader = nullptr;
+			asset::Shader *ssaoShader = nullptr;
+			asset::Shader *ssaoBlurShader = nullptr;
+			asset::Shader *lightingShader = nullptr;
 
 			uint pass = GEOMETRY;
 
 			/** @brief fbo used for geometry pass */
-			GLuint fbo = 0;
-			GLuint textures[GBUFFER_NUM_TEXTURES];
+			GLuint geometryFbo = 0;
+			GLuint geometryTextures[GBUFFER_NUM_TEXTURES];
 			GLuint depthTexture = 0;
+
+			/** @brief SSAO noise texture */
+			GLuint ssaoNoise = 0;
+			GLuint ssaoFbo = 0;
+			GLuint ssaoTexture = 0;
+			GLuint ssaoBlurFbo = 0;
+			GLuint ssaoBlurTexture = 0;
 
 			struct {
 				GLuint diffuse = 0;

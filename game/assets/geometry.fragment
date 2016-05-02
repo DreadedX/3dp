@@ -20,17 +20,24 @@ in VS_OUT {
 	vec3 Normal;
 } fs_in;
 
-layout (location = 0) out vec3 WorldPosOut;
+layout (location = 0) out vec4 WorldPosOut;
 layout (location = 1) out vec3 ColorOut;
 layout (location = 2) out vec3 NormalOut;
 layout (location = 3) out vec3 TexCoordOut;
 
-layout (location = 4) out vec3 MaterialOut;
-layout (location = 5) out vec3 DiffuseColorOut;
-layout (location = 6) out vec3 SpecularColorOut;
+layout (location = 4) out vec3 DiffuseColorOut;
+layout (location = 5) out vec4 SpecularColorOut;
 
 uniform Material material;
 uniform Light light;
+
+const float NEAR = 0.1; // projection matrix's near plane
+const float FAR = 1000.0f; // projection matrix's far plane
+float LinearizeDepth(float depth)
+{
+    float z = depth * 2.0 - 1.0; // Back to NDC 
+    return (2.0 * NEAR * FAR) / (FAR + NEAR - z * (FAR - NEAR));	
+}
 
 void main() {
 
@@ -38,12 +45,13 @@ void main() {
 		discard;
 	}
 
-	WorldPosOut = fs_in.FragPosition;
+	WorldPosOut.xyz = fs_in.FragPosition;
+	WorldPosOut.a = LinearizeDepth(gl_FragCoord.z);
 	ColorOut = texture(material.diffuse, fs_in.Texcoord).rgb;
 	NormalOut = normalize(fs_in.Normal);
 	TexCoordOut = vec3(fs_in.Texcoord, 0.0);
 
-	MaterialOut = vec3(texture(material.specular, fs_in.Texcoord).r, material.shininess, 0.0);
 	DiffuseColorOut = light.diffuse;
-	SpecularColorOut = light.specular;
+	SpecularColorOut.rgb = light.specular * texture(material.specular, fs_in.Texcoord).rgb;
+	SpecularColorOut.a = material.shininess;
 }

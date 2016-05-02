@@ -1,0 +1,4 @@
+{
+    "vertex": "base/ssao_vertex",
+    "fragment": "base/ssao_fragment"
+}
