@@ -38,16 +38,10 @@ build:
             make
 
     - script:
-        name: generate FLX file
-        code: |
-            mkdir build/Linux/bin/cache
-            touch build/Linux/bin/cache/cache.json
-            cd CMake/Linux
-            make assets
-
-    - script:
         name: generate dist
         code: |
+            mkdir build/Linux/bin/cache		
+            touch build/Linux/bin/cache/cache.json
             cd CMake/Linux
             make dist
 
@@ -56,12 +50,9 @@ deploy:
         - install-packages:
             packages: git curl tree file
 
-        - print-dir-tree:
-            directory: dist
-
         - script:
             name: get version from git
-            code: export APP_VERSION=$(git describe --tags)
+            code: export APP_VERSION=$(git rev-parse --short HEAD)
 
         - github-create-release:
             token: $GITHUB_TOKEN
@@ -72,3 +63,7 @@ deploy:
             token: $GITHUB_TOKEN
             file: dist/release-Linux.tar.gz
             filename: release-Linux.tar.gz
+
+        - script:
+            name: Remove tag
+            code: git push --delete $APP_VERSION
