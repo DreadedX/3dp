@@ -1,5 +1,5 @@
-#ifndef OBJ_READER_H
-#define OBJ_READER_H
+#ifndef PLUGIN_OBJ_H
+#define PLUGIN_OBJ_H
 
 #include "flare/flare.h"
 

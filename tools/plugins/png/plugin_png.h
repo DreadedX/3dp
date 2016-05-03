@@ -1,5 +1,5 @@
-#ifndef PNG_READER_H
-#define PNG_READER_H
+#ifndef PLUGIN_OBJ_H
+#define PLUGIN_OBJ_H
 
 namespace png {
 

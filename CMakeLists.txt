@@ -81,6 +81,7 @@ add_subdirectory(tools/fluxuate)
 
 add_subdirectory(tools/plugins/png)
 add_subdirectory(tools/plugins/obj)
+add_subdirectory(tools/plugins/glsl)
 
 add_subdirectory(game)
 
