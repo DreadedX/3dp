@@ -1,25 +1,32 @@
-#version 330 core
-struct Material {
-	sampler2D diffuse;
-	sampler2D normal;
-	sampler2D specular;
-	float shininess;
-};
-
-struct Light {
-	vec3 direction;
-
-	vec3 ambient;
-	vec3 diffuse;
-	vec3 specular;
-};
-
-in VS_OUT {
+#pragma version 330 core
+#pragma interface_start
 	vec3 FragPosition;
 	vec2 Texcoord;
 	vec3 Normal;
-} fs_in;
+#pragma interface_end
 
+#pragma vertex
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec3 normal;
+layout (location = 2) in vec3 tangent;
+layout (location = 3) in vec2 texcoord;
+
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+
+void main() {
+
+	vec4 viewPos = view * model * vec4(position, 1.0);
+	gl_Position = projection * viewPos;
+	vs_out.FragPosition = viewPos.xyz;
+	vs_out.Texcoord = texcoord;
+
+	mat3 normalMatrix = transpose(inverse(mat3(model)));
+	vs_out.Normal = normalMatrix * normal;
+}
+
+#pragma fragment
 layout (location = 0) out vec4 WorldPosOut;
 layout (location = 1) out vec3 ColorOut;
 layout (location = 2) out vec3 NormalOut;
@@ -28,16 +35,12 @@ layout (location = 3) out vec3 TexCoordOut;
 layout (location = 4) out vec3 DiffuseColorOut;
 layout (location = 5) out vec4 SpecularColorOut;
 
+#pragma include Material
 uniform Material material;
+#pragma include Light
 uniform Light light;
 
-const float NEAR = 0.1; // projection matrix's near plane
-const float FAR = 1000.0f; // projection matrix's far plane
-float LinearizeDepth(float depth)
-{
-    float z = depth * 2.0 - 1.0; // Back to NDC 
-    return (2.0 * NEAR * FAR) / (FAR + NEAR - z * (FAR - NEAR));	
-}
+#pragma include LinearizeDepth
 
 void main() {
 

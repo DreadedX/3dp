@@ -1,4 +1,23 @@
-#version 330 core
+#pragma version 330 core
+#pragma interface_start
+	vec3 FragPosition;
+	vec2 Texcoord;
+	vec3 Normal;
+#pragma interface_end
+
+#pragma vertex
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec3 normal;
+layout (location = 2) in vec3 tangent;
+layout (location = 3) in vec2 texcoord;
+
+void main() {
+
+	gl_Position = vec4(position, 1.0);
+	vs_out.Texcoord = texcoord;
+}
+
+#pragma fragment
 uniform sampler2D gPositionMap;
 uniform sampler2D noiseTexture;
 uniform sampler2D gNormalMap;
@@ -9,11 +28,6 @@ uniform mat4 model;
 uniform mat4 view;
 
 out float FragColor;
-in VS_OUT {
-	vec3 FragPosition;
-	vec2 Texcoord;
-	vec3 Normal;
-} fs_in;
 
 const vec2 noiseScale = vec2(1280.0/4.0, 720.0/4.0);
 
@@ -54,7 +68,7 @@ void main() {
 		//occlusion += (sampleDepth >= sample.z ? 1.0 : 0.0);     
 
 	}
-    occlusion = 1.0 - (occlusion / kernelSize);
+	occlusion = 1.0 - (occlusion / kernelSize);
 
 	FragColor = occlusion;
 }

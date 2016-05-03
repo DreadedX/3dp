@@ -1,12 +1,17 @@
+#pragma version 330 core
 
-#version 330 core
-struct Light {
-	vec3 direction;
+#pragma vertex
+layout (location = 0) in vec3 position;
 
-	vec3 ambient;
-	vec3 diffuse;
-	vec3 specular;
-};
+uniform mat4 model;
+
+void main() {
+
+	gl_Position = model * vec4(position, 1.0);
+}
+
+#pragma fragment
+#pragma include Light
 uniform Light light;
 uniform vec3 viewPosition;
 
@@ -21,16 +26,13 @@ uniform sampler2D ssaoBlurTexture;
 
 out vec4 FragColor;
 
-vec2 calcTexCoord() {
-
-	return gl_FragCoord.xy / vec2(1280, 720);
-}
+#pragma include CalcTexCoord
 
 const float kPi = 3.14159265;
 
 void main() {
 
-	vec2 TexCoord = calcTexCoord();
+	vec2 TexCoord = CalcTexCoord();
 
 	vec4 color = vec4(texture(gColorMap, TexCoord).rgb, 1.0);
 

@@ -22,6 +22,11 @@ void flux::load() {
 
 		file->load(fileNames[i]);
 	}
+
+	for (uint i = 0; i < files[0]->indexSize; i++) {
+
+		print::d("Asset: %s", files[0]->index[i].name.c_str());
+	}
 }
 
 /** @todo Should the file be closed again */
