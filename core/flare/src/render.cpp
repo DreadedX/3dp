@@ -39,8 +39,6 @@ void generateSSAOKernel() {
 		scale = lerp(0.1f, 1.0f, scale * scale);
 		sample *= scale;
 		ssaoKernel.push_back(sample);
-
-		print::d("Random floats: %f, %f, %f", sample.x, sample.y, sample.z);
 	}
 
 	std::vector<glm::vec3> ssaoNoise;

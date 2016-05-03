@@ -1,10 +1,14 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
+#include <iostream>
+#include <vector>
+#include "flux/flux.h"
+
 // This should propably have a function pointer or something
 struct Plugin {
 
-	typedef void (*loadPtr)(std::string filePath, flux::FileWrite *file);
+	typedef void (*loadPtr)(std::string assetName, std::string filePath, std::vector<flux::FileWrite*> *files);
 
 	const char *name;
 	const char *description;

@@ -1,7 +1,7 @@
 #include "standard.h"
 
 void getDir(std::string dir, std::vector<std::string> &files);
-void getFile(std::string basePath, std::string fileName, flux::FileWrite *file);
+void getFile(std::string basePath, std::string fileName, std::vector<flux::FileWrite*> *files);
 bool hasChanged(std::string filePath);
 
 void writeCache(flux::FileWrite *file, std::string fileName);
@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
 		dir = argv[1];
 	} else {
 
-		print::e("Please specify an asset folder!\n");
+		print::e("Please specify an asset folder!");
 		exit(-1);
 	}
 	std::vector<std::string> files = std::vector<std::string>();
@@ -28,14 +28,38 @@ int main(int argc, char* argv[]) {
 	getDir(dir, files);
 	uint count = files.size();
 
-	flux::FileWrite *fluxFiles = new flux::FileWrite[count];
+	//flux::FileWrite *fluxFiles = new flux::FileWrite[count];
+	std::vector<flux::FileWrite*> fluxFiles;
 
 	// NOTE: Uncomment to enable caching
 	cacheOld = jsoncons::json::parse_file("cache/cache.json");
 
 	for (uint i = 0; i < count; ++i) {
 
-		getFile(dir, files[i].c_str(), &fluxFiles[i]);
+		getFile(dir, files[i].c_str(), &fluxFiles);
+	}
+
+	for (flux::FileWrite *file : fluxFiles) {
+
+		file->nameSize = file->name.length();
+
+		// Compress the data
+		uint uncompressedDataSize = file->dataSize;
+		byte *uncompressedData = file->data;
+		// Temporary size
+		uLongf compressedDataSize = file->dataSize + 1024;
+		byte *compressedData = new byte[compressedDataSize];
+
+		int result = compress(compressedData, &compressedDataSize, uncompressedData, uncompressedDataSize);
+		if (result != Z_OK) {
+			print::e("Compression of '%s' failed (%i)", file->name.c_str(), result);
+			exit(-1);
+		}
+
+		delete[] file->data;
+
+		file->compressedDataSize = compressedDataSize;
+		file->data = compressedData;
 	}
 
 	std::ofstream os("cache/cache.json");
@@ -47,36 +71,36 @@ int main(int argc, char* argv[]) {
 	FILE *file = fopen("base.flx", "w+b");
 
 	ulong dataLocation = 4 + sizeof(uint);
-	for (uint i = 0; i < count; i++) {
+	for (flux::FileWrite *fluxFile : fluxFiles) {
 
 		dataLocation += sizeof(byte);
-		dataLocation += fluxFiles[i].nameSize;
+		dataLocation += fluxFile->nameSize;
 		dataLocation += sizeof(uint);
 		dataLocation += sizeof(uint);
 		dataLocation += sizeof(ulong);
 	}
 	totalSize += dataLocation;
-	for (uint i = 0; i < count; i++) {
+	for (flux::FileWrite *fluxFile : fluxFiles) {
 
-		fluxFiles[i].dataLocation = dataLocation;
-		dataLocation += fluxFiles[i].compressedDataSize;
+		fluxFile->dataLocation = dataLocation;
+		dataLocation += fluxFile->compressedDataSize;
 	}
 	/** @todo This needs to move into flux */
 	bytes_written += fwrite("FLX1", sizeof(byte), 4, file);
 	bytes_written += fwrite(&count, sizeof(byte), sizeof(uint), file);
-	for (uint i = 0; i < count; i++) {
+	for (flux::FileWrite *fluxFile : fluxFiles) {
 
-		bytes_written += fwrite(&fluxFiles[i].nameSize, sizeof(byte), sizeof(byte), file);
-		bytes_written += fwrite(fluxFiles[i].name.c_str(), sizeof(byte), fluxFiles[i].nameSize, file);
-		bytes_written += fwrite(&fluxFiles[i].dataSize, sizeof(byte), sizeof(uint), file);
-		bytes_written += fwrite(&fluxFiles[i].compressedDataSize, sizeof(byte), sizeof(uint), file);
-		bytes_written += fwrite(&fluxFiles[i].dataLocation, sizeof(byte), sizeof(ulong), file);
+		bytes_written += fwrite(&fluxFile->nameSize, sizeof(byte), sizeof(byte), file);
+		bytes_written += fwrite(fluxFile->name.c_str(), sizeof(byte), fluxFile->nameSize, file);
+		bytes_written += fwrite(&fluxFile->dataSize, sizeof(byte), sizeof(uint), file);
+		bytes_written += fwrite(&fluxFile->compressedDataSize, sizeof(byte), sizeof(uint), file);
+		bytes_written += fwrite(&fluxFile->dataLocation, sizeof(byte), sizeof(ulong), file);
 	}
-	for (uint i = 0; i < count; i++) {
+	for (flux::FileWrite *fluxFile : fluxFiles) {
 
-		bytes_written += fwrite(fluxFiles[i].data, sizeof(byte), fluxFiles[i].compressedDataSize, file);
+		bytes_written += fwrite(fluxFile->data, sizeof(byte), fluxFile->compressedDataSize, file);
 
-		totalSize += fluxFiles[i].compressedDataSize;
+		totalSize += fluxFile->compressedDataSize;
 	}
 
 	fseek(file, 0, SEEK_END);
@@ -119,15 +143,20 @@ int main(int argc, char* argv[]) {
 	fclose(file);
 
 	assert(bytes_written == totalSize);
-	print::m("Total data size: %llu\n", totalSize);
+	print::d("======");
+	print::m("Total data size: %llu", totalSize);
 
 	// Preventing memory leaks
-	for (uint i = 0; i < count; i++) {
+	for (flux::FileWrite *fluxFile : fluxFiles) {
 
-		delete[] fluxFiles[i].data;
-		fluxFiles[i].data = nullptr;
+		delete[] fluxFile->data;
+		fluxFile->data = nullptr;
+
+		delete fluxFile;
+		fluxFile = nullptr;
 	}
-	delete[] fluxFiles;
+
+	fluxFiles.clear();
 
 	double delta = difftime(clock(), t);
 	print::d("Packing took %f seconds", delta/CLOCKS_PER_SEC);
@@ -140,7 +169,7 @@ void getDir(std::string dir, std::vector<std::string> &files) {
 
 	if ((dp = opendir(dir.c_str())) == NULL) {
 
-		print::e("Error (%i) while opening %s\n", errno, dir.c_str());
+		print::e("Error (%i) while opening %s", errno, dir.c_str());
 		return;
 	}
 
@@ -155,7 +184,9 @@ void getDir(std::string dir, std::vector<std::string> &files) {
 	closedir(dp);
 }
 
-void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) {
+void getFile(std::string basePath, std::string fileName, std::vector<flux::FileWrite*> *files) {
+
+	print::d("======");
 
 	std::string extension;
 	std::string baseName;
@@ -174,22 +205,20 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
 		baseName = fileName;
 	}
 
-	// TODO: This needs needs to go automatically (recursive directory)
-	std::string assetName = "base/" + baseName;
-	file->nameSize = assetName.size();
-	file->name = assetName;
-
-	// TODO: Check if file acctualy has changed, if not use cache
-
 	// TODO: Make this based on the actual filePath
 	std::string filePath = basePath + "/" + fileName;
 
-	if (hasChanged(filePath)) {
+	// TODO: This needs needs to go automatically (recursive directory)
+	std::string assetName = "base/" + baseName;
 
-		print::m("Loading from cache: %s (%s)", assetName.c_str(), extension.c_str());
-
-		readCache(file, fileName);
-		// NOTE: For some weird reason, this prints weird stuff, but it writes the correct stuff to the file...
+	// TODO: Fix caching
+	// if (hasChanged(filePath)) {
+	if (false) {
+    //
+	// 	print::m("Loading from cache: %s (%s)", assetName.c_str(), extension.c_str());
+    //
+	// 	readCache(file, fileName);
+	// 	// NOTE: For some weird reason, this prints weird stuff, but it writes the correct stuff to the file...
 	} else {
 
 		print::m("Packing: %s (%s)", assetName.c_str(), extension.c_str());
@@ -229,19 +258,22 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
 			/** @todo This function has a kind of weird name */
 			Plugin plugin = getPlugin();
 
-			print::m("Plugin name: %s", plugin.name);
-			print::m("Plugin desc: %s", plugin.description);
+			print::m("Using: %s", plugin.name);
 
-			plugin.load(filePath.c_str(), file);
+			plugin.load(assetName, filePath, files);
 
 		} else {
 
-			print::m("No plugin found for file format: %s", extension.c_str());
 #if WIN32
 			print::d("%li", error);
 #else
 			print::d("%s", error);
 #endif
+
+			flux::FileWrite *file = new flux::FileWrite;
+			files->push_back(file);
+
+			file->name = assetName;
 
 			if (extension == "vertex" || extension == "fragment") {
 
@@ -271,40 +303,11 @@ void getFile(std::string basePath, std::string fileName, flux::FileWrite *file) 
 			assert(bytes_read == file->dataSize);
 			fclose(sourceFile);
 		}
-		// Compress the data
-		uint uncompressedDataSize = file->dataSize;
-		byte *uncompressedData = file->data;
-		// Temporary size
-		uLongf compressedDataSize = file->dataSize + 1024;
-		byte *compressedData = new byte[compressedDataSize];
-
-		int result = compress(compressedData, &compressedDataSize, uncompressedData, uncompressedDataSize);
-		if (result != Z_OK) {
-			print::e("Compression of '%s' failed (%i)\n", file->name.c_str(), result);
-			exit(-1);
-		}
-
-		delete[] file->data;
-
-		file->compressedDataSize = compressedDataSize;
-		file->data = compressedData;
 
 		// TODO: Write all data to cache file
-		writeCache(file, fileName);
-	}
+		// writeCache(file, fileName);
 
-#if 0
-	print::d("- - - - ASSET - - - -");
-	print::d("Name: %s", file->name.c_str());
-	print::d("Data adress: %p", file->data);
-	print::d("Original size: %i", file->dataSize);
-	print::d("Compressed size: %i", file->compressedDataSize);
-	print::d("Extra: ");
-	for (uint i = 0; i < file->extraSize; ++i) {
-
-		print::d("%x ", file->extra[i]);
 	}
-#endif
 }
 
 /** @todo This needs to be in a seperate file 

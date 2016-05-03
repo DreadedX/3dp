@@ -46,8 +46,6 @@ obj::Model obj::read(const char *name) {
 	}
 	basePath += "/";
 
-	print::d("%s", basePath.c_str());
-
 	std::string err;
 	/** @todo Make this not hardcoded */
 	bool succes = tinyobj::LoadObj(shapes, materials, err, name, basePath.c_str());
@@ -55,8 +53,6 @@ obj::Model obj::read(const char *name) {
 		print::e(err.c_str());
 		exit(1);
 	}
-
-	print::d("Meshes: %i", shapes.size());
 
 	for (size_t i = 0; i < shapes.size(); i++) {
 
@@ -102,8 +98,6 @@ obj::Model obj::read(const char *name) {
 			mesh->specularColor = glm::vec3(material.specular[0], material.specular[1], material.specular[2]);
 			mesh->shininess = material.shininess;
 
-			print::d("%f", material.shininess);
-
 			mesh->diffuseMap = material.diffuse_texname;
 			mesh->specularMap = material.specular_texname;
 		} else {
@@ -115,9 +109,11 @@ obj::Model obj::read(const char *name) {
 	return model;
 }
 
-void load(std::string filePath, flux::FileWrite *file) {
+void load(std::string assetName, std::string filePath, std::vector<flux::FileWrite*> *files) {
 
-	print::d(file->name.c_str());
+	flux::FileWrite *file = new flux::FileWrite;
+	files->push_back(file);
+	file->name = assetName;
 
 	obj::Model model = obj::read(filePath.c_str());
 

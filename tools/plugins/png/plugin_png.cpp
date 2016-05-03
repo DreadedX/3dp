@@ -98,7 +98,11 @@ png::Data png::read(const char *name) {
 	return data;
 }
 
-void load(std::string filePath, flux::FileWrite *file) {
+void load(std::string assetName, std::string filePath, std::vector<flux::FileWrite*> *files) {
+
+	flux::FileWrite *file = new flux::FileWrite;
+	files->push_back(file);
+	file->name = assetName;
 
 	png::Data data = png::read(filePath.c_str());
 
