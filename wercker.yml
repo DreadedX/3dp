@@ -61,7 +61,7 @@ deploy:
 
         - script:
             name: get version from git
-            code: export APP_VERSION=$(git describe --tags)
+            code: export APP_VERSION=$(git rev-parse --short HEAD)
 
         - github-create-release:
             token: $GITHUB_TOKEN
@@ -72,3 +72,7 @@ deploy:
             token: $GITHUB_TOKEN
             file: dist/release-Linux.tar.gz
             filename: release-Linux.tar.gz
+
+        - script:
+            name: Remove tag
+            code: git push --delete origin $APP_VERSION
