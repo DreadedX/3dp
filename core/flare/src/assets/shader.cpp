@@ -1,5 +1,43 @@
 #include "flare/flare.h"
 
+#include <sstream>
+
+/** @todo Figure out a way to map this to the special glsl files, an idea is to add a shader compiler to the glsl plugin and map it back to the original file */
+void printError(char* error, const char* source, std::string name) {
+
+		print::w("Shader failed to compile (%s)", name.c_str());
+
+		std::istringstream errorStream(error);
+		std::string errorLine;
+
+		while (std::getline(errorStream, errorLine)) {
+
+			int lineNumberStart = errorLine.find("(");
+			int lineNumberEnd = errorLine.find(")");
+
+			std::string lineNumber = errorLine.substr(lineNumberStart + 1, lineNumberEnd - lineNumberStart - 1);
+
+			std::istringstream sourceStream(source);
+			std::string sourceLine;
+
+			print::w(errorLine.c_str());
+
+			int count = 1;
+			while(std::getline(sourceStream, sourceLine)) {
+
+				if (lineNumber.compare(std::to_string(count-1)) == 0 || lineNumber.compare(std::to_string(count+1)) == 0 ) {
+
+					print::w("	%i: \033[37m%s\033[39m", count, sourceLine.c_str());
+				}
+				if (lineNumber.compare(std::to_string(count)) == 0) {
+
+					print::w("	%i: \033[39m%s", count, sourceLine.c_str());
+				}
+				count++;
+			}
+		}
+}
+
 void flare::asset::Shader::_load() {
 
 	if (id != 0) {
@@ -8,14 +46,17 @@ void flare::asset::Shader::_load() {
 		id = 0;
 	}
 
-	flux::FileLoad *shaderConfigFile = flux::get(name);
-	const char *shaderConfig = reinterpret_cast<const char*>(shaderConfigFile->get(true));
+	// flux::FileLoad *shaderConfigFile = flux::get(name);
+	// const char *shaderConfig = reinterpret_cast<const char*>(shaderConfigFile->get(true));
+    //
+	// jsoncons::json configJson = jsoncons::json::parse_string(shaderConfig);
+	// delete[] shaderConfig;
 
-	jsoncons::json configJson = jsoncons::json::parse_string(shaderConfig);
-	delete[] shaderConfig;
+	// flux::FileLoad *vertexFile = flux::get(configJson.get("vertex", "Unknown Vertex Shader").as<std::string>());
+	// flux::FileLoad *fragmentFile = flux::get(configJson.get("fragment", "Unknown Fragment Shader").as<std::string>());
 
-	flux::FileLoad *vertexFile = flux::get(configJson.get("vertex", "Unknown Vertex Shader").as<std::string>());
-	flux::FileLoad *fragmentFile = flux::get(configJson.get("fragment", "Unknown Fragment Shader").as<std::string>());
+	flux::FileLoad *vertexFile = flux::get(name + "/vertex");
+	flux::FileLoad *fragmentFile = flux::get(name + "/fragment");
 
 	const char *vertexSource = reinterpret_cast<const char*>(vertexFile->get(true));
 	const char *fragmentSource = reinterpret_cast<const char*>(fragmentFile->get(true));
@@ -29,8 +70,6 @@ void flare::asset::Shader::_load() {
 	// Compile shader
 	glCompileShader(vertexShader);
 	glCompileShader(fragmentShader);
-	delete[] vertexSource;
-	delete[] fragmentSource;
 
 	// Check compile status
 	GLint vertexStatus;
@@ -38,7 +77,11 @@ void flare::asset::Shader::_load() {
 	if (vertexStatus != GL_TRUE) {
 		char buffer[512];
 		glGetShaderInfoLog(vertexShader, 512, NULL, buffer);
-		print::w("Vertex shader error: %s (%s)", buffer, name.c_str());
+
+		printError(buffer, vertexSource, name + "/vertex");
+
+		delete[] vertexSource;
+		delete[] fragmentSource;
 		return;
 	}
 
@@ -47,9 +90,16 @@ void flare::asset::Shader::_load() {
 	if (fragmentStatus != GL_TRUE) {
 		char buffer[512];
 		glGetShaderInfoLog(fragmentShader, 512, NULL, buffer);
-		print::w("Fragment shader error: %s (%s)", buffer, name.c_str());
+
+		printError(buffer, fragmentSource, name + "/fragment");
+
+		delete[] vertexSource;
+		delete[] fragmentSource;
 		return;
 	}
+
+	delete[] vertexSource;
+	delete[] fragmentSource;
 
 	// Combine shaders
 	id = glCreateProgram();
@@ -63,7 +113,7 @@ void flare::asset::Shader::_load() {
 	if (programStatus != GL_TRUE) {
 		char buffer[512];
 		glGetProgramInfoLog(id, 512, NULL, buffer);
-		print::w("Shader link error: %s", buffer);
+		print::w("Shader link error: (%s)\n%s", name.c_str(), buffer);
 	}
 
 	// Shader setup stuff

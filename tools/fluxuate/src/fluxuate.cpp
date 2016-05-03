@@ -39,6 +39,8 @@ int main(int argc, char* argv[]) {
 		getFile(dir, files[i].c_str(), &fluxFiles);
 	}
 
+	count = fluxFiles.size();
+
 	for (flux::FileWrite *file : fluxFiles) {
 
 		file->nameSize = file->name.length();
