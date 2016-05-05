@@ -11,6 +11,8 @@ void flare::asset::Texture::_load() {
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);
 
+	glGenerateMipmap(GL_TEXTURE_2D);
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
@@ -38,8 +40,13 @@ void flare::asset::Texture::_load() {
 		byte bytesPerPixel = textureData[offset];
 		offset += sizeof(byte);
 
-		/** @todo Check bytes per pixel */
-		// Check if color space is linear or sRGB
+		/** @todo This needs all kinds of checking */
+		float amount = 4.0f;
+		print::d("Anisotropic: %f", amount);
+
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, amount);
+
+		/** @todo Check if color space is linear or sRGB */
 		if (bytesPerPixel == 0x04) {
 
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData + offset);
@@ -50,9 +57,6 @@ void flare::asset::Texture::_load() {
 
 			print::w("'%s' contains an invalid amount of bytes per pixel (%X)", name.c_str(), bytesPerPixel);
 		}
-
-		/** @todo Figure out how this works */
-		// glGenerateMipmap(GL_TEXTURE_2D);
 
 		delete[] textureData;
 	} else {
