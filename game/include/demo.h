@@ -13,6 +13,7 @@
 
 #include "camera.h"
 #include "spin.h"
+#include "scanline.h"
 
 #endif
 

@@ -92,6 +92,11 @@ int main() {
 	camera->rotation.x = 157.0f;
 #endif
 
+	// Example of post proccessing
+	// Scanline *scanline = new Scanline;
+	// scanline->init();
+	// flare::render::getState()->renderPasses.push_back(scanline);
+
 	while (flare::isRunning()) {
 
 		flare::update();

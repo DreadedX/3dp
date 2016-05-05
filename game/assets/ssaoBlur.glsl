@@ -16,14 +16,11 @@ uniform sampler2D ssaoTexture;
 
 out float FragColor;
 
-vec2 calcTexCoord() {
-
-	return gl_FragCoord.xy / vec2(1280, 720);
-}
+#pragma include CalcTexCoord
 
 void main() {
 
-	vec2 TexCoords = calcTexCoord();
+	vec2 TexCoords = CalcTexCoord();
 
     vec2 texelSize = 1.0 / vec2(textureSize(ssaoTexture, 0));
     float result = 0.0;
