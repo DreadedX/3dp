@@ -4,50 +4,42 @@
 bool keys[25536] = {false};
 
 /** @brief Mouse object
-	@note Might not be neccesairy in the future */
+  @note Might not be neccesairy in the future */
 flare::input::Mouse mouse;
 
 bool flare::input::keyCheck(int key) {
 
-    return keys[key];
+	return keys[key];
 }
 
 void flare::input::keySet(int key, bool state) {
 
-    keys[key] = state;
+	keys[key] = state;
 }
 
 void flare::input::_keyCallback(GLFWwindow*, int key, int, int action, int) {
 
-    if (action == GLFW_PRESS) {
+	if (action == GLFW_PRESS) {
 
-	keys[key] = true;
-    }
+		keys[key] = true;
+	}
 
-    if (action == GLFW_RELEASE) {
+	if (action == GLFW_RELEASE) {
 
-	keys[key] = false;
-    }
+		keys[key] = false;
+	}
 }
 
 flare::input::Mouse *flare::input::getMouse() {
 
-    return &mouse;
+	return &mouse;
 }
 
-void flare::input::_mouseCallback(GLFWwindow*, double xpos, double ypos) {
+void flare::input::update() {
 
-    if (mouse._first) {
+	// mouse.delta = glm::vec2(0.0f, 0.0f);
+
+	double xpos, ypos;
+	glfwGetCursorPos(getWindow(), &xpos, &ypos);
 	mouse.position = glm::vec2(xpos, ypos);
-	mouse._first = false;
-    }
-
-    if (keyCheck(GLFW_KEY_SPACE)) {
-
-	mouse.yaw += (xpos - mouse.position.x) * getSettings()->mouseSensitivity;
-	mouse.pitch += (mouse.position.y - ypos) * getSettings()->mouseSensitivity;
-    }
-
-    mouse.position = glm::vec2(xpos, ypos);
 }
-

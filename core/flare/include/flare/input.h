@@ -6,6 +6,9 @@ namespace flare {
 	/** @brief Input handling */
 	namespace input {
 
+		/** @brief For now makes sure the mouse delta is 0 */
+		void update();
+
 		/** @brief Check the state of a key
 			@param key - GLFW key id for the key you want to check
 			@returns True if the key is pressed */
@@ -27,17 +30,6 @@ namespace flare {
 
 			/** @brief Current mouse location, relative to the window */
 			glm::vec2 position = glm::vec2(0.0f, 0.0f);
-
-			/** @brief Mouse yaw
-				@todo This should be in the render camera */
-			float yaw = -90.0f;
-			/** @brief Mouse pitch
-				@todo This should be in the render camera */
-			float pitch = 0.0f;
-
-			/** @brief Is this the first time polling mouse location
-				@note This is used to not make the mouse not make a huge movement the first time the mouse is polled */
-			bool _first = true;
 		};
 
 		/** @brief Install mouse callback

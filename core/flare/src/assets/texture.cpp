@@ -19,6 +19,11 @@ void flare::asset::Texture::_load() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
+	/** @todo This needs all kinds of checking */
+	float amount = 4.0f;
+	print::d("Anisotropic: %f", amount);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, amount);
+
 	if (name != "") {
 		flux::FileLoad *textureFile = flux::get(name);
 		byte *textureData = textureFile->get();
@@ -39,12 +44,6 @@ void flare::asset::Texture::_load() {
 
 		byte bytesPerPixel = textureData[offset];
 		offset += sizeof(byte);
-
-		/** @todo This needs all kinds of checking */
-		float amount = 4.0f;
-		print::d("Anisotropic: %f", amount);
-
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, amount);
 
 		/** @todo Check if color space is linear or sRGB */
 		if (bytesPerPixel == 0x04) {

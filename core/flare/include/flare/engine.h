@@ -12,7 +12,7 @@ namespace flare {
 		glm::ivec2 resolution = glm::ivec2(1280, 720);
 		/** @brief Sensitity of the mouselook
 			@todo Camera controls should not be part of the engine */
-		float mouseSensitivity = 0.5f;
+		float mouseSensitivity = 1.0f;
 
 		/** @brief All possible swap values */
 		enum {
@@ -39,6 +39,8 @@ namespace flare {
 	/** @brief Request the engine settings
 		@return A pointer to the engine settings */
 	Settings *getSettings();
+
+	GLFWwindow *getWindow();
 
 	/** @brief Called after the ending the main loop, makes sure everything get properly unloaded
 		@param errorCode - The error code the application should give after shutdown */

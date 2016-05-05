@@ -11,5 +11,8 @@
 // #include "LuaContext.hpp"
 #include "flare/flare.h"
 
+#include "camera.h"
+#include "spin.h"
+
 #endif
 

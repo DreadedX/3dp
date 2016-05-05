@@ -25,11 +25,11 @@ void geometryPass(flare::component::Object *object) {
 		flare::render::State *state = flare::render::getState();
 
 		{
-			glUniform3fv(flare::render::getState()->geometryShader->locations.light.diffuse, 1, glm::value_ptr(mesh->diffuseColor * state->light.diffuse));		
-			glUniform3fv(flare::render::getState()->geometryShader->locations.light.specular, 1, glm::value_ptr(mesh->specularColor * state->light.specular));		
+			glUniform3fv(flare::render::getState()->shader->locations.light.diffuse, 1, glm::value_ptr(mesh->diffuseColor * state->light.diffuse));		
+			glUniform3fv(flare::render::getState()->shader->locations.light.specular, 1, glm::value_ptr(mesh->specularColor * state->light.specular));		
 
-			glUniformMatrix4fv(flare::render::getState()->geometryShader->locations.view, 1, GL_FALSE, glm::value_ptr(state->view));
-			glUniformMatrix4fv(flare::render::getState()->geometryShader->locations.projection, 1, GL_FALSE, glm::value_ptr(state->projection));
+			glUniformMatrix4fv(flare::render::getState()->shader->locations.view, 1, GL_FALSE, glm::value_ptr(state->view));
+			glUniformMatrix4fv(flare::render::getState()->shader->locations.projection, 1, GL_FALSE, glm::value_ptr(state->projection));
 		}
 
 		glm::mat4 modelMatrix;
@@ -38,7 +38,7 @@ void geometryPass(flare::component::Object *object) {
 
 			modelMatrix = glm::rotate(modelMatrix, object->rotation->rotation, object->rotation->rotationAxis);  
 		}
-		glUniformMatrix4fv(flare::render::getState()->geometryShader->locations.model, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+		glUniformMatrix4fv(flare::render::getState()->shader->locations.model, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
 		glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
 	}

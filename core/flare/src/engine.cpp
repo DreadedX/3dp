@@ -2,8 +2,14 @@
 #include <thread>
 #include <chrono>
 
-/** @brief Pointer to the GLFW window */
+/** @brief Pointer to the GLFW window
+	@todo This needs to be part of the state */
 GLFWwindow *window = nullptr;
+
+GLFWwindow *flare::getWindow() {
+
+	return window;
+}
 
 /** @brief Pointer the settings that are currently used by the engine
   @todo Add a way to set this externally */
@@ -41,7 +47,6 @@ void flare::init() {
 	glfwSetWindowPos(window, (mode->width - settings->resolution.x) / 2 + 1366, (mode->height - settings->resolution.y) / 2);
 
 	glfwSetKeyCallback(window, input::_keyCallback);
-	glfwSetCursorPosCallback(window, input::_mouseCallback);
 
 	glfwMakeContextCurrent(window);
 
@@ -86,6 +91,7 @@ void flare::update() {
 	lastFrame = currentFrame;
 
 	glfwPollEvents();
+	flare::input::update();
 
 	// NOTE: Debug keybindings
 	{
@@ -126,8 +132,8 @@ void flare::update() {
 	{
 		ImGui::Text("Delta time: %.2fms", render::getState()->deltaTime * 1000);
 		ImGui::Text("Mouse position: %.2f, %.2f", input::getMouse()->position.x, input::getMouse()->position.y);
-		ImGui::Text("Yaw/Pitch: %.2f, %.2f", input::getMouse()->yaw, input::getMouse()->pitch);
-		ImGui::Text("Camera position: %.2f, %.2f, %.2f", flare::render::getCamera()->position.x, render::getCamera()->position.y, render::getCamera()->position.z);
+		ImGui::Text("Yaw/Pitch: %.2f, %.2f", render::getState()->camera->rotation.x, render::getState()->camera->rotation.y);
+		ImGui::Text("Camera position: %.2f, %.2f, %.2f", flare::render::getState()->camera->position.x, render::getState()->camera->position.y, render::getState()->camera->position.z);
 		debug::entityTree();
 	}
 	ImGui::Render();

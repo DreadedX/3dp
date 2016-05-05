@@ -46,6 +46,7 @@ namespace flare{
 #include "flare/assets.h"
 #include "flare/components.h"
 
+#include "flare/passes.h"
 #include "flare/render.h"
 
 #include "flare/info.h"
