@@ -21,7 +21,7 @@ namespace flare {
 
 		/** @brief List of all loaded assets
 			@todo This needs to be private, but needs to be accesible by load<T>() */
-		extern std::vector<Asset*> assetList;
+		extern Array<Asset*> assetList;
 		/** @brief Hash map of all loaded asset, to make sure we are not loading assets that are already loaded
 			@todo This needs to be private, but needs to be accesible by load<T>() */
 		extern std::map<std::string, Asset*> assetMap;
@@ -45,7 +45,7 @@ namespace flare {
 
 				asset->_load();
 
-				assetList.push_back(asset);
+				assetList.add(asset);
 				assetMap[name] = asset;
 				return asset;
 			}

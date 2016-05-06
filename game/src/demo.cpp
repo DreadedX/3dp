@@ -93,9 +93,9 @@ int main() {
 #endif
 
 	// Example of post proccessing
-	// Scanline *scanline = new Scanline;
-	// scanline->init();
-	// flare::render::getState()->renderPasses.push_back(scanline);
+	Scanline *scanline = new Scanline;
+	scanline->init();
+	flare::render::getState()->renderPasses.add(scanline);
 
 	while (flare::isRunning()) {
 

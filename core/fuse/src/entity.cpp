@@ -33,7 +33,7 @@ bool fuse::Entity::isChild() {
 fuse::Entity *fuse::Entity::createChild(const char *name) {
 
 	Entity *child = fuse::createEntity(name, this);
-	children.push_back(child);
+	children.add(child);
 	return child;
 }
 

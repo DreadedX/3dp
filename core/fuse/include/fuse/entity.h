@@ -7,14 +7,14 @@ namespace fuse {
 	struct Entity {
 
 		/** @brief List of all the components contained in this entity */
-		std::vector<Component*> components;
+		Array<Component*> components;
 		/** @brief Predefined array of components for fast lookup */
 		std::array<Component*, MAX_COMPONENTS> componentArray;
 		/** @brief Bitset used to check if a component is already loaded */
 		std::bitset<MAX_COMPONENTS> componentBitset;
 
 		/** @brief List of all child entities of this entity */
-		std::vector<Entity*> children;
+		Array<Entity*> children;
 
 		/** @brief Entity name */
 		const char *name = "";
@@ -73,7 +73,7 @@ namespace fuse {
 
 				T *component = new T(this, std::forward<TArgs>(args)...);
 
-				components.push_back(component);
+				components.add(component);
 				componentArray[_getTypeID<T>()] = component;
 				componentBitset[_getTypeID<T>()] = true;
 

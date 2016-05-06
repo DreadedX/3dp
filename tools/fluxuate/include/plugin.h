@@ -8,7 +8,7 @@
 // This should propably have a function pointer or something
 struct Plugin {
 
-	typedef void (*loadPtr)(std::string assetName, std::string filePath, std::vector<flux::FileWrite*> *files);
+	typedef void (*loadPtr)(std::string assetName, std::string filePath, Array<flux::FileWrite*> *files);
 
 	const char *name;
 	const char *description;

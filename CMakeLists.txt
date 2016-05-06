@@ -68,22 +68,29 @@ if (WIN32)
   set(CMAKE_SHARED_LIBRARY_PREFIX "")
 endif ()
 
+# Libraries
 add_subdirectory(libs/leakage)
 add_subdirectory(libs/imgui)
-add_subdirectory(libs/tinyobjloader)
 
+# Core engine components
 add_subdirectory(core/extra)
 add_subdirectory(core/flux)
 add_subdirectory(core/fuse)
 add_subdirectory(core/flare)
 
-add_subdirectory(tools/fluxuate)
+# Demo game
+add_subdirectory(game)
 
+# Tools
+add_subdirectory(tools/fluxuate)
+add_subdirectory(tools/launcher)
+
+# Plugins for fluxuate
 add_subdirectory(tools/plugins/png)
+add_subdirectory(libs/tinyobjloader)
 add_subdirectory(tools/plugins/obj)
 add_subdirectory(tools/plugins/glsl)
 
-add_subdirectory(game)
 
 # add_custom_target(info
 # 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}

@@ -48,7 +48,7 @@ namespace flare {
 			asset::Model *quad = nullptr;
 
 			uint pass = GEOMETRY;
-			std::vector<passes::Pass*> renderPasses;
+			Array<passes::Pass*> renderPasses;
 
 			~State() {
 

@@ -7,13 +7,14 @@ void flare::render::passes::Geometry::init() {
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
 
-	textures = new GLuint[GBUFFER_NUM_TEXTURES];
-	glGenTextures(GBUFFER_NUM_TEXTURES, textures);
 	glGenTextures(1, &depthTexture);
 
-	for (uint i = 0; i < GBUFFER_NUM_TEXTURES; ++i) {
+	for (int i = 0; i < GBUFFER_NUM_TEXTURES; i++) {
 
-		glBindTexture(GL_TEXTURE_2D, textures[i]);
+		GLuint texture = 0;
+
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
 
 		if (i == GBUFFER_TEXTURE_TYPE_POSITION || i == GBUFFER_TEXTURE_TYPE_SPECULAR_LIGHT) {
 
@@ -26,8 +27,12 @@ void flare::render::passes::Geometry::init() {
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, textures[i], 0);
+		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, texture, 0);
+
+		textures.add(texture);
 	}
+
+	textures[10];
 
 	glBindTexture(GL_TEXTURE_2D,depthTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, getSettings()->resolution.x, getSettings()->resolution.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);

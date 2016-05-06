@@ -22,10 +22,10 @@ void generateSSAOKernel(flare::render::passes::SSAO *ssao) {
 		GLfloat scale = GLfloat(i) / 64.0;
 		scale = lerp(0.1f, 1.0f, scale * scale);
 		sample *= scale;
-		ssao->ssaoKernel.push_back(sample);
+		ssao->ssaoKernel.add(sample);
 	}
 
-	std::vector<glm::vec3> ssaoNoise;
+	Array<glm::vec3> ssaoNoise = Array<glm::vec3>(16);
 	for (GLuint i = 0; i < 16; i++) {
 
 		glm::vec3 noise(
@@ -33,16 +33,20 @@ void generateSSAOKernel(flare::render::passes::SSAO *ssao) {
 				randomFloats(generator) * 2.0 - 1.0,
 				0.0f
 			);
-		ssaoNoise.push_back(noise);
+		ssaoNoise.add(noise);
 	}
 
-	glGenTextures(1, &ssao->textures[2]);
-	glBindTexture(GL_TEXTURE_2D, ssao->textures[2]);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, 4, 4, 0, GL_RGB, GL_FLOAT, &ssaoNoise[0]);
+	GLuint textureNoise = 0;
+
+	glGenTextures(1, &textureNoise);
+	glBindTexture(GL_TEXTURE_2D, textureNoise);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, 4, 4, 0, GL_RGB, GL_FLOAT, &textureNoise);
+
+	ssao->textures.add(textureNoise);
 }
 
 void flare::render::passes::SSAO::init() {
@@ -50,17 +54,17 @@ void flare::render::passes::SSAO::init() {
 	shader = asset::load<asset::Shader>("base/ssao");
 	shaderBlur = asset::load<asset::Shader>("base/ssaoBlur");
 
-	textures = new GLuint[3];
-
 	glGenFramebuffers(1, &fboNoBlur);  
 	glBindFramebuffer(GL_FRAMEBUFFER, fboNoBlur);
 
-	glGenTextures(1, &textures[0]);
-	glBindTexture(GL_TEXTURE_2D, textures[0]);
+	GLuint textureNoBlur = 0;
+
+	glGenTextures(1, &textureNoBlur);
+	glBindTexture(GL_TEXTURE_2D, textureNoBlur);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, getSettings()->resolution.x, getSettings()->resolution.y, 0, GL_RGB, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textures[0], 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureNoBlur, 0);
 
 	GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
@@ -69,14 +73,18 @@ void flare::render::passes::SSAO::init() {
 		exit(-1);
 	}
 
+	textures.add(textureNoBlur);
+
+	GLuint textureBlur = 0;
+
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-	glGenTextures(1, &textures[1]);
-	glBindTexture(GL_TEXTURE_2D, textures[1]);
+	glGenTextures(1, &textureBlur);
+	glBindTexture(GL_TEXTURE_2D, textureBlur);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, getSettings()->resolution.x, getSettings()->resolution.y, 0, GL_RGB, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textures[1], 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureBlur, 0);
 
 	status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
@@ -84,6 +92,8 @@ void flare::render::passes::SSAO::init() {
 		print::e("FB error, status: 0x%x", status);
 		exit(-1);
 	}
+
+	textures.add(textureBlur);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 

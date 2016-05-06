@@ -22,9 +22,9 @@ namespace obj {
 				std::string specularMap = "";
 
 				/** @brief List of all the vertices in this mesh */
-				std::vector<flare::asset::model::Vertex> vertices;
+				Array<flare::asset::model::Vertex> vertices;
 				/** @brief List of all the indices in this mesh */
-				std::vector<GLuint> indices;
+				Array<GLuint> indices;
 			};
 		}
 
@@ -32,7 +32,7 @@ namespace obj {
 		struct Model : flare::asset::Asset {
 
 			/** @brief List of all meshes in this model */
-			std::vector<model::Mesh*> meshes;
+			Array<model::Mesh*> meshes;
 
 			/** @brief Load model data */
 			void _load() override {}

@@ -58,7 +58,9 @@ void flare::asset::Model::_load() {
 	for (ulong i = 0; i < meshCount; ++i) {
 
 		model::Mesh *mesh = new model::Mesh;
-		meshes.push_back(mesh);
+		meshes.add(mesh);
+		mesh->vertices.resize(vertexCount[i]);
+		mesh->indices.resize(indexCount[i]);
 
 		for (ulong j = 0; j < vertexCount[i]; ++j) {
 
@@ -88,7 +90,7 @@ void flare::asset::Model::_load() {
 			memcpy(&vertex.texCoords, tempData, sizeof(glm::vec2));
 			delete[] tempData;
 
-			mesh->vertices.push_back(vertex);
+			mesh->vertices.add(vertex);
 		}
 		for (ulong j = 0; j < indexCount[i]; ++j) {
 
@@ -100,7 +102,7 @@ void flare::asset::Model::_load() {
 			}
 			offset += sizeof(GLuint);
 
-			mesh->indices.push_back(index);
+			mesh->indices.add(index);
 		}
 
 		byte *tempData = new byte[sizeof(glm::vec3)];

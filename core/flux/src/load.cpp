@@ -1,7 +1,7 @@
 #include "flux/flux.h"
 
 /** @brief List of all the loaded container */
-std::vector<flux::Flux*> files;
+Array<flux::Flux*> files;
 
 /** @brief Amount of loaded files */
 int count = 0;
@@ -18,7 +18,7 @@ void flux::load() {
 	for (int i = 0; i < count; i++) {
 
 		flux::Flux *file = new flux::Flux;
-		files.push_back(file);
+		files.add(file);
 
 		file->load(fileNames[i]);
 	}
@@ -212,8 +212,9 @@ void flux::reload() {
 
 		print::d("Freeing memory");
 		files[i]->close();
-		files.erase(files.begin()+i);
 	}
+
+	files.clear();
 
 	map.clear();
 	load();

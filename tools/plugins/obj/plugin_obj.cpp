@@ -54,13 +54,17 @@ obj::Model obj::read(const char *name) {
 		exit(1);
 	}
 
-	for (size_t i = 0; i < shapes.size(); i++) {
+	for (uint i = 0; i < shapes.size(); i++) {
 
 		model::Mesh *mesh = new model::Mesh;
-		model.meshes.push_back(mesh);
+		model.meshes.add(mesh);
+
+		// Increase the increment size, because we know we are going to be dealing with a lot of data
+		mesh->vertices.resize(shapes[i].mesh.positions.size() / 3);
+		mesh->indices.resize(shapes[i].mesh.indices.size());
 
 		assert((shapes[i].mesh.indices.size() % 3) == 0);
-		for (size_t v = 0; v < shapes[i].mesh.positions.size() / 3; v++) {
+		for (uint v = 0; v < shapes[i].mesh.positions.size() / 3; v++) {
 
 			flare::asset::model::Vertex vertex;
 
@@ -78,13 +82,13 @@ obj::Model obj::read(const char *name) {
 			vertex.texCoords.x = shapes[i].mesh.texcoords[2*v+0];
 			vertex.texCoords.y = shapes[i].mesh.texcoords[2*v+1];
 
-			mesh->vertices.push_back(vertex);
+			mesh->vertices.add(vertex);
 
 		}
 
-		for (size_t f = 0; f < shapes[i].mesh.indices.size(); f++) {
+		for (uint f = 0; f < shapes[i].mesh.indices.size(); f++) {
 
-			mesh->indices.push_back(shapes[i].mesh.indices[f]);
+			mesh->indices.add(shapes[i].mesh.indices[f]);
 		}
 
 		// I assume each mesh can only have one material
@@ -109,10 +113,10 @@ obj::Model obj::read(const char *name) {
 	return model;
 }
 
-void load(std::string assetName, std::string filePath, std::vector<flux::FileWrite*> *files) {
+void load(std::string assetName, std::string filePath, Array<flux::FileWrite*> *files) {
 
 	flux::FileWrite *file = new flux::FileWrite;
-	files->push_back(file);
+	files->add(file);
 	file->name = assetName;
 
 	obj::Model model = obj::read(filePath.c_str());

@@ -5,9 +5,9 @@ flare::render::State state;
 
 void flare::render::init() {
 
-	state.renderPasses.push_back(new passes::Geometry);
-	state.renderPasses.push_back(new passes::SSAO);
-	state.renderPasses.push_back(new passes::Lighting);
+	state.renderPasses.add(new passes::Geometry);
+	state.renderPasses.add(new passes::SSAO);
+	state.renderPasses.add(new passes::Lighting);
 
 	for(passes::Pass *pass : state.renderPasses) {
 

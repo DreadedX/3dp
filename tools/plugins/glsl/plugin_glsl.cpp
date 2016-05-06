@@ -127,7 +127,7 @@ std::string removeWhitespace(std::string source) {
 	return source;
 }
 
-void load(std::string assetName, std::string filePath, std::vector<flux::FileWrite*> *files) {
+void load(std::string assetName, std::string filePath, Array<flux::FileWrite*> *files) {
 
 	std::ifstream t(filePath);
 
@@ -147,7 +147,7 @@ void load(std::string assetName, std::string filePath, std::vector<flux::FileWri
 	print::d(vertexString.c_str());
 
 	flux::FileWrite *vertexFile = new flux::FileWrite;
-	files->push_back(vertexFile);
+	files->add(vertexFile);
 	vertexFile->name = assetName + "/vertex";
 
 	vertexFile->dataSize = vertexString.length();
@@ -166,7 +166,7 @@ void load(std::string assetName, std::string filePath, std::vector<flux::FileWri
 	print::d(fragmentString.c_str());
 
 	flux::FileWrite *fragmentFile = new flux::FileWrite;
-	files->push_back(fragmentFile);
+	files->add(fragmentFile);
 	fragmentFile->name = assetName + "/fragment";
 
 	fragmentFile->dataSize = fragmentString.length();

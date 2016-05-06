@@ -8,20 +8,14 @@ namespace flare {
 			struct Pass {
 
 				GLuint fbo;
-				GLuint *textures = nullptr;
+				Array<GLuint> textures;
 
 				asset::Shader *shader = nullptr;
 
 				virtual void init() {}
 				virtual void draw() {}
 
-				virtual ~Pass() {
-
-					if (textures != nullptr) {
-
-						delete[] textures;
-					}
-				}
+				virtual ~Pass() {}
 			};
 
 			struct Geometry : Pass {
@@ -45,7 +39,7 @@ namespace flare {
 
 			struct SSAO : Pass {
 
-				std::vector<glm::vec3> ssaoKernel;
+				Array<glm::vec3> ssaoKernel = Array<glm::vec3>(64);
 
 				GLuint fboNoBlur;
 

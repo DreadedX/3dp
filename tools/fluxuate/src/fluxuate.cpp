@@ -1,7 +1,7 @@
 #include "standard.h"
 
-void getDir(std::string dir, std::vector<std::string> &files);
-void getFile(std::string basePath, std::string fileName, std::vector<flux::FileWrite*> *files);
+void getDir(std::string dir, Array<std::string> &files);
+void getFile(std::string basePath, std::string fileName, Array<flux::FileWrite*> *files);
 bool hasChanged(std::string filePath);
 
 void writeCache(flux::FileWrite *file, std::string fileName);
@@ -23,13 +23,13 @@ int main(int argc, char* argv[]) {
 		print::e("Please specify an asset folder!");
 		exit(-1);
 	}
-	std::vector<std::string> files = std::vector<std::string>();
+	Array<std::string> files;
 
 	getDir(dir, files);
 	uint count = files.size();
 
 	//flux::FileWrite *fluxFiles = new flux::FileWrite[count];
-	std::vector<flux::FileWrite*> fluxFiles;
+	Array<flux::FileWrite*> fluxFiles;
 
 	// NOTE: Uncomment to enable caching
 	cacheOld = jsoncons::json::parse_file("cache/cache.json");
@@ -164,7 +164,7 @@ int main(int argc, char* argv[]) {
 	print::d("Packing took %f seconds", delta/CLOCKS_PER_SEC);
 }
 
-void getDir(std::string dir, std::vector<std::string> &files) {
+void getDir(std::string dir, Array<std::string> &files) {
 
 	DIR *dp;
 	struct dirent *dirp;
@@ -179,14 +179,14 @@ void getDir(std::string dir, std::vector<std::string> &files) {
 
 		const char *name = dirp->d_name;
 		if (strcmp(name, ".") && strcmp(name, "..")) {
-			files.push_back(std::string(dirp->d_name));
+			files.add(std::string(dirp->d_name));
 		}
 	}
 
 	closedir(dp);
 }
 
-void getFile(std::string basePath, std::string fileName, std::vector<flux::FileWrite*> *files) {
+void getFile(std::string basePath, std::string fileName, Array<flux::FileWrite*> *files) {
 
 	print::d("======");
 
@@ -273,7 +273,7 @@ void getFile(std::string basePath, std::string fileName, std::vector<flux::FileW
 #endif
 
 			flux::FileWrite *file = new flux::FileWrite;
-			files->push_back(file);
+			files->add(file);
 
 			file->name = assetName;
 

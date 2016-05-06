@@ -1,6 +1,11 @@
 #ifndef PRINT_H
 #define PRINT_H
 
+#include <iostream>
+#include <cstdarg>
+#include <cstring>
+#include <ctime>
+
 /** @brief Print functions that adds logging */
 namespace print {
 

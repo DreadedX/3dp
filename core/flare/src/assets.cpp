@@ -1,6 +1,6 @@
 #include "flare/flare.h"
 
-std::vector<flare::asset::Asset*> flare::asset::assetList;
+Array<flare::asset::Asset*> flare::asset::assetList;
 std::map<std::string, flare::asset::Asset*> flare::asset::assetMap;
 
 void flare::asset::reload() {

@@ -46,9 +46,9 @@ namespace flare {
 				Texture *specular = nullptr;
 
 				/** @brief List of all the vertices in this mesh */
-				std::vector<model::Vertex> vertices;
+				Array<model::Vertex> vertices;
 				/** @brief List of all the indices in this mesh */
-				std::vector<GLuint> indices;
+				Array<GLuint> indices;
 			};
 		}
 
@@ -56,7 +56,7 @@ namespace flare {
 		struct Model : Asset {
 
 			/** @brief List of all meshes in this model */
-			std::vector<model::Mesh*> meshes;
+			Array<model::Mesh*> meshes;
 
 			/** @brief Load model data */
 			void _load() override;
