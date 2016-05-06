@@ -2,7 +2,7 @@
 
 void flare::render::passes::Geometry::init() {
 
-	shader = asset::load<asset::Shader>("base/geometry");
+	shader = asset::load<asset::Shader>("core/geometry");
 
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
@@ -31,8 +31,6 @@ void flare::render::passes::Geometry::init() {
 
 		textures.add(texture);
 	}
-
-	textures[10];
 
 	glBindTexture(GL_TEXTURE_2D,depthTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, getSettings()->resolution.x, getSettings()->resolution.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);

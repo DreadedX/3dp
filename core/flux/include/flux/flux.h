@@ -1,7 +1,6 @@
 #ifndef FLUX_H
 #define FLUX_H
 
-#include <vector>
 #include <cstring>
 #include <map>
 #include <assert.h>

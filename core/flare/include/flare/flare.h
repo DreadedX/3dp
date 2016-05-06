@@ -7,8 +7,8 @@
 #define GIT_VERSION "Unknown"
 #endif
 
-#include <map>
-#include <string>
+// #include <map>
+// #include <string>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -17,7 +17,12 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 #include "jsoncons/json.hpp"
+
+#pragma GCC diagnostic pop
 
 #ifndef NDEBUG
     #include "imgui.h"

@@ -12,8 +12,8 @@ std::map<std::string, flux::FileLoad*> map;
 void flux::load() {
 
 	/** @todo Make it find all flux files automatically */
-	count = 1;
-	std::string fileNames[] = {"base.flx"};
+	count = 2;
+	std::string fileNames[] = {"core.flx", "demo.flx"};
 
 	for (int i = 0; i < count; i++) {
 
@@ -21,6 +21,14 @@ void flux::load() {
 		files.add(file);
 
 		file->load(fileNames[i]);
+	}
+
+	for (flux::Flux *file : files) {
+
+		for (uint i = 0; i < file->indexSize; i++) {
+
+			print::d("Asset: %s", file->index[i].name.c_str());
+		}
 	}
 }
 
@@ -40,7 +48,6 @@ void flux::Flux::load(std::string name) {
 		uint adler = adler32(0L, Z_NULL, 0);
 
 		uint length = 1024;
-		byte *buffer = nullptr;
 
 		bool shouldContinue = true;
 
@@ -55,14 +62,12 @@ void flux::Flux::load(std::string name) {
 				shouldContinue = false;
 			}
 
-			buffer = new byte[length];
+			byte *buffer = new byte[length];
 
 			fread(buffer, sizeof(byte), length, fileHandle);
 			adler = adler32(adler, buffer, length);
 
 			delete[] buffer;
-			buffer = nullptr;
-			
 		}
 
 		uint checksum;

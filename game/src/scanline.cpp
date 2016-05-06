@@ -2,7 +2,7 @@
 
 void Scanline::init() {
 
-	shader = flare::asset::load<flare::asset::Shader>("base/grayscale");
+	shader = flare::asset::load<flare::asset::Shader>("demo/scanline");
 
 	GLuint texture = 0;
 

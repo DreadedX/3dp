@@ -2,7 +2,7 @@
 
 void flare::render::passes::Lighting::init() {
 
-	shader = asset::load<asset::Shader>("base/lighting");
+	shader = asset::load<asset::Shader>("core/lighting");
 
 	GLuint lightingTexture = 0;
 

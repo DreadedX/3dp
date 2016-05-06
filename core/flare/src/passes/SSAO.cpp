@@ -51,8 +51,8 @@ void generateSSAOKernel(flare::render::passes::SSAO *ssao) {
 
 void flare::render::passes::SSAO::init() {
 
-	shader = asset::load<asset::Shader>("base/ssao");
-	shaderBlur = asset::load<asset::Shader>("base/ssaoBlur");
+	shader = asset::load<asset::Shader>("core/ssao");
+	shaderBlur = asset::load<asset::Shader>("core/ssaoBlur");
 
 	glGenFramebuffers(1, &fboNoBlur);  
 	glBindFramebuffer(GL_FRAMEBUFFER, fboNoBlur);

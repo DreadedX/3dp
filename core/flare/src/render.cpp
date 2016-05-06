@@ -39,7 +39,7 @@ void flare::render::init() {
     // state.light.specular = glm::vec3(1.0f, 1.0f, 1.0f);
 	
 	/** @todo This needs to not use a model, but a hardcoded quad */
-	state.quad = asset::load<asset::Model>("quad");
+	state.quad = asset::load<asset::Model>("core/quad");
 }
 
 void debugRender() {
@@ -116,11 +116,11 @@ void flare::render::update() {
 		debug = !debug;
 		input::keySet(GLFW_KEY_F1, false);
 	}
-	static bool night = false;
 	if (input::keyCheck(GLFW_KEY_N)) {
 
 		print::d("Toggling day/night");
 
+		static bool night = false;
 		if (night) {
 			glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 

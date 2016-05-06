@@ -73,17 +73,17 @@ int main() {
 		fuse::Entity *cube = fuse::createEntity("Container");
 		cube->addComponent<flare::component::Position>(cubePositions[i]);
 		cube->addComponent<flare::component::Rotation>(glm::radians(20.0f * i), glm::vec3(0.5f, 1.0f, 0.0f));
-		cube->addComponent<flare::component::Object>("cube");
+		cube->addComponent<flare::component::Object>("demo/cube");
 		cube->addComponent<Spin>();
 	}
 #elif 1
 	fuse::Entity *house = fuse::createEntity("House");
 	house->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
-	house->addComponent<flare::component::Object>("house");
+	house->addComponent<flare::component::Object>("demo/house");
 #elif 0
 	fuse::Entity *rungholt = fuse::createEntity("Rungholt");
 	rungholt->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
-	rungholt->addComponent<flare::component::Object>("rungholt");
+	rungholt->addComponent<flare::component::Object>("demo/rungholt");
 
 	flare::render::State::Camera *camera = flare::render::getState()->camera;
 	camera->position = glm::vec3(377, 115, -246);
@@ -93,9 +93,9 @@ int main() {
 #endif
 
 	// Example of post proccessing
-	Scanline *scanline = new Scanline;
-	scanline->init();
-	flare::render::getState()->renderPasses.add(scanline);
+	// Scanline *scanline = new Scanline;
+	// scanline->init();
+	// flare::render::getState()->renderPasses.add(scanline);
 
 	while (flare::isRunning()) {
 

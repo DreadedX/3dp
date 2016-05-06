@@ -2,9 +2,7 @@
 #define ARRAY_H
 
 #include "extra/typedef.h"
-
-#pragma GCC push_options
-#pragma GCC optimize ("O3")
+#include <assert.h>
 
 /** @brief Replacement for std::vector
 	@todo It is still missing some things */
@@ -85,6 +83,9 @@ class Array {
 
 		uint incrementSize_ = _DEFAULT_ARRAY_SIZE;
 };
+
+#pragma GCC push_options
+#pragma GCC optimize ("O3")
 
 template<typename T>
 void Array<T>::add(const T &t) {

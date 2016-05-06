@@ -1,6 +1,8 @@
 #ifndef FLARE_TYPEDEF_H
 #define FLARE_TYPEDEF_H
 
+#include <stdint.h>
+
 typedef uint8_t byte;
 typedef uint32_t uint;
 /** @bug This has the wrong size on windows (Is still the case when using MinGW?) */

@@ -12,6 +12,6 @@ newmtl cube
   Kd 1 1 1
   Ks 1.0 1.0 1.0
   Ke 0 0 0
-  map_Kd base/container_diffuse
-  map_Bump base/container_normal
-  map_Ks base/container_specular
+  map_Kd demo/container_diffuse
+  map_Bump demo/container_normal
+  map_Ks demo/container_specular

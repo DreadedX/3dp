@@ -91,7 +91,6 @@ add_subdirectory(libs/tinyobjloader)
 add_subdirectory(tools/plugins/obj)
 add_subdirectory(tools/plugins/glsl)
 
-
 # add_custom_target(info
 # 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 # 	COMMAND touch ./core/flare/src/info.cpp
@@ -99,7 +98,8 @@ add_subdirectory(tools/plugins/glsl)
 
 if(UNIX)
 	add_custom_target(assets
-		COMMAND ./fluxuate ${CMAKE_SOURCE_DIR}/game/assets
+		COMMAND ./fluxuate -d ${CMAKE_SOURCE_DIR}/game/assets -p demo
+		COMMAND ./fluxuate -d ${CMAKE_SOURCE_DIR}/core/flare/assets -p core
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 	add_custom_target(run

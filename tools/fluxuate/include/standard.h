@@ -6,7 +6,6 @@
 // Standard library
 #include <iostream>
 #include <fstream>
-#include <vector>
 #include <cstring>
 #include <dirent.h>
 #include <assert.h>
@@ -25,9 +24,16 @@
 #include <png.h>
 #include <zlib.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 #include "jsoncons/json.hpp"
 
+#pragma GCC diagnostic pop
+
 #include "tinyobjloader/tiny_obj_loader.h"
+
+#include "cmdline/cmdline.h"
 
 // Needed to be able to store assets in the same format as flare
 // #include "flare/assets.h"
@@ -37,7 +43,13 @@
     #include "debug_new.h"
 #endif
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wparentheses"
+
 #include "md5.h"
+
+#pragma GCC diagnostic pop
+
 #include "extra/extra.h"
 #include "flux/flux.h"
 

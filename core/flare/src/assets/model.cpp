@@ -5,8 +5,7 @@ void flare::asset::Model::_load() {
 
 	double timer = glfwGetTime();
 
-	/** @note This is just for testing, is not actually used yet */
-	flux::FileLoad *modelFile = flux::get("base/" + name);
+	flux::FileLoad *modelFile = flux::get(name);
 	// flux::FileLoad *materialFile = flux::get("base/" + name + "_material");
 
 	byte *modelData = modelFile->get();

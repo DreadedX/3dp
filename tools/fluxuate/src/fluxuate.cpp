@@ -10,19 +10,22 @@ void readCache(flux::FileWrite *file, std::string fileName);
 jsoncons::json cache;
 jsoncons::json cacheOld;
 
+std::string packageName;
+
 int main(int argc, char* argv[]) {
+
+	cmdline::parser a;
+
+	a.add<std::string>("pkg", 'p', "Package name", true, "");
+	a.add<std::string>("dir", 'd', "Directory to package", true, "");
+
+	a.parse_check(argc, argv);
 
 	clock_t t = clock();
 
-	std::string dir;
-	if (argc == 2) {
+	std::string dir = a.get<std::string>("dir");
+	packageName = a.get<std::string>("pkg");
 
-		dir = argv[1];
-	} else {
-
-		print::e("Please specify an asset folder!");
-		exit(-1);
-	}
 	Array<std::string> files;
 
 	getDir(dir, files);
@@ -70,7 +73,7 @@ int main(int argc, char* argv[]) {
 	ulong totalSize = 0;
 	ulong bytes_written = 0;
 	// TODO: Determine the output file name based on the directory
-	FILE *file = fopen("base.flx", "w+b");
+	FILE *file = fopen((packageName + ".flx").c_str(), "w+b");
 
 	ulong dataLocation = 4 + sizeof(uint);
 	for (flux::FileWrite *fluxFile : fluxFiles) {
@@ -211,7 +214,7 @@ void getFile(std::string basePath, std::string fileName, Array<flux::FileWrite*>
 	std::string filePath = basePath + "/" + fileName;
 
 	// TODO: This needs needs to go automatically (recursive directory)
-	std::string assetName = "base/" + baseName;
+	std::string assetName = packageName + "/" + baseName;
 
 	// TODO: Fix caching
 	// if (hasChanged(filePath)) {

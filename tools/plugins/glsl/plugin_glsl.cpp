@@ -140,7 +140,10 @@ void load(std::string assetName, std::string filePath, Array<flux::FileWrite*> *
 	std::string vertexString;
 
 	vertexString += "#version " + version + "\n";
-	vertexString += "out INTERFACE {" + interface + "} vs_out;" + "\n";
+	if (interface != "") {
+
+		vertexString += "out INTERFACE {" + interface + "} vs_out;" + "\n";
+	}
 	vertexString += vertex + "\n";
 
 	vertexString = removeWhitespace(vertexString);
@@ -159,7 +162,10 @@ void load(std::string assetName, std::string filePath, Array<flux::FileWrite*> *
 	std::string fragmentString;
 
 	fragmentString += "#version " + version + "\n";
-	fragmentString += "in INTERFACE {" + interface + "} fs_in;" + "\n";
+	if (interface != "") {
+
+		fragmentString += "in INTERFACE {" + interface + "} fs_in;" + "\n";
+	}
 	fragmentString += fragment + "\n";
 
 	fragmentString = removeWhitespace(fragmentString);
