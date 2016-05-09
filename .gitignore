@@ -53,8 +53,8 @@ build/*
 docs/*
 CMake/*
 dist/*
-!Cmake/toolchains
-!Cmake/modules
+!CMake/toolchains
+!CMake/modules
 *~
 *.swp
 imgui.ini

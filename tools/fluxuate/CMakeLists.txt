@@ -28,3 +28,5 @@ endif (PNG_FOUND)
 
 target_link_libraries(${PROJECT_NAME} flux extra leakage tinyobjloader ${CMAKE_DL_LIBS})
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)
+
+cotire(${PROJECT_NAME})
