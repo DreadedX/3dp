@@ -6,7 +6,7 @@
   @todo Add a way to set this externally */
 flare::State *state = nullptr;
 
-const size_t RESERVED_MEMORY = 1000 * 1000 * 11; /* 100 MB */
+const size_t RESERVED_MEMORY = 1000 * 1000 * 11; /* 10 MB */
 
 void *arenaStart;
 
@@ -25,9 +25,10 @@ void flare::init() {
 	getState()->mainAllocator = tempAllocator;
 
 	// Create proxy allocators
-	getState()->proxyAllocators.model = allocator::make_new_proxy(*getState()->mainAllocator);
 	getState()->proxyAllocators.flux = allocator::make_new_proxy(*getState()->mainAllocator);
 	getState()->proxyAllocators.fuse = allocator::make_new_proxy(*getState()->mainAllocator);
+	getState()->proxyAllocators.asset = allocator::make_new_proxy(*getState()->mainAllocator);
+	getState()->proxyAllocators.model = allocator::make_new_proxy(*getState()->mainAllocator);
 
 	info::print();
 
@@ -90,6 +91,8 @@ void flare::init() {
 
 	// Initialize other systems
 	fuse::init(getState()->proxyAllocators.fuse);
+
+	asset::init(getState()->proxyAllocators.asset);
 
 	render::init();
 
@@ -154,9 +157,10 @@ void flare::update() {
 		ImGui::Text("Yaw/Pitch: %.2f, %.2f", getState()->render.camera.rotation.x, getState()->render.camera.rotation.y);
 		ImGui::Text("Camera position: %.2f, %.2f, %.2f", getState()->render.camera.position.x, getState()->render.camera.position.y, getState()->render.camera.position.z);
 		ImGui::Text("Memory usage (total): %lu bytes (%i%%)", getState()->mainAllocator->getUsedMemory(), (int)(getState()->mainAllocator->getUsedMemory()*100/getState()->mainAllocator->getSize()));
-		ImGui::Text("Memory usage (model): %lu bytes (%i%%)", getState()->proxyAllocators.model->getUsedMemory(), (int)(getState()->proxyAllocators.model->getUsedMemory()*100/getState()->proxyAllocators.model->getSize()));
 		ImGui::Text("Memory usage (flux): %lu bytes (%i%%)", getState()->proxyAllocators.flux->getUsedMemory(), (int)(getState()->proxyAllocators.flux->getUsedMemory()*100/getState()->proxyAllocators.flux->getSize()));
 		ImGui::Text("Memory usage (fuse): %lu bytes (%i%%)", getState()->proxyAllocators.fuse->getUsedMemory(), (int)(getState()->proxyAllocators.fuse->getUsedMemory()*100/getState()->proxyAllocators.fuse->getSize()));
+		ImGui::Text("Memory usage (asset): %lu bytes (%i%%)", getState()->proxyAllocators.asset->getUsedMemory(), (int)(getState()->proxyAllocators.asset->getUsedMemory()*100/getState()->proxyAllocators.asset->getSize()));
+		ImGui::Text("Memory usage (model): %lu bytes (%i%%)", getState()->proxyAllocators.model->getUsedMemory(), (int)(getState()->proxyAllocators.model->getUsedMemory()*100/getState()->proxyAllocators.model->getSize()));
 		debug::entityTree();
 	}
 	ImGui::Render();
@@ -179,12 +183,14 @@ void flare::terminate(int errorCode) {
 	print::d("The engine is now exiting");
 
 	// Remove all proxy allocators
-	allocator::make_delete_proxy(*getState()->proxyAllocators.model, *getState()->mainAllocator);
-	getState()->proxyAllocators.model = nullptr;
 	allocator::make_delete_proxy(*getState()->proxyAllocators.flux, *getState()->mainAllocator);
 	getState()->proxyAllocators.flux = nullptr;
 	allocator::make_delete_proxy(*getState()->proxyAllocators.fuse, *getState()->mainAllocator);
 	getState()->proxyAllocators.fuse = nullptr;
+	allocator::make_delete_proxy(*getState()->proxyAllocators.asset, *getState()->mainAllocator);
+	getState()->proxyAllocators.asset = nullptr;
+	allocator::make_delete_proxy(*getState()->proxyAllocators.model, *getState()->mainAllocator);
+	getState()->proxyAllocators.model = nullptr;
 
 	// Create a temporary pointer to the main allocator
 	FreeListAllocator *tempAllocator = getState()->mainAllocator;

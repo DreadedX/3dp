@@ -36,6 +36,7 @@ namespace flare{
 	namespace component {};
 
 	struct State;
+	struct ProxyAllocators;
 };
 
 #include "extra/allocator/allocator.h"

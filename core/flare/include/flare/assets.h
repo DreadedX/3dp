@@ -26,6 +26,10 @@ namespace flare {
 			@todo This needs to be private, but needs to be accesible by load<T>() */
 		extern std::map<std::string, Asset*> assetMap;
 
+		extern Allocator *asset_allocator;
+
+		void init(Allocator *_allocator);
+
 		/** @brief Load an asset
 			@tparam T - Asset type to load
 			@param name - Name of the asset to load */
@@ -40,7 +44,9 @@ namespace flare {
 
 				print::d("Loading asset '%s'", name.c_str());
 
-				T *asset = new T();
+				// T *asset = new T();
+				T* asset = allocator::make_new<T>(*asset_allocator);
+
 				asset->name = name;
 
 				asset->_load();

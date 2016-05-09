@@ -5,14 +5,15 @@ namespace flare {
 
 	struct State {
 
-		FreeListAllocator *mainAllocator = nullptr;
-
 		struct ProxyAllocators {
 
-			ProxyAllocator *model = nullptr;
 			ProxyAllocator *flux = nullptr;
 			ProxyAllocator *fuse = nullptr;
+			ProxyAllocator *asset = nullptr;
+			ProxyAllocator *model = nullptr;
 		} proxyAllocators;
+
+		FreeListAllocator *mainAllocator = nullptr;
 
 		struct Settings {
 
@@ -35,9 +36,7 @@ namespace flare {
 			};
 			/** @brief V-Sync settings */
 			int swap = VSYNC_OFF;
-		};
-
-		Settings settings;
+		} settings;
 
 		GLFWwindow *window = nullptr;
 
@@ -102,18 +101,14 @@ namespace flare {
 				/** @brief Camera position */
 				glm::vec3 position = glm::vec3(0.0f, 0.0f, 3.0f);
 				/** @brief Camera roation (yaw, pitch, roll)
-					@note Currently roll does not do anything */
+				  @note Currently roll does not do anything */
 				glm::vec3 rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 				/** @brief Vector pointing straight ahead from the camera */
 				glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f);
 				/** @brief Vector pointing straight up from the camera */
 				glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-			};
-
-			Camera camera;
-		};
-
-		Render render;
+			} camera;
+		} render;
 	};
 };
 
