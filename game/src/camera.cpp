@@ -2,7 +2,7 @@
 
 void Camera::_update() {
 
-	flare::render::State::Camera *camera = flare::render::getState()->camera;
+	flare::State::Render::Camera *camera = &flare::getState()->render.camera;
 	GLfloat speed = 50.0f * flare::render::getDeltaTime();
 
 	if (flare::input::keyCheck(GLFW_KEY_W)) {
@@ -41,18 +41,18 @@ void Camera::_update() {
 		camera->rotation.x += 10 * speed;
 	}
 
-	glm::vec2 delta = glm::vec2(flare::input::getMouse()->position.x - flare::getSettings()->resolution.x/2, flare::getSettings()->resolution.y/2 - flare::input::getMouse()->position.y);
+	glm::vec2 delta = glm::vec2(flare::input::getMouse()->position.x - flare::getState()->settings.resolution.x/2, flare::getState()->settings.resolution.y/2 - flare::input::getMouse()->position.y);
 	if (flare::input::keyCheck(GLFW_KEY_SPACE)) {
 
-		camera->rotation.x += delta.x * flare::getSettings()->mouseSensitivity;
-		camera->rotation.y += delta.y * flare::getSettings()->mouseSensitivity;
-		glfwSetCursorPos(flare::getWindow(), flare::getSettings()->resolution.x/2, flare::getSettings()->resolution.y/2);
+		camera->rotation.x += delta.x * flare::getState()->settings.mouseSensitivity;
+		camera->rotation.y += delta.y * flare::getState()->settings.mouseSensitivity;
+		glfwSetCursorPos(flare::getState()->window, flare::getState()->settings.resolution.x/2, flare::getState()->settings.resolution.y/2);
 	}
 }
 
 void JoyCamera::_update() {
 
-	flare::render::State::Camera *camera = flare::render::getState()->camera;
+	flare::State::Render::Camera *camera = &flare::getState()->render.camera;
 	GLfloat speed = 50.0f * flare::render::getDeltaTime();
 
 	// TODO: Create easier controller support in engine

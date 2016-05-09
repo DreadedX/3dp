@@ -10,7 +10,7 @@ void Scanline::init() {
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, flare::getSettings()->resolution.x, flare::getSettings()->resolution.y, 0, GL_RGBA, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, flare::getState()->settings.resolution.x, flare::getState()->settings.resolution.y, 0, GL_RGBA, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
@@ -28,6 +28,8 @@ void Scanline::init() {
 }
 
 void Scanline::draw() {
+
+	flare::State::Render *render = &flare::getState()->render;
 	
 	glEnable(GL_BLEND);
 	glBlendEquation(GL_FUNC_ADD);
@@ -36,22 +38,22 @@ void Scanline::draw() {
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
 	glActiveTexture(GL_TEXTURE0);	
-	glBindTexture(GL_TEXTURE_2D, flare::render::getState()->renderPasses[2]->textures[0]);
+	glBindTexture(GL_TEXTURE_2D, render->renderPasses[2]->textures[0]);
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	flare::render::setShader(shader);
 
 		{
-			glUniform3fv(flare::render::getState()->shader->locations.light.direction, 1, glm::value_ptr(flare::render::getState()->light.direction));
-			glUniform3fv(flare::render::getState()->shader->locations.light.ambient, 1, glm::value_ptr(flare::render::getState()->light.ambient));
+			glUniform3fv(render->shader->locations.light.direction, 1, glm::value_ptr(render->light.direction));
+			glUniform3fv(render->shader->locations.light.ambient, 1, glm::value_ptr(render->light.ambient));
 
-			glUniform3fv(flare::render::getState()->shader->locations.viewPosition, 1, glm::value_ptr(flare::render::getState()->camera->position));
+			glUniform3fv(render->shader->locations.viewPosition, 1, glm::value_ptr(render->camera.position));
 		}
 
-		glUniformMatrix4fv(flare::render::getState()->shader->locations.model, 1, GL_FALSE, glm::value_ptr(glm::mat4()));
+		glUniformMatrix4fv(render->shader->locations.model, 1, GL_FALSE, glm::value_ptr(glm::mat4()));
 
-	for (flare::asset::model::Mesh *mesh : flare::render::getState()->quad->meshes) {
+	for (flare::asset::model::Mesh *mesh : render->quad->meshes) {
 
 		glBindVertexArray(mesh->vao);
 

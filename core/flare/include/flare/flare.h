@@ -34,16 +34,21 @@ namespace flare{
 
 	/** @brief Components used by the flare engine */
 	namespace component {};
+
+	struct State;
 };
+
+#ifndef NDEBUG
+    // #include "debug_new.h"
+    #include "flare/debug.h"
+#endif
+
+#include "extra/allocator/allocator.h"
+#include "extra/allocator/free_list_allocator.h"
 
 #include "extra/extra.h"
 #include "flux/flux.h"
 #include "fuse/fuse.h"
-
-#ifndef NDEBUG
-    #include "debug_new.h"
-    #include "flare/debug.h"
-#endif
 
 #include "flare/engine.h"
 #include "flare/input.h"
@@ -55,6 +60,8 @@ namespace flare{
 #include "flare/render.h"
 
 #include "flare/info.h"
+
+#include "flare/state.h"
 
 #endif
 

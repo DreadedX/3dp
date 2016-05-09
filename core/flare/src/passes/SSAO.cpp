@@ -61,7 +61,7 @@ void flare::render::passes::SSAO::init() {
 
 	glGenTextures(1, &textureNoBlur);
 	glBindTexture(GL_TEXTURE_2D, textureNoBlur);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, getSettings()->resolution.x, getSettings()->resolution.y, 0, GL_RGB, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, getState()->settings.resolution.x, getState()->settings.resolution.y, 0, GL_RGB, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureNoBlur, 0);
@@ -81,7 +81,7 @@ void flare::render::passes::SSAO::init() {
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 	glGenTextures(1, &textureBlur);
 	glBindTexture(GL_TEXTURE_2D, textureBlur);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, getSettings()->resolution.x, getSettings()->resolution.y, 0, GL_RGB, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, getState()->settings.resolution.x, getState()->settings.resolution.y, 0, GL_RGB, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureBlur, 0);
@@ -102,6 +102,8 @@ void flare::render::passes::SSAO::init() {
 
 void flare::render::passes::SSAO::draw() {
 
+	State::Render *render = &getState()->render;
+
 	// SSAO
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fboNoBlur);
 
@@ -110,21 +112,21 @@ void flare::render::passes::SSAO::draw() {
 	flare::render::setShader(shader);
 
 	glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, getState()->renderPasses[0]->textures[Geometry::GBUFFER_TEXTURE_TYPE_POSITION]);
+    glBindTexture(GL_TEXTURE_2D, render->renderPasses[0]->textures[Geometry::GBUFFER_TEXTURE_TYPE_POSITION]);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, textures[2]);
     glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, getState()->renderPasses[0]->textures[Geometry::GBUFFER_TEXTURE_TYPE_NORMAL]);
+    glBindTexture(GL_TEXTURE_2D, render->renderPasses[0]->textures[Geometry::GBUFFER_TEXTURE_TYPE_NORMAL]);
 
 	for (GLuint i = 0; i < 64; ++i) {
 
-		glUniform3fv(glGetUniformLocation(getState()->shader->id, ("samples[" + std::to_string(i) + "]").c_str()), 1, &ssaoKernel[i][0]);
+		glUniform3fv(glGetUniformLocation(render->shader->id, ("samples[" + std::to_string(i) + "]").c_str()), 1, &ssaoKernel[i][0]);
 	}
 
-	glUniformMatrix4fv(getState()->shader->locations.view, 1, GL_FALSE, glm::value_ptr(getState()->view));
-	glUniformMatrix4fv(getState()->shader->locations.projection, 1, GL_FALSE, glm::value_ptr(getState()->projection));
+	glUniformMatrix4fv(render->shader->locations.view, 1, GL_FALSE, glm::value_ptr(render->view));
+	glUniformMatrix4fv(render->shader->locations.projection, 1, GL_FALSE, glm::value_ptr(render->projection));
 
-	for (flare::asset::model::Mesh *mesh : getState()->quad->meshes) {
+	for (flare::asset::model::Mesh *mesh : render->quad->meshes) {
 
 		glBindVertexArray(mesh->vao);
 
@@ -141,7 +143,7 @@ void flare::render::passes::SSAO::draw() {
 	glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textures[0]);
 
-	for (flare::asset::model::Mesh *mesh : getState()->quad->meshes) {
+	for (flare::asset::model::Mesh *mesh : render->quad->meshes) {
 
 		glBindVertexArray(mesh->vao);
 

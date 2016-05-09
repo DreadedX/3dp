@@ -2,25 +2,32 @@
 #include <thread>
 #include <chrono>
 
-/** @brief Pointer to the GLFW window
-	@todo This needs to be part of the state */
-GLFWwindow *window = nullptr;
-
-GLFWwindow *flare::getWindow() {
-
-	return window;
-}
-
 /** @brief Pointer the settings that are currently used by the engine
   @todo Add a way to set this externally */
-flare::Settings *settings = new flare::Settings();
+flare::State *state = nullptr;
+
+const size_t RESERVED_MEMORY = 1024;
+
+void *arenaStart;
 
 void flare::init() {
+
+	arenaStart = malloc(RESERVED_MEMORY + sizeof(FreeListAllocator));
+
+	FreeListAllocator *tempAllocator = new (arenaStart) FreeListAllocator(RESERVED_MEMORY, pointer_math::add(arenaStart, sizeof(FreeListAllocator)));
+
+	state = allocator::make_new<State>(*tempAllocator);
+
+	getState()->mainAllocator = tempAllocator;
 
 	info::print();
 
 	// Initialize window
 	/** @todo Part of this should propably move into the renderer */
+
+	State::Settings *settings = &getState()->settings;
+
+	assert(settings != nullptr);
 
 	print::d("The current resolution is %i by %i", settings->resolution.x, settings->resolution.y);
 
@@ -40,15 +47,15 @@ void flare::init() {
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 	// NOTE: First nullptr to glfwGetPrimaryMonitor for fullscreen
-	window = glfwCreateWindow(settings->resolution.x, settings->resolution.y, settings->name, nullptr, nullptr);
+	getState()->window = glfwCreateWindow(settings->resolution.x, settings->resolution.y, settings->name, nullptr, nullptr);
 
 	const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 	/** @bug This currently needs to add the width of my left monitor the get it center on my center monitor */
-	glfwSetWindowPos(window, (mode->width - settings->resolution.x) / 2 + 1366, (mode->height - settings->resolution.y) / 2);
+	glfwSetWindowPos(getState()->window, (mode->width - settings->resolution.x) / 2 + 1366, (mode->height - settings->resolution.y) / 2);
 
-	glfwSetKeyCallback(window, input::_keyCallback);
+	glfwSetKeyCallback(getState()->window, input::_keyCallback);
 
-	glfwMakeContextCurrent(window);
+	glfwMakeContextCurrent(getState()->window);
 
 	glewExperimental = GL_TRUE;
 	GLenum glewStatus = glewInit();
@@ -61,7 +68,7 @@ void flare::init() {
 #ifndef NDEBUG
 	/** @todo Create own ImGui compatible callbacks
 		@bug This sets things like swap, that then need to be disabled again */
-	ImGui_ImplGlfwGL3_Init(window, false);
+	ImGui_ImplGlfwGL3_Init(getState()->window, false);
 #endif
 
 	glfwSwapInterval(settings->swap);
@@ -79,7 +86,7 @@ void flare::init() {
 
 bool flare::isRunning() {
 
-	return !glfwWindowShouldClose(window);
+	return !glfwWindowShouldClose(getState()->window);
 }
 
 void flare::update() {
@@ -87,7 +94,7 @@ void flare::update() {
 	// Calculate the deltaTime
 	static float lastFrame = 0;
 	float currentFrame = glfwGetTime();
-	flare::render::getState()->deltaTime = (currentFrame - lastFrame);
+	flare::getState()->render.deltaTime = (currentFrame - lastFrame);
 	lastFrame = currentFrame;
 
 	glfwPollEvents();
@@ -97,7 +104,7 @@ void flare::update() {
 	{
 		if (input::keyCheck(GLFW_KEY_ESCAPE)) {
 
-			glfwSetWindowShouldClose(window, GL_TRUE);
+			glfwSetWindowShouldClose(getState()->window, GL_TRUE);
 		}
 
 		if (input::keyCheck(GLFW_KEY_F5)) {
@@ -130,21 +137,32 @@ void flare::update() {
 #ifndef NDEBUG
 	ImGui_ImplGlfwGL3_NewFrame();
 	{
-		ImGui::Text("Delta time: %.2fms", render::getState()->deltaTime * 1000);
+		ImGui::Text("Delta time: %.2fms", getState()->render.deltaTime * 1000);
 		ImGui::Text("Mouse position: %.2f, %.2f", input::getMouse()->position.x, input::getMouse()->position.y);
-		ImGui::Text("Yaw/Pitch: %.2f, %.2f", render::getState()->camera->rotation.x, render::getState()->camera->rotation.y);
-		ImGui::Text("Camera position: %.2f, %.2f, %.2f", flare::render::getState()->camera->position.x, render::getState()->camera->position.y, render::getState()->camera->position.z);
+		ImGui::Text("Yaw/Pitch: %.2f, %.2f", getState()->render.camera.rotation.x, getState()->render.camera.rotation.y);
+		ImGui::Text("Camera position: %.2f, %.2f, %.2f", getState()->render.camera.position.x, getState()->render.camera.position.y, getState()->render.camera.position.z);
+		ImGui::Text("Memory usage: %lu bytes (%i%%)", getState()->mainAllocator->getUsedMemory(), (int)(getState()->mainAllocator->getUsedMemory()*100/getState()->mainAllocator->getSize()));
 		debug::entityTree();
 	}
 	ImGui::Render();
 #endif
 
-	glfwSwapBuffers(window);
+	glfwSwapBuffers(getState()->window);
 }
 
 void flare::terminate(int errorCode) {
 
-	delete settings;
+	// Create a temporary pointer to the main allocator
+	FreeListAllocator *tempAllocator = getState()->mainAllocator;
+
+	// Delete the state object
+	allocator::make_delete<State>(*tempAllocator, *getState());
+
+	// Call the destructor of the main allocator
+	tempAllocator->~FreeListAllocator();
+
+	// Free the reserved memory
+	free(arenaStart);
 
 	// Kill and remove all remaining entities
 	fuse::killAll();
@@ -160,7 +178,7 @@ void flare::terminate(int errorCode) {
 	exit(errorCode);
 }
 
-flare::Settings *flare::getSettings() {
+flare::State *flare::getState() {
 
-	return settings;
+	return state;
 }

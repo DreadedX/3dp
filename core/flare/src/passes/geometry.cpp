@@ -18,10 +18,10 @@ void flare::render::passes::Geometry::init() {
 
 		if (i == GBUFFER_TEXTURE_TYPE_POSITION || i == GBUFFER_TEXTURE_TYPE_SPECULAR_LIGHT) {
 
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, getSettings()->resolution.x, getSettings()->resolution.y, 0, GL_RGBA, GL_FLOAT, NULL);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, getState()->settings.resolution.x, getState()->settings.resolution.y, 0, GL_RGBA, GL_FLOAT, NULL);
 		} else {
 
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, getSettings()->resolution.x, getSettings()->resolution.y, 0, GL_RGB, GL_FLOAT, NULL);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, getState()->settings.resolution.x, getState()->settings.resolution.y, 0, GL_RGB, GL_FLOAT, NULL);
 		}
 
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -33,7 +33,7 @@ void flare::render::passes::Geometry::init() {
 	}
 
 	glBindTexture(GL_TEXTURE_2D,depthTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, getSettings()->resolution.x, getSettings()->resolution.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, getState()->settings.resolution.x, getState()->settings.resolution.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
 
 	GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5 }; 
@@ -62,7 +62,7 @@ void flare::render::passes::Geometry::draw() {
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 
-	getState()->pass = flare::render::GEOMETRY;
+	getState()->render.pass = State::Render::GEOMETRY;
 	fuse::draw();
 
 	glDepthMask(GL_FALSE);

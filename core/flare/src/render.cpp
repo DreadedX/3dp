@@ -1,15 +1,14 @@
 #include "flare/flare.h"
 
-/** @brief Store the render state */
-flare::render::State state;
-
 void flare::render::init() {
 
-	state.renderPasses.add(new passes::Geometry);
-	state.renderPasses.add(new passes::SSAO);
-	state.renderPasses.add(new passes::Lighting);
+	State::Render *render = &getState()->render;
 
-	for(passes::Pass *pass : state.renderPasses) {
+	render->renderPasses.add(new passes::Geometry);
+	render->renderPasses.add(new passes::SSAO);
+	render->renderPasses.add(new passes::Lighting);
+
+	for(passes::Pass *pass : render->renderPasses) {
 
 		pass->init();
 	}
@@ -26,36 +25,38 @@ void flare::render::init() {
     
     // glm::vec3(1.0f, 0.9f, 0.7f);
     // state.light.direction = glm::vec3(-0.2f, -1.0f, -0.3f);
-    state.light.direction = glm::vec3(45.0f, -50.0f, 65.0f);
+    render->light.direction = glm::vec3(45.0f, -50.0f, 65.0f);
 
 	glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
-    state.light.ambient = glm::vec3(0.02f, 0.02f, 0.02f) * color;
-    state.light.diffuse = glm::vec3(1.0f, 1.0f, 1.0f) * color;
-    state.light.specular = glm::vec3(1.0f, 1.0f, 1.0f) * color;
+    render->light.ambient = glm::vec3(0.02f, 0.02f, 0.02f) * color;
+    render->light.diffuse = glm::vec3(1.0f, 1.0f, 1.0f) * color;
+    render->light.specular = glm::vec3(1.0f, 1.0f, 1.0f) * color;
 
     // state.light.ambient = glm::vec3(0.02f, 0.02f, 0.02f);
     // state.light.diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
     // state.light.specular = glm::vec3(1.0f, 1.0f, 1.0f);
 	
 	/** @todo This needs to not use a model, but a hardcoded quad */
-	state.quad = asset::load<asset::Model>("core/quad");
+	render->quad = asset::load<asset::Model>("core/quad");
 }
 
 void debugRender() {
+
+		flare::State::Render *render = &flare::getState()->render;
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, state.renderPasses[0]->fbo);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, render->renderPasses[0]->fbo);
 
 		// glReadBuffer(GL_COLOR_ATTACHMENT0);
 		// glBlitFramebuffer(0, 0, getSettings()->resolution.x, getSettings()->resolution.y, 
 		// 		0, 0, getSettings()->resolution.x, getSettings()->resolution.y, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-		GLsizei width = (GLsizei)flare::getSettings()->resolution.x;
-		GLsizei height = (GLsizei)flare::getSettings()->resolution.y;
+		GLsizei width = (GLsizei)flare::getState()->settings.resolution.x;
+		GLsizei height = (GLsizei)flare::getState()->settings.resolution.y;
 
 		glReadBuffer(GL_COLOR_ATTACHMENT1);
 		glBlitFramebuffer(0, 0, width, height, 
@@ -69,7 +70,7 @@ void debugRender() {
 		glBlitFramebuffer(0, 0, width, height, 
 				width/2, 0, width, height/2, GL_COLOR_BUFFER_BIT, GL_LINEAR); 
 
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, state.renderPasses[1]->fbo);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, render->renderPasses[1]->fbo);
 		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBlitFramebuffer(0, 0, width, height,
 				0, 0, width/2, height/2, GL_COLOR_BUFFER_BIT, GL_LINEAR);
@@ -84,26 +85,28 @@ float nfmod(float a, float b) {
 
 void flare::render::update() {
 
+	State::Render *render = &getState()->render;
+
 	// Calculate the camera angle
 	// state.camera->rotation.y = nfmod(state.camera->rotation.y, 360);
-	if (state.camera->rotation.y > 89.9) {
-		state.camera->rotation.y = 89.9;
+	if (render->camera.rotation.y > 89.9) {
+		render->camera.rotation.y = 89.9;
 	}
-	if (state.camera->rotation.y < -89.9) {
-		state.camera->rotation.y = -89.9;
+	if (render->camera.rotation.y < -89.9) {
+		render->camera.rotation.y = -89.9;
 	}
-	state.camera->rotation.x = nfmod(state.camera->rotation.x, 360);
+	render->camera.rotation.x = nfmod(render->camera.rotation.x, 360);
 
-	state.camera->front.x = cos(glm::radians(state.camera->rotation.x)) * cos(glm::radians(state.camera->rotation.y));
-	state.camera->front.y = sin(glm::radians(state.camera->rotation.y));
-	state.camera->front.z = sin(glm::radians(state.camera->rotation.x)) * cos(glm::radians(state.camera->rotation.y));
-	state.camera->front = glm::normalize(state.camera->front);
+	render->camera.front.x = cos(glm::radians(render->camera.rotation.x)) * cos(glm::radians(render->camera.rotation.y));
+	render->camera.front.y = sin(glm::radians(render->camera.rotation.y));
+	render->camera.front.z = sin(glm::radians(render->camera.rotation.x)) * cos(glm::radians(render->camera.rotation.y));
+	render->camera.front = glm::normalize(render->camera.front);
 
-    state.view = glm::lookAt(state.camera->position, state.camera->position + state.camera->front, state.camera->up);
+    render->view = glm::lookAt(render->camera.position, render->camera.position + render->camera.front, render->camera.up);
 
-    state.projection = glm::perspectiveFov(glm::radians(90.0f), (float)getSettings()->resolution.x, (float)getSettings()->resolution.y , 0.1f, 1000.0f);
+    render->projection = glm::perspectiveFov(glm::radians(90.0f), (float)getState()->settings.resolution.x, (float)getState()->settings.resolution.y , 0.1f, 1000.0f);
 
-	for(passes::Pass *pass : state.renderPasses) {
+	for(passes::Pass *pass : render->renderPasses) {
 
 		pass->draw();
 	}
@@ -124,22 +127,22 @@ void flare::render::update() {
 		if (night) {
 			glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
-			state.light.ambient = glm::vec3(0.02f, 0.02f, 0.02f) * color;
-			state.light.diffuse = glm::vec3(1.0f, 1.0f, 1.0f) * color;
-			state.light.specular = glm::vec3(1.0f, 1.0f, 1.0f) * color;
+			render->light.ambient = glm::vec3(0.02f, 0.02f, 0.02f) * color;
+			render->light.diffuse = glm::vec3(1.0f, 1.0f, 1.0f) * color;
+			render->light.specular = glm::vec3(1.0f, 1.0f, 1.0f) * color;
 
-			state.light.direction = glm::vec3(45.0f, -50.0f, 65.0f);
+			render->light.direction = glm::vec3(45.0f, -50.0f, 65.0f);
 
 			night = false;
 		} else {
 
 			glm::vec3 color = glm::vec3(0.05f, 0.05f, 0.25f);
 
-			state.light.ambient = glm::vec3(0.02f, 0.02f, 0.02f) * color;
-			state.light.diffuse = glm::vec3(1.0f, 1.0f, 1.0f) * color;
-			state.light.specular = glm::vec3(1.0f, 1.0f, 1.0f) * color;
+			render->light.ambient = glm::vec3(0.02f, 0.02f, 0.02f) * color;
+			render->light.diffuse = glm::vec3(1.0f, 1.0f, 1.0f) * color;
+			render->light.specular = glm::vec3(1.0f, 1.0f, 1.0f) * color;
 
-			state.light.direction = glm::vec3(-35.0f, -50.0f, 25.0f);
+			render->light.direction = glm::vec3(-35.0f, -50.0f, 25.0f);
 
 			night = true;
 		}
@@ -150,10 +153,10 @@ void flare::render::update() {
 
 		debugRender();
 	} else {
-		GLsizei width = (GLsizei)flare::getSettings()->resolution.x;
-		GLsizei height = (GLsizei)flare::getSettings()->resolution.y;
+		GLsizei width = (GLsizei)flare::getState()->settings.resolution.x;
+		GLsizei height = (GLsizei)flare::getState()->settings.resolution.y;
 
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, state.renderPasses[state.renderPasses.size()-1]->fbo);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, render->renderPasses[render->renderPasses.size()-1]->fbo);
 		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBlitFramebuffer(0, 0, width, height,
 				0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
@@ -162,7 +165,9 @@ void flare::render::update() {
 
 void flare::render::setShader(flare::asset::Shader *shader) {
 
-    if (state.shader == nullptr || state.shader->id != shader->id) {
+	State::Render *render = &getState()->render;
+
+    if (render->shader == nullptr || render->shader->id != shader->id) {
 
 		glUseProgram(shader->id);
 		glUniform1i(glGetUniformLocation(shader->id, "material.diffuse"), 0);
@@ -180,16 +185,13 @@ void flare::render::setShader(flare::asset::Shader *shader) {
 		glUniform1i(glGetUniformLocation(shader->id, "ssaoTexture"), 0);
 
 		glUniform1i(glGetUniformLocation(shader->id, "noiseTexture"), 1);
-		state.shader = shader;
+		render->shader = shader;
 	
     }
 }
 
-flare::render::State *flare::render::getState() {
-    return &state;
-}
-
 float flare::render::getDeltaTime() {
-    return state.deltaTime;
+
+    return getState()->render.deltaTime;
 }
 

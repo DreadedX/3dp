@@ -83,7 +83,9 @@ add_subdirectory(game)
 
 # Tools
 add_subdirectory(tools/fluxuate)
-add_subdirectory(tools/launcher)
+if(UNIX)
+	add_subdirectory(tools/launcher)
+endif(UNIX)
 
 # Plugins for fluxuate
 add_subdirectory(tools/plugins/png)
@@ -109,30 +111,31 @@ if(UNIX)
 	add_custom_target(debug
 		COMMAND gdb ./game -ex run -ex bt -ex quit --silent
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+
 	add_custom_target(dist
 		COMMAND mkdir -p ${CMAKE_SOURCE_DIR}/dist
-		COMMAND tar -cvf ${CMAKE_SOURCE_DIR}/dist/release-${CMAKE_SYSTEM_NAME}.tar game base.flx
+		COMMAND tar -cvf ${CMAKE_SOURCE_DIR}/dist/release-${CMAKE_SYSTEM_NAME}.tar game core.flx demo.flx
 		COMMAND gzip ${CMAKE_SOURCE_DIR}/dist/release-${CMAKE_SYSTEM_NAME}.tar
 		DEPENDS assets
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 endif(UNIX)
 if(WIN32)
 	add_custom_target(assets
-		COMMAND wine fluxuate.exe ${CMAKE_SOURCE_DIR}/game/assets
+		COMMAND wine fluxuate.exe -d ${CMAKE_SOURCE_DIR}/game/assets -p demo
+		COMMAND wine fluxuate.exe -d ${CMAKE_SOURCE_DIR}/core/flare/assets -p core
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 	add_custom_target(run
 		COMMAND wine game.exe
-		DEPENDS assets
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 	add_custom_target(debug
 		COMMAND wine game.exe
-		DEPENDS assets
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+
 	add_custom_target(dist
 		COMMAND mkdir -p ${CMAKE_SOURCE_DIR}/dist
-		COMMAND zip ${CMAKE_SOURCE_DIR}/dist/release-${CMAKE_SYSTEM_NAME} game.exe base.flx
+		COMMAND zip ${CMAKE_SOURCE_DIR}/dist/release-${CMAKE_SYSTEM_NAME} game.exe core.flx demo.flx
 		DEPENDS assets
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 endif(WIN32)

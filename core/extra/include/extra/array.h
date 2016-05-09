@@ -52,7 +52,7 @@ class Array {
 
 		/** @brief Get the array size
 			@returns Array size */
-		uint size();
+		uint size() const;
 
 		/** @brief Empty the array */
 		void clear();
@@ -117,7 +117,7 @@ void Array<T>::resize(uint n) {
 }
 
 template<typename T>
-uint Array<T>::size() {
+uint Array<T>::size() const {
 
 	return size_;
 }

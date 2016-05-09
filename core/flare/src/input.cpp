@@ -40,6 +40,6 @@ void flare::input::update() {
 	// mouse.delta = glm::vec2(0.0f, 0.0f);
 
 	double xpos, ypos;
-	glfwGetCursorPos(getWindow(), &xpos, &ypos);
+	glfwGetCursorPos(getState()->window, &xpos, &ypos);
 	mouse.position = glm::vec2(xpos, ypos);
 }
