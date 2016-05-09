@@ -7,6 +7,13 @@ namespace flare {
 
 		FreeListAllocator *mainAllocator = nullptr;
 
+		struct ProxyAllocators {
+
+			ProxyAllocator *model = nullptr;
+			ProxyAllocator *flux = nullptr;
+			ProxyAllocator *fuse = nullptr;
+		} proxyAllocators;
+
 		struct Settings {
 
 			/** @brief Window name */

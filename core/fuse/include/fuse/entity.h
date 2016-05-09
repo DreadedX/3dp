@@ -31,9 +31,11 @@ namespace fuse {
 			@param name - Entity name
 			@param entity - Parent entity, nullptr if this entity is not a child
 			@warning You should never manually call this function, use the entity manager to create entities instead */
-		Entity(const char *name, Entity *entity);
+		Entity(Allocator *_allocator, const char *name, Entity *entity);
 		/** @brief Entity destructor */
 		~Entity();
+
+		Allocator *_allocator;
 
 		/** @brief Create a new entity that is a chil of this entity
 			@param name - Child entity name */
@@ -71,7 +73,7 @@ namespace fuse {
 
 				assert(!hasComponent<T>() /*Entity already has this component*/);
 
-				T *component = new T(this, std::forward<TArgs>(args)...);
+				T *component = new (_allocator->allocate(sizeof(T), __alignof(T))) T(this, std::forward<TArgs>(args)...);
 
 				components.add(component);
 				componentArray[_getTypeID<T>()] = component;

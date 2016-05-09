@@ -1,8 +1,9 @@
 #include "fuse/fuse.h"
 
-fuse::Entity::Entity(const char *name, fuse::Entity *entity) {
+fuse::Entity::Entity(Allocator *_allocator, const char *name, fuse::Entity *entity) {
 
 	this->name = name;
+	this->_allocator = _allocator;
 
 	if (entity != nullptr) {
 
@@ -20,7 +21,8 @@ fuse::Entity::~Entity() {
 
 	for (Component *component : components) {
 
-		delete component;
+		// delete component;
+		allocator::make_delete(*_allocator, *component);
 	}
 }
 

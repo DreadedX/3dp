@@ -6,6 +6,8 @@
 #include <cassert>
 #include <cstdint>
 
+#include "extra/print.h"
+
 class Allocator {
 
 	public:
@@ -21,7 +23,10 @@ class Allocator {
 
 		virtual ~Allocator() {
 
-			assert(_num_allocations == 0 && _used_memory == 0);
+			if(_num_allocations != 0 && _used_memory != 0) {
+
+				print::w("Memory leak detected (%i object, %i bytes)", _num_allocations, _used_memory);
+			}
 
 			_start = nullptr;
 			_size  = 0;
@@ -57,6 +62,33 @@ class Allocator {
 
 		size_t _used_memory;
 		size_t _num_allocations;
+};
+
+class HeapAllocator : public Allocator {
+
+	public:
+
+		HeapAllocator(size_t size, void* start);
+		~HeapAllocator();
+
+		void *allocate(size_t size, uint8_t) override {
+
+			return malloc(size);
+		}
+
+		void deallocate(void *p) override {
+
+			free(p);
+		}
+
+		void clear();
+
+	private:
+
+		HeapAllocator(const HeapAllocator&);
+		HeapAllocator &operator=(const HeapAllocator&);
+
+		void *_current_pos;
 };
 
 namespace allocator {

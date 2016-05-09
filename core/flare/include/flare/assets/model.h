@@ -63,14 +63,7 @@ namespace flare {
 
 			/** @brief Model destructor
 				Makes sure all meshes get deleted properly */
-			~Model() {
-
-				/** @todo Should probably also delete opengl buffers (this currently only gets called on shutdown, so causes no issues */
-				for (model::Mesh *mesh : meshes) {
-
-					delete mesh;
-				}
-			}
+			~Model();
 		};
 	}
 }

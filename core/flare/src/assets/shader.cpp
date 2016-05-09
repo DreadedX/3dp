@@ -58,8 +58,8 @@ void flare::asset::Shader::_load() {
 	flux::FileLoad *vertexFile = flux::get(name + "/vertex");
 	flux::FileLoad *fragmentFile = flux::get(name + "/fragment");
 
-	const char *vertexSource = reinterpret_cast<const char*>(vertexFile->get(true));
-	const char *fragmentSource = reinterpret_cast<const char*>(fragmentFile->get(true));
+	char *vertexSource = reinterpret_cast<char*>(vertexFile->get(true));
+	char *fragmentSource = reinterpret_cast<char*>(fragmentFile->get(true));
 
 	// Load shader source
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -80,8 +80,10 @@ void flare::asset::Shader::_load() {
 
 		printError(buffer, vertexSource, name + "/vertex");
 
-		delete[] vertexSource;
-		delete[] fragmentSource;
+		// delete[] vertexSource;
+		// delete[] fragmentSource;
+		allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, vertexSource);
+		allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, fragmentSource);
 		return;
 	}
 
@@ -93,13 +95,17 @@ void flare::asset::Shader::_load() {
 
 		printError(buffer, fragmentSource, name + "/fragment");
 
-		delete[] vertexSource;
-		delete[] fragmentSource;
+		// delete[] vertexSource;
+		// delete[] fragmentSource;
+		allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, vertexSource);
+		allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, fragmentSource);
 		return;
 	}
 
-	delete[] vertexSource;
-	delete[] fragmentSource;
+	// delete[] vertexSource;
+	// delete[] fragmentSource;
+	allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, vertexSource);
+	allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, fragmentSource);
 
 	// Combine shaders
 	id = glCreateProgram();

@@ -9,6 +9,13 @@ int count = 0;
 /** @brief Hash map used to make sure we are not loading FLX files more than once */
 std::map<std::string, flux::FileLoad*> map;
 
+Allocator *flux_allocator = nullptr;
+
+void flux::init(Allocator *_allocator) {
+
+	flux_allocator = _allocator;
+}
+
 void flux::load() {
 
 	/** @todo Make it find all flux files automatically */
@@ -17,7 +24,8 @@ void flux::load() {
 
 	for (int i = 0; i < count; i++) {
 
-		flux::Flux *file = new flux::Flux;
+		// flux::Flux *file = new flux::Flux;
+		flux::Flux *file = allocator::make_new<flux::Flux>(*flux_allocator);
 		files.add(file);
 
 		file->load(fileNames[i]);
@@ -62,12 +70,14 @@ void flux::Flux::load(std::string name) {
 				shouldContinue = false;
 			}
 
-			byte *buffer = new byte[length];
+			// byte *buffer = new byte[length];
+			byte *buffer = allocator::make_new_array<byte>(*flux_allocator, length);
 
 			fread(buffer, sizeof(byte), length, fileHandle);
 			adler = adler32(adler, buffer, length);
 
-			delete[] buffer;
+			// delete[] buffer;
+			allocator::make_delete_array<byte>(*flux_allocator, buffer);
 		}
 
 		uint checksum;
@@ -75,30 +85,35 @@ void flux::Flux::load(std::string name) {
 
 		fseek(fileHandle, 0, SEEK_SET);
 
-		byte *header = new byte[6];
+		// byte *header = new byte[6];
+		byte *header = allocator::make_new_array<byte>(*flux_allocator, 6);
 		fread(header, sizeof(byte), 4, fileHandle);
 		// Make string null terminated
 		header[4] = 0x00;
 		header[5] = 0x00;
 
 		std::string headerString(reinterpret_cast<const char*>(header));
-		delete[] header;
+		// delete[] header;
+		allocator::make_delete_array<byte>(*flux_allocator, header);
 
 		if (headerString == "FLX1" && checksum == adler)  {
 
 			fread(&indexSize, sizeof(byte), sizeof(uint), fileHandle);
 			print::d("FLX Container '%s' contains %i files", name.c_str(), indexSize);
-			this->index = new FileLoad[indexSize];
+			// this->index = new FileLoad[indexSize];
+			this->index = allocator::make_new_array<FileLoad>(*flux_allocator, indexSize);
 
 			for (uint i = 0; i < indexSize; ++i) {
 
 				// Read fileName
 				byte nameSize = 0;
 				fread(&nameSize, sizeof(byte), sizeof(byte), fileHandle);
-				char *name = new char[nameSize];
+				// char *name = new char[nameSize];
+				char *name = allocator::make_new_array<char>(*flux_allocator, nameSize);
 				fread(name, sizeof(byte), nameSize, fileHandle);
 				index[i].name = std::string(name, nameSize);
-				delete[] name;
+				// delete[] name;
+				allocator::make_delete_array<char>(*flux_allocator, name);
 
 				// Read data size and location
 				fread(&index[i].dataSize, sizeof(byte), sizeof(uint), fileHandle);
@@ -156,17 +171,20 @@ byte *flux::FileLoad::get(bool addNullTerminator) {
 
 	print::d("Loading file: '%s'", name.c_str());
 
-	byte *compressedData = new byte[compressedDataSize];
+	// byte *compressedData = new byte[compressedDataSize];
+	byte *compressedData = allocator::make_new_array<byte>(*flux_allocator, compressedDataSize);
 	fseek(parent->fileHandle, dataLocation, SEEK_SET);
 	fread(compressedData, sizeof(byte), compressedDataSize, parent->fileHandle);
 
 	byte *data = nullptr;
 	if (!addNullTerminator) {
 
-		data = new byte[dataSize];
+		// data = new byte[dataSize];
+		data = allocator::make_new_array<byte>(*flux_allocator, dataSize);
 	} else {
 
-		data = new byte[dataSize+1];
+		// data = new byte[dataSize+1];
+		data = allocator::make_new_array<byte>(*flux_allocator, dataSize + 1);
 		data[dataSize] = 0x00;
 	}
 	uLongf tempDataSize = dataSize; 
@@ -178,7 +196,8 @@ byte *flux::FileLoad::get(bool addNullTerminator) {
 		exit(-1);
 	}
 
-	delete[] compressedData;
+	// delete[] compressedData;
+	allocator::make_delete_array<byte>(*flux_allocator, compressedData);
 
 	return data;
 }
@@ -188,7 +207,9 @@ void flux::close() {
 	for (int i = 0; i < count; ++i) {
 
 		files[i]->close();
-		delete files[i];
+
+		// delete files[i];
+		allocator::make_delete<flux::Flux>(*flux_allocator, *files[i]);
 	}
 }
 
@@ -202,7 +223,8 @@ void flux::Flux::close() {
 	}
 	if (index != nullptr) {
 
-		delete[] index;
+		// delete[] index;
+		allocator::make_delete_array(*flux_allocator, index);
 		index = nullptr;
 	}
 }

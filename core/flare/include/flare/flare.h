@@ -38,13 +38,14 @@ namespace flare{
 	struct State;
 };
 
-#ifndef NDEBUG
-    // #include "debug_new.h"
-    #include "flare/debug.h"
-#endif
-
 #include "extra/allocator/allocator.h"
 #include "extra/allocator/free_list_allocator.h"
+#include "extra/allocator/proxy_allocator.h"
+
+#ifndef NDEBUG
+    #include "debug_new.h"
+    #include "flare/debug.h"
+#endif
 
 #include "extra/extra.h"
 #include "flux/flux.h"

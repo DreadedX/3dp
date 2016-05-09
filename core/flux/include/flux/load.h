@@ -40,6 +40,8 @@ namespace flux {
 		void close();
 	};
 
+	/** @brief Initialize system */
+	void init(Allocator *allocator);
 	/** @brief Load all FLX containers in current directory */
 	void load();
 	/** @brief Get pointer to FLX single file header, this file could be in any of the loaded containers */

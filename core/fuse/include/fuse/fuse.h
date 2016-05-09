@@ -9,6 +9,7 @@
 #include <cassert>
 
 #include "extra/extra.h"
+#include "extra/allocator/allocator.h"
 
 /** @brief Entity-component system */
 namespace fuse {};

@@ -57,7 +57,8 @@ void flare::asset::Texture::_load() {
 			print::w("'%s' contains an invalid amount of bytes per pixel (%X)", name.c_str(), bytesPerPixel);
 		}
 
-		delete[] textureData;
+		// delete[] textureData;
+		allocator::make_delete_array<byte>(*getState()->proxyAllocators.flux, textureData);
 	} else {
 
 		print::d("Generating empty texture");

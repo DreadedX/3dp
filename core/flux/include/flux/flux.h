@@ -8,6 +8,7 @@
 #include <zlib.h>
 
 #include "extra/extra.h"
+#include "extra/allocator/allocator.h"
 
 /** @brief Flux is a FLX file reader/writer */
 namespace flux{};

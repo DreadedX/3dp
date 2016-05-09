@@ -3,6 +3,8 @@
 
 namespace fuse {
 
+	void init(Allocator *_allocator);
+
 	/** @brief Call the update function of each entity */
     void update();
 
