@@ -38,22 +38,18 @@ void printError(char* error, const char* source, std::string name) {
 		}
 }
 
+void deleteShader(flare::asset::Shader *shader) {
+
+	if (shader->id != 0) {
+
+		glDeleteProgram(shader->id);
+		shader->id = 0;
+	}
+}
+
 void flare::asset::Shader::_load() {
 
-	if (id != 0) {
-
-		glDeleteProgram(id);
-		id = 0;
-	}
-
-	// flux::FileLoad *shaderConfigFile = flux::get(name);
-	// const char *shaderConfig = reinterpret_cast<const char*>(shaderConfigFile->get(true));
-    //
-	// jsoncons::json configJson = jsoncons::json::parse_string(shaderConfig);
-	// delete[] shaderConfig;
-
-	// flux::FileLoad *vertexFile = flux::get(configJson.get("vertex", "Unknown Vertex Shader").as<std::string>());
-	// flux::FileLoad *fragmentFile = flux::get(configJson.get("fragment", "Unknown Fragment Shader").as<std::string>());
+	deleteShader(this);
 
 	flux::FileLoad *vertexFile = flux::get(name + "/vertex");
 	flux::FileLoad *fragmentFile = flux::get(name + "/fragment");
@@ -137,4 +133,9 @@ void flare::asset::Shader::_load() {
 	locations.viewPosition = glGetUniformLocation(id, "viewPosition");
 
 	locations.toggle = glGetUniformLocation(id, "toggle");
+}
+
+flare::asset::Shader::~Shader() {
+
+	deleteShader(this);
 }

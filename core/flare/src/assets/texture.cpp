@@ -1,12 +1,17 @@
 #include "flare/flare.h"
 
+void clearTexture(flare::asset::Texture *texture) {
+
+	if (texture->id != 0) {
+
+		glDeleteTextures(1, &texture->id);
+		texture->id = 0;
+	}
+}
+
 void flare::asset::Texture::_load() {
 
-	if (id != 0) {
-
-		glDeleteTextures(1, &id);
-		id = 0;
-	}
+	clearTexture(this);
 
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);
@@ -68,4 +73,9 @@ void flare::asset::Texture::_load() {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData);
 
 	}
+}
+
+flare::asset::Texture::~Texture() {
+
+	clearTexture(this);
 }

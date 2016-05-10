@@ -79,7 +79,18 @@ void *FreeListAllocator::allocate(size_t size, uint8_t alignment) {
 		return (void*)aligned_adress;
 	}
 
-	printf("Could not find free block large enough\n");
+	print::e("Could not find free block large enough (%lu needed, only %lu available)\n", size, _size-_used_memory);
+
+	free_block = _free_blocks;
+
+	while(free_block->next != nullptr) {
+
+		print::e("Freeblock %i bytes (start: %p, end: %p)", free_block->size, free_block, free_block + free_block->size);
+
+		free_block = free_block->next;
+	}
+
+	assert(0);
 
 	return nullptr;
 }

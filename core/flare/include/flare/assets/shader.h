@@ -12,6 +12,8 @@ namespace flare {
 			/** @brief Shader id */
 			GLuint id = 0;
 
+			~Shader();
+
 			struct {
 
 				// GLuint position = 0;

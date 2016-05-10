@@ -25,7 +25,7 @@ void generateSSAOKernel(flare::render::passes::SSAO *ssao) {
 		ssao->ssaoKernel.add(sample);
 	}
 
-	Array<glm::vec3> ssaoNoise = Array<glm::vec3>(16);
+	Array<glm::vec3> ssaoNoise = Array<glm::vec3>(4);
 	for (GLuint i = 0; i < 16; i++) {
 
 		glm::vec3 noise(
@@ -130,7 +130,7 @@ void flare::render::passes::SSAO::draw() {
 
 		glBindVertexArray(mesh->vao);
 
-		glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, mesh->indexSize, GL_UNSIGNED_INT, 0);
 	}
 
 	// Blur
@@ -147,7 +147,7 @@ void flare::render::passes::SSAO::draw() {
 
 		glBindVertexArray(mesh->vao);
 
-		glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, mesh->indexSize, GL_UNSIGNED_INT, 0);
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);

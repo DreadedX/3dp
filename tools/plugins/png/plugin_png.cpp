@@ -18,6 +18,7 @@
 #include "tinyobjloader/tiny_obj_loader.h"
 
 // Needed to be able to store assets in the same format as flare
+#define NO_LEAKAGE
 #include "flare/flare.h"
 
 // Debug

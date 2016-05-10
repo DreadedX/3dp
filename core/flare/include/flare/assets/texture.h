@@ -8,6 +8,8 @@ namespace flare {
 		/** @brief Asset struct containing texture info */
 		struct Texture : Asset {
 
+			~Texture();
+
 			/** @brief Texture id */
 			GLuint id = 0;
 

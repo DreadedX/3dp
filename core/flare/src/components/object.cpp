@@ -40,7 +40,7 @@ void geometryPass(flare::component::Object *object) {
 		}
 		glUniformMatrix4fv(render->shader->locations.model, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
-		glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, mesh->indexSize, GL_UNSIGNED_INT, 0);
 	}
 }
 

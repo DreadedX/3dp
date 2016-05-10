@@ -204,22 +204,21 @@ byte *flux::FileLoad::get(bool addNullTerminator) {
 
 void flux::close() {
 
-	for (int i = 0; i < count; ++i) {
+	for (Flux *file : files) {
 
-		files[i]->close();
+		file->close();
 
 		// delete files[i];
-		allocator::make_delete<flux::Flux>(*flux_allocator, *files[i]);
+		allocator::make_delete<flux::Flux>(*flux_allocator, *file);
 	}
 }
 
-/** .todo Check this for memory leaks (Pretty sure there are non) */
 void flux::Flux::close() {
 
 	if (fileHandle != nullptr) {
 
-		// @todo This causes a SEGFAULT ?? (Is this even needed)
-		// fclose(fileHandle);
+		fclose(fileHandle);
+		fileHandle = nullptr;
 	}
 	if (index != nullptr) {
 

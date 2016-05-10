@@ -46,9 +46,10 @@ namespace flare {
 				Texture *specular = nullptr;
 
 				/** @brief List of all the vertices in this mesh */
-				Array<model::Vertex> vertices;
+				model::Vertex *vertices = nullptr;
 				/** @brief List of all the indices in this mesh */
-				Array<GLuint> indices;
+				GLuint *indices = nullptr;
+				GLuint indexSize = 0;
 			};
 		}
 

@@ -2,18 +2,10 @@
 
 /** @todo The majority of this code should move into fluxuate, in order to store the raw data for faster parsing at runtime
 	@todo This uses to much data */
-void flare::asset::Model::_load() {
 
-	double timer = glfwGetTime();
-
-	flux::FileLoad *modelFile = flux::get(name);
-	// flux::FileLoad *materialFile = flux::get("base/" + name + "_material");
-
-	byte *modelData = modelFile->get();
-	// byte *materialData = materialFile->get();
-
-	/** @todo This should be in the destructor, and i should just call the destructor here */
-	for (model::Mesh *mesh : meshes) {
+void clearMeshes(flare::asset::Model *model) {
+	
+	for (flare::asset::model::Mesh *mesh : model->meshes) {
 		if (mesh->vao != 0) {
 			glDeleteVertexArrays(1, &mesh->vao);
 		}
@@ -24,9 +16,23 @@ void flare::asset::Model::_load() {
 			glDeleteBuffers(1, &mesh->ebo);
 		}
 		// delete mesh;
-		allocator::make_delete<model::Mesh>(*flare::getState()->proxyAllocators.model, *mesh);
+		allocator::make_delete<flare::asset::model::Mesh>(*flare::getState()->proxyAllocators.model, *mesh);
 	}
-	meshes.clear();
+	model->meshes.clear();
+
+}
+
+void flare::asset::Model::_load() {
+
+	double timer = glfwGetTime();
+
+	flux::FileLoad *modelFile = flux::get(name);
+	// flux::FileLoad *materialFile = flux::get("base/" + name + "_material");
+
+	byte *modelData = modelFile->get();
+	// byte *materialData = materialFile->get();
+
+	clearMeshes(this);
 
 	uint offset = 0;
 
@@ -64,12 +70,14 @@ void flare::asset::Model::_load() {
 		// model::Mesh *mesh = new model::Mesh;
 		model::Mesh *mesh = allocator::make_new<model::Mesh>(*getState()->proxyAllocators.model);
 		meshes.add(mesh);
-		mesh->vertices.resize(vertexCount[i]);
-		mesh->indices.resize(indexCount[i]);
+		// mesh->vertices.resize(vertexCount[i]);
+		mesh->vertices = allocator::make_new_array<model::Vertex>(*getState()->proxyAllocators.model, vertexCount[i]);
+		// mesh->indices.resize(indexCount[i]);
+		mesh->indices = allocator::make_new_array<GLuint>(*getState()->proxyAllocators.model, indexCount[i]);
 
 		for (ulong j = 0; j < vertexCount[i]; ++j) {
 
-			model::Vertex vertex;
+			model::Vertex *vertex = &mesh->vertices[j];
 
 			// byte *tempData = new byte[sizeof(glm::vec3)];
 			byte *tempData = allocator::make_new_array<byte>(*getState()->proxyAllocators.model, sizeof(glm::vec3));
@@ -77,27 +85,26 @@ void flare::asset::Model::_load() {
 				tempData[n] = modelData[n + offset];
 			}
 			offset += sizeof(glm::vec3);
-			memcpy(&vertex.position, tempData, sizeof(glm::vec3));
+			memcpy(&vertex->position, tempData, sizeof(glm::vec3));
 			// delete[] tempData;
-
+			
 			// tempData = new byte[sizeof(glm::vec3)];
 			for (uint n = 0; n < sizeof(glm::vec3); ++n) {
 				tempData[n] = modelData[n + offset];
 			}
 			offset += sizeof(glm::vec3);
-			memcpy(&vertex.normal, tempData, sizeof(glm::vec3));
+			memcpy(&vertex->normal, tempData, sizeof(glm::vec3));
 			// delete[] tempData;
-
+			
 			// tempData = new byte[sizeof(glm::vec2)];
 			for (uint n = 0; n < sizeof(glm::vec2); ++n) {
 				tempData[n] = modelData[n + offset];
 			}
 			offset += sizeof(glm::vec2);
-			memcpy(&vertex.texCoords, tempData, sizeof(glm::vec2));
+			memcpy(&vertex->texCoords, tempData, sizeof(glm::vec2));
+
 			// delete[] tempData;
 			allocator::make_delete_array<byte>(*getState()->proxyAllocators.model, tempData);
-
-			mesh->vertices.add(vertex);
 		}
 		for (ulong j = 0; j < indexCount[i]; ++j) {
 
@@ -109,7 +116,7 @@ void flare::asset::Model::_load() {
 			}
 			offset += sizeof(GLuint);
 
-			mesh->indices.add(index);
+			memcpy(&mesh->indices[j], &index, sizeof(GLuint));
 		}
 
 		// byte *tempData = new byte[sizeof(glm::vec3)];
@@ -182,10 +189,10 @@ void flare::asset::Model::_load() {
 		glBindVertexArray(mesh->vao);
 
 		glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-		glBufferData(GL_ARRAY_BUFFER, mesh->vertices.size() * sizeof(flare::asset::model::Vertex), &mesh->vertices[0], GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, vertexCount[i] * sizeof(flare::asset::model::Vertex), &mesh->vertices[0], GL_STATIC_DRAW);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->ebo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->indices.size() * sizeof(GLuint), &mesh->indices[0], GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount[i] * sizeof(GLuint), &mesh->indices[0], GL_STATIC_DRAW);
 
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(flare::asset::model::Vertex), (GLvoid*)0);
@@ -215,13 +222,20 @@ void flare::asset::Model::_load() {
 		// 			shapes[i].mesh.positions[3*v+1],
 		// 			shapes[i].mesh.positions[3*v+2]);
 		// }
+		
+
+		mesh->indexSize = indexCount[i];
+		// mesh->indices.clear();
+		allocator::make_delete_array<GLuint>(*getState()->proxyAllocators.model, mesh->indices);
+		// mesh->vertices.clear();
+		allocator::make_delete_array<model::Vertex>(*getState()->proxyAllocators.model, mesh->vertices);
 	}
 
 	// delete[] vertexCount;
 	// delete[] indexCount;
 	
-	allocator::make_delete_array(*getState()->proxyAllocators.model, vertexCount);
 	allocator::make_delete_array(*getState()->proxyAllocators.model, indexCount);
+	allocator::make_delete_array(*getState()->proxyAllocators.model, vertexCount);
 
 	print::d("File memory usage: %i bytes (%i%%)", getState()->proxyAllocators.flux->getUsedMemory(),
 			(int)(getState()->proxyAllocators.flux->getUsedMemory()*100/getState()->proxyAllocators.flux->getSize()));
@@ -235,10 +249,5 @@ void flare::asset::Model::_load() {
 
 flare::asset::Model::~Model() {
 
-	/** @todo Should probably also delete opengl buffers (this currently only gets called on shutdown, so causes no issues */
-	for (model::Mesh *mesh : meshes) {
-
-		// delete mesh;
-		allocator::make_delete<model::Mesh>(*flare::getState()->proxyAllocators.model, *mesh);
-	}
+	clearMeshes(this);
 }

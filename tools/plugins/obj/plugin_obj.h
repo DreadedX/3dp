@@ -1,6 +1,7 @@
 #ifndef PLUGIN_OBJ_H
 #define PLUGIN_OBJ_H
 
+#define NO_LEAKAGE
 #include "flare/flare.h"
 
 namespace obj {

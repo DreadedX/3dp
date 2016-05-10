@@ -85,7 +85,7 @@ int main() {
 	rungholt->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
 	rungholt->addComponent<flare::component::Object>("demo/rungholt");
 
-	flare::render::State::Camera *camera = flare::render::getState()->camera;
+	flare::State::Render::Camera *camera = &flare::getState()->render.camera;
 	camera->position = glm::vec3(377, 115, -246);
 
 	camera->rotation.y = -16.0f;

@@ -19,5 +19,5 @@ set(EXTRA_FLAGS "${EXTRA_FLAGS} -g")
 set(CMAKE_CXX_FLAGS "${EXTRA_FLAGS}")
 set(CMAKE_CXX_FLAGS_DEBUG "${EXTRA_FLAGS}")
 
-target_link_libraries(${PROJECT_NAME} extra leakage)
+target_link_libraries(${PROJECT_NAME} extra)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)

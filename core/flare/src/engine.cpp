@@ -6,7 +6,7 @@
   @todo Add a way to set this externally */
 flare::State *state = nullptr;
 
-const size_t RESERVED_MEMORY = 1000 * 1000 * 11; /* 10 MB */
+const size_t RESERVED_MEMORY = 1000l * 1000l * 15l; /* 130 MB */
 
 void *arenaStart;
 
@@ -174,6 +174,9 @@ void flare::terminate(int errorCode) {
 	// Kill and remove all remaining entities
 	fuse::killAll();
 	fuse::update();
+
+	// Close all files
+	flux::close();
 
 	glfwTerminate();
 

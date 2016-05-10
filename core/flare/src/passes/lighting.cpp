@@ -63,7 +63,7 @@ void flare::render::passes::Lighting::draw() {
 
 		glBindVertexArray(mesh->vao);
 
-		glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, mesh->indexSize, GL_UNSIGNED_INT, 0);
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);

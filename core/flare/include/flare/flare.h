@@ -44,7 +44,9 @@ namespace flare{
 #include "extra/allocator/proxy_allocator.h"
 
 #ifndef NDEBUG
-    #include "debug_new.h"
+	#ifndef NO_LEAKAGE
+		#include "debug_new.h"
+	#endif
     #include "flare/debug.h"
 #endif
 
