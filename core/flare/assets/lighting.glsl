@@ -46,9 +46,6 @@ void main() {
 		renderLighting(TexCoord);
 	}
 
-	float gamma = 2.2;
-	FragColor.rgb = pow(FragColor.rgb, vec3(1.0/gamma));
-
 }
 
 void renderSkybox(vec2 TexCoord) {
@@ -81,5 +78,9 @@ void renderLighting(vec2 TexCoord) {
 	vec4 specular = vec4(texture(gSpecularColorMap, TexCoord).rgb * spec * texture(gSpecularColorMap, TexCoord).rgb, 1.0);
 
 	FragColor = vec4((ambient + diffuse + specular).rgb, 1.0) * texture(ssaoBlurTexture, TexCoord).r;
+
+	float gamma = 2.2;
+	FragColor.rgb = pow(FragColor.rgb, vec3(1.0/gamma));
+
 }
 

@@ -1,9 +1,10 @@
 #include "fuse/fuse.h"
 
-fuse::Entity::Entity(Allocator *_allocator, const char *name, fuse::Entity *entity) {
+fuse::Entity::Entity(Manager *manager, Allocator *_allocator, const char *name, fuse::Entity *entity) {
 
-	this->name = name;
+	this->manager = manager;
 	this->_allocator = _allocator;
+	this->name = name;
 
 	if (entity != nullptr) {
 
@@ -34,7 +35,7 @@ bool fuse::Entity::isChild() {
 /** @todo Make a list of all the children, that get killed when the parent gets killed */
 fuse::Entity *fuse::Entity::createChild(const char *name) {
 
-	Entity *child = fuse::createEntity(name, this);
+	Entity *child = this->manager->createEntity(name, this);
 	children.add(child);
 	return child;
 }

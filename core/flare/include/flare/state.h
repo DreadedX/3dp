@@ -11,10 +11,12 @@ namespace flare {
 			ProxyAllocator *fuse = nullptr;
 			ProxyAllocator *asset = nullptr;
 			ProxyAllocator *model = nullptr;
-			ProxyAllocator *render = nullptr;
+			ProxyAllocator *entities = nullptr;
 		} proxyAllocators;
 
 		FreeListAllocator *mainAllocator = nullptr;
+
+		MainState *mainState;
 
 		struct Settings {
 
@@ -70,14 +72,14 @@ namespace flare {
 				glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
 			} light;
 
-			~Render() {
-				for(flare::render::passes::Pass *pass : renderPasses) {
-
-					delete pass;
-					pass = nullptr;
-				}
-				renderPasses.clear();
-			}
+			// ~Render() {
+			// 	for(flare::render::passes::Pass *pass : renderPasses) {
+            //
+			// 		delete pass;
+			// 		pass = nullptr;
+			// 	}
+			// 	renderPasses.clear();
+			// }
 
 			/** @brief The currently used vbo */
 			GLuint vbo = 0;
@@ -90,7 +92,7 @@ namespace flare {
 			asset::Model *quad = nullptr;
 
 			uint pass = GEOMETRY;
-			Array<flare::render::passes::Pass*> renderPasses;
+			// Array<flare::render::passes::Pass*> renderPasses;
 
 			/** @brief Frame delta time */
 			float deltaTime = 0;

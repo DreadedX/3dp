@@ -27,7 +27,7 @@ void PostFX::init() {
 	textures.add(texture);
 }
 
-void PostFX::draw() {
+void PostFX::draw(flare::GameState *) {
 
 	flare::State::Render *render = &flare::getState()->render;
 	
@@ -40,7 +40,7 @@ void PostFX::draw() {
 	glActiveTexture(GL_TEXTURE0);
 
 	/** @todo Need to make this so that it takes the output of the previous shader */
-	glBindTexture(GL_TEXTURE_2D, render->renderPasses[previous]->textures[0]);
+	glBindTexture(GL_TEXTURE_2D, flare::getState()->mainState->renderPasses[previous]->textures[0]);
 
 	glClear(GL_COLOR_BUFFER_BIT);
 

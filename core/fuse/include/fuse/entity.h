@@ -3,6 +3,8 @@
 
 namespace fuse {
 
+	struct Manager;
+
 	/** @brief This is really a container for a group of components */
 	struct Entity {
 
@@ -27,11 +29,13 @@ namespace fuse {
 			@note Only set when the entity is a child*/
 		Entity *parent = nullptr;
 
+		Manager *manager = nullptr;
+
 		/** @brief Entity constructor
 			@param name - Entity name
 			@param entity - Parent entity, nullptr if this entity is not a child
 			@warning You should never manually call this function, use the entity manager to create entities instead */
-		Entity(Allocator *_allocator, const char *name, Entity *entity);
+		Entity(Manager *manager, Allocator *_allocator, const char *name, Entity *entity);
 		/** @brief Entity destructor */
 		~Entity();
 

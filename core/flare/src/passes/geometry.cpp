@@ -49,7 +49,7 @@ void flare::render::passes::Geometry::init() {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void flare::render::passes::Geometry::draw() {
+void flare::render::passes::Geometry::draw(GameState *gameState) {
 
 	flare::render::setShader(shader);
 
@@ -63,7 +63,7 @@ void flare::render::passes::Geometry::draw() {
 	glDisable(GL_BLEND);
 
 	getState()->render.pass = State::Render::GEOMETRY;
-	fuse::draw();
+	gameState->draw();
 
 	glDepthMask(GL_FALSE);
 	glDisable(GL_DEPTH_TEST);

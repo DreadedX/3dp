@@ -6,7 +6,7 @@ struct PostFX : flare::render::passes::Pass {
 	PostFX(std::string name) {
 
 		this->name = name;
-		previous = flare::getState()->render.renderPasses.size() - 1;
+		previous = flare::getState()->mainState->renderPasses.size() - 1;
 	}
 
 	std::string name;
@@ -15,7 +15,7 @@ struct PostFX : flare::render::passes::Pass {
 	GLfloat test = 0.0;
 
 	void init() override;
-	void draw() override;
+	void draw(flare::GameState *) override;
 };
 
 #endif

@@ -1,21 +1,16 @@
 #include "fuse/fuse.h"
 
-/** @brief List of all entities */
-std::vector<fuse::Entity*> entities;
-
-Allocator *manager_allocator = nullptr;
-
-void fuse::init(Allocator *_allocator) {
+void fuse::Manager::init(Allocator *_allocator) {
 
 	manager_allocator = _allocator;
 }
 
-void fuse::update() {
+void fuse::Manager::update() {
 
 	entities.erase(
 			std::remove_if(
 				entities.begin(), entities.end(),
-				[](Entity *entity) {
+				[&](Entity *entity) {
 
 				if (!entity->_isAlive()) {
 
@@ -35,7 +30,7 @@ void fuse::update() {
 	}
 }
 
-void fuse::draw() {
+void fuse::Manager::draw() {
 
 	for (Entity *entity: entities) {
 
@@ -44,15 +39,15 @@ void fuse::draw() {
 }
 
 /** Create a new entity, add it to the entity list and return a pointer */
-fuse::Entity *fuse::createEntity(const char *name, Entity *parent) {
+fuse::Entity *fuse::Manager::createEntity(const char *name, Entity *parent) {
 
-	Entity *entity = new (manager_allocator->allocate(sizeof(Entity), __alignof(Entity))) Entity(manager_allocator, name, parent);
+	Entity *entity = new (manager_allocator->allocate(sizeof(Entity), __alignof(Entity))) Entity(this, manager_allocator, name, parent);
 	entities.push_back(entity);
 
 	return entity;
 }
 
-void fuse::killAll() {
+void fuse::Manager::killAll() {
 
 	for (Entity *entity : entities) {
 
@@ -60,7 +55,7 @@ void fuse::killAll() {
 	}
 }
 
-std::vector<fuse::Entity*> *fuse::getEntities() {
+std::vector<fuse::Entity*> *fuse::Manager::getEntities() {
 
 	return &entities;
 }

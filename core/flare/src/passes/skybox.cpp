@@ -136,7 +136,7 @@ void flare::render::passes::Skybox::init() {
 	glBindVertexArray(0);
 }
 
-void flare::render::passes::Skybox::draw() {
+void flare::render::passes::Skybox::draw(GameState *) {
 
 	State::Render *render = &getState()->render;
 	

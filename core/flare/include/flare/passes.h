@@ -2,6 +2,9 @@
 #define PASSES_H
 
 namespace flare {
+
+	class GameState;
+
 	namespace render {
 		namespace passes {
 
@@ -13,7 +16,7 @@ namespace flare {
 				asset::Shader *shader = nullptr;
 
 				virtual void init() {}
-				virtual void draw() {}
+				virtual void draw(GameState *) {}
 
 				virtual ~Pass() {}
 			};
@@ -34,7 +37,7 @@ namespace flare {
 				GLuint depthTexture = 0;
 
 				void init() override;
-				void draw() override;
+				void draw(GameState *gameState) override;
 			};
 
 			struct Skybox : Pass {
@@ -43,7 +46,7 @@ namespace flare {
 				GLuint vao;
 
 				void init() override;
-				void draw() override;
+				void draw(GameState *) override;
 			};
 
 			struct SSAO : Pass {
@@ -55,13 +58,13 @@ namespace flare {
 				asset::Shader *shaderBlur = nullptr;
 
 				void init() override;
-				void draw() override;
+				void draw(GameState *) override;
 			};
 
 			struct Lighting : Pass {
 
 				void init() override;
-				void draw() override;
+				void draw(GameState *) override;
 			};
 		}
 	}

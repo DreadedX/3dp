@@ -65,6 +65,7 @@ namespace flare{
 
 #include "flare/info.h"
 
+#include "flare/game_state.h"
 #include "flare/state.h"
 
 #endif

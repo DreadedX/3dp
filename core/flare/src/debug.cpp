@@ -32,7 +32,8 @@ void flare::debug::entityTree() {
 
 	ImGui::Begin("Entities");
 
-	for (fuse::Entity *entity : *fuse::getEntities()) {
+	// This is going to be interesting once we introduce multiple 'game states', each game state will have it's own manager
+	for (fuse::Entity *entity : *getState()->mainState->manager->getEntities()) {
 
 		entityTreeNode(entity);
 	}

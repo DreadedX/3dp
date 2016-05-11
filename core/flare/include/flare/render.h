@@ -3,6 +3,8 @@
 
 namespace flare {
 
+	class GameState;
+
 	/** @brief Render code */
 	namespace render {
 
@@ -10,7 +12,7 @@ namespace flare {
 		void init();
 
 		/** @brief Draw a new frame */
-		void update();
+		void draw(GameState *gameState);
 
 		/** @brief Set the shader
 			@param shader - Pointer to Shader Asset to use */

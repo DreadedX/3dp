@@ -4,12 +4,12 @@ void flare::render::init() {
 
 	State::Render *render = &getState()->render;
 
-	render->renderPasses.add(new passes::Geometry);
-	render->renderPasses.add(new passes::Skybox);
-	render->renderPasses.add(new passes::SSAO);
-	render->renderPasses.add(new passes::Lighting);
+	getState()->mainState->renderPasses.add(new passes::Geometry);
+	getState()->mainState->renderPasses.add(new passes::Skybox);
+	getState()->mainState->renderPasses.add(new passes::SSAO);
+	getState()->mainState->renderPasses.add(new passes::Lighting);
 
-	for(passes::Pass *pass : render->renderPasses) {
+	for(passes::Pass *pass : getState()->mainState->renderPasses) {
 
 		pass->init();
 	}
@@ -44,8 +44,6 @@ void flare::render::init() {
 
 void debugRender() {
 
-		flare::State::Render *render = &flare::getState()->render;
-
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -53,7 +51,7 @@ void debugRender() {
 		GLsizei width = (GLsizei)flare::getState()->settings.resolution.x;
 		GLsizei height = (GLsizei)flare::getState()->settings.resolution.y;
 
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, render->renderPasses[flare::State::Render::GEOMETRY]->fbo);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[flare::State::Render::GEOMETRY]->fbo);
 		glReadBuffer(GL_COLOR_ATTACHMENT1);
 		glBlitFramebuffer(0, 0, width, height, 
 				0, height/2, width/2, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
@@ -62,11 +60,12 @@ void debugRender() {
 		glBlitFramebuffer(0, 0, width, height, 
 				width/2, height/2, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-		glReadBuffer(GL_COLOR_ATTACHMENT2);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[flare::State::Render::POST]->fbo);
+		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBlitFramebuffer(0, 0, width, height, 
 				width/2, 0, width, height/2, GL_COLOR_BUFFER_BIT, GL_LINEAR); 
 
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, render->renderPasses[flare::State::Render::SKYBOX]->fbo);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[flare::State::Render::SKYBOX]->fbo);
 		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBlitFramebuffer(0, 0, width, height,
 				0, 0, width/2, height/2, GL_COLOR_BUFFER_BIT, GL_LINEAR);
@@ -79,7 +78,7 @@ float nfmod(float a, float b) {
 	return a - b * floor(a / b);
 }
 
-void flare::render::update() {
+void flare::render::draw(GameState *gameState) {
 
 	State::Render *render = &getState()->render;
 
@@ -102,9 +101,9 @@ void flare::render::update() {
 
     render->projection = glm::perspectiveFov(glm::radians(90.0f), (float)getState()->settings.resolution.x, (float)getState()->settings.resolution.y , 0.1f, 1000.0f);
 
-	for(passes::Pass *pass : render->renderPasses) {
+	for(passes::Pass *pass : gameState->renderPasses) {
 
-		pass->draw();
+		pass->draw(gameState);
 	}
 
 	static bool debug = false;
@@ -152,7 +151,7 @@ void flare::render::update() {
 		GLsizei width = (GLsizei)flare::getState()->settings.resolution.x;
 		GLsizei height = (GLsizei)flare::getState()->settings.resolution.y;
 
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, render->renderPasses[render->renderPasses.size()-1]->fbo);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, getState()->mainState->renderPasses[getState()->mainState->renderPasses.size()-1]->fbo);
 		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBlitFramebuffer(0, 0, width, height,
 				0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);

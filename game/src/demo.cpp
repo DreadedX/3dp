@@ -58,7 +58,7 @@ int main() {
 	}
 	// END
 
-	fuse::Entity *player = fuse::createEntity("Player");
+	fuse::Entity *player = flare::getState()->mainState->manager->createEntity("Player");
 	player->addComponent<Camera>();
 	// Make sure that the controller is plugged in before adding the control
 	if (present == 1) {
@@ -77,7 +77,7 @@ int main() {
 		cube->addComponent<Spin>();
 	}
 #elif 1
-	fuse::Entity *house = fuse::createEntity("House");
+	fuse::Entity *house = flare::getState()->mainState->manager->createEntity("House");
 	house->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
 	house->addComponent<flare::component::Object>("demo/house");
 #elif 0
@@ -100,10 +100,10 @@ int main() {
 	// Two pass gausian blur
 	PostFX *gausian = new PostFX("demo/gausian");
 	gausian->init();
-	flare::getState()->render.renderPasses.add(gausian);
+	flare::getState()->mainState->renderPasses.add(gausian);
 	PostFX *gausian2 = new PostFX("demo/gausian2");
 	gausian2->init();
-	flare::getState()->render.renderPasses.add(gausian2);
+	flare::getState()->mainState->renderPasses.add(gausian2);
 
 	while (flare::isRunning()) {
 
@@ -120,13 +120,13 @@ int main() {
 
 		if (paused) {
 
-			gausian->test = fmin(gausian->test + 5*flare::render::getDeltaTime(), 1.0f);
-			gausian2->test = fmin(gausian->test + 5*flare::render::getDeltaTime(), 1.0f);
+			gausian->test = fmin(gausian->test + 7*flare::render::getDeltaTime(), 1.0f);
+			gausian2->test = fmin(gausian->test + 7*flare::render::getDeltaTime(), 1.0f);
 		}
 		if (!paused) {
 
-			gausian->test = fmax(gausian->test - 5*flare::render::getDeltaTime(), 0.0f);
-			gausian2->test = fmax(gausian->test - 5*flare::render::getDeltaTime(), 0.0f);
+			gausian->test = fmax(gausian->test - 7*flare::render::getDeltaTime(), 0.0f);
+			gausian2->test = fmax(gausian->test - 7*flare::render::getDeltaTime(), 0.0f);
 		}
 	}
 
