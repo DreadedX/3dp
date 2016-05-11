@@ -13,7 +13,7 @@
 
 #include "camera.h"
 #include "spin.h"
-#include "scanline.h"
+#include "postfx.h"
 
 #endif
 

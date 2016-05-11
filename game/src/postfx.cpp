@@ -1,8 +1,8 @@
 #include "demo.h"
 
-void Scanline::init() {
+void PostFX::init() {
 
-	shader = flare::asset::load<flare::asset::Shader>("demo/scanline");
+	shader = flare::asset::load<flare::asset::Shader>(name);
 
 	GLuint texture = 0;
 
@@ -27,7 +27,7 @@ void Scanline::init() {
 	textures.add(texture);
 }
 
-void Scanline::draw() {
+void PostFX::draw() {
 
 	flare::State::Render *render = &flare::getState()->render;
 	
@@ -37,8 +37,10 @@ void Scanline::draw() {
 
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
-	glActiveTexture(GL_TEXTURE0);	
-	glBindTexture(GL_TEXTURE_2D, render->renderPasses[2]->textures[0]);
+	glActiveTexture(GL_TEXTURE0);
+
+	/** @todo Need to make this so that it takes the output of the previous shader */
+	glBindTexture(GL_TEXTURE_2D, render->renderPasses[previous]->textures[0]);
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -52,6 +54,8 @@ void Scanline::draw() {
 		}
 
 		glUniformMatrix4fv(render->shader->locations.model, 1, GL_FALSE, glm::value_ptr(glm::mat4()));
+
+		glUniform1f(glGetUniformLocation(shader->id, "test"), test);
 
 	for (flare::asset::model::Mesh *mesh : render->quad->meshes) {
 

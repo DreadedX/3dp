@@ -93,21 +93,40 @@ int main() {
 #endif
 
 	// Example of post proccessing
-	// Scanline *scanline = new Scanline;
+	// PostFX *scanline = new PostFX("demo/scanline");
 	// scanline->init();
-	// flare::render::getState()->renderPasses.add(scanline);
+	// flare::getState()->render.renderPasses.add(scanline);
+
+	// Two pass gausian blur
+	PostFX *gausian = new PostFX("demo/gausian");
+	gausian->init();
+	flare::getState()->render.renderPasses.add(gausian);
+	PostFX *gausian2 = new PostFX("demo/gausian2");
+	gausian2->init();
+	flare::getState()->render.renderPasses.add(gausian2);
 
 	while (flare::isRunning()) {
 
 		flare::update();
 
 		// NOTE: Why is this here? (Probably just testing)
+		static bool paused = false;
 		if (flare::input::keyCheck(GLFW_KEY_X) && player != nullptr) {
-			player->kill();
-			player = nullptr;
-			flare::input::keySet(GLFW_KEY_X, false);
 
-			print::d("Killing player");
+			print::d("Toggling pause effect");
+			paused = !paused;
+			flare::input::keySet(GLFW_KEY_X, false);
+		}
+
+		if (paused) {
+
+			gausian->test = fmin(gausian->test + 5*flare::render::getDeltaTime(), 1.0f);
+			gausian2->test = fmin(gausian->test + 5*flare::render::getDeltaTime(), 1.0f);
+		}
+		if (!paused) {
+
+			gausian->test = fmax(gausian->test - 5*flare::render::getDeltaTime(), 0.0f);
+			gausian2->test = fmax(gausian->test - 5*flare::render::getDeltaTime(), 0.0f);
 		}
 	}
 
