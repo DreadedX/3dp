@@ -37,6 +37,15 @@ namespace flare {
 				void draw() override;
 			};
 
+			struct Skybox : Pass {
+
+				GLuint skyboxTexture = 0;
+				GLuint vao;
+
+				void init() override;
+				void draw() override;
+			};
+
 			struct SSAO : Pass {
 
 				Array<glm::vec3> ssaoKernel = Array<glm::vec3>(64);

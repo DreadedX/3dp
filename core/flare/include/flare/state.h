@@ -11,6 +11,7 @@ namespace flare {
 			ProxyAllocator *fuse = nullptr;
 			ProxyAllocator *asset = nullptr;
 			ProxyAllocator *model = nullptr;
+			ProxyAllocator *render = nullptr;
 		} proxyAllocators;
 
 		FreeListAllocator *mainAllocator = nullptr;
@@ -44,6 +45,7 @@ namespace flare {
 
 			enum RENDER_PASSES {
 				GEOMETRY,
+				SKYBOX,
 				SSAO,
 				LIGHTING,
 				POST

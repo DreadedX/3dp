@@ -5,6 +5,7 @@ void flare::render::init() {
 	State::Render *render = &getState()->render;
 
 	render->renderPasses.add(new passes::Geometry);
+	render->renderPasses.add(new passes::Skybox);
 	render->renderPasses.add(new passes::SSAO);
 	render->renderPasses.add(new passes::Lighting);
 
@@ -25,7 +26,7 @@ void flare::render::init() {
     
     // glm::vec3(1.0f, 0.9f, 0.7f);
     // state.light.direction = glm::vec3(-0.2f, -1.0f, -0.3f);
-    render->light.direction = glm::vec3(45.0f, -50.0f, 65.0f);
+    render->light.direction = glm::vec3(122.0f, -162.0f, -190.0f);
 
 	glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
@@ -49,15 +50,10 @@ void debugRender() {
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, render->renderPasses[0]->fbo);
-
-		// glReadBuffer(GL_COLOR_ATTACHMENT0);
-		// glBlitFramebuffer(0, 0, getSettings()->resolution.x, getSettings()->resolution.y, 
-		// 		0, 0, getSettings()->resolution.x, getSettings()->resolution.y, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-
 		GLsizei width = (GLsizei)flare::getState()->settings.resolution.x;
 		GLsizei height = (GLsizei)flare::getState()->settings.resolution.y;
 
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, render->renderPasses[flare::State::Render::GEOMETRY]->fbo);
 		glReadBuffer(GL_COLOR_ATTACHMENT1);
 		glBlitFramebuffer(0, 0, width, height, 
 				0, height/2, width/2, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
@@ -70,7 +66,7 @@ void debugRender() {
 		glBlitFramebuffer(0, 0, width, height, 
 				width/2, 0, width, height/2, GL_COLOR_BUFFER_BIT, GL_LINEAR); 
 
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, render->renderPasses[1]->fbo);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, render->renderPasses[flare::State::Render::SKYBOX]->fbo);
 		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBlitFramebuffer(0, 0, width, height,
 				0, 0, width/2, height/2, GL_COLOR_BUFFER_BIT, GL_LINEAR);
@@ -131,7 +127,7 @@ void flare::render::update() {
 			render->light.diffuse = glm::vec3(1.0f, 1.0f, 1.0f) * color;
 			render->light.specular = glm::vec3(1.0f, 1.0f, 1.0f) * color;
 
-			render->light.direction = glm::vec3(45.0f, -50.0f, 65.0f);
+			render->light.direction = glm::vec3(122.0f, -162.0f, -190.0f);
 
 			night = false;
 		} else {
@@ -178,13 +174,16 @@ void flare::render::setShader(flare::asset::Shader *shader) {
 		glUniform1i(glGetUniformLocation(shader->id, "gColorMap"), 1);
 		glUniform1i(glGetUniformLocation(shader->id, "gNormalMap"), 2);
 		glUniform1i(glGetUniformLocation(shader->id, "gTexCoordMap"), 3);
+
 		glUniform1i(glGetUniformLocation(shader->id, "gDiffuseColorMap"), 4);
 		glUniform1i(glGetUniformLocation(shader->id, "gSpecularColorMap"), 5);
 		glUniform1i(glGetUniformLocation(shader->id, "ssaoBlurTexture"), 6);
+		glUniform1i(glGetUniformLocation(shader->id, "skyboxTexture"), 7);
 
 		glUniform1i(glGetUniformLocation(shader->id, "ssaoTexture"), 0);
-
 		glUniform1i(glGetUniformLocation(shader->id, "noiseTexture"), 1);
+
+		glUniform1i(glGetUniformLocation(shader->id, "skybox"), 0);
 		render->shader = shader;
 	
     }

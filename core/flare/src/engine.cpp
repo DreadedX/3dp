@@ -6,7 +6,7 @@
   @todo Add a way to set this externally */
 flare::State *state = nullptr;
 
-const size_t RESERVED_MEMORY = 1000l * 1000l * 15l; /* 130 MB */
+const size_t RESERVED_MEMORY = 1000l * 1000l * 20l; /* 130 MB */
 
 void *arenaStart;
 
@@ -29,6 +29,7 @@ void flare::init() {
 	getState()->proxyAllocators.fuse = allocator::make_new_proxy(*getState()->mainAllocator);
 	getState()->proxyAllocators.asset = allocator::make_new_proxy(*getState()->mainAllocator);
 	getState()->proxyAllocators.model = allocator::make_new_proxy(*getState()->mainAllocator);
+	getState()->proxyAllocators.render = allocator::make_new_proxy(*getState()->mainAllocator);
 
 	info::print();
 
@@ -161,6 +162,7 @@ void flare::update() {
 		ImGui::Text("Memory usage (fuse): %lu bytes (%i%%)", getState()->proxyAllocators.fuse->getUsedMemory(), (int)(getState()->proxyAllocators.fuse->getUsedMemory()*100/getState()->proxyAllocators.fuse->getSize()));
 		ImGui::Text("Memory usage (asset): %lu bytes (%i%%)", getState()->proxyAllocators.asset->getUsedMemory(), (int)(getState()->proxyAllocators.asset->getUsedMemory()*100/getState()->proxyAllocators.asset->getSize()));
 		ImGui::Text("Memory usage (model): %lu bytes (%i%%)", getState()->proxyAllocators.model->getUsedMemory(), (int)(getState()->proxyAllocators.model->getUsedMemory()*100/getState()->proxyAllocators.model->getSize()));
+		ImGui::Text("Memory usage (render): %lu bytes (%i%%)", getState()->proxyAllocators.render->getUsedMemory(), (int)(getState()->proxyAllocators.render->getUsedMemory()*100/getState()->proxyAllocators.render->getSize()));
 		debug::entityTree();
 	}
 	ImGui::Render();
@@ -194,6 +196,8 @@ void flare::terminate(int errorCode) {
 	getState()->proxyAllocators.asset = nullptr;
 	allocator::make_delete_proxy(*getState()->proxyAllocators.model, *getState()->mainAllocator);
 	getState()->proxyAllocators.model = nullptr;
+	allocator::make_delete_proxy(*getState()->proxyAllocators.render, *getState()->mainAllocator);
+	getState()->proxyAllocators.render = nullptr;
 
 	// Create a temporary pointer to the main allocator
 	FreeListAllocator *tempAllocator = getState()->mainAllocator;

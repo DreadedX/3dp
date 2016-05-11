@@ -26,7 +26,10 @@ if (PNG_FOUND)
     target_link_libraries (${PROJECT_NAME} ${PNG_LIBRARIES})
 endif (PNG_FOUND)
 
-target_link_libraries(${PROJECT_NAME} flux extra leakage tinyobjloader ${CMAKE_DL_LIBS})
+target_link_libraries(${PROJECT_NAME} flux extra ${CMAKE_DL_LIBS})
+if (NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+	target_link_libraries(${PROJECT_NAME} leakage)
+endif()
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)
 
 cotire(${PROJECT_NAME})

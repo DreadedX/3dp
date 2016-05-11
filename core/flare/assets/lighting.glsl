@@ -23,6 +23,7 @@ uniform sampler2D gTexCoordMap;
 uniform sampler2D gDiffuseColorMap;
 uniform sampler2D gSpecularColorMap;
 uniform sampler2D ssaoBlurTexture;
+uniform sampler2D skyboxTexture;
 
 out vec4 FragColor;
 
@@ -30,9 +31,33 @@ out vec4 FragColor;
 
 const float kPi = 3.14159265;
 
+void renderSkybox(vec2 TexCoord);
+void renderLighting(vec2 TexCoord);
+
 void main() {
 
 	vec2 TexCoord = CalcTexCoord();
+
+	if (texture(gPositionMap, TexCoord).a == 0) {
+
+		renderSkybox(TexCoord);
+	} else {
+		
+		renderLighting(TexCoord);
+	}
+
+	float gamma = 2.2;
+	FragColor.rgb = pow(FragColor.rgb, vec3(1.0/gamma));
+
+}
+
+void renderSkybox(vec2 TexCoord) {
+
+	FragColor.rgb = texture(skyboxTexture, TexCoord).rgb;
+	// FragColor.a = 1.0;
+}
+
+void renderLighting(vec2 TexCoord) {
 
 	vec4 color = vec4(texture(gColorMap, TexCoord).rgb, 1.0);
 
@@ -56,7 +81,5 @@ void main() {
 	vec4 specular = vec4(texture(gSpecularColorMap, TexCoord).rgb * spec * texture(gSpecularColorMap, TexCoord).rgb, 1.0);
 
 	FragColor = vec4((ambient + diffuse + specular).rgb, 1.0) * texture(ssaoBlurTexture, TexCoord).r;
-
-	float gamma = 2.2;
-	FragColor.rgb = pow(FragColor.rgb, vec3(1.0/gamma));
 }
+

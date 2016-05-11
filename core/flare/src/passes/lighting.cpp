@@ -40,11 +40,14 @@ void flare::render::passes::Lighting::draw() {
 	for (unsigned int i = 0 ; i < Geometry::GBUFFER_NUM_TEXTURES; i++) {
 
 		glActiveTexture(GL_TEXTURE0 + i);	
-		glBindTexture(GL_TEXTURE_2D, render->renderPasses[0]->textures[i]);
+		glBindTexture(GL_TEXTURE_2D, render->renderPasses[State::Render::GEOMETRY]->textures[i]);
 	}
 
 	glActiveTexture(GL_TEXTURE0 + Geometry::GBUFFER_NUM_TEXTURES);	
-	glBindTexture(GL_TEXTURE_2D, render->renderPasses[1]->textures[1]);
+	glBindTexture(GL_TEXTURE_2D, render->renderPasses[State::Render::SSAO]->textures[1]);
+
+	glActiveTexture(GL_TEXTURE0 + Geometry::GBUFFER_NUM_TEXTURES + 1);	
+	glBindTexture(GL_TEXTURE_2D, render->renderPasses[State::Render::SKYBOX]->textures[0]);
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
