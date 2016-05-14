@@ -6,6 +6,7 @@ namespace flare {
 	class GameState {
 
 		public:
+
 			// Stores all the entity needed for this specific game state
 			fuse::Manager *manager = nullptr;
 
@@ -19,6 +20,7 @@ namespace flare {
 	class MainState : public GameState {
 
 		public:
+
 			void update() override {
 
 				manager->update();
@@ -26,27 +28,28 @@ namespace flare {
 
 			void draw() override {
 
-				manager->draw();
+				render::draw(this);
 		}
 	};
 
 	class PauseState : public GameState {
 
-		// Stores pointer to previous game state so that it can render on top of the previous state
-		GameState *previousState = nullptr;
+		public:
 
-		void update() override {
+			// Stores pointer to previous game state so that it can render on top of the previous state
+			GameState *previousState = nullptr;
 
-			manager->update();
-		}
+			void update() override {
 
-		void draw() override {
+				manager->update();
+			}
 
-			// previousState->manager->draw();
-			render::draw(previousState);
-			
-			manager->draw();
-		}
+			void draw() override {
+
+				// previousState->manager->draw();
+				render::draw(previousState);
+				render::draw(this);
+			}
 	};
 }
 

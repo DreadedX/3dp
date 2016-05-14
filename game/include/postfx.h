@@ -3,10 +3,10 @@
 
 struct PostFX : flare::render::passes::Pass {
 
-	PostFX(std::string name) {
+	PostFX(std::string name, flare::GameState *gameState) {
 
 		this->name = name;
-		previous = flare::getState()->mainState->renderPasses.size() - 1;
+		previous = gameState->renderPasses.size() - 1;
 	}
 
 	std::string name;

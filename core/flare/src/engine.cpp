@@ -152,7 +152,7 @@ void flare::update() {
 	// Run manager logic
 	getState()->mainState->update();
 	// Run renderer logic
-	render::draw(getState()->mainState);
+	getState()->mainState->draw();
 
 	// This is for the debug interface
 #ifndef NDEBUG

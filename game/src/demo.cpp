@@ -97,36 +97,63 @@ int main() {
 	// scanline->init();
 	// flare::getState()->render.renderPasses.add(scanline);
 
-	// Two pass gausian blur
-	PostFX *gausian = new PostFX("demo/gausian");
+	flare::PauseState *pauseState = new flare::PauseState;
+	pauseState->previousState = flare::getState()->mainState;
+	pauseState->manager = new fuse::Manager;
+
+	// Two pass gausian blurrender
+	// PostFX *gausian = new PostFX("demo/gausian", flare::getState()->mainState);
+	// gausian->init();
+	// flare::getState()->mainState->renderPasses.add(gausian);
+	// PostFX *gausian2 = new PostFX("demo/gausian2", flare::getState()->mainState);
+	// gausian2->init();
+	// flare::getState()->mainState->renderPasses.add(gausian2);
+	
+	Gausian *gausian = new Gausian;
 	gausian->init();
-	flare::getState()->mainState->renderPasses.add(gausian);
-	PostFX *gausian2 = new PostFX("demo/gausian2");
-	gausian2->init();
-	flare::getState()->mainState->renderPasses.add(gausian2);
+	pauseState->renderPasses.add(gausian);
 
 	while (flare::isRunning()) {
 
 		flare::update();
 
-		// NOTE: Why is this here? (Probably just testing)
+		static bool blur = false;
 		static bool paused = false;
+		if (flare::input::keyCheck(GLFW_KEY_P) && player != nullptr) {
+
+			if (!paused) {
+
+				flare::getState()->mainState = pauseState;
+				blur = true;
+			} else {
+
+				blur = false;
+			}
+
+			print::d("Toggling pause");
+			paused = !paused;
+			flare::input::keySet(GLFW_KEY_P, false);
+		}
+
 		if (flare::input::keyCheck(GLFW_KEY_X) && player != nullptr) {
 
 			print::d("Toggling pause effect");
-			paused = !paused;
+			blur = !blur;
 			flare::input::keySet(GLFW_KEY_X, false);
 		}
 
-		if (paused) {
+		if (blur) {
 
 			gausian->test = fmin(gausian->test + 7*flare::render::getDeltaTime(), 1.0f);
-			gausian2->test = fmin(gausian->test + 7*flare::render::getDeltaTime(), 1.0f);
 		}
-		if (!paused) {
+		if (!blur) {
 
 			gausian->test = fmax(gausian->test - 7*flare::render::getDeltaTime(), 0.0f);
-			gausian2->test = fmax(gausian->test - 7*flare::render::getDeltaTime(), 0.0f);
+			// This is really not efficient at all
+			if (gausian->test == 0.0f) {
+
+				flare::getState()->mainState = pauseState->previousState;
+			}
 		}
 	}
 

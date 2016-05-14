@@ -14,6 +14,7 @@
 #include "camera.h"
 #include "spin.h"
 #include "postfx.h"
+#include "gausian.h"
 
 #endif
 

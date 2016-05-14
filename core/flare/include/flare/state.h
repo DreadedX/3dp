@@ -16,7 +16,7 @@ namespace flare {
 
 		FreeListAllocator *mainAllocator = nullptr;
 
-		MainState *mainState;
+		GameState *mainState;
 
 		struct Settings {
 

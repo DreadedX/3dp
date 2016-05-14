@@ -100,7 +100,7 @@ void flare::render::passes::SSAO::init() {
 	generateSSAOKernel(this);
 }
 
-void flare::render::passes::SSAO::draw(GameState *) {
+void flare::render::passes::SSAO::draw(GameState *gameState) {
 
 	State::Render *render = &getState()->render;
 
@@ -112,11 +112,11 @@ void flare::render::passes::SSAO::draw(GameState *) {
 	flare::render::setShader(shader);
 
 	glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, getState()->mainState->renderPasses[State::Render::GEOMETRY]->textures[Geometry::GBUFFER_TEXTURE_TYPE_POSITION]);
+    glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[State::Render::GEOMETRY]->textures[Geometry::GBUFFER_TEXTURE_TYPE_POSITION]);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, textures[2]);
     glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, getState()->mainState->renderPasses[State::Render::GEOMETRY]->textures[Geometry::GBUFFER_TEXTURE_TYPE_NORMAL]);
+    glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[State::Render::GEOMETRY]->textures[Geometry::GBUFFER_TEXTURE_TYPE_NORMAL]);
 
 	for (GLuint i = 0; i < 64; ++i) {
 

@@ -151,7 +151,7 @@ void flare::render::draw(GameState *gameState) {
 		GLsizei width = (GLsizei)flare::getState()->settings.resolution.x;
 		GLsizei height = (GLsizei)flare::getState()->settings.resolution.y;
 
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, getState()->mainState->renderPasses[getState()->mainState->renderPasses.size()-1]->fbo);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, gameState->renderPasses[gameState->renderPasses.size()-1]->fbo);
 		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBlitFramebuffer(0, 0, width, height,
 				0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
