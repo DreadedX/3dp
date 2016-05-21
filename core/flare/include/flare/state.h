@@ -3,6 +3,18 @@
 
 namespace flare {
 
+	struct Timer {
+
+		Timer(std::string name, float time) {
+
+			this->name = name;
+			this->time = time;
+		}
+
+		std::string name;
+		float time;
+	};
+
 	struct State {
 
 		struct ProxyAllocators {
@@ -13,6 +25,8 @@ namespace flare {
 			ProxyAllocator *model = nullptr;
 			ProxyAllocator *entities = nullptr;
 		} proxyAllocators;
+
+		std::vector<Timer> timers;
 
 		FreeListAllocator *mainAllocator = nullptr;
 

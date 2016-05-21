@@ -47,13 +47,13 @@ namespace flare{
 	#ifndef NO_LEAKAGE
 		#include "debug_new.h"
 	#endif
-    #include "flare/debug.h"
 #endif
 
 #include "extra/extra.h"
 #include "flux/flux.h"
 #include "fuse/fuse.h"
 
+#include "flare/debug.h"
 #include "flare/engine.h"
 #include "flare/input.h"
 

@@ -117,6 +117,7 @@ int main() {
 
 		flare::update();
 
+			flare::Timer timer = flare::Timer("demo code", glfwGetTime());
 		static bool blur = false;
 		static bool paused = false;
 		if (flare::input::keyCheck(GLFW_KEY_P) && player != nullptr) {
@@ -155,6 +156,8 @@ int main() {
 				flare::getState()->mainState = pauseState->previousState;
 			}
 		}
+			timer.time = glfwGetTime() - timer.time;
+			flare::getState()->timers.push_back(timer);
 	}
 
 	flare::terminate();

@@ -47,6 +47,10 @@ void Camera::_update() {
 		camera->rotation.x += delta.x * flare::getState()->settings.mouseSensitivity;
 		camera->rotation.y += delta.y * flare::getState()->settings.mouseSensitivity;
 		glfwSetCursorPos(flare::getState()->window, flare::getState()->settings.resolution.x/2, flare::getState()->settings.resolution.y/2);
+
+		// For some weird reason this is needed for mouse look to work, I have no idea why...
+		double x, y;
+		glfwGetCursorPos(flare::getState()->window, &x, &y);
 	}
 }
 

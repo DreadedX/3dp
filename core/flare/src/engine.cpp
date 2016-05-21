@@ -112,17 +112,21 @@ bool flare::isRunning() {
 
 void flare::update() {
 
+	DEBUG_TIME_INIT;
+
 	// Calculate the deltaTime
 	static float lastFrame = 0;
 	float currentFrame = glfwGetTime();
 	flare::getState()->render.deltaTime = (currentFrame - lastFrame);
 	lastFrame = currentFrame;
 
-	glfwPollEvents();
-	flare::input::update();
+	DEBUG_TIME( {
+		glfwPollEvents();
+		flare::input::update();
+	}, "input" );
 
 	// NOTE: Debug keybindings
-	{
+	DEBUG_TIME( {
 		if (input::keyCheck(GLFW_KEY_ESCAPE)) {
 
 			glfwSetWindowShouldClose(getState()->window, GL_TRUE);
@@ -147,33 +151,21 @@ void flare::update() {
 			}
 			input::keySet(GLFW_KEY_Z, false);
 		}
-	}
+	}, "debug keys" );
 
 	// Run manager logic
-	getState()->mainState->update();
+	/** @todo The stats on this need to be more in-depth */
+	DEBUG_TIME( getState()->mainState->update(), "update" );
 	// Run renderer logic
-	getState()->mainState->draw();
+	/** @todo The stats on this need to be more in-depth */
+	DEBUG_TIME( getState()->mainState->draw(), "render" );
 
 	// This is for the debug interface
 #ifndef NDEBUG
-	ImGui_ImplGlfwGL3_NewFrame();
-	{
-		ImGui::Text("Delta time: %.2fms", getState()->render.deltaTime * 1000);
-		ImGui::Text("Mouse position: %.2f, %.2f", input::getMouse()->position.x, input::getMouse()->position.y);
-		ImGui::Text("Yaw/Pitch: %.2f, %.2f", getState()->render.camera.rotation.x, getState()->render.camera.rotation.y);
-		ImGui::Text("Camera position: %.2f, %.2f, %.2f", getState()->render.camera.position.x, getState()->render.camera.position.y, getState()->render.camera.position.z);
-		ImGui::Text("Memory usage (total): %lu bytes (%i%%)", getState()->mainAllocator->getUsedMemory(), (int)(getState()->mainAllocator->getUsedMemory()*100/getState()->mainAllocator->getSize()));
-		ImGui::Text("Memory usage (flux): %lu bytes (%i%%)", getState()->proxyAllocators.flux->getUsedMemory(), (int)(getState()->proxyAllocators.flux->getUsedMemory()*100/getState()->proxyAllocators.flux->getSize()));
-		ImGui::Text("Memory usage (fuse): %lu bytes (%i%%)", getState()->proxyAllocators.fuse->getUsedMemory(), (int)(getState()->proxyAllocators.fuse->getUsedMemory()*100/getState()->proxyAllocators.fuse->getSize()));
-		ImGui::Text("Memory usage (asset): %lu bytes (%i%%)", getState()->proxyAllocators.asset->getUsedMemory(), (int)(getState()->proxyAllocators.asset->getUsedMemory()*100/getState()->proxyAllocators.asset->getSize()));
-		ImGui::Text("Memory usage (model): %lu bytes (%i%%)", getState()->proxyAllocators.model->getUsedMemory(), (int)(getState()->proxyAllocators.model->getUsedMemory()*100/getState()->proxyAllocators.model->getSize()));
-		ImGui::Text("Memory usage (entities): %lu bytes (%i%%)", getState()->proxyAllocators.entities->getUsedMemory(), (int)(getState()->proxyAllocators.entities->getUsedMemory()*100/getState()->proxyAllocators.entities->getSize()));
-		debug::entityTree();
-	}
-	ImGui::Render();
+		DEBUG_TIME( debug::debug(), "debug interface" );
 #endif
 
-	glfwSwapBuffers(getState()->window);
+	DEBUG_TIME( glfwSwapBuffers(getState()->window), "swap buffers" );
 }
 
 void flare::terminate(int errorCode) {
