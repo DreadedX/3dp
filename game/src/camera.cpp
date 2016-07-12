@@ -61,7 +61,7 @@ void JoyCamera::_update() {
 
 	// TODO: Create easier controller support in engine
 	int countAxes;
-	const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &countAxes);
+	const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_2, &countAxes);
 
 	camera->position -= speed * glm::normalize(glm::vec3(camera->front.x, 0, camera->front.z)) * axes[1];
 	camera->position += glm::normalize(glm::cross(camera->front, camera->up)) * speed * axes[0];
@@ -71,7 +71,7 @@ void JoyCamera::_update() {
 	camera->rotation.x += 10 * speed * axes[2];
 
 	int countButtons;
-	const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &countButtons);
+	const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_2, &countButtons);
 
 	camera->position += speed * camera->up * (float)buttons[14];
 	camera->position -= speed * camera->up * (float)buttons[13];

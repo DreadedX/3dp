@@ -22,7 +22,7 @@ struct JoyDebugControl : fuse::Component {
 	void _update() override {
 
 		int countButtons;
-		const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &countButtons);
+		const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_2, &countButtons);
 
 		static bool reloaded = false;
 
@@ -51,7 +51,7 @@ int main() {
 	print::d("Present: %i", present);
 
 	if (present == 1) {
-		const char *name = glfwGetJoystickName(GLFW_JOYSTICK_1);
+		const char *name = glfwGetJoystickName(GLFW_JOYSTICK_2);
 
 		print::d("Controller name: %s", name);
 

@@ -68,7 +68,7 @@ void main() {
 		//occlusion += (sampleDepth >= sample.z ? 1.0 : 0.0);     
 
 	}
-	occlusion = 1.0 - (occlusion / kernelSize);
+	occlusion = 1.0 - 4*(occlusion / kernelSize);
 
 	FragColor = occlusion;
 }

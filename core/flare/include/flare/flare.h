@@ -9,6 +9,7 @@
 
 // #include <map>
 // #include <string>
+#include <random>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -45,7 +46,7 @@ namespace flare{
 
 #ifndef NDEBUG
 	#ifndef NO_LEAKAGE
-		#include "debug_new.h"
+		// #include "debug_new.h"
 	#endif
 #endif
 
