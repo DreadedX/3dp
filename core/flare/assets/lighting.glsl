@@ -45,7 +45,6 @@ void main() {
 		
 		renderLighting(TexCoord);
 	}
-
 }
 
 void renderSkybox(vec2 TexCoord) {

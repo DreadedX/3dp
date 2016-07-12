@@ -136,7 +136,7 @@ void flare::render::passes::Skybox::init() {
 	glBindVertexArray(0);
 }
 
-void flare::render::passes::Skybox::draw(GameState *) {
+void flare::render::passes::Skybox::draw(GameState *gameState) {
 
 	State::Render *render = &getState()->render;
 	
@@ -149,14 +149,22 @@ void flare::render::passes::Skybox::draw(GameState *) {
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTexture);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[0]->textures[0]);
 
 	glm::mat4 view = glm::mat4(glm::mat3(render->view));
 	glUniformMatrix4fv(render->shader->locations.view, 1, GL_FALSE, glm::value_ptr(view));
 	glUniformMatrix4fv(render->shader->locations.projection, 1, GL_FALSE, glm::value_ptr(render->projection));
 
-	glBindVertexArray(vao);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+	for (flare::asset::model::Mesh *mesh : render->quad->meshes) {
 
+		glBindVertexArray(mesh->vao);
+
+		glDrawElements(GL_TRIANGLES, mesh->indexSize, GL_UNSIGNED_INT, 0);
+	}
+
+	// glBindVertexArray(vao);
+	// glDrawArrays(GL_TRIANGLES, 0, 36);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glDepthMask(GL_TRUE);

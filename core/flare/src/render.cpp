@@ -4,10 +4,9 @@ void flare::render::init() {
 
 	State::Render *render = &getState()->render;
 
-	getState()->mainState->renderPasses.add(new passes::Geometry);
-	getState()->mainState->renderPasses.add(new passes::Skybox);
+	getState()->mainState->renderPasses.add(new passes::Basic);
 	getState()->mainState->renderPasses.add(new passes::SSAO);
-	getState()->mainState->renderPasses.add(new passes::Lighting);
+	getState()->mainState->renderPasses.add(new passes::Skybox);
 
 	for(passes::Pass *pass : getState()->mainState->renderPasses) {
 
@@ -168,6 +167,8 @@ void flare::render::setShader(flare::asset::Shader *shader) {
 		glUniform1i(glGetUniformLocation(shader->id, "material.diffuse"), 0);
 		glUniform1i(glGetUniformLocation(shader->id, "material.normal"), 1);
 		glUniform1i(glGetUniformLocation(shader->id, "material.specular"), 2);
+
+		glUniform1i(glGetUniformLocation(shader->id, "render"), 1);
 
 		glUniform1i(glGetUniformLocation(shader->id, "gPositionMap"), 0);
 		glUniform1i(glGetUniformLocation(shader->id, "gColorMap"), 1);

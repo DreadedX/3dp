@@ -21,6 +21,12 @@ namespace flare {
 				virtual ~Pass() {}
 			};
 
+			struct Basic : Pass {
+
+				void init() override;
+				void draw(GameState *) override;
+			};
+
 			struct Geometry : Pass {
 
 				enum GBUFFER_TEXTURE_TYPE {

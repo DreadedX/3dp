@@ -1,0 +1,72 @@
+#pragma version 330 core
+#pragma interface_start
+	vec3 FragPosition;
+	vec2 Texcoord;
+	vec3 Normal;
+#pragma interface_end
+
+#pragma vertex
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec3 normal;
+layout (location = 2) in vec3 tangent;
+layout (location = 3) in vec2 texcoord;
+
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+
+void main() {
+
+	vec4 viewPos = view * model * vec4(position, 1.0);
+	gl_Position = projection * viewPos;
+	vs_out.FragPosition = viewPos.xyz;
+	vs_out.Texcoord = texcoord;
+
+	mat3 normalMatrix = transpose(inverse(mat3(model)));
+	vs_out.Normal = normalize(normalMatrix * normal);
+}
+
+#pragma fragment
+out vec4 FragColor;
+
+#pragma include Material
+uniform Material material;
+#pragma include Light
+uniform Light light;
+
+uniform vec3 viewPosition;
+
+#pragma include LinearizeDepth
+
+void main() {
+
+	if (texture(material.diffuse, fs_in.Texcoord).a == 0.0) {
+		discard;
+	}
+
+	vec3 color = texture(material.diffuse, fs_in.Texcoord).rgb;
+
+	// Ambient
+	vec3 ambient = light.ambient * color;
+
+	vec3 lightDir = normalize(-light.direction);
+	float diff = max(dot(fs_in.Normal, lightDir), 0.0);
+	vec3 diffuse = light.diffuse * diff * color;
+
+	// Specular (currently not in use)
+	const float kPi = 3.14159265;
+	float shininess = material.shininess;
+	shininess = 32;
+	float energyConservation = (8.0 + shininess) / (8.0 * kPi);
+	vec3 viewDir = normalize(viewPosition - fs_in.FragPosition);
+	vec3 halfwayDir = normalize(lightDir + viewDir);
+	float spec = energyConservation * pow(max(dot(fs_in.Normal, halfwayDir), 0.0), shininess);
+	vec3 specular = light.specular * texture(material.specular, fs_in.Texcoord).rgb * spec;
+
+	FragColor.rgb = ambient + diffuse;
+	FragColor.a = LinearizeDepth(gl_FragCoord.z);
+
+	// Gamma correction
+	float gamma = 2.2;
+	FragColor.rgb = pow(FragColor.rgb, vec3(1.0/gamma));
+}

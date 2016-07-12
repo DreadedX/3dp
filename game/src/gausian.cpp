@@ -63,8 +63,7 @@ void Gausian::draw(flare::GameState *gameState) {
 
 	glActiveTexture(GL_TEXTURE0);
 
-	/** @todo Need to make this so that it takes the output of the previous shader */
-	glBindTexture(GL_TEXTURE_2D, dynamic_cast<flare::PauseState*>(gameState)->previousState->renderPasses[flare::State::Render::LIGHTING]->textures[0]);
+	glBindTexture(GL_TEXTURE_2D, dynamic_cast<flare::PauseState*>(gameState)->previousState->renderPasses[dynamic_cast<flare::PauseState*>(gameState)->previousState->renderPasses.size()-1]->textures[0]);
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -79,6 +78,7 @@ void Gausian::draw(flare::GameState *gameState) {
 
 		glUniformMatrix4fv(render->shader->locations.model, 1, GL_FALSE, glm::value_ptr(glm::mat4()));
 
+		/** @todo Change the variable to something else than test */
 		glUniform1f(glGetUniformLocation(shader->id, "test"), test);
 
 	for (flare::asset::model::Mesh *mesh : render->quad->meshes) {

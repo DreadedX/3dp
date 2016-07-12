@@ -112,7 +112,7 @@ void flare::render::passes::SSAO::draw(GameState *gameState) {
 	flare::render::setShader(shader);
 
 	glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[State::Render::GEOMETRY]->textures[Geometry::GBUFFER_TEXTURE_TYPE_POSITION]);
+    glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[0]->textures[Geometry::GBUFFER_TEXTURE_TYPE_POSITION]);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, textures[2]);
     glActiveTexture(GL_TEXTURE2);

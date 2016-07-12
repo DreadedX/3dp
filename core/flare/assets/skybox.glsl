@@ -1,6 +1,6 @@
 #pragma version 330
 #pragma interface_start
-	vec3 TexCoords;
+	vec3 EyeDirection;
 #pragma interface_end
 
 #pragma vertex
@@ -11,20 +11,32 @@ uniform mat4 view;
 
 void main() {
 
-	gl_Position = projection * view * vec4(position, 1.0);
-	vs_out.TexCoords = position;
+	mat4 inverseProjection = inverse(projection);
+	mat3 inverseModelview = transpose(mat3(view));
+	vec3 unprojected = (inverseProjection * vec4(position, 1.0)).xyz;
+	vs_out.EyeDirection = inverseModelview * unprojected;
+
+	gl_Position = vec4(position, 1.0);
 }
 
 #pragma fragment
 
+#pragma include CalcTexCoord
+
 out vec4 color;
 
 uniform samplerCube skybox;
+uniform sampler2D render;
 
 void main() {
 
-	color.rgb = texture(skybox, fs_in.TexCoords).rgb;
-	color.a = 1.0;
+	vec2 texCoords = CalcTexCoord();
 
-	/* color = vec4(fs_in.TexCoords.x, fs_in.TexCoords.y, 1.0, 1.0); */
+	if (texture(render, texCoords).a == 0.0) {
+
+		color.rgb = texture(skybox, fs_in.EyeDirection).rgb;
+	} else {
+
+		color.rgb = texture(render, texCoords).rgb;
+	}
 }
