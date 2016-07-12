@@ -150,7 +150,8 @@ void flare::render::passes::Skybox::draw(GameState *gameState) {
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTexture);
 	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[0]->textures[0]);
+	/** @todo Make this not hardcoded and use the previous shader step */
+	glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[1]->textures[1]);
 
 	glm::mat4 view = glm::mat4(glm::mat3(render->view));
 	glUniformMatrix4fv(render->shader->locations.view, 1, GL_FALSE, glm::value_ptr(view));

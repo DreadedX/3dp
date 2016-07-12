@@ -22,7 +22,7 @@ uniform sampler2D gPositionMap;
 uniform sampler2D noiseTexture;
 uniform sampler2D gNormalMap;
 
-uniform vec3 samples[64];
+uniform vec3 samples[128];
 uniform mat4 projection;
 uniform mat4 model;
 uniform mat4 view;
@@ -31,8 +31,8 @@ out float FragColor;
 
 const vec2 noiseScale = vec2(1280.0/4.0, 720.0/4.0);
 
-int kernelSize = 64;
-float radius = 1.0;
+int kernelSize = 128;
+float radius = 2.0;
 
 void main() {
 
@@ -60,15 +60,14 @@ void main() {
 		offset.xyz = offset.xyz * 0.5 + 0.5;
 
 		float sampleDepth = -texture(gPositionMap, offset.xy).a;
-		FragColor = -sampleDepth;
 
 		// Enable this when we have skyboxes
 		float rangeCheck = smoothstep(0.0, 1.0, radius / abs(fragPos.z - sampleDepth));
-		occlusion += (sampleDepth >= sample.z ? 1.0 : 0.0) * rangeCheck;     
+		occlusion += (sampleDepth >= sample.z ? 1.0 : 0.0) * rangeCheck;
 		//occlusion += (sampleDepth >= sample.z ? 1.0 : 0.0);     
 
 	}
-	occlusion = 1.0 - 4*(occlusion / kernelSize);
+	occlusion = 1.0 - (occlusion / kernelSize);
 
 	FragColor = occlusion;
 }

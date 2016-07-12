@@ -41,7 +41,7 @@ void flare::render::init() {
 	render->quad = asset::load<asset::Model>("core/quad");
 }
 
-void debugRender() {
+void debugRender(flare::GameState *gameState) {
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -50,21 +50,21 @@ void debugRender() {
 		GLsizei width = (GLsizei)flare::getState()->settings.resolution.x;
 		GLsizei height = (GLsizei)flare::getState()->settings.resolution.y;
 
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[flare::State::Render::GEOMETRY]->fbo);
-		glReadBuffer(GL_COLOR_ATTACHMENT1);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[0]->fbo);
+		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBlitFramebuffer(0, 0, width, height, 
 				0, height/2, width/2, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-		glReadBuffer(GL_COLOR_ATTACHMENT4);
+		glReadBuffer(GL_COLOR_ATTACHMENT1);
 		glBlitFramebuffer(0, 0, width, height, 
 				width/2, height/2, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[flare::State::Render::POST]->fbo);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[1]->fbo);
 		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBlitFramebuffer(0, 0, width, height, 
 				width/2, 0, width, height/2, GL_COLOR_BUFFER_BIT, GL_LINEAR); 
 
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[flare::State::Render::SKYBOX]->fbo);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, gameState->renderPasses[gameState->renderPasses.size()-1]->fbo);
 		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBlitFramebuffer(0, 0, width, height,
 				0, 0, width/2, height/2, GL_COLOR_BUFFER_BIT, GL_LINEAR);
@@ -145,7 +145,7 @@ void flare::render::draw(GameState *gameState) {
 	
 	if (debug) {
 
-		debugRender();
+		debugRender(gameState);
 	} else {
 		GLsizei width = (GLsizei)flare::getState()->settings.resolution.x;
 		GLsizei height = (GLsizei)flare::getState()->settings.resolution.y;

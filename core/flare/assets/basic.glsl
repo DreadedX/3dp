@@ -27,8 +27,6 @@ void main() {
 }
 
 #pragma fragment
-out vec4 FragColor;
-
 #pragma include Material
 uniform Material material;
 #pragma include Light
@@ -36,9 +34,18 @@ uniform Light light;
 
 uniform vec3 viewPosition;
 
+layout (location = 0) out vec4 FragColor;
+layout (location = 1) out vec4 WorldPosOut;
+layout (location = 2) out vec3 NormalOut;
+
 #pragma include LinearizeDepth
 
 void main() {
+
+	// Export some values that other shaders can use
+	WorldPosOut.rgb = fs_in.FragPosition;
+	WorldPosOut.a = LinearizeDepth(gl_FragCoord.z);
+	NormalOut = fs_in.Normal;
 
 	if (texture(material.diffuse, fs_in.Texcoord).a == 0.0) {
 		discard;
@@ -64,9 +71,9 @@ void main() {
 	vec3 specular = light.specular * texture(material.specular, fs_in.Texcoord).rgb * spec;
 
 	FragColor.rgb = ambient + diffuse;
-	FragColor.a = LinearizeDepth(gl_FragCoord.z);
 
 	// Gamma correction
 	float gamma = 2.2;
 	FragColor.rgb = pow(FragColor.rgb, vec3(1.0/gamma));
+	FragColor.a = LinearizeDepth(gl_FragCoord.z);
 }
