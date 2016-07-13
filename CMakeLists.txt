@@ -86,7 +86,7 @@ add_subdirectory(game)
 # Tools
 add_subdirectory(tools/fluxuate)
 if(UNIX)
-	add_subdirectory(tools/launcher)
+	# add_subdirectory(tools/launcher)
 endif(UNIX)
 
 # Plugins for fluxuate
