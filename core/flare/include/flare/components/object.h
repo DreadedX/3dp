@@ -11,6 +11,8 @@ namespace flare {
 
 			/** @brief Pointer to the parent's Position Component */
 			Position *position = nullptr;
+			/** @brief Pointer to the parent's Scale Component */
+			Scale *scale = nullptr;
 			/** @brief Pointer to the parent's Rotation Component */
 			Rotation *rotation = nullptr;
 
@@ -29,6 +31,11 @@ namespace flare {
 				super(parent);
 
 				this->position = parent->getComponent<Position>();
+				/** Scale is optional */
+				if (parent->hasComponent<Scale>()) {
+
+					this->scale = parent->getComponent<Scale>();
+				}
 				/** Rotation is optional */
 				if (parent->hasComponent<Rotation>()) {
 

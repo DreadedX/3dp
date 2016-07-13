@@ -122,6 +122,7 @@ void flare::asset::Shader::_load() {
 	locations.model = glGetUniformLocation(id, "model");
 	locations.view = glGetUniformLocation(id, "view");
 	locations.projection = glGetUniformLocation(id, "projection");
+	locations.depthMVP = glGetUniformLocation(id, "depthMVP");
 
 	locations.material.shininess = glGetUniformLocation(id, "material.shininess");
 

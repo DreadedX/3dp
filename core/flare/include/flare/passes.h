@@ -27,6 +27,12 @@ namespace flare {
 				void draw(GameState *) override;
 			};
 
+			struct Shadow : Pass {
+
+				void init() override;
+				void draw(GameState *) override;
+			};
+
 			struct Geometry : Pass {
 
 				enum GBUFFER_TEXTURE_TYPE {

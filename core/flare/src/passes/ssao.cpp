@@ -112,11 +112,11 @@ void flare::render::passes::SSAO::draw(GameState *gameState) {
 	flare::render::setShader(shader);
 
 	glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[0]->textures[1]);
+    glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[1]->textures[1]);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, textures[2]);
     glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[0]->textures[2]);
+    glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[1]->textures[2]);
 
 	for (GLuint i = 0; i < 128; ++i) {
 
@@ -144,7 +144,7 @@ void flare::render::passes::SSAO::draw(GameState *gameState) {
     glBindTexture(GL_TEXTURE_2D, textures[0]);
 
 	glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[0]->textures[0]);
+    glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[1]->textures[0]);
 
 	for (flare::asset::model::Mesh *mesh : render->quad->meshes) {
 

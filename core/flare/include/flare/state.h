@@ -72,6 +72,9 @@ namespace flare {
 			/** @brief Projection matrix */
 			glm::mat4 projection;
 
+			// MSAA Sample count
+			int sampleCount;
+
 			/** @brief Global light settings
 			  @todo This should configurable */
 			struct Light {

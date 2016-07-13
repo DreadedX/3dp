@@ -77,9 +77,10 @@ int main() {
 		cube->addComponent<Spin>();
 	}
 #elif 1
-	fuse::Entity *house = flare::getState()->mainState->manager->createEntity("House");
+	fuse::Entity *house = flare::getState()->mainState->manager->createEntity("Sponza");
 	house->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
-	house->addComponent<flare::component::Object>("demo/house");
+	house->addComponent<flare::component::Scale>(glm::vec3(0.1f, 0.1f, 0.1f));
+	house->addComponent<flare::component::Object>("demo/sponza");
 #elif 0
 	fuse::Entity *rungholt = fuse::createEntity("Rungholt");
 	rungholt->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
@@ -114,6 +115,11 @@ int main() {
 	pauseState->renderPasses.add(gausian);
 
 	while (flare::isRunning()) {
+
+		// Shadow test
+		// flare::getState()->render.light.direction.x = 100 * cos(glfwGetTime());
+		// flare::getState()->render.light.direction.z = 100 * sin(glfwGetTime());
+		//////
 
 		flare::update();
 

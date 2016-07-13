@@ -16,6 +16,17 @@ namespace flare {
 			}
 		};
 
+		struct Scale : fuse::Component {
+
+			glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
+
+			Scale(fuse::Entity *parent, glm::vec3 scale) {
+				super(parent);
+
+				this->scale = scale;
+			}
+		};
+
 		/** Component that stores roation data of the parent entity */
 		struct Rotation : fuse::Component {
 

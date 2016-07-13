@@ -6,7 +6,7 @@
   @todo Add a way to set this externally */
 flare::State *state = nullptr;
 
-const size_t RESERVED_MEMORY = 1000l * 1000l * 20l; /* 130 MB */
+const size_t RESERVED_MEMORY = 1000l * 1000l * 200l; /* 130 MB */
 
 void *arenaStart;
 

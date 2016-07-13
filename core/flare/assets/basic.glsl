@@ -3,6 +3,7 @@
 	vec3 FragPosition;
 	vec2 Texcoord;
 	vec3 Normal;
+	vec4 ShadowCoord;
 #pragma interface_end
 
 #pragma vertex
@@ -14,6 +15,7 @@ layout (location = 3) in vec2 texcoord;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
+uniform mat4 depthMVP;
 
 void main() {
 
@@ -24,6 +26,8 @@ void main() {
 
 	mat3 normalMatrix = transpose(inverse(mat3(model)));
 	vs_out.Normal = normalize(normalMatrix * normal);
+
+	vs_out.ShadowCoord = depthMVP * model * vec4(position, 1.0);
 }
 
 #pragma fragment
@@ -33,6 +37,8 @@ uniform Material material;
 uniform Light light;
 
 uniform vec3 viewPosition;
+
+uniform sampler2D shadow;
 
 layout (location = 0) out vec4 FragColor;
 layout (location = 1) out vec4 WorldPosOut;
@@ -47,6 +53,17 @@ void main() {
 	WorldPosOut.a = LinearizeDepth(gl_FragCoord.z);
 	NormalOut = fs_in.Normal;
 
+	vec3 lightDir = normalize(-light.direction);
+
+	float cosTheta = clamp( dot( fs_in.Normal, lightDir ), 0, 1 );
+	float bias = 0.005*tan(acos(cosTheta));
+	bias = 0.005;
+	bias = clamp(bias, 0,0.01);
+	float visibility = 1.0;
+	if ( texture( shadow, fs_in.ShadowCoord.xy ).r  <  fs_in.ShadowCoord.z - bias){
+		visibility = 0.0;
+	}
+
 	if (texture(material.diffuse, fs_in.Texcoord).a == 0.0) {
 		discard;
 	}
@@ -56,7 +73,6 @@ void main() {
 	// Ambient
 	vec3 ambient = light.ambient * color;
 
-	vec3 lightDir = normalize(-light.direction);
 	float diff = max(dot(fs_in.Normal, lightDir), 0.0);
 	vec3 diffuse = light.diffuse * diff * color;
 
@@ -70,10 +86,12 @@ void main() {
 	float spec = energyConservation * pow(max(dot(fs_in.Normal, halfwayDir), 0.0), shininess);
 	vec3 specular = light.specular * texture(material.specular, fs_in.Texcoord).rgb * spec;
 
-	FragColor.rgb = ambient + diffuse;
+	FragColor.rgb = ambient + (diffuse * visibility);
 
 	// Gamma correction
 	float gamma = 2.2;
 	FragColor.rgb = pow(FragColor.rgb, vec3(1.0/gamma));
 	FragColor.a = LinearizeDepth(gl_FragCoord.z);
+
+	/* FragColor.rgb = vec3(texture( shadow, fs_in.ShadowCoord.xy ).r); */
 }

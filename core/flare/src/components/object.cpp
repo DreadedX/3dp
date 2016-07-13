@@ -23,17 +23,15 @@ void geometryPass(flare::component::Object *object) {
 		glBindVertexArray(mesh->vao);
 
 		flare::State::Render *render = &flare::getState()->render;
-
-		{
-			glUniform3fv(render->shader->locations.light.diffuse, 1, glm::value_ptr(mesh->diffuseColor * render->light.diffuse));		
-			glUniform3fv(render->shader->locations.light.specular, 1, glm::value_ptr(mesh->specularColor * render->light.specular));		
-
-			glUniformMatrix4fv(render->shader->locations.view, 1, GL_FALSE, glm::value_ptr(render->view));
-			glUniformMatrix4fv(render->shader->locations.projection, 1, GL_FALSE, glm::value_ptr(render->projection));
-		}
+		glUniform3fv(render->shader->locations.light.diffuse, 1, glm::value_ptr(mesh->diffuseColor * render->light.diffuse));		
+		glUniform3fv(render->shader->locations.light.specular, 1, glm::value_ptr(mesh->specularColor * render->light.specular));		
 
 		glm::mat4 modelMatrix;
 		modelMatrix = glm::translate(modelMatrix, object->position->position);
+		if (object->scale != nullptr) {
+
+			modelMatrix = glm::scale(modelMatrix, object->scale->scale);
+		}
 		if (object->rotation != nullptr) {
 
 			modelMatrix = glm::rotate(modelMatrix, object->rotation->rotation, object->rotation->rotationAxis);  

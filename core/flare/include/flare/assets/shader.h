@@ -26,6 +26,8 @@ namespace flare {
 				GLuint view = 0;
 				/** @brief Uniform location of projection matrix */
 				GLuint projection = 0;
+				/** @brief Uniform location of projection matrix */
+				GLuint depthMVP = 0;
 
 				/** @brief Uniform location of view position */
 				GLuint viewPosition = 0;

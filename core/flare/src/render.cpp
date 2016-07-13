@@ -4,6 +4,7 @@ void flare::render::init() {
 
 	State::Render *render = &getState()->render;
 
+	getState()->mainState->renderPasses.add(new passes::Shadow);
 	getState()->mainState->renderPasses.add(new passes::Basic);
 	getState()->mainState->renderPasses.add(new passes::SSAO);
 	getState()->mainState->renderPasses.add(new passes::Skybox);
@@ -50,16 +51,18 @@ void debugRender(flare::GameState *gameState) {
 		GLsizei width = (GLsizei)flare::getState()->settings.resolution.x;
 		GLsizei height = (GLsizei)flare::getState()->settings.resolution.y;
 
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[0]->fbo);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[1]->fbo);
 		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBlitFramebuffer(0, 0, width, height, 
 				0, height/2, width/2, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-		glReadBuffer(GL_COLOR_ATTACHMENT1);
-		glBlitFramebuffer(0, 0, width, height, 
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[0]->fbo);
+		// glReadBuffer(GL_COLOR_ATTACHMENT1);
+		glReadBuffer(GL_COLOR_ATTACHMENT0);
+		glBlitFramebuffer(0, 0, 1024*2, 1024*2, 
 				width/2, height/2, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[1]->fbo);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[2]->fbo);
 		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBlitFramebuffer(0, 0, width, height, 
 				width/2, 0, width, height/2, GL_COLOR_BUFFER_BIT, GL_LINEAR); 
@@ -169,6 +172,7 @@ void flare::render::setShader(flare::asset::Shader *shader) {
 		glUniform1i(glGetUniformLocation(shader->id, "material.specular"), 2);
 
 		glUniform1i(glGetUniformLocation(shader->id, "render"), 1);
+		glUniform1i(glGetUniformLocation(shader->id, "shadow"), 3);
 
 		glUniform1i(glGetUniformLocation(shader->id, "gPositionMap"), 0);
 		glUniform1i(glGetUniformLocation(shader->id, "gColorMap"), 1);
