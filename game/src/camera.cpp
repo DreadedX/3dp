@@ -3,7 +3,7 @@
 void Camera::_update() {
 
 	flare::State::Render::Camera *camera = &flare::getState()->render.camera;
-	GLfloat speed = 50.0f * flare::render::getDeltaTime();
+	GLfloat speed = 200.0f * flare::render::getDeltaTime();
 
 	if (flare::input::keyCheck(GLFW_KEY_W)) {
 
@@ -57,7 +57,7 @@ void Camera::_update() {
 void JoyCamera::_update() {
 
 	flare::State::Render::Camera *camera = &flare::getState()->render.camera;
-	GLfloat speed = 50.0f * flare::render::getDeltaTime();
+	GLfloat speed = 250.0f * flare::render::getDeltaTime();
 
 	// TODO: Create easier controller support in engine
 	int countAxes;
@@ -67,12 +67,12 @@ void JoyCamera::_update() {
 	camera->position += glm::normalize(glm::cross(camera->front, camera->up)) * speed * axes[0];
 
 	// TODO: Add sensitivity
-	camera->rotation.y -= 10 * speed * axes[3];
-	camera->rotation.x += 10 * speed * axes[2];
+	camera->rotation.y -= 2 * speed * axes[3];
+	camera->rotation.x += 2 * speed * axes[2];
 
 	int countButtons;
 	const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_2, &countButtons);
 
-	camera->position += speed * camera->up * (float)buttons[14];
-	camera->position -= speed * camera->up * (float)buttons[13];
+	camera->position += speed/3 * camera->up * (float)buttons[14];
+	camera->position -= speed/3 * camera->up * (float)buttons[13];
 }

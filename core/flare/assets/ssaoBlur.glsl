@@ -35,6 +35,5 @@ void main() {
 	}
 
     FragColor.rgb = texture(render, CalcTexCoord()).rgb * vec3(result / (4.0 * 4.0)) * vec3(result / (4.0 * 4.0));
-    /* FragColor.rgb = vec3(result / (4.0 * 4.0)) * vec3(result / (4.0 * 4.0)); */
 	FragColor.a = texture(render, CalcTexCoord()).a;
 }  

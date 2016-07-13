@@ -67,31 +67,10 @@ int main() {
 		player->addComponent<JoyDebugControl>();
 	}
 
-#if 0
-	for (int i = 0; i < 10; ++i) {
-
-		fuse::Entity *cube = fuse::createEntity("Container");
-		cube->addComponent<flare::component::Position>(cubePositions[i]);
-		cube->addComponent<flare::component::Rotation>(glm::radians(20.0f * i), glm::vec3(0.5f, 1.0f, 0.0f));
-		cube->addComponent<flare::component::Object>("demo/cube");
-		cube->addComponent<Spin>();
-	}
-#elif 1
 	fuse::Entity *house = flare::getState()->mainState->manager->createEntity("Sponza");
 	house->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
 	house->addComponent<flare::component::Scale>(glm::vec3(0.1f, 0.1f, 0.1f));
 	house->addComponent<flare::component::Object>("demo/sponza");
-#elif 0
-	fuse::Entity *rungholt = fuse::createEntity("Rungholt");
-	rungholt->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
-	rungholt->addComponent<flare::component::Object>("demo/rungholt");
-
-	flare::State::Render::Camera *camera = &flare::getState()->render.camera;
-	camera->position = glm::vec3(377, 115, -246);
-
-	camera->rotation.y = -16.0f;
-	camera->rotation.x = 157.0f;
-#endif
 
 	// Example of post proccessing
 	// PostFX *scanline = new PostFX("demo/scanline");
@@ -102,14 +81,6 @@ int main() {
 	pauseState->previousState = flare::getState()->mainState;
 	pauseState->manager = new fuse::Manager;
 
-	// Two pass gausian blurrender
-	// PostFX *gausian = new PostFX("demo/gausian", flare::getState()->mainState);
-	// gausian->init();
-	// flare::getState()->mainState->renderPasses.add(gausian);
-	// PostFX *gausian2 = new PostFX("demo/gausian2", flare::getState()->mainState);
-	// gausian2->init();
-	// flare::getState()->mainState->renderPasses.add(gausian2);
-	
 	Gausian *gausian = new Gausian;
 	gausian->init();
 	pauseState->renderPasses.add(gausian);
@@ -117,8 +88,8 @@ int main() {
 	while (flare::isRunning()) {
 
 		// Shadow test
-		// flare::getState()->render.light.direction.x = 100 * cos(glfwGetTime());
-		// flare::getState()->render.light.direction.z = 100 * sin(glfwGetTime());
+		flare::getState()->render.light.direction.x = 100 * cos(glfwGetTime()/5);
+		flare::getState()->render.light.direction.z = 100 * sin(glfwGetTime()/5);
 		//////
 
 		flare::update();
