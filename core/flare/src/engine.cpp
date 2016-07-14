@@ -10,6 +10,12 @@ const size_t RESERVED_MEMORY = 1000l * 1000l * 200l; /* 130 MB */
 
 void *arenaStart;
 
+/** @todo This should be moved to a seperate file */
+void errorCallbackGLFW(int error, const char *description) {
+
+	print::e("GLFW error (%i): %s", error, description);
+}
+
 void flare::init() {
 
 	// Reserve memory
@@ -48,10 +54,13 @@ void flare::init() {
 		exit(-1);
 	}
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwSetErrorCallback(errorCallbackGLFW);
+
+	/** @note Disabled for testing */
+	// glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	// glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	// glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	// glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 	// glfwWindowHint(GLFW_SAMPLES, 4);
 
@@ -59,6 +68,12 @@ void flare::init() {
 
 	// NOTE: First nullptr to glfwGetPrimaryMonitor for fullscreen
 	getState()->window = glfwCreateWindow(settings->resolution.x, settings->resolution.y, settings->name, nullptr, nullptr);
+
+	if (getState()->window == nullptr) {
+
+		print::e("Failed to initialize window");
+		exit(-1);
+	}
 
 	const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 	/** @bug This currently needs to add the width of my left monitor the get it center on my center monitor */
