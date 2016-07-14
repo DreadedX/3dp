@@ -12,13 +12,6 @@ file(GLOB_RECURSE CPP_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
 add_executable(${PROJECT_NAME} ${CPP_FILES})
 
-set(CURSES_NEEDS_NCURSES TRUE)
-find_package (Curses REQUIRED)
-if (CURSES_FOUND)
-	include_directories(${CURSES_INCLUDE_DIRS})
-	target_link_libraries (${PROJECT_NAME} ${CURSES_LIBRARIES})
-endif (CURSES_FOUND)
-
 target_link_libraries(${PROJECT_NAME} extra)
 if (NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	target_link_libraries(${PROJECT_NAME} leakage)

@@ -1,0 +1,26 @@
+{
+	"name": "Linux Debug",
+	"dir": "CMake/default",
+	"setup": "cmake ../..",
+	"build": "make",
+	"run": "make debug"
+},{
+	"name": "Windows Debug",
+	"dir": "CMake/windows",
+	"setup": "cmake -DCMAKE_TOOLCHAIN_FILE=../toolchains/i686-w64-mingw32.cmake ../..",
+	"build": "make",
+	"run": "make run"
+},{
+	"name": "Assets All",
+	"dir": "CMake/default",
+	"run": "make assets",
+	"note": "Depends on the Linux Debug setup. All setup should be run in one go, so it should be fine. There also needs to be a way to share the assets files cross platform."
+},{
+	"name": "Assets Core",
+	"dir": "CMake/default",
+	"run": "make core_assets"
+},{
+	"name": "Assets Demo",
+	"dir": "CMake/default",
+	"run": "make core_assets"
+}
