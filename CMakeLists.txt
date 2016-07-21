@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 project(all)
 
+cmake_policy(SET CMP0011 NEW)
 set( CMAKE_POSITION_INDEPENDENT_CODE ON )
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/modules")
 include(cotire)
@@ -25,9 +26,6 @@ if(DOXYGEN_FOUND)
 		COMMENT "Generating API documentation with Doxygen" VERBATIM
 		)
 endif(DOXYGEN_FOUND)
-
-execute_process(COMMAND git describe --tags --dirty OUTPUT_STRIP_TRAILING_WHITESPACE OUTPUT_VARIABLE GIT_VERSION)
-add_definitions(-DGIT_VERSION="${GIT_VERSION}")
 
 # Make sure there is no in source build
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
