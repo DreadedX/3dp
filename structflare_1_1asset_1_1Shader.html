@@ -113,6 +113,8 @@ Inheritance diagram for flare::asset::Shader:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:ab48d25738373af20902305fc630cc3ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structflare_1_1asset_1_1Shader.html#ab48d25738373af20902305fc630cc3ab">~Shader</a> ()</td></tr>
+<tr class="separator:ab48d25738373af20902305fc630cc3ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bb86b5acfd77cdfdce7c319d28c6dac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structflare_1_1asset_1_1Shader.html#a0bb86b5acfd77cdfdce7c319d28c6dac">_load</a> () override</td></tr>
 <tr class="memdesc:a0bb86b5acfd77cdfdce7c319d28c6dac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load shader.  <a href="#a0bb86b5acfd77cdfdce7c319d28c6dac">More...</a><br /></td></tr>
 <tr class="separator:a0bb86b5acfd77cdfdce7c319d28c6dac"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,12 +137,15 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ac872ad69e54f8eef7ed09bc0a9354744"><td class="memItemLeft" >&#160;&#160;&#160;GLuint&#160;&#160;&#160;<a class="el" href="structflare_1_1asset_1_1Shader.html#a9629683ad24f8738eebc92f80fbd6e43">projection</a> = 0</td></tr>
 <tr class="memdesc:ac872ad69e54f8eef7ed09bc0a9354744"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uniform location of projection matrix.  <a href="#ac872ad69e54f8eef7ed09bc0a9354744">More...</a><br /></td></tr>
 <tr class="separator:ac872ad69e54f8eef7ed09bc0a9354744"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75910a01404b1b46e3e6a137a8c3ab8f"><td class="memItemLeft" >&#160;&#160;&#160;GLuint&#160;&#160;&#160;<a class="el" href="structflare_1_1asset_1_1Shader.html#a1f1e63eca2a1cdb0c8052b010b43c9c0">depthMVP</a> = 0</td></tr>
+<tr class="memdesc:a75910a01404b1b46e3e6a137a8c3ab8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uniform location of projection matrix.  <a href="#a75910a01404b1b46e3e6a137a8c3ab8f">More...</a><br /></td></tr>
+<tr class="separator:a75910a01404b1b46e3e6a137a8c3ab8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c3227f5a26d2301b09589c624fd543b"><td class="memItemLeft" >&#160;&#160;&#160;GLuint&#160;&#160;&#160;<a class="el" href="structflare_1_1asset_1_1Shader.html#ade61a2f534a5a8c8dc204742b1779fae">viewPosition</a> = 0</td></tr>
 <tr class="memdesc:a4c3227f5a26d2301b09589c624fd543b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uniform location of view position.  <a href="#a4c3227f5a26d2301b09589c624fd543b">More...</a><br /></td></tr>
 <tr class="separator:a4c3227f5a26d2301b09589c624fd543b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76f0b666089c49e5b80fb2c1301e10f3"><td class="memItemLeft" >&#160;&#160;&#160;struct {</td></tr>
 <tr class="memitem:a6d4e07bc76c943b0a53e71a8a983019e"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;GLuint&#160;&#160;&#160;<a class="el" href="structflare_1_1asset_1_1Shader.html#a3822b70d82be66795945f46d917c8837">shininess</a> = 0</td></tr>
-<tr class="memdesc:a6d4e07bc76c943b0a53e71a8a983019e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structflare_1_1asset_1_1Material.html" title="Asset struct containing material data. ">Material</a> shininess.  <a href="#a6d4e07bc76c943b0a53e71a8a983019e">More...</a><br /></td></tr>
+<tr class="memdesc:a6d4e07bc76c943b0a53e71a8a983019e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Material shininess.  <a href="#a6d4e07bc76c943b0a53e71a8a983019e">More...</a><br /></td></tr>
 <tr class="separator:a6d4e07bc76c943b0a53e71a8a983019e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76f0b666089c49e5b80fb2c1301e10f3"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;&#160;&#160;<a class="el" href="structflare_1_1asset_1_1Shader.html#ae5a9104de23c3b7816278595e62a1332">material</a></td></tr>
 <tr class="separator:a76f0b666089c49e5b80fb2c1301e10f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -171,10 +176,28 @@ Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="structflare_1_1asset_1_1Asset.html" title="Base used for all assets. ">Asset</a> struct containing shader info. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000018">Todo:</a></b></dt><dd>Find a better solution to storing all attrib and uniform locators (Maybe an array and using an enum to get the correct value) </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000032">Todo:</a></b></dt><dd>Find a better solution to storing all attrib and uniform locators (Maybe an array and using an enum to get the correct value) </dd></dl>
 
 <p>Definition at line <a class="el" href="shader_8h_source.html#l00010">10</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ab48d25738373af20902305fc630cc3ab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">flare::asset::Shader::~Shader </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="shader_8cpp_source.html#l00139">139</a> of file <a class="el" href="shader_8cpp_source.html">shader.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a0bb86b5acfd77cdfdce7c319d28c6dac"></a>
 <div class="memitem">
 <div class="memproto">
@@ -200,7 +223,7 @@ Public Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="structflare_1_1asset_1_1Asset.html#a23ae0cb244f2082b4fedd04eb7c22c81">flare::asset::Asset</a>.</p>
 
-<p>Definition at line <a class="el" href="shader_8cpp_source.html#l00003">3</a> of file <a class="el" href="shader_8cpp_source.html">shader.cpp</a>.</p>
+<p>Definition at line <a class="el" href="shader_8cpp_source.html#l00050">50</a> of file <a class="el" href="shader_8cpp_source.html">shader.cpp</a>.</p>
 
 </div>
 </div>
@@ -217,7 +240,23 @@ Public Attributes</h2></td></tr>
 
 <p>Uniform location of ambient light color. </p>
 
-<p>Definition at line <a class="el" href="shader_8h_source.html#l00041">41</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
+<p>Definition at line <a class="el" href="shader_8h_source.html#l00045">45</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1f1e63eca2a1cdb0c8052b010b43c9c0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLuint flare::asset::Shader::depthMVP = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Uniform location of projection matrix. </p>
+
+<p>Definition at line <a class="el" href="shader_8h_source.html#l00030">30</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
 
 </div>
 </div>
@@ -233,7 +272,7 @@ Public Attributes</h2></td></tr>
 
 <p>Uniform location of diffuse light color. </p>
 
-<p>Definition at line <a class="el" href="shader_8h_source.html#l00043">43</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
+<p>Definition at line <a class="el" href="shader_8h_source.html#l00047">47</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
 
 </div>
 </div>
@@ -249,7 +288,7 @@ Public Attributes</h2></td></tr>
 
 <p>Uniform location of light direction vector. </p>
 
-<p>Definition at line <a class="el" href="shader_8h_source.html#l00039">39</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
+<p>Definition at line <a class="el" href="shader_8h_source.html#l00043">43</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
 
 </div>
 </div>
@@ -317,7 +356,7 @@ Public Attributes</h2></td></tr>
 
 <p>Uniform location of model matrix. </p>
 
-<p>Definition at line <a class="el" href="shader_8h_source.html#l00022">22</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
+<p>Definition at line <a class="el" href="shader_8h_source.html#l00024">24</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
 
 </div>
 </div>
@@ -333,7 +372,7 @@ Public Attributes</h2></td></tr>
 
 <p>Uniform location of projection matrix. </p>
 
-<p>Definition at line <a class="el" href="shader_8h_source.html#l00026">26</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
+<p>Definition at line <a class="el" href="shader_8h_source.html#l00028">28</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
 
 </div>
 </div>
@@ -347,10 +386,10 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="structflare_1_1asset_1_1Material.html" title="Asset struct containing material data. ">Material</a> shininess. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000019">Todo:</a></b></dt><dd>This should propably use <a class="el" href="structflare_1_1asset_1_1Material.html" title="Asset struct containing material data. ">Material</a> <a class="el" href="structflare_1_1asset_1_1Asset.html" title="Base used for all assets. ">Asset</a> (?) </dd></dl>
+<p>Material shininess. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000033">Todo:</a></b></dt><dd>This should propably use Material <a class="el" href="structflare_1_1asset_1_1Asset.html" title="Base used for all assets. ">Asset</a> (?) </dd></dl>
 
-<p>Definition at line <a class="el" href="shader_8h_source.html#l00034">34</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
+<p>Definition at line <a class="el" href="shader_8h_source.html#l00038">38</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
 
 </div>
 </div>
@@ -366,7 +405,7 @@ Public Attributes</h2></td></tr>
 
 <p>Uniform location of specular light color. </p>
 
-<p>Definition at line <a class="el" href="shader_8h_source.html#l00045">45</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
+<p>Definition at line <a class="el" href="shader_8h_source.html#l00049">49</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
 
 </div>
 </div>
@@ -382,7 +421,7 @@ Public Attributes</h2></td></tr>
 
 <p>Uniform location of a toggle that can be used in the shader for testing. </p>
 
-<p>Definition at line <a class="el" href="shader_8h_source.html#l00049">49</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
+<p>Definition at line <a class="el" href="shader_8h_source.html#l00053">53</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
 
 </div>
 </div>
@@ -398,7 +437,7 @@ Public Attributes</h2></td></tr>
 
 <p>Uniform location of view matrix. </p>
 
-<p>Definition at line <a class="el" href="shader_8h_source.html#l00024">24</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
+<p>Definition at line <a class="el" href="shader_8h_source.html#l00026">26</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
 
 </div>
 </div>
@@ -414,7 +453,7 @@ Public Attributes</h2></td></tr>
 
 <p>Uniform location of view position. </p>
 
-<p>Definition at line <a class="el" href="shader_8h_source.html#l00029">29</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
+<p>Definition at line <a class="el" href="shader_8h_source.html#l00033">33</a> of file <a class="el" href="shader_8h_source.html">shader.h</a>.</p>
 
 </div>
 </div>

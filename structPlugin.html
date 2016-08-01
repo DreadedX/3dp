@@ -98,12 +98,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a8cb2a097f9abb07274f8d58490069062"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPlugin.html#a8cb2a097f9abb07274f8d58490069062">loadPtr</a>) (std::string filePath, <a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> *file)</td></tr>
-<tr class="separator:a8cb2a097f9abb07274f8d58490069062"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62ec481defeb5018a3dd4f1b90e15bc1"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPlugin.html#a62ec481defeb5018a3dd4f1b90e15bc1">loadPtr</a>) (std::string assetName, std::string filePath, <a class="el" href="classArray.html">Array</a>&lt; <a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> * &gt; *<a class="el" href="load_8cpp.html#ae96a324f408f9188407fe4c78c445ecc">files</a>)</td></tr>
+<tr class="separator:a62ec481defeb5018a3dd4f1b90e15bc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af81593f9f3f66a5d90e0ddcb50fba40f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPlugin.html#af81593f9f3f66a5d90e0ddcb50fba40f">Plugin</a> (const char *<a class="el" href="structPlugin.html#af662f146708f3eace14148395902c59e">name</a>, const char *<a class="el" href="structPlugin.html#adb20bb211215b1a7eaca912026bf4be2">description</a>, <a class="el" href="structPlugin.html#a8cb2a097f9abb07274f8d58490069062">loadPtr</a> <a class="el" href="structPlugin.html#abd0fe3c6c626568de1a4214024d33125">load</a>)</td></tr>
+<tr class="memitem:af81593f9f3f66a5d90e0ddcb50fba40f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPlugin.html#af81593f9f3f66a5d90e0ddcb50fba40f">Plugin</a> (const char *<a class="el" href="structPlugin.html#af662f146708f3eace14148395902c59e">name</a>, const char *<a class="el" href="structPlugin.html#adb20bb211215b1a7eaca912026bf4be2">description</a>, <a class="el" href="structPlugin.html#a62ec481defeb5018a3dd4f1b90e15bc1">loadPtr</a> <a class="el" href="structPlugin.html#abd0fe3c6c626568de1a4214024d33125">load</a>)</td></tr>
 <tr class="separator:af81593f9f3f66a5d90e0ddcb50fba40f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -112,24 +112,24 @@ Public Attributes</h2></td></tr>
 <tr class="separator:af662f146708f3eace14148395902c59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb20bb211215b1a7eaca912026bf4be2"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPlugin.html#adb20bb211215b1a7eaca912026bf4be2">description</a></td></tr>
 <tr class="separator:adb20bb211215b1a7eaca912026bf4be2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd0fe3c6c626568de1a4214024d33125"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPlugin.html#a8cb2a097f9abb07274f8d58490069062">loadPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPlugin.html#abd0fe3c6c626568de1a4214024d33125">load</a></td></tr>
+<tr class="memitem:abd0fe3c6c626568de1a4214024d33125"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPlugin.html#a62ec481defeb5018a3dd4f1b90e15bc1">loadPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPlugin.html#abd0fe3c6c626568de1a4214024d33125">load</a></td></tr>
 <tr class="separator:abd0fe3c6c626568de1a4214024d33125"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="plugin_8h_source.html#l00005">5</a> of file <a class="el" href="plugin_8h_source.html">plugin.h</a>.</p>
+<p>Definition at line <a class="el" href="plugin_8h_source.html#l00009">9</a> of file <a class="el" href="plugin_8h_source.html">plugin.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a class="anchor" id="a8cb2a097f9abb07274f8d58490069062"></a>
+<a class="anchor" id="a62ec481defeb5018a3dd4f1b90e15bc1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* Plugin::loadPtr) (std::string filePath, <a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> *file)</td>
+          <td class="memname">typedef void(* Plugin::loadPtr) (std::string assetName, std::string filePath, <a class="el" href="classArray.html">Array</a>&lt; <a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> * &gt; *<a class="el" href="load_8cpp.html#ae96a324f408f9188407fe4c78c445ecc">files</a>)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="plugin_8h_source.html#l00007">7</a> of file <a class="el" href="plugin_8h_source.html">plugin.h</a>.</p>
+<p>Definition at line <a class="el" href="plugin_8h_source.html#l00011">11</a> of file <a class="el" href="plugin_8h_source.html">plugin.h</a>.</p>
 
 </div>
 </div>
@@ -156,7 +156,7 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structPlugin.html#a8cb2a097f9abb07274f8d58490069062">loadPtr</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="structPlugin.html#a62ec481defeb5018a3dd4f1b90e15bc1">loadPtr</a>&#160;</td>
           <td class="paramname"><em>load</em>&#160;</td>
         </tr>
         <tr>
@@ -172,7 +172,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="plugin_8h_source.html#l00014">14</a> of file <a class="el" href="plugin_8h_source.html">plugin.h</a>.</p>
+<p>Definition at line <a class="el" href="plugin_8h_source.html#l00018">18</a> of file <a class="el" href="plugin_8h_source.html">plugin.h</a>.</p>
 
 </div>
 </div>
@@ -187,7 +187,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="plugin_8h_source.html#l00010">10</a> of file <a class="el" href="plugin_8h_source.html">plugin.h</a>.</p>
+<p>Definition at line <a class="el" href="plugin_8h_source.html#l00014">14</a> of file <a class="el" href="plugin_8h_source.html">plugin.h</a>.</p>
 
 </div>
 </div>
@@ -196,12 +196,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structPlugin.html#a8cb2a097f9abb07274f8d58490069062">loadPtr</a> Plugin::load</td>
+          <td class="memname"><a class="el" href="structPlugin.html#a62ec481defeb5018a3dd4f1b90e15bc1">loadPtr</a> Plugin::load</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="plugin_8h_source.html#l00011">11</a> of file <a class="el" href="plugin_8h_source.html">plugin.h</a>.</p>
+<p>Definition at line <a class="el" href="plugin_8h_source.html#l00015">15</a> of file <a class="el" href="plugin_8h_source.html">plugin.h</a>.</p>
 
 </div>
 </div>
@@ -215,7 +215,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="plugin_8h_source.html#l00009">9</a> of file <a class="el" href="plugin_8h_source.html">plugin.h</a>.</p>
+<p>Definition at line <a class="el" href="plugin_8h_source.html#l00013">13</a> of file <a class="el" href="plugin_8h_source.html">plugin.h</a>.</p>
 
 </div>
 </div>

@@ -105,24 +105,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;zlib.h&gt;</code><br />
 <code>#include &quot;jsoncons/json.hpp&quot;</code><br />
 <code>#include &quot;tinyobjloader/tiny_obj_loader.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="flare_8h_source.html">flare/flare.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="extra_8h_source.html">extra/extra.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="flux_8h_source.html">flux/flux.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="plugin__obj_8h_source.html">plugin_obj.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="plugin_8h_source.html">plugin.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="extra_8h_source.html">extra/extra.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="flux_8h_source.html">flux/flux.h</a>&quot;</code><br />
 </div>
 <p><a href="plugin__obj_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac297617a02f3e71a45a8e4108f69f725"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="plugin__obj_8cpp.html#ac297617a02f3e71a45a8e4108f69f725">load</a> (std::string filePath, <a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> *file)</td></tr>
-<tr class="separator:ac297617a02f3e71a45a8e4108f69f725"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0ac44a2aed204352a6e9903fc2bb5e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="plugin__obj_8cpp.html#af0ac44a2aed204352a6e9903fc2bb5e3">load</a> (std::string assetName, std::string filePath, <a class="el" href="classArray.html">Array</a>&lt; <a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> * &gt; *<a class="el" href="load_8cpp.html#ae96a324f408f9188407fe4c78c445ecc">files</a>)</td></tr>
+<tr class="separator:af0ac44a2aed204352a6e9903fc2bb5e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9747acb6489087733c8654ff01c5ba7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPlugin.html">Plugin</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="plugin__obj_8cpp.html#a9747acb6489087733c8654ff01c5ba7d">getPlugin</a> ()</td></tr>
 <tr class="separator:a9747acb6489087733c8654ff01c5ba7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:aec15837332c0b6b3b1321d4f51c67b81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPlugin.html">Plugin</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="plugin__obj_8cpp.html#aec15837332c0b6b3b1321d4f51c67b81">plugin</a> (&quot;OBJ <a class="el" href="structPlugin.html">Plugin</a>&quot;,&quot;Allows fluxuate to pack obj <a class="el" href="load_8cpp.html#a6833913523fcd18a38c6fd23e9b6096a">files</a> in a format compatible with Flare&quot;, load)</td></tr>
+<tr class="memitem:aec15837332c0b6b3b1321d4f51c67b81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPlugin.html">Plugin</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="plugin__obj_8cpp.html#aec15837332c0b6b3b1321d4f51c67b81">plugin</a> (&quot;OBJ <a class="el" href="structPlugin.html">Plugin</a>&quot;,&quot;Allows fluxuate to pack obj <a class="el" href="load_8cpp.html#ae96a324f408f9188407fe4c78c445ecc">files</a> in a format compatible with Flare&quot;, load)</td></tr>
 <tr class="separator:aec15837332c0b6b3b1321d4f51c67b81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -139,11 +138,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="plugin__obj_8cpp_source.html#l00219">219</a> of file <a class="el" href="plugin__obj_8cpp_source.html">plugin_obj.cpp</a>.</p>
+<p>Definition at line <a class="el" href="plugin__obj_8cpp_source.html#l00291">291</a> of file <a class="el" href="plugin__obj_8cpp_source.html">plugin_obj.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac297617a02f3e71a45a8e4108f69f725"></a>
+<a class="anchor" id="af0ac44a2aed204352a6e9903fc2bb5e3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -151,13 +150,19 @@ Variables</h2></td></tr>
           <td class="memname">void load </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>assetName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>filePath</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> *&#160;</td>
-          <td class="paramname"><em>file</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="classArray.html">Array</a>&lt; <a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> * &gt; *&#160;</td>
+          <td class="paramname"><em>files</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -166,9 +171,10 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000036">Todo:</a></b></dt><dd>Should this really be stored in extra </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000050">Todo:</a></b></dt><dd>Should this really be stored in extra </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000051">Todo:</a></b></dt><dd>Why am i copying this? </dd></dl>
 
-<p>Definition at line <a class="el" href="plugin__obj_8cpp_source.html#l00089">89</a> of file <a class="el" href="plugin__obj_8cpp_source.html">plugin_obj.cpp</a>.</p>
+<p>Definition at line <a class="el" href="plugin__obj_8cpp_source.html#l00113">113</a> of file <a class="el" href="plugin__obj_8cpp_source.html">plugin_obj.cpp</a>.</p>
 
 </div>
 </div>
@@ -178,7 +184,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structPlugin.html">Plugin</a> plugin(&quot;OBJ <a class="el" href="structPlugin.html">Plugin</a>&quot;,&quot;Allows fluxuate to pack obj <a class="el" href="load_8cpp.html#a6833913523fcd18a38c6fd23e9b6096a">files</a> in a format compatible with Flare&quot;, load)</td>
+          <td class="memname"><a class="el" href="structPlugin.html">Plugin</a> plugin(&quot;OBJ <a class="el" href="structPlugin.html">Plugin</a>&quot;,&quot;Allows fluxuate to pack obj <a class="el" href="load_8cpp.html#ae96a324f408f9188407fe4c78c445ecc">files</a> in a format compatible with Flare&quot;, load)</td>
         </tr>
       </table>
 </div><div class="memdoc">

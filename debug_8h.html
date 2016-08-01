@@ -88,6 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">debug.h File Reference</div>  </div>
@@ -105,11 +106,67 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:namespaceflare_1_1debug"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug functions. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aaacb7b108e17d4c787be8b8e57a70edd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="debug_8h.html#aaacb7b108e17d4c787be8b8e57a70edd">DEBUG_TIME_INIT</a>&#160;&#160;&#160;<a class="el" href="structflare_1_1Timer.html">flare::Timer</a> timer(&quot;empty&quot;, 0);</td></tr>
+<tr class="separator:aaacb7b108e17d4c787be8b8e57a70edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3995e611a078f586f8aa76d7e94c296"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="debug_8h.html#ae3995e611a078f586f8aa76d7e94c296">DEBUG_TIME</a>(FUNC,  DESC)&#160;&#160;&#160;timer = Timer(DESC, glfwGetTime()); FUNC; timer.time = glfwGetTime() - timer.time; getState()-&gt;timers.push_back(timer)</td></tr>
+<tr class="separator:ae3995e611a078f586f8aa76d7e94c296"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a2e6bada66517cf4ed2bdb49693683cd8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1debug.html#a2e6bada66517cf4ed2bdb49693683cd8">flare::debug::entityTree</a> ()</td></tr>
 <tr class="separator:a2e6bada66517cf4ed2bdb49693683cd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d4b77cdb2ceebf02f52573065f0e8e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1debug.html#a0d4b77cdb2ceebf02f52573065f0e8e7">flare::debug::general</a> ()</td></tr>
+<tr class="separator:a0d4b77cdb2ceebf02f52573065f0e8e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace8b334c20ce9b076f0f23180230d708"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1debug.html#ace8b334c20ce9b076f0f23180230d708">flare::debug::timers</a> ()</td></tr>
+<tr class="separator:ace8b334c20ce9b076f0f23180230d708"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b6a2ac24f78cba405a7ae1e23dbf88f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1debug.html#a2b6a2ac24f78cba405a7ae1e23dbf88f">flare::debug::debug</a> ()</td></tr>
+<tr class="separator:a2b6a2ac24f78cba405a7ae1e23dbf88f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ae3995e611a078f586f8aa76d7e94c296"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEBUG_TIME</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">FUNC, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">DESC&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;timer = Timer(DESC, glfwGetTime()); FUNC; timer.time = glfwGetTime() - timer.time; getState()-&gt;timers.push_back(timer)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="debug_8h_source.html#l00021">21</a> of file <a class="el" href="debug_8h_source.html">debug.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaacb7b108e17d4c787be8b8e57a70edd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEBUG_TIME_INIT&#160;&#160;&#160;<a class="el" href="structflare_1_1Timer.html">flare::Timer</a> timer(&quot;empty&quot;, 0);</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="debug_8h_source.html#l00020">20</a> of file <a class="el" href="debug_8h_source.html">debug.h</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['camera',['Camera',['../structflare_1_1component_1_1Camera.html',1,'flare::component']]],
-  ['camera',['Camera',['../structflare_1_1render_1_1Camera.html',1,'flare::render']]],
-  ['component',['Component',['../structfuse_1_1Component.html',1,'fuse']]]
+  ['basic',['Basic',['../structflare_1_1render_1_1passes_1_1Basic.html',1,'flare::render::passes']]]
 ];

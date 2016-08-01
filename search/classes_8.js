@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['plugin',['Plugin',['../structPlugin.html',1,'']]],
-  ['position',['Position',['../structflare_1_1component_1_1Position.html',1,'flare::component']]]
+  ['light',['Light',['../structflare_1_1State_1_1Render_1_1Light.html',1,'flare::State::Render']]],
+  ['lighting',['Lighting',['../structflare_1_1render_1_1passes_1_1Lighting.html',1,'flare::render::passes']]],
+  ['linearallocator',['LinearAllocator',['../classLinearAllocator.html',1,'']]]
 ];

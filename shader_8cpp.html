@@ -86,13 +86,78 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">shader.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="flare_8h_source.html">flare/flare.h</a>&quot;</code><br />
+<code>#include &lt;sstream&gt;</code><br />
 </div>
 <p><a href="shader_8cpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aeac26e44bba947528b99b640e2d80d0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shader_8cpp.html#aeac26e44bba947528b99b640e2d80d0d">printError</a> (char *error, const char *source, std::string name)</td></tr>
+<tr class="separator:aeac26e44bba947528b99b640e2d80d0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a09baf20505ac37b9e8179439c69b16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shader_8cpp.html#a6a09baf20505ac37b9e8179439c69b16">deleteShader</a> (<a class="el" href="structflare_1_1asset_1_1Shader.html">flare::asset::Shader</a> *shader)</td></tr>
+<tr class="separator:a6a09baf20505ac37b9e8179439c69b16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a6a09baf20505ac37b9e8179439c69b16"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void deleteShader </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structflare_1_1asset_1_1Shader.html">flare::asset::Shader</a> *&#160;</td>
+          <td class="paramname"><em>shader</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="shader_8cpp_source.html#l00041">41</a> of file <a class="el" href="shader_8cpp_source.html">shader.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aeac26e44bba947528b99b640e2d80d0d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void printError </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>error</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Figure out a way to map this to the special glsl files, an idea is to add a shader compiler to the glsl plugin and map it back to the original file </dd></dl>
+
+<p>Definition at line <a class="el" href="shader_8cpp_source.html#l00006">6</a> of file <a class="el" href="shader_8cpp_source.html">shader.cpp</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

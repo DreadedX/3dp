@@ -87,21 +87,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">debug.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="flare_8h_source.html">flare/flare.h</a>&quot;</code><br />
+<code>#include &lt;map&gt;</code><br />
 </div>
 <p><a href="debug_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPlotVarData.html">PlotVarData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ad600103c49d90fc546804265409e7d33"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="load_8cpp.html#a0a56be5536c8c2badbb74abbd0346169">std::map</a>&lt; ImGuiID, <a class="el" href="structPlotVarData.html">PlotVarData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="debug_8cpp.html#ad600103c49d90fc546804265409e7d33">PlotVarsMap</a></td></tr>
+<tr class="separator:ad600103c49d90fc546804265409e7d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ae52c8389bf2931a97086f90b93a1827f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="debug_8cpp.html#ae52c8389bf2931a97086f90b93a1827f">entityTreeNode</a> (<a class="el" href="structfuse_1_1Entity.html">fuse::Entity</a> *entity, bool showChildren=false)</td></tr>
 <tr class="memdesc:ae52c8389bf2931a97086f90b93a1827f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw Entity-Component node.  <a href="#ae52c8389bf2931a97086f90b93a1827f">More...</a><br /></td></tr>
 <tr class="separator:ae52c8389bf2931a97086f90b93a1827f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a265d96451c1737339ae8b8251df41e2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="debug_8cpp.html#a265d96451c1737339ae8b8251df41e2f">PlotVar</a> (const char *label, float value, float scale_min=FLT_MAX, float scale_max=FLT_MAX, size_t buffer_size=1200)</td></tr>
+<tr class="separator:a265d96451c1737339ae8b8251df41e2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa007376ac104e2ab4cce88c643b43f77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="debug_8cpp.html#aa007376ac104e2ab4cce88c643b43f77">PlotVarFlushOldEntries</a> ()</td></tr>
+<tr class="separator:aa007376ac104e2ab4cce88c643b43f77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ad600103c49d90fc546804265409e7d33"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="load_8cpp.html#a0a56be5536c8c2badbb74abbd0346169">std::map</a>&lt;ImGuiID, <a class="el" href="structPlotVarData.html">PlotVarData</a>&gt; <a class="el" href="debug_8cpp.html#ad600103c49d90fc546804265409e7d33">PlotVarsMap</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="debug_8cpp_source.html#l00072">72</a> of file <a class="el" href="debug_8cpp_source.html">debug.cpp</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ae52c8389bf2931a97086f90b93a1827f"></a>
 <div class="memitem">
@@ -128,9 +160,72 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Draw Entity-Component node. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>Figure out if showChildren is neccesary </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>Figure out if showChildren is neccesary </dd></dl>
 
 <p>Definition at line <a class="el" href="debug_8cpp_source.html#l00006">6</a> of file <a class="el" href="debug_8cpp_source.html">debug.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a265d96451c1737339ae8b8251df41e2f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PlotVar </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>label</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>scale_min</em> = <code>FLT_MAX</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>scale_max</em> = <code>FLT_MAX</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>buffer_size</em> = <code>1200</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="debug_8cpp_source.html#l00077">77</a> of file <a class="el" href="debug_8cpp_source.html">debug.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa007376ac104e2ab4cce88c643b43f77"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PlotVarFlushOldEntries </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="debug_8cpp_source.html#l00118">118</a> of file <a class="el" href="debug_8cpp_source.html">debug.cpp</a>.</p>
 
 </div>
 </div>

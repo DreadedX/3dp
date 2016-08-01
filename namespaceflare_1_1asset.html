@@ -110,9 +110,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structflare_1_1asset_1_1Asset.html">Asset</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base used for all assets.  <a href="structflare_1_1asset_1_1Asset.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structflare_1_1asset_1_1Material.html">Material</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structflare_1_1asset_1_1Asset.html" title="Base used for all assets. ">Asset</a> struct containing material data.  <a href="structflare_1_1asset_1_1Material.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structflare_1_1asset_1_1Model.html">Model</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structflare_1_1asset_1_1Asset.html" title="Base used for all assets. ">Asset</a> struct containing 3d model info.  <a href="structflare_1_1asset_1_1Model.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,6 +122,8 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a4402b8e41a21367b6967a1aab4a429dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1asset.html#a4402b8e41a21367b6967a1aab4a429dd">init</a> (<a class="el" href="classAllocator.html">Allocator</a> *_allocator)</td></tr>
+<tr class="separator:a4402b8e41a21367b6967a1aab4a429dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a664673ff4775f3873efc4de546b6c227"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a664673ff4775f3873efc4de546b6c227"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1asset.html#a664673ff4775f3873efc4de546b6c227">load</a> (std::string name)</td></tr>
 <tr class="memdesc:a664673ff4775f3873efc4de546b6c227"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an asset.  <a href="#a664673ff4775f3873efc4de546b6c227">More...</a><br /></td></tr>
@@ -138,12 +137,14 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ab214908ebe098d00b79855592135daff"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structflare_1_1asset_1_1Asset.html">Asset</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1asset.html#ab214908ebe098d00b79855592135daff">assetList</a></td></tr>
-<tr class="memdesc:ab214908ebe098d00b79855592135daff"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all loaded assets.  <a href="#ab214908ebe098d00b79855592135daff">More...</a><br /></td></tr>
-<tr class="separator:ab214908ebe098d00b79855592135daff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad94069502accd87625a62de46f6cc143"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classArray.html">Array</a>&lt; <a class="el" href="structflare_1_1asset_1_1Asset.html">Asset</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1asset.html#ad94069502accd87625a62de46f6cc143">assetList</a></td></tr>
+<tr class="memdesc:ad94069502accd87625a62de46f6cc143"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all loaded assets.  <a href="#ad94069502accd87625a62de46f6cc143">More...</a><br /></td></tr>
+<tr class="separator:ad94069502accd87625a62de46f6cc143"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af54b4b588986a0be0393e1603c34b96c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="load_8cpp.html#a0a56be5536c8c2badbb74abbd0346169">std::map</a>&lt; std::string, <a class="el" href="structflare_1_1asset_1_1Asset.html">Asset</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1asset.html#af54b4b588986a0be0393e1603c34b96c">assetMap</a></td></tr>
 <tr class="memdesc:af54b4b588986a0be0393e1603c34b96c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hash map of all loaded asset, to make sure we are not loading assets that are already loaded.  <a href="#af54b4b588986a0be0393e1603c34b96c">More...</a><br /></td></tr>
 <tr class="separator:af54b4b588986a0be0393e1603c34b96c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada35459153ef7de2d6b69e734836caac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classAllocator.html">Allocator</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1asset.html#ada35459153ef7de2d6b69e734836caac">asset_allocator</a></td></tr>
+<tr class="separator:ada35459153ef7de2d6b69e734836caac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="structflare_1_1asset_1_1Asset.html" title="Base used for all assets. ">Asset</a> handeling. </p>
@@ -162,9 +163,27 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Close all loaded assets. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000034">Todo:</a></b></dt><dd>Make sure that all assets have proper clean-up </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000030">Todo:</a></b></dt><dd>Make sure that all assets have proper clean-up </dd></dl>
 
-<p>Definition at line <a class="el" href="assets_8cpp_source.html#l00017">17</a> of file <a class="el" href="assets_8cpp_source.html">assets.cpp</a>.</p>
+<p>Definition at line <a class="el" href="assets_8cpp_source.html#l00023">23</a> of file <a class="el" href="assets_8cpp_source.html">assets.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4402b8e41a21367b6967a1aab4a429dd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void flare::asset::init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classAllocator.html">Allocator</a> *&#160;</td>
+          <td class="paramname"><em>_allocator</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="assets_8cpp_source.html#l00007">7</a> of file <a class="el" href="assets_8cpp_source.html">assets.cpp</a>.</p>
 
 </div>
 </div>
@@ -198,7 +217,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="assets_8h_source.html#l00033">33</a> of file <a class="el" href="assets_8h_source.html">assets.h</a>.</p>
+<p>Definition at line <a class="el" href="assets_8h_source.html#l00037">37</a> of file <a class="el" href="assets_8h_source.html">assets.h</a>.</p>
 
 </div>
 </div>
@@ -217,23 +236,37 @@ template&lt;typename T &gt; </div>
 
 <p>Reload all assets. </p>
 
-<p>Definition at line <a class="el" href="assets_8cpp_source.html#l00006">6</a> of file <a class="el" href="assets_8cpp_source.html">assets.cpp</a>.</p>
+<p>Definition at line <a class="el" href="assets_8cpp_source.html#l00012">12</a> of file <a class="el" href="assets_8cpp_source.html">assets.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="ab214908ebe098d00b79855592135daff"></a>
+<a class="anchor" id="ada35459153ef7de2d6b69e734836caac"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt; <a class="el" href="structflare_1_1asset_1_1Asset.html">flare::asset::Asset</a> * &gt; flare::asset::assetList</td>
+          <td class="memname"><a class="el" href="classAllocator.html">Allocator</a> * flare::asset::asset_allocator</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="assets_8cpp_source.html#l00005">5</a> of file <a class="el" href="assets_8cpp_source.html">assets.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad94069502accd87625a62de46f6cc143"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classArray.html">Array</a>&lt; <a class="el" href="structflare_1_1asset_1_1Asset.html">flare::asset::Asset</a> * &gt; flare::asset::assetList</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>List of all loaded assets. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000032">Todo:</a></b></dt><dd>This needs to be private, but needs to be accesible by <a class="el" href="namespaceflare_1_1asset.html#a664673ff4775f3873efc4de546b6c227" title="Load an asset. ">load&lt;T&gt;()</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000028">Todo:</a></b></dt><dd>This needs to be private, but needs to be accesible by <a class="el" href="namespaceflare_1_1asset.html#a664673ff4775f3873efc4de546b6c227" title="Load an asset. ">load&lt;T&gt;()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="assets_8cpp_source.html#l00003">3</a> of file <a class="el" href="assets_8cpp_source.html">assets.cpp</a>.</p>
 
@@ -250,7 +283,7 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Hash map of all loaded asset, to make sure we are not loading assets that are already loaded. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000033">Todo:</a></b></dt><dd>This needs to be private, but needs to be accesible by <a class="el" href="namespaceflare_1_1asset.html#a664673ff4775f3873efc4de546b6c227" title="Load an asset. ">load&lt;T&gt;()</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000029">Todo:</a></b></dt><dd>This needs to be private, but needs to be accesible by <a class="el" href="namespaceflare_1_1asset.html#a664673ff4775f3873efc4de546b6c227" title="Load an asset. ">load&lt;T&gt;()</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="assets_8cpp_source.html#l00004">4</a> of file <a class="el" href="assets_8cpp_source.html">assets.cpp</a>.</p>
 

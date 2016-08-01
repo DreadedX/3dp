@@ -97,7 +97,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="shader_8h_source.html">assets/shader.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="texture_8h_source.html">assets/texture.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="material_8h_source.html">assets/material.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="model_8h_source.html">assets/model.h</a>&quot;</code><br />
 </div>
 <p><a href="assets_8h_source.html">Go to the source code of this file.</a></p>
@@ -119,6 +118,8 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a4402b8e41a21367b6967a1aab4a429dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1asset.html#a4402b8e41a21367b6967a1aab4a429dd">flare::asset::init</a> (<a class="el" href="classAllocator.html">Allocator</a> *_allocator)</td></tr>
+<tr class="separator:a4402b8e41a21367b6967a1aab4a429dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a664673ff4775f3873efc4de546b6c227"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a664673ff4775f3873efc4de546b6c227"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1asset.html#a664673ff4775f3873efc4de546b6c227">flare::asset::load</a> (std::string name)</td></tr>
 <tr class="memdesc:a664673ff4775f3873efc4de546b6c227"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an asset.  <a href="namespaceflare_1_1asset.html#a664673ff4775f3873efc4de546b6c227">More...</a><br /></td></tr>
@@ -132,12 +133,14 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ab214908ebe098d00b79855592135daff"><td class="memItemLeft" align="right" valign="top">std::vector&lt; Asset * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1asset.html#ab214908ebe098d00b79855592135daff">flare::asset::assetList</a></td></tr>
-<tr class="memdesc:ab214908ebe098d00b79855592135daff"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all loaded assets.  <a href="namespaceflare_1_1asset.html#ab214908ebe098d00b79855592135daff">More...</a><br /></td></tr>
-<tr class="separator:ab214908ebe098d00b79855592135daff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad94069502accd87625a62de46f6cc143"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classArray.html">Array</a>&lt; Asset * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1asset.html#ad94069502accd87625a62de46f6cc143">flare::asset::assetList</a></td></tr>
+<tr class="memdesc:ad94069502accd87625a62de46f6cc143"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all loaded assets.  <a href="namespaceflare_1_1asset.html#ad94069502accd87625a62de46f6cc143">More...</a><br /></td></tr>
+<tr class="separator:ad94069502accd87625a62de46f6cc143"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af54b4b588986a0be0393e1603c34b96c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="load_8cpp.html#a0a56be5536c8c2badbb74abbd0346169">std::map</a>&lt; std::string, Asset * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1asset.html#af54b4b588986a0be0393e1603c34b96c">flare::asset::assetMap</a></td></tr>
 <tr class="memdesc:af54b4b588986a0be0393e1603c34b96c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hash map of all loaded asset, to make sure we are not loading assets that are already loaded.  <a href="namespaceflare_1_1asset.html#af54b4b588986a0be0393e1603c34b96c">More...</a><br /></td></tr>
 <tr class="separator:af54b4b588986a0be0393e1603c34b96c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada35459153ef7de2d6b69e734836caac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classAllocator.html">Allocator</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceflare_1_1asset.html#ada35459153ef7de2d6b69e734836caac">flare::asset::asset_allocator</a></td></tr>
+<tr class="separator:ada35459153ef7de2d6b69e734836caac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

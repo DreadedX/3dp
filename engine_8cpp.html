@@ -87,6 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">engine.cpp File Reference</div>  </div>
@@ -98,46 +99,94 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <p><a href="engine_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a2fb3b0349c5cc427b34935920a7502c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#a2fb3b0349c5cc427b34935920a7502c6">errorCallbackGLFW</a> (int error, const char *description)</td></tr>
+<tr class="separator:a2fb3b0349c5cc427b34935920a7502c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a80de27bd7dc4e2b2ad3d5895b97a70f0"><td class="memItemLeft" align="right" valign="top">GLFWwindow *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#a80de27bd7dc4e2b2ad3d5895b97a70f0">window</a> = nullptr</td></tr>
-<tr class="memdesc:a80de27bd7dc4e2b2ad3d5895b97a70f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the GLFW window.  <a href="#a80de27bd7dc4e2b2ad3d5895b97a70f0">More...</a><br /></td></tr>
-<tr class="separator:a80de27bd7dc4e2b2ad3d5895b97a70f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbae857455600e698c9974bc8d56aaed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structflare_1_1Settings.html">flare::Settings</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#adbae857455600e698c9974bc8d56aaed">settings</a> = new <a class="el" href="structflare_1_1Settings.html">flare::Settings</a>()</td></tr>
-<tr class="memdesc:adbae857455600e698c9974bc8d56aaed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer the settings that are currently used by the engine.  <a href="#adbae857455600e698c9974bc8d56aaed">More...</a><br /></td></tr>
-<tr class="separator:adbae857455600e698c9974bc8d56aaed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a193e46e7892c5b8074d4ea382bf638c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structflare_1_1State.html">flare::State</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#a193e46e7892c5b8074d4ea382bf638c4">state</a> = nullptr</td></tr>
+<tr class="memdesc:a193e46e7892c5b8074d4ea382bf638c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer the settings that are currently used by the engine.  <a href="#a193e46e7892c5b8074d4ea382bf638c4">More...</a><br /></td></tr>
+<tr class="separator:a193e46e7892c5b8074d4ea382bf638c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a571812e4517e33d648876de09aa72be0"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#a571812e4517e33d648876de09aa72be0">RESERVED_MEMORY</a> = 1000l * 1000l * 200l</td></tr>
+<tr class="separator:a571812e4517e33d648876de09aa72be0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c627fec2e9f0fc4a64375c7f8670fd2"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="engine_8cpp.html#a2c627fec2e9f0fc4a64375c7f8670fd2">arenaStart</a></td></tr>
+<tr class="separator:a2c627fec2e9f0fc4a64375c7f8670fd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="adbae857455600e698c9974bc8d56aaed"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a2fb3b0349c5cc427b34935920a7502c6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structflare_1_1Settings.html">flare::Settings</a>* settings = new <a class="el" href="structflare_1_1Settings.html">flare::Settings</a>()</td>
+          <td class="memname">void errorCallbackGLFW </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>error</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>description</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>This should be moved to a seperate file </dd></dl>
+
+<p>Definition at line <a class="el" href="engine_8cpp_source.html#l00014">14</a> of file <a class="el" href="engine_8cpp_source.html">engine.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="a2c627fec2e9f0fc4a64375c7f8670fd2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* arenaStart</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="engine_8cpp_source.html#l00011">11</a> of file <a class="el" href="engine_8cpp_source.html">engine.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a571812e4517e33d648876de09aa72be0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const size_t RESERVED_MEMORY = 1000l * 1000l * 200l</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="engine_8cpp_source.html#l00009">9</a> of file <a class="el" href="engine_8cpp_source.html">engine.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a193e46e7892c5b8074d4ea382bf638c4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structflare_1_1State.html">flare::State</a>* state = nullptr</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Pointer the settings that are currently used by the engine. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>Add a way to set this externally </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd>Add a way to set this externally </dd></dl>
 
-<p>Definition at line <a class="el" href="engine_8cpp_source.html#l00010">10</a> of file <a class="el" href="engine_8cpp_source.html">engine.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a80de27bd7dc4e2b2ad3d5895b97a70f0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">GLFWwindow* window = nullptr</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Pointer to the GLFW window. </p>
-
-<p>Definition at line <a class="el" href="engine_8cpp_source.html#l00006">6</a> of file <a class="el" href="engine_8cpp_source.html">engine.cpp</a>.</p>
+<p>Definition at line <a class="el" href="engine_8cpp_source.html#l00007">7</a> of file <a class="el" href="engine_8cpp_source.html">engine.cpp</a>.</p>
 
 </div>
 </div>

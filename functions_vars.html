@@ -74,6 +74,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions_func.html"><span>Functions</span></a></li>
       <li class="current"><a href="functions_vars.html"><span>Variables</span></a></li>
       <li><a href="functions_type.html"><span>Typedefs</span></a></li>
+      <li><a href="functions_enum.html"><span>Enumerations</span></a></li>
       <li><a href="functions_eval.html"><span>Enumerator</span></a></li>
     </ul>
   </div>
@@ -92,13 +93,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_m"><span>m</span></a></li>
       <li><a href="#index_n"><span>n</span></a></li>
       <li><a href="#index_p"><span>p</span></a></li>
+      <li><a href="#index_q"><span>q</span></a></li>
       <li><a href="#index_r"><span>r</span></a></li>
       <li><a href="#index_s"><span>s</span></a></li>
       <li><a href="#index_t"><span>t</span></a></li>
       <li><a href="#index_u"><span>u</span></a></li>
       <li><a href="#index_v"><span>v</span></a></li>
-      <li><a href="#index_w"><span>w</span></a></li>
-      <li class="current"><a href="#index_y"><span>y</span></a></li>
+      <li class="current"><a href="#index_w"><span>w</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -120,8 +121,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 &#160;
 
 <h3><a class="anchor" id="index__"></a>- _ -</h3><ul>
-<li>_first
-: <a class="el" href="structflare_1_1input_1_1Mouse.html#a689d3f405c3caa606e661dd588ecd5fe">flare::input::Mouse</a>
+<li>_allocator
+: <a class="el" href="structfuse_1_1Entity.html#acfc454c5db11caf7247d49b6ff651de7">fuse::Entity</a>
+</li>
+<li>_num_allocations
+: <a class="el" href="classAllocator.html#adfef1442b8cce584c3a6b6497daacea4">Allocator</a>
+</li>
+<li>_size
+: <a class="el" href="classAllocator.html#aaaa155a45fd87de31798eaf0435667e8">Allocator</a>
+</li>
+<li>_start
+: <a class="el" href="classAllocator.html#a5b3a790d0bb64ec39f7c1af9fc9bb360">Allocator</a>
+</li>
+<li>_used_memory
+: <a class="el" href="classAllocator.html#a2d96e46d234ce85dc90871cdb2918074">Allocator</a>
 </li>
 </ul>
 
@@ -132,7 +145,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>ambient
 : <a class="el" href="structflare_1_1asset_1_1Shader.html#a2a8bf833a3984045d2ff21173aea0984">flare::asset::Shader</a>
-, <a class="el" href="structflare_1_1render_1_1Light.html#a1cf139d1faa125483164f540b420ca3e">flare::render::Light</a>
+, <a class="el" href="structflare_1_1State_1_1Render_1_1Light.html#a84ba0b074512a7e7ca203174b3da73ff">flare::State::Render::Light</a>
+</li>
+<li>asset
+: <a class="el" href="structflare_1_1State_1_1ProxyAllocators.html#abdbbc6c0b08f7c00990e77f98a52589d">flare::State::ProxyAllocators</a>
 </li>
 </ul>
 
@@ -146,13 +162,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
 <li>camera
-: <a class="el" href="structflare_1_1render_1_1State.html#adb8756da458f1a6f3eec91bf6aa08e39">flare::render::State</a>
+: <a class="el" href="structflare_1_1State_1_1Render.html#afd62262b0103f19b0f38b3320c8867f4">flare::State::Render</a>
 </li>
 <li>child
 : <a class="el" href="structfuse_1_1Entity.html#ace244bd3c988b125b1514a65513d1ac6">fuse::Entity</a>
 </li>
 <li>children
-: <a class="el" href="structfuse_1_1Entity.html#a0abce41b43cd997299944c5758cb7641">fuse::Entity</a>
+: <a class="el" href="structfuse_1_1Entity.html#a8a8fca361b53cbfcd09dd7cbb7e05370">fuse::Entity</a>
 </li>
 <li>componentArray
 : <a class="el" href="structfuse_1_1Entity.html#a5be2a24f3ba22267574da6ed276a82ba">fuse::Entity</a>
@@ -161,7 +177,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="structfuse_1_1Entity.html#ac640eb16749fce76fac872447ef09d1e">fuse::Entity</a>
 </li>
 <li>components
-: <a class="el" href="structfuse_1_1Entity.html#ae3446f245fd95bc18919181aa9256c45">fuse::Entity</a>
+: <a class="el" href="structfuse_1_1Entity.html#a61cba3a0eff9db6ea35a76a89837e5a3">fuse::Entity</a>
 </li>
 <li>compressedDataSize
 : <a class="el" href="structflux_1_1FileBase.html#aa88eb9071aedfbaf370eb728d7dc01f3">flux::FileBase</a>
@@ -171,26 +187,43 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
 <li>data
-: <a class="el" href="structflux_1_1FileWrite.html#adfd464fe33e7d3edf0c186a4f60a7a40">flux::FileWrite</a>
+: <a class="el" href="structflux_1_1FileWrite.html#a0721705cf46adc5ccc2ace49b09f032a">flux::FileWrite</a>
+</li>
+<li>Data
+: <a class="el" href="structPlotVarData.html#a7fa2d2cf8f71d4b73164cb090cf680f6">PlotVarData</a>
+</li>
+<li>DataInsertIdx
+: <a class="el" href="structPlotVarData.html#a490caa010d128b2d3ec03e237c7afde6">PlotVarData</a>
 </li>
 <li>dataLocation
-: <a class="el" href="structflux_1_1FileBase.html#a1ccaabbf59ef4474f1d3608487831698">flux::FileBase</a>
+: <a class="el" href="structflux_1_1FileBase.html#a56703e7f06f9fb9ffc213b9035bda663">flux::FileBase</a>
 </li>
 <li>dataSize
 : <a class="el" href="structflux_1_1FileBase.html#a9eea7f84126a80ec99995cd53af7c176">flux::FileBase</a>
 </li>
 <li>deltaTime
-: <a class="el" href="structflare_1_1render_1_1State.html#acb9d2b466b2b46f8b2b312067ecad7ce">flare::render::State</a>
+: <a class="el" href="structflare_1_1State_1_1Render.html#acf4bc88dfac599383100f92b19ba348b">flare::State::Render</a>
+</li>
+<li>depthMVP
+: <a class="el" href="structflare_1_1asset_1_1Shader.html#a1f1e63eca2a1cdb0c8052b010b43c9c0">flare::asset::Shader</a>
+</li>
+<li>depthTexture
+: <a class="el" href="structflare_1_1render_1_1passes_1_1Geometry.html#abf00768fa427bd7d27df5619de042502">flare::render::passes::Geometry</a>
 </li>
 <li>description
 : <a class="el" href="structPlugin.html#adb20bb211215b1a7eaca912026bf4be2">Plugin</a>
 </li>
 <li>diffuse
-: <a class="el" href="structflare_1_1asset_1_1Material.html#a422500574868c99a2c1701ee07a174fd">flare::asset::Material</a>
-, <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#ac138a094c6f81afdafaf4d0418776e91">flare::asset::model::Mesh</a>
+: <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#ac138a094c6f81afdafaf4d0418776e91">flare::asset::model::Mesh</a>
 , <a class="el" href="structflare_1_1asset_1_1Shader.html#acfcc6ccd27a251160a9d9b5bacc20635">flare::asset::Shader</a>
-, <a class="el" href="structflare_1_1render_1_1Light.html#a22ec293038deb0862ee19faddad54ef0">flare::render::Light</a>
-, <a class="el" href="structflare_1_1render_1_1State.html#abcaefafcdb2d5c1a371a018c0bcbefe9">flare::render::State</a>
+, <a class="el" href="structflare_1_1State_1_1Render_1_1Light.html#a04e1304cbfb31256b6b055d53af3f6f9">flare::State::Render::Light</a>
+</li>
+<li>diffuseColor
+: <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#aa561e943edff273c98b5ba8f683d2df2">flare::asset::model::Mesh</a>
+, <a class="el" href="structobj_1_1model_1_1Mesh.html#afefc2078d86886f5c49e7090b501305e">obj::model::Mesh</a>
+</li>
+<li>diffuseMap
+: <a class="el" href="structobj_1_1model_1_1Mesh.html#a3a70c4127f2ca128c8b31c1186bab4e3">obj::model::Mesh</a>
 </li>
 <li>digestChars
 : <a class="el" href="classMD5.html#aaa5b5a40c4dfe26b48eb95b0f43ac7d6">MD5</a>
@@ -200,7 +233,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>direction
 : <a class="el" href="structflare_1_1asset_1_1Shader.html#ab3cae002d15076f734db43384ef2d8e8">flare::asset::Shader</a>
-, <a class="el" href="structflare_1_1render_1_1Light.html#a07dbe7baa00561e79270b7307c12dbb2">flare::render::Light</a>
+, <a class="el" href="structflare_1_1State_1_1Render_1_1Light.html#aa9eb93bdb3785e36551b19a6aaac0f23">flare::State::Render::Light</a>
 </li>
 </ul>
 
@@ -209,24 +242,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>ebo
 : <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#a2a328c24faf2fc4c59e953daf43d5cc8">flare::asset::model::Mesh</a>
 </li>
-<li>emission
-: <a class="el" href="structflare_1_1asset_1_1Material.html#a37f05e56d7a59e273d2ae795b4cf89e2">flare::asset::Material</a>
-</li>
-<li>extra
-: <a class="el" href="structflux_1_1FileBase.html#a742908e98fae674def649d5be54a7935">flux::FileBase</a>
-</li>
-<li>extraSize
-: <a class="el" href="structflux_1_1FileBase.html#a7943ff6fb8aafcf7c4ccb37d8e70f2d6">flux::FileBase</a>
+<li>entities
+: <a class="el" href="structflare_1_1State_1_1ProxyAllocators.html#a3f5c5a80e6e9f45aeb7f126c12dfa7d5">flare::State::ProxyAllocators</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_f"></a>- f -</h3><ul>
+<li>fbo
+: <a class="el" href="structflare_1_1render_1_1passes_1_1Pass.html#a222373de8f68af7f196a701a9de8250a">flare::render::passes::Pass</a>
+</li>
+<li>fboNoBlur
+: <a class="el" href="structflare_1_1render_1_1passes_1_1SSAO.html#a1a62296a2885217e74677e19cc2233cf">flare::render::passes::SSAO</a>
+</li>
 <li>fileHandle
 : <a class="el" href="structflux_1_1Flux.html#a4769ffeeda4428e60dbc022ce60ebcfe">flux::Flux</a>
 </li>
+<li>flux
+: <a class="el" href="structflare_1_1State_1_1ProxyAllocators.html#a6096bade496f17ae529eda062bd63490">flare::State::ProxyAllocators</a>
+</li>
 <li>front
-: <a class="el" href="structflare_1_1render_1_1Camera.html#ab05d4bc45ee22305eb1c0a1f65d0f0ff">flare::render::Camera</a>
+: <a class="el" href="structflare_1_1State_1_1Render_1_1Camera.html#a6dd71cac2e4ef4d125d1529008fece74">flare::State::Render::Camera</a>
+</li>
+<li>fuse
+: <a class="el" href="structflare_1_1State_1_1ProxyAllocators.html#a487f0205fc7140b87b2fdad31fdd3c4a">flare::State::ProxyAllocators</a>
 </li>
 </ul>
 
@@ -243,22 +282,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="structflare_1_1asset_1_1Shader.html#ad3240aee68f652df45cc8a1ac67ca4fe">flare::asset::Shader</a>
 , <a class="el" href="structflare_1_1asset_1_1Texture.html#abf7740b9536eb18d7c4aeb0a36ad5c0e">flare::asset::Texture</a>
 </li>
+<li>ID
+: <a class="el" href="structPlotVarData.html#a89242dfdbe774114705d8c4f6b2dc86e">PlotVarData</a>
+</li>
 <li>index
 : <a class="el" href="structflux_1_1Flux.html#a302fb68eedbec1524df7f527eecc5014">flux::Flux</a>
 </li>
 <li>indexSize
-: <a class="el" href="structflux_1_1Flux.html#a428bbf473a5e59eef622f44afb0254f9">flux::Flux</a>
+: <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#ad7ac5f681c65d33974c738ee5154aa68">flare::asset::model::Mesh</a>
+, <a class="el" href="structflux_1_1Flux.html#a428bbf473a5e59eef622f44afb0254f9">flux::Flux</a>
 </li>
 <li>indices
-: <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#a3b747785a77ed87e2ddc9c7820b7d7e6">flare::asset::model::Mesh</a>
+: <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#afc711cd1d99f4d62b4ffab56dabd324d">flare::asset::model::Mesh</a>
+, <a class="el" href="structobj_1_1model_1_1Mesh.html#aa3538fb48f3cde6d86816a7032377f04">obj::model::Mesh</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_l"></a>- l -</h3><ul>
+<li>LastFrame
+: <a class="el" href="structPlotVarData.html#aac1eac0bb27991130968c1870254a054">PlotVarData</a>
+</li>
 <li>light
 : <a class="el" href="structflare_1_1asset_1_1Shader.html#a8184315747fe73ab49c527c8a1122c89">flare::asset::Shader</a>
-, <a class="el" href="structflare_1_1render_1_1State.html#a6e07a36fdfce4c06d20a3e8e327889a8">flare::render::State</a>
+, <a class="el" href="structflare_1_1State_1_1Render.html#a35a7fdea7a4761ecc0be0b62dc51ae37">flare::State::Render</a>
 </li>
 <li>load
 : <a class="el" href="structPlugin.html#abd0fe3c6c626568de1a4214024d33125">Plugin</a>
@@ -270,19 +317,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
+<li>mainAllocator
+: <a class="el" href="structflare_1_1State.html#ae07a8ce2885db4cfc7ee6e85ed0c0282">flare::State</a>
+</li>
+<li>mainState
+: <a class="el" href="structflare_1_1State.html#a7305718c9a7ab3e3f2daf8269865f3b9">flare::State</a>
+</li>
+<li>manager
+: <a class="el" href="classflare_1_1GameState.html#ad99d15122212caf957e116ad5f5ad2d1">flare::GameState</a>
+, <a class="el" href="structfuse_1_1Entity.html#ad7a5438f1fdbebf67a470ab412d02269">fuse::Entity</a>
+</li>
 <li>material
 : <a class="el" href="structflare_1_1asset_1_1Shader.html#ae5a9104de23c3b7816278595e62a1332">flare::asset::Shader</a>
-, <a class="el" href="structflare_1_1render_1_1State.html#abf3d04b9214dba3f091da6eaf54eab36">flare::render::State</a>
 </li>
 <li>meshes
-: <a class="el" href="structflare_1_1asset_1_1Model.html#af1710e66557bdf62e0bddaf755dfa230">flare::asset::Model</a>
+: <a class="el" href="structflare_1_1asset_1_1Model.html#abbd569cb6013a45a548017cef758bd78">flare::asset::Model</a>
+, <a class="el" href="structobj_1_1Model.html#a02754f4bb0c2f3904561cc14645a4175">obj::Model</a>
 </li>
 <li>model
 : <a class="el" href="structflare_1_1asset_1_1Shader.html#a5cfa7102c22768c11597dd11d10a1808">flare::asset::Shader</a>
 , <a class="el" href="structflare_1_1component_1_1Object.html#ae26dd4284ac0b06cd279a29f39e90556">flare::component::Object</a>
+, <a class="el" href="structflare_1_1State_1_1ProxyAllocators.html#a7328352698ab86f0814114b50ebfa720">flare::State::ProxyAllocators</a>
 </li>
 <li>mouseSensitivity
-: <a class="el" href="structflare_1_1Settings.html#ab65f1b6496bea57fdd09e76fd4811853">flare::Settings</a>
+: <a class="el" href="structflare_1_1State_1_1Settings.html#a54c2fe1ac9db82a5ed17005b8309a22f">flare::State::Settings</a>
 </li>
 </ul>
 
@@ -290,7 +348,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h3><a class="anchor" id="index_n"></a>- n -</h3><ul>
 <li>name
 : <a class="el" href="structflare_1_1asset_1_1Asset.html#a48fa4c8577eca39f91b2f0da1c61c12e">flare::asset::Asset</a>
-, <a class="el" href="structflare_1_1Settings.html#a1afc03fef058677556c297723c71d5b4">flare::Settings</a>
+, <a class="el" href="structflare_1_1State_1_1Settings.html#abf83b50b68cb0e0d5e59029e5c9f642a">flare::State::Settings</a>
+, <a class="el" href="structflare_1_1Timer.html#a83492c14fe78d3f0bf7520a79161c1ee">flare::Timer</a>
 , <a class="el" href="structflux_1_1FileBase.html#a6c610be413dd04d03267d30c928b5345">flux::FileBase</a>
 , <a class="el" href="structflux_1_1Flux.html#a554630929e2ad552e84bf07947b492e9">flux::Flux</a>
 , <a class="el" href="structfuse_1_1Component.html#aca5a063468f967e9a591bd9a4da01666">fuse::Component</a>
@@ -298,12 +357,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="structPlugin.html#af662f146708f3eace14148395902c59e">Plugin</a>
 </li>
 <li>nameSize
-: <a class="el" href="structflux_1_1FileBase.html#aff8c19e95b2aa4e35326100216c81190">flux::FileBase</a>
+: <a class="el" href="structflux_1_1FileBase.html#adf6e906d69e1139007cd5a4d0f12b1b5">flux::FileBase</a>
 </li>
 <li>normal
-: <a class="el" href="structflare_1_1asset_1_1Material.html#a794c60d648485f36c6b8a54c75a0cd53">flare::asset::Material</a>
-, <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#a7f77a5c492d9cfdf7b7fa55f777318d9">flare::asset::model::Mesh</a>
-, <a class="el" href="structflare_1_1asset_1_1model_1_1Vertex.html#a6e503eb37e01254098a421e2c1b3d765">flare::asset::model::Vertex</a>
+: <a class="el" href="structflare_1_1asset_1_1model_1_1Vertex.html#a6e503eb37e01254098a421e2c1b3d765">flare::asset::model::Vertex</a>
 </li>
 </ul>
 
@@ -314,8 +371,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="structfuse_1_1Component.html#a5d02f1bbd34af6f77b9df05a3e6e8210">fuse::Component</a>
 , <a class="el" href="structfuse_1_1Entity.html#ab9877fb1e821998899557a39350bc9c6">fuse::Entity</a>
 </li>
-<li>pitch
-: <a class="el" href="structflare_1_1input_1_1Mouse.html#a52d8d21376296c5abf213d7ade8011e5">flare::input::Mouse</a>
+<li>pass
+: <a class="el" href="structflare_1_1State_1_1Render.html#a3e5f3c7e8a10269e5198f8bced5f812c">flare::State::Render</a>
 </li>
 <li>pixels
 : <a class="el" href="structpng_1_1Data.html#a742bf6a539730bf1b1b3b39873388fa1">png::Data</a>
@@ -325,22 +382,42 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="structflare_1_1component_1_1Object.html#ad495f247d9aa2c31a74e5c12c94da41d">flare::component::Object</a>
 , <a class="el" href="structflare_1_1component_1_1Position.html#ae05d81d226106dd6768c307ac6e89d76">flare::component::Position</a>
 , <a class="el" href="structflare_1_1input_1_1Mouse.html#ab8c9854cfd6a44bc40ecc8ace3a2331d">flare::input::Mouse</a>
-, <a class="el" href="structflare_1_1render_1_1Camera.html#a3c589324377a3cc2cafad03d2fcc9872">flare::render::Camera</a>
+, <a class="el" href="structflare_1_1State_1_1Render_1_1Camera.html#a346a33da8d7f8adb02bfc8f8f3010788">flare::State::Render::Camera</a>
+</li>
+<li>previousState
+: <a class="el" href="classflare_1_1PauseState.html#a339bc99d33e1a057dc71bbf4c419d213">flare::PauseState</a>
 </li>
 <li>projection
 : <a class="el" href="structflare_1_1asset_1_1Shader.html#a9629683ad24f8738eebc92f80fbd6e43">flare::asset::Shader</a>
-, <a class="el" href="structflare_1_1render_1_1State.html#ac23d2ff17372099688c6f48c7c3ad41f">flare::render::State</a>
+, <a class="el" href="structflare_1_1State_1_1Render.html#aaf6eaf27def7000dbe8ccebb1b8648c0">flare::State::Render</a>
+</li>
+<li>proxyAllocators
+: <a class="el" href="structflare_1_1State.html#a63d071f10f288d9ee707083a91f7903b">flare::State</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_q"></a>- q -</h3><ul>
+<li>quad
+: <a class="el" href="structflare_1_1State_1_1Render.html#ae4635d6f63c6bf6f83363ed8fd673df1">flare::State::Render</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
+<li>render
+: <a class="el" href="structflare_1_1State.html#adc5b9bb5e46aab659b8060db50f7e7b5">flare::State</a>
+</li>
+<li>renderPasses
+: <a class="el" href="classflare_1_1GameState.html#aa27b2cbd0b2fad7b6b1daa1ccb07d3f2">flare::GameState</a>
+</li>
 <li>resolution
-: <a class="el" href="structflare_1_1Settings.html#af4a0353c533f7fd6cd2bc79fccc8cb64">flare::Settings</a>
+: <a class="el" href="structflare_1_1State_1_1Settings.html#aec3ac429a0c924259f6fd894912b82f3">flare::State::Settings</a>
 </li>
 <li>rotation
 : <a class="el" href="structflare_1_1component_1_1Object.html#a2d187137dfb74c929dfdc7c9887fd95b">flare::component::Object</a>
 , <a class="el" href="structflare_1_1component_1_1Rotation.html#ad025f1dc91400b0a756fc4575219d8bc">flare::component::Rotation</a>
+, <a class="el" href="structflare_1_1State_1_1Render_1_1Camera.html#aef015bef85d1d1528a581f70d298c63b">flare::State::Render::Camera</a>
 </li>
 <li>rotationAxis
 : <a class="el" href="structflare_1_1component_1_1Rotation.html#a4b7fc0edef826f40138c3d5c0aaebf58">flare::component::Rotation</a>
@@ -349,26 +426,51 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
+<li>sampleCount
+: <a class="el" href="structflare_1_1State_1_1Render.html#a83faf50f13024cace3d1186c5859b6ad">flare::State::Render</a>
+</li>
+<li>scale
+: <a class="el" href="structflare_1_1component_1_1Object.html#a4a3f01d285000b74cf36a0dda956774d">flare::component::Object</a>
+, <a class="el" href="structflare_1_1component_1_1Scale.html#af894816af3396a9d0e5f962955e9bc93">flare::component::Scale</a>
+</li>
+<li>settings
+: <a class="el" href="structflare_1_1State.html#ae09e83e45389ae1c4d921d0717cd92d6">flare::State</a>
+</li>
 <li>shader
-: <a class="el" href="structflare_1_1component_1_1Object.html#adf3fa291a243165eed47a06789f0dbf4">flare::component::Object</a>
-, <a class="el" href="structflare_1_1render_1_1State.html#a3e50fb1768a6514b1d62abed22a35418">flare::render::State</a>
+: <a class="el" href="structflare_1_1render_1_1passes_1_1Pass.html#a00540e8bb9e9a4c61fd419f2a3d17921">flare::render::passes::Pass</a>
+, <a class="el" href="structflare_1_1State_1_1Render.html#a72d815d6f5431340e8529394abbcd434">flare::State::Render</a>
+</li>
+<li>shaderBlur
+: <a class="el" href="structflare_1_1render_1_1passes_1_1SSAO.html#af32c4dfddd7bafb4b19efa81a6959659">flare::render::passes::SSAO</a>
 </li>
 <li>shininess
-: <a class="el" href="structflare_1_1asset_1_1Material.html#a512530e89a4132de2e86a0183c3b82f6">flare::asset::Material</a>
+: <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#ae0217cf75bf6ea8237dab89f4727f59d">flare::asset::model::Mesh</a>
 , <a class="el" href="structflare_1_1asset_1_1Shader.html#a3822b70d82be66795945f46d917c8837">flare::asset::Shader</a>
+, <a class="el" href="structobj_1_1model_1_1Mesh.html#a618400eb177706e59a2d687c6afda376">obj::model::Mesh</a>
 </li>
 <li>size
 : <a class="el" href="structpng_1_1Data.html#a1c3a2d84bd26778cba1e5a0559acf4b4">png::Data</a>
 </li>
+<li>skyboxTexture
+: <a class="el" href="structflare_1_1render_1_1passes_1_1Skybox.html#a4e7900ffc00bcf6291d90096ba6f17ce">flare::render::passes::Skybox</a>
+</li>
 <li>specular
-: <a class="el" href="structflare_1_1asset_1_1Material.html#a512d0197d59505ffaadb4a289f7a3383">flare::asset::Material</a>
-, <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#aa1bd392c39dddfeffd0a2f376a1fe45a">flare::asset::model::Mesh</a>
+: <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#aa1bd392c39dddfeffd0a2f376a1fe45a">flare::asset::model::Mesh</a>
 , <a class="el" href="structflare_1_1asset_1_1Shader.html#aa18bcd58356ea4a5457822543e80ef82">flare::asset::Shader</a>
-, <a class="el" href="structflare_1_1render_1_1Light.html#a2a627d0a876ef072814bf10f2b9d818c">flare::render::Light</a>
-, <a class="el" href="structflare_1_1render_1_1State.html#aeae8ddd7eab3e0d185cdad619084cd7f">flare::render::State</a>
+, <a class="el" href="structflare_1_1State_1_1Render_1_1Light.html#abb486db2f3ef574c40e06f50b03dcf23">flare::State::Render::Light</a>
+</li>
+<li>specularColor
+: <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#aeb2d01c283a4cc49969cf7d1654e3688">flare::asset::model::Mesh</a>
+, <a class="el" href="structobj_1_1model_1_1Mesh.html#a689b75e26331893861ff285dec87aa22">obj::model::Mesh</a>
+</li>
+<li>specularMap
+: <a class="el" href="structobj_1_1model_1_1Mesh.html#a68562b490e539882dc3d4cddc9ffe995">obj::model::Mesh</a>
+</li>
+<li>ssaoKernel
+: <a class="el" href="structflare_1_1render_1_1passes_1_1SSAO.html#a7c5e7bf804f151f497454dffcc287ca9">flare::render::passes::SSAO</a>
 </li>
 <li>swap
-: <a class="el" href="structflare_1_1Settings.html#adcbcd55d8bd3c2b05df3a2f279e38de3">flare::Settings</a>
+: <a class="el" href="structflare_1_1State_1_1Settings.html#af80bdce17edaa17ed546098364a59d0d">flare::State::Settings</a>
 </li>
 </ul>
 
@@ -376,6 +478,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
 <li>texCoords
 : <a class="el" href="structflare_1_1asset_1_1model_1_1Vertex.html#a4797c3c936abe27f8ed9a922e001befb">flare::asset::model::Vertex</a>
+</li>
+<li>textures
+: <a class="el" href="structflare_1_1render_1_1passes_1_1Pass.html#af3c33c597dd80ed27b7b2a5e99a0ece0">flare::render::passes::Pass</a>
+</li>
+<li>time
+: <a class="el" href="structflare_1_1Timer.html#af1883aa3bd0a39ec81c4a94f47384bcd">flare::Timer</a>
+</li>
+<li>timers
+: <a class="el" href="structflare_1_1State.html#a750a1a033ef3b0173e3a3bb2a17977d0">flare::State</a>
 </li>
 <li>toggle
 : <a class="el" href="structflare_1_1asset_1_1Shader.html#adf09d128c52c63b88465758982db9a52">flare::asset::Shader</a>
@@ -385,7 +496,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_u"></a>- u -</h3><ul>
 <li>up
-: <a class="el" href="structflare_1_1render_1_1Camera.html#a8ff0cdd7afba8b99e48c56862106a998">flare::render::Camera</a>
+: <a class="el" href="structflare_1_1State_1_1Render_1_1Camera.html#a3edaad9ea51fca7a0e7899f9b7d3868d">flare::State::Render::Camera</a>
 </li>
 </ul>
 
@@ -396,18 +507,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>vao
 : <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#a86b1125003278523b49e457230ca5f86">flare::asset::model::Mesh</a>
-, <a class="el" href="structflare_1_1render_1_1State.html#a388d5f9f37667ff12f61a84c300413ba">flare::render::State</a>
+, <a class="el" href="structflare_1_1render_1_1passes_1_1Skybox.html#a71b9b92e99240b87caefdd97d91feb80">flare::render::passes::Skybox</a>
+, <a class="el" href="structflare_1_1State_1_1Render.html#a75add20b0bfa2184ff793ad6bddd8f39">flare::State::Render</a>
 </li>
 <li>vbo
 : <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#a52e1d4cf48b933e940f5a16cc1d03fca">flare::asset::model::Mesh</a>
-, <a class="el" href="structflare_1_1render_1_1State.html#af8e23c08a8cd31a044ce387ddd36e949">flare::render::State</a>
+, <a class="el" href="structflare_1_1State_1_1Render.html#a9f34fe8c61add9acca89f60f3603672d">flare::State::Render</a>
 </li>
 <li>vertices
-: <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#a7530a8f3bb86bf4edc361092e580445a">flare::asset::model::Mesh</a>
+: <a class="el" href="structflare_1_1asset_1_1model_1_1Mesh.html#a65fed3448e771f3ebcc1bc6bb9565d09">flare::asset::model::Mesh</a>
+, <a class="el" href="structobj_1_1model_1_1Mesh.html#a1b83ab6ba0c52a2dbb8499e0eefe8dba">obj::model::Mesh</a>
 </li>
 <li>view
 : <a class="el" href="structflare_1_1asset_1_1Shader.html#ae2ef7ad3d5f9175e3d13ed5a56b422fc">flare::asset::Shader</a>
-, <a class="el" href="structflare_1_1render_1_1State.html#a9d4a7092c8a755c8697da8105b2b66e7">flare::render::State</a>
+, <a class="el" href="structflare_1_1State_1_1Render.html#ac25b3776fa49ed009c5fbf8af137b790">flare::State::Render</a>
 </li>
 <li>viewPosition
 : <a class="el" href="structflare_1_1asset_1_1Shader.html#ade61a2f534a5a8c8dc204742b1779fae">flare::asset::Shader</a>
@@ -419,12 +532,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>width
 : <a class="el" href="structpng_1_1Data.html#aea5bfd1dd3936610592a6bb85f7b0ace">png::Data</a>
 </li>
-</ul>
-
-
-<h3><a class="anchor" id="index_y"></a>- y -</h3><ul>
-<li>yaw
-: <a class="el" href="structflare_1_1input_1_1Mouse.html#ae4ca2214d360e280c46d43872ba461a7">flare::input::Mouse</a>
+<li>window
+: <a class="el" href="structflare_1_1State.html#a37257032eff1babefeb6afdf3e2bc134">flare::State</a>
 </li>
 </ul>
 </div><!-- contents -->

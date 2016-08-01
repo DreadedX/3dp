@@ -99,10 +99,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a36e36ee34ba7582b13e40be358da86c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#a36e36ee34ba7582b13e40be358da86c6">getDir</a> (std::string dir, std::vector&lt; std::string &gt; &amp;<a class="el" href="load_8cpp.html#a6833913523fcd18a38c6fd23e9b6096a">files</a>)</td></tr>
-<tr class="separator:a36e36ee34ba7582b13e40be358da86c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84761dc3632dd7821ba646bf359e6c6b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#a84761dc3632dd7821ba646bf359e6c6b">getFile</a> (std::string basePath, std::string fileName, <a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> *file)</td></tr>
-<tr class="separator:a84761dc3632dd7821ba646bf359e6c6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac525a095c1452ccaf8c2ffe2750c1819"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#ac525a095c1452ccaf8c2ffe2750c1819">getDir</a> (std::string dir, <a class="el" href="classArray.html">Array</a>&lt; std::string &gt; &amp;<a class="el" href="load_8cpp.html#ae96a324f408f9188407fe4c78c445ecc">files</a>, std::string prefix=&quot;&quot;)</td></tr>
+<tr class="separator:ac525a095c1452ccaf8c2ffe2750c1819"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa65f17e1fd4e883f0b64f18a8459d808"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#aa65f17e1fd4e883f0b64f18a8459d808">getFile</a> (std::string basePath, std::string fileName, <a class="el" href="classArray.html">Array</a>&lt; <a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> * &gt; *<a class="el" href="load_8cpp.html#ae96a324f408f9188407fe4c78c445ecc">files</a>)</td></tr>
+<tr class="separator:aa65f17e1fd4e883f0b64f18a8459d808"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeec218b94efed11e56af00e35e2a16fc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#aeec218b94efed11e56af00e35e2a16fc">hasChanged</a> (std::string filePath)</td></tr>
 <tr class="separator:aeec218b94efed11e56af00e35e2a16fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad49709405d1b8e7239450e6d8ba63966"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#ad49709405d1b8e7239450e6d8ba63966">writeCache</a> (<a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> *file, std::string fileName)</td></tr>
@@ -118,9 +118,11 @@ Variables</h2></td></tr>
 <tr class="separator:ad554823599d49bc623fe700e8b342b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9baab582ba2bce4538e0023319f2db4a"><td class="memItemLeft" align="right" valign="top">jsoncons::json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#a9baab582ba2bce4538e0023319f2db4a">cacheOld</a></td></tr>
 <tr class="separator:a9baab582ba2bce4538e0023319f2db4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21041d1536fe307e62cc3a5a0cacc0ff"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fluxuate_8cpp.html#a21041d1536fe307e62cc3a5a0cacc0ff">packageName</a></td></tr>
+<tr class="separator:a21041d1536fe307e62cc3a5a0cacc0ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a36e36ee34ba7582b13e40be358da86c6"></a>
+<a class="anchor" id="ac525a095c1452ccaf8c2ffe2750c1819"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -133,8 +135,14 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>files</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="classArray.html">Array</a>&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>files</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>prefix</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -144,11 +152,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00102">102</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
+<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00173">173</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a84761dc3632dd7821ba646bf359e6c6b"></a>
+<a class="anchor" id="aa65f17e1fd4e883f0b64f18a8459d808"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -167,8 +175,8 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> *&#160;</td>
-          <td class="paramname"><em>file</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="classArray.html">Array</a>&lt; <a class="el" href="structflux_1_1FileWrite.html">flux::FileWrite</a> * &gt; *&#160;</td>
+          <td class="paramname"><em>files</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -177,10 +185,10 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000038">Todo:</a></b></dt><dd>This should be in a seperate function </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000039">Todo:</a></b></dt><dd>This function has a kind of weird name </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000045">Todo:</a></b></dt><dd>This should be in a seperate function </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000046">Todo:</a></b></dt><dd>This function has a kind of weird name </dd></dl>
 
-<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00124">124</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
+<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00202">202</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
 
 </div>
 </div>
@@ -197,11 +205,11 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000040">Todo:</a></b></dt><dd><p class="startdd">This needs to be in a seperate file </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000047">Todo:</a></b></dt><dd><p class="startdd">This needs to be in a seperate file </p>
 <p class="enddd">Clean up this function </p>
 </dd></dl>
 
-<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00257">257</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
+<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00330">330</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
 
 </div>
 </div>
@@ -228,8 +236,10 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000043">Todo:</a></b></dt><dd>This program contains some really unorganized and confusing code, really needs a refactor </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000044">Todo:</a></b></dt><dd>This needs to move into flux </dd></dl>
 
-<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00013">13</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
+<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00017">17</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
 
 </div>
 </div>
@@ -257,7 +267,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00326">326</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
+<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00397">397</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
 
 </div>
 </div>
@@ -285,7 +295,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00310">310</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
+<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00383">383</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
 
 </div>
 </div>
@@ -315,6 +325,20 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00011">11</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a21041d1536fe307e62cc3a5a0cacc0ff"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string packageName</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="fluxuate_8cpp_source.html#l00013">13</a> of file <a class="el" href="fluxuate_8cpp_source.html">fluxuate.cpp</a>.</p>
 
 </div>
 </div>

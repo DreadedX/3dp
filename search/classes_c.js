@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['vertex',['Vertex',['../structflare_1_1asset_1_1model_1_1Vertex.html',1,'flare::asset::model']]]
+  ['render',['Render',['../structflare_1_1State_1_1Render.html',1,'flare::State']]],
+  ['rotation',['Rotation',['../structflare_1_1component_1_1Rotation.html',1,'flare::component']]]
 ];

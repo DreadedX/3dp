@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['entity',['Entity',['../structfuse_1_1Entity.html',1,'fuse']]]
+  ['data',['Data',['../structpng_1_1Data.html',1,'png']]]
 ];
