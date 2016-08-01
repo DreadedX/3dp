@@ -2,7 +2,7 @@
 
 void Gausian::init() {
 
-	shaderOne = flare::asset::load<flare::asset::Shader>("demo/gausian");
+	shaderOne = flare::asset::load<flare::asset::Shader>("demo/shader/gausian");
 
 	GLuint texture = 0;
 
@@ -26,7 +26,7 @@ void Gausian::init() {
 
 	textures.add(texture);
 
-	shader = flare::asset::load<flare::asset::Shader>("demo/gausian2");
+	shader = flare::asset::load<flare::asset::Shader>("demo/shader/gausian2");
 
 	texture = 0;
 

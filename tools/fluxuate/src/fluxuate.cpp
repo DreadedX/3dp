@@ -1,6 +1,6 @@
 #include "standard.h"
 
-void getDir(std::string dir, Array<std::string> &files);
+void getDir(std::string dir, Array<std::string> &files, std::string prefix = "");
 void getFile(std::string basePath, std::string fileName, Array<flux::FileWrite*> *files);
 bool hasChanged(std::string filePath);
 
@@ -11,6 +11,8 @@ jsoncons::json cache;
 jsoncons::json cacheOld;
 
 std::string packageName;
+
+/** @todo This program contains some really unorganized and confusing code, really needs a refactor */
 
 int main(int argc, char* argv[]) {
 
@@ -29,6 +31,7 @@ int main(int argc, char* argv[]) {
 	Array<std::string> files;
 
 	getDir(dir, files);
+
 	uint count = files.size();
 
 	//flux::FileWrite *fluxFiles = new flux::FileWrite[count];
@@ -167,10 +170,10 @@ int main(int argc, char* argv[]) {
 	print::d("Packing took %f seconds", delta/CLOCKS_PER_SEC);
 }
 
-void getDir(std::string dir, Array<std::string> &files) {
+void getDir(std::string dir, Array<std::string> &files, std::string prefix) {
 
 	DIR *dp;
-	struct dirent *dirp;
+	struct dirent *entry;
 
 	if ((dp = opendir(dir.c_str())) == NULL) {
 
@@ -178,11 +181,18 @@ void getDir(std::string dir, Array<std::string> &files) {
 		return;
 	}
 
-	while ((dirp = readdir(dp)) != NULL) {
+	while ((entry = readdir(dp)) != NULL) {
 
-		const char *name = dirp->d_name;
-		if (strcmp(name, ".") && strcmp(name, "..")) {
-			files.add(std::string(dirp->d_name));
+		if (strcmp(entry->d_name, ".") && strcmp(entry->d_name, "..")) {
+
+			if (entry->d_type == DT_DIR) {
+
+				getDir(dir + "/" + entry->d_name, files, prefix + entry->d_name + "/");
+
+			} else {
+
+				files.add(std::string(prefix + entry->d_name));
+			}
 		}
 	}
 

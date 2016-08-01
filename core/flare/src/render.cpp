@@ -39,7 +39,7 @@ void flare::render::init() {
     // state.light.specular = glm::vec3(1.0f, 1.0f, 1.0f);
 	
 	/** @todo This needs to not use a model, but a hardcoded quad */
-	render->quad = asset::load<asset::Model>("core/quad");
+	render->quad = asset::load<asset::Model>("core/model/quad");
 }
 
 void debugRender(flare::GameState *gameState) {

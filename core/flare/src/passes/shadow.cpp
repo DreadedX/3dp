@@ -5,7 +5,7 @@ float shadowMapSize = 1024*2;
  
 void flare::render::passes::Shadow::init() {
 
-	shader = asset::load<asset::Shader>("core/shadow");
+	shader = asset::load<asset::Shader>("core/shader/shadow");
 
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);

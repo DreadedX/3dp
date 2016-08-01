@@ -70,7 +70,7 @@ int main() {
 	fuse::Entity *house = flare::getState()->mainState->manager->createEntity("Sponza");
 	house->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
 	house->addComponent<flare::component::Scale>(glm::vec3(0.1f, 0.1f, 0.1f));
-	house->addComponent<flare::component::Object>("demo/sponza");
+	house->addComponent<flare::component::Object>("demo/model/sponza");
 
 	// Example of post proccessing
 	// PostFX *scanline = new PostFX("demo/scanline");

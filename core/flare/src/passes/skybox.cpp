@@ -47,19 +47,19 @@ GLfloat skyboxVertices[] = {
 
 void flare::render::passes::Skybox::init() {
 
-	shader = asset::load<asset::Shader>("core/skybox");
+	shader = asset::load<asset::Shader>("core/shader/skybox");
 
 	// Load the skybox
 	/** @todo This needs to be an asset */
 	
 	Array<std::string> faces;
 
-	faces.add("core/right");
-	faces.add("core/left");
-	faces.add("core/top");
-	faces.add("core/bottom");
-	faces.add("core/front");
-	faces.add("core/back");
+	faces.add("core/skybox/polar/right");
+	faces.add("core/skybox/polar/left");
+	faces.add("core/skybox/polar/top");
+	faces.add("core/skybox/polar/bottom");
+	faces.add("core/skybox/polar/front");
+	faces.add("core/skybox/polar/back");
 
 	glGenTextures(1, &skyboxTexture);
 	glActiveTexture(GL_TEXTURE0);

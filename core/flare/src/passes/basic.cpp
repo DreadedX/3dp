@@ -2,7 +2,7 @@
 
 void flare::render::passes::Basic::init() {
 
-	shader = asset::load<asset::Shader>("core/basic");
+	shader = asset::load<asset::Shader>("core/shader/basic");
 
 	GLuint texture = 0;
 
