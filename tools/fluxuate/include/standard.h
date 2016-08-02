@@ -20,18 +20,12 @@
 	#include <dlfcn.h>
 #endif
 
-// System libraries
-#include <png.h>
-#include <zlib.h>
-
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
 #include "jsoncons/json.hpp"
 
 #pragma GCC diagnostic pop
-
-#include "tinyobjloader/tiny_obj_loader.h"
 
 #include "cmdline/cmdline.h"
 

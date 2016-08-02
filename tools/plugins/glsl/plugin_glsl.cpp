@@ -1,14 +1,8 @@
-#include <iostream>
-#include <vector>
-#include <string>
 #include <sstream>
 #include <fstream>
-#include <streambuf>
-
-#include "flux/flux.h"
-#include "extra/extra.h"
 
 #include "plugin.h"
+#include "extra/extra.h"
 
 enum PRAGMA_COMMANDS {
 	PRAGMA_VERSION,

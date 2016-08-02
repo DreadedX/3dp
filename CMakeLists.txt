@@ -71,6 +71,9 @@ endif ()
 # Libraries
 add_subdirectory(libs/leakage)
 add_subdirectory(libs/imgui)
+add_subdirectory(libs/zlib-ng)
+add_subdirectory(libs/tinyobjloader)
+include_directories(${PROJECT_SOURCE_DIR}/libs/tinyobjloader)
 
 # Core engine components
 add_subdirectory(core/extra)
@@ -86,14 +89,8 @@ add_subdirectory(tools/fluxuate)
 
 # Plugins for fluxuate
 add_subdirectory(tools/plugins/png)
-add_subdirectory(libs/tinyobjloader)
 add_subdirectory(tools/plugins/obj)
 add_subdirectory(tools/plugins/glsl)
-
-# add_custom_target(info
-# 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-# 	COMMAND touch ./core/flare/src/info.cpp
-# 	DEPENDS core/flare)
 
 if(UNIX)
 	add_custom_target(assets

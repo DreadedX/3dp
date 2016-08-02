@@ -1,36 +1,31 @@
-/** @todo Figure out which of these are really needed */
 // Standard library
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <cstring>
-#include <dirent.h>
-#include <assert.h>
-#include <algorithm>
-#include <ctime>
+// #include <iostream>
+// #include <fstream>
+// #include <vector>
+// #include <cstring>
+// #include <dirent.h>
+// #include <assert.h>
+// #include <algorithm>
+// #include <ctime>
 
 // System libraries
 #include <png.h>
-#include <zlib.h>
 
-#include "jsoncons/json.hpp"
-
-#include "tinyobjloader/tiny_obj_loader.h"
-
-// Needed to be able to store assets in the same format as flare
-#define NO_LEAKAGE
-#include "flare/flare.h"
-
-// Debug
-// #ifndef NDEBUG
-//     #include "debug_new.h"
-// #endif
-
-#include "extra/extra.h"
-#include "flux/flux.h"
-
-#include "plugin_png.h"
 #include "plugin.h"
+
+namespace png {
+
+    struct Data {
+
+	int width = 0;
+	int height = 0;
+	int size = 0;
+	unsigned char bytesPerPixel = 0;
+	unsigned char *pixels = nullptr;
+    };
+
+    Data read(const char *name);
+}
 
 png::Data png::read(const char *name) {
 

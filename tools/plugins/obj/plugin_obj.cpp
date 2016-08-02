@@ -1,32 +1,58 @@
-/** @todo Figure out which of these are really needed */
-// Standard library
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <cstring>
-#include <dirent.h>
-#include <assert.h>
-#include <algorithm>
-#include <ctime>
+#include <random>
 
-// System libraries
-#include <png.h>
-#include <zlib.h>
+#include "tiny_obj_loader.h"
 
-#include "jsoncons/json.hpp"
-
-#include "tinyobjloader/tiny_obj_loader.h"
-
-// Debug
-// #ifndef NDEBUG
-//     #include "debug_new.h"
-// #endif
-
-#include "plugin_obj.h"
+#include "flare/flare.h"
 #include "plugin.h"
 
-#include "extra/extra.h"
-#include "flux/flux.h"
+namespace obj {
+
+		struct Model;
+
+		/** @brief Structs needed for models */
+		namespace model {
+
+			/** @brief Mesh data
+				@todo Make this use a material instead of storing the texture on its own */
+			struct Mesh {
+
+				glm::vec3 diffuseColor = glm::vec3(1.0f, 1.0f, 1.0f);
+				glm::vec3 specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+				GLfloat shininess = 0.0f;
+
+				std::string diffuseMap = "";
+				std::string specularMap = "";
+
+				/** @brief List of all the vertices in this mesh */
+				Array<flare::asset::model::Vertex> vertices;
+				/** @brief List of all the indices in this mesh */
+				Array<GLuint> indices;
+			};
+		}
+
+		/** @brief Asset struct containing 3d model info */
+		struct Model : flare::asset::Asset {
+
+			/** @brief List of all meshes in this model */
+			Array<model::Mesh*> meshes;
+
+			/** @brief Load model data */
+			void _load() override {}
+
+			/** @brief Model destructor
+				Makes sure all meshes get deleted properly */
+			~Model() {
+
+				/** @todo Should probably also delete opengl buffers (this currently only gets called on shutdown, so causes no issues */
+				for (model::Mesh *mesh : meshes) {
+
+					delete mesh;
+				}
+			}
+		};
+
+	Model read(const char *name);
+}
 
 obj::Model obj::read(const char *name) {
 

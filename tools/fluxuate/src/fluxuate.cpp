@@ -185,6 +185,8 @@ void getDir(std::string dir, Array<std::string> &files, std::string prefix) {
 
 		if (strcmp(entry->d_name, ".") && strcmp(entry->d_name, "..")) {
 
+			/** @todo Fix this on windows */
+#ifndef WIN32
 			if (entry->d_type == DT_DIR) {
 
 				getDir(dir + "/" + entry->d_name, files, prefix + entry->d_name + "/");
@@ -193,6 +195,9 @@ void getDir(std::string dir, Array<std::string> &files, std::string prefix) {
 
 				files.add(std::string(prefix + entry->d_name));
 			}
+#else
+				files.add(std::string(prefix + entry->d_name));
+#endif
 		}
 	}
 

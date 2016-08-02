@@ -14,19 +14,10 @@ file(GLOB_RECURSE CPP_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
 add_executable(${PROJECT_NAME} ${CPP_FILES})
 
-# set (EXTRA_FLAGS "${EXTRA_FLAGS} -O3")
-set (EXTRA_FLAGS "${EXTRA_FLAGS} -g")
-set(CMAKE_CXX_FLAGS "${EXTRA_FLAGS}")
-set(CMAKE_CXX_FLAGS_DEBUG "${EXTRA_FLAGS}")
+target_link_libraries(${PROJECT_NAME} flux extra)
+target_link_libraries(${PROJECT_NAME} zlibstatic)
+target_link_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS})
 
-# NOTE: zlib is included in libpng
-find_package (PNG REQUIRED)
-if (PNG_FOUND)
-    include_directories(${PNG_INCLUDE_DIRS})
-    target_link_libraries (${PROJECT_NAME} ${PNG_LIBRARIES})
-endif (PNG_FOUND)
-
-target_link_libraries(${PROJECT_NAME} flux extra ${CMAKE_DL_LIBS})
 if (NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	target_link_libraries(${PROJECT_NAME} leakage)
 endif()
