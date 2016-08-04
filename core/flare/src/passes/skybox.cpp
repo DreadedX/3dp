@@ -154,8 +154,8 @@ void flare::render::passes::Skybox::draw(GameState *gameState) {
 	glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[2]->textures[1]);
 
 	glm::mat4 view = glm::mat4(glm::mat3(render->view));
-	glUniformMatrix4fv(render->shader->locations.view, 1, GL_FALSE, glm::value_ptr(view));
-	glUniformMatrix4fv(render->shader->locations.projection, 1, GL_FALSE, glm::value_ptr(render->projection));
+	glUniformMatrix4fv(render->shader->getLocation("view"), 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(render->shader->getLocation("projection"), 1, GL_FALSE, glm::value_ptr(render->projection));
 
 	for (flare::asset::model::Mesh *mesh : render->quad->meshes) {
 

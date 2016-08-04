@@ -54,13 +54,13 @@ void flare::render::passes::Lighting::draw(GameState *gameState) {
 	flare::render::setShader(shader);
 
 		{
-			glUniform3fv(render->shader->locations.light.direction, 1, glm::value_ptr(render->light.direction));
-			glUniform3fv(render->shader->locations.light.ambient, 1, glm::value_ptr(render->light.ambient));
+			glUniform3fv(render->shader->getLocation("light.direction"), 1, glm::value_ptr(render->light.direction));
+			glUniform3fv(render->shader->getLocation("light.ambient"), 1, glm::value_ptr(render->light.ambient));
 
-			glUniform3fv(render->shader->locations.viewPosition, 1, glm::value_ptr(render->camera.position));
+			glUniform3fv(render->shader->getLocation("viewPosition"), 1, glm::value_ptr(render->camera.position));
 		}
 
-		glUniformMatrix4fv(render->shader->locations.model, 1, GL_FALSE, glm::value_ptr(glm::mat4()));
+		glUniformMatrix4fv(render->shader->getLocation("model"), 1, GL_FALSE, glm::value_ptr(glm::mat4()));
 
 	for (flare::asset::model::Mesh *mesh : render->quad->meshes) {
 

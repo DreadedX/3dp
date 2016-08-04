@@ -73,12 +73,12 @@ void flare::render::passes::Basic::draw(GameState *gameState) {
 	glDisable(GL_BLEND);
 
 	State::Render *render = &getState()->render;
-	glUniform3fv(render->shader->locations.light.direction, 1, glm::value_ptr(render->light.direction));
-	glUniform3fv(render->shader->locations.light.ambient, 1, glm::value_ptr(render->light.ambient));
-	glUniform3fv(render->shader->locations.viewPosition, 1, glm::value_ptr(render->camera.position));
+	glUniform3fv(render->shader->getLocation("light.direction"), 1, glm::value_ptr(render->light.direction));
+	glUniform3fv(render->shader->getLocation("light.ambient"), 1, glm::value_ptr(render->light.ambient));
+	glUniform3fv(render->shader->getLocation("viewPosition"), 1, glm::value_ptr(render->camera.position));
 
-	glUniformMatrix4fv(render->shader->locations.view, 1, GL_FALSE, glm::value_ptr(render->view));
-	glUniformMatrix4fv(render->shader->locations.projection, 1, GL_FALSE, glm::value_ptr(render->projection));
+	glUniformMatrix4fv(render->shader->getLocation("view"), 1, GL_FALSE, glm::value_ptr(render->view));
+	glUniformMatrix4fv(render->shader->getLocation("projection"), 1, GL_FALSE, glm::value_ptr(render->projection));
 
 	glm::mat4 depthProjectionMatrix = glm::ortho<float>(-400, 400, -400, 400, -400, 400);
 	glm::mat4 depthViewMatrix = glm::lookAt(-render->light.direction, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -94,7 +94,7 @@ void flare::render::passes::Basic::draw(GameState *gameState) {
 			);
 	glm::mat4 depthBiasMVP = biasMatrix*depthMVP;
 
-	glUniformMatrix4fv(render->shader->locations.depthMVP, 1, GL_FALSE, &depthBiasMVP[0][0]);
+	glUniformMatrix4fv(render->shader->getLocation("depthMVP"), 1, GL_FALSE, &depthBiasMVP[0][0]);
 
 	glActiveTexture(GL_TEXTURE3);
 	/** @todo Make this not hardcoded and use the previous shader step */

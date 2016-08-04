@@ -123,8 +123,8 @@ void flare::render::passes::SSAO::draw(GameState *gameState) {
 		glUniform3fv(glGetUniformLocation(render->shader->id, ("samples[" + std::to_string(i) + "]").c_str()), 1, &ssaoKernel[i][0]);
 	}
 
-	glUniformMatrix4fv(render->shader->locations.view, 1, GL_FALSE, glm::value_ptr(render->view));
-	glUniformMatrix4fv(render->shader->locations.projection, 1, GL_FALSE, glm::value_ptr(render->projection));
+	glUniformMatrix4fv(render->shader->getLocation("view"), 1, GL_FALSE, glm::value_ptr(render->view));
+	glUniformMatrix4fv(render->shader->getLocation("projection"), 1, GL_FALSE, glm::value_ptr(render->projection));
 
 	for (flare::asset::model::Mesh *mesh : render->quad->meshes) {
 

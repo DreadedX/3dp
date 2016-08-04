@@ -23,8 +23,8 @@ void flare::component::Object::_draw() {
 		glBindVertexArray(mesh->vao);
 
 		State::Render *render = &getState()->render;
-		glUniform3fv(render->shader->locations.light.diffuse, 1, glm::value_ptr(mesh->diffuseColor * render->light.diffuse));		
-		glUniform3fv(render->shader->locations.light.specular, 1, glm::value_ptr(mesh->specularColor * render->light.specular));		
+		glUniform3fv(render->shader->getLocation("light.diffuse"), 1, glm::value_ptr(mesh->diffuseColor * render->light.diffuse));		
+		glUniform3fv(render->shader->getLocation("light.specular"), 1, glm::value_ptr(mesh->specularColor * render->light.specular));		
 
 		glm::mat4 modelMatrix;
 		modelMatrix = glm::translate(modelMatrix, parent->getAttribute<glm::vec3>("position"));
@@ -36,7 +36,7 @@ void flare::component::Object::_draw() {
 
 			modelMatrix = glm::rotate(modelMatrix, parent->getAttribute<float>("rotation"), parent->getAttribute<glm::vec3>("rotationAxis"));  
 		}
-		glUniformMatrix4fv(render->shader->locations.model, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+		glUniformMatrix4fv(render->shader->getLocation("model"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
 		glDrawElements(GL_TRIANGLES, mesh->indexSize, GL_UNSIGNED_INT, 0);
 	}

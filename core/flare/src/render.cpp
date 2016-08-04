@@ -167,27 +167,12 @@ void flare::render::setShader(flare::asset::Shader *shader) {
     if (render->shader == nullptr || render->shader->id != shader->id) {
 
 		glUseProgram(shader->id);
-		glUniform1i(glGetUniformLocation(shader->id, "material.diffuse"), 0);
-		glUniform1i(glGetUniformLocation(shader->id, "material.normal"), 1);
-		glUniform1i(glGetUniformLocation(shader->id, "material.specular"), 2);
 
-		glUniform1i(glGetUniformLocation(shader->id, "render"), 1);
-		glUniform1i(glGetUniformLocation(shader->id, "shadow"), 3);
+		for(auto i : shader->textures) {
 
-		glUniform1i(glGetUniformLocation(shader->id, "gPositionMap"), 0);
-		glUniform1i(glGetUniformLocation(shader->id, "gColorMap"), 1);
-		glUniform1i(glGetUniformLocation(shader->id, "gNormalMap"), 2);
-		glUniform1i(glGetUniformLocation(shader->id, "gTexCoordMap"), 3);
+			glUniform1i(glGetUniformLocation(shader->id, i.first.c_str()), i.second);
+		}
 
-		glUniform1i(glGetUniformLocation(shader->id, "gDiffuseColorMap"), 4);
-		glUniform1i(glGetUniformLocation(shader->id, "gSpecularColorMap"), 5);
-		glUniform1i(glGetUniformLocation(shader->id, "ssaoBlurTexture"), 6);
-		glUniform1i(glGetUniformLocation(shader->id, "skyboxTexture"), 7);
-
-		glUniform1i(glGetUniformLocation(shader->id, "ssaoTexture"), 0);
-		glUniform1i(glGetUniformLocation(shader->id, "noiseTexture"), 1);
-
-		glUniform1i(glGetUniformLocation(shader->id, "skybox"), 0);
 		render->shader = shader;
 	
     }

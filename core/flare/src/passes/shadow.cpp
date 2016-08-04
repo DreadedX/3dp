@@ -77,7 +77,7 @@ void flare::render::passes::Shadow::draw(GameState *gameState) {
 
 	glm::mat4 depthMVP = depthProjectionMatrix * depthViewMatrix * depthModelMatrix;
 
-	glUniformMatrix4fv(render->shader->locations.depthMVP, 1, GL_FALSE, &depthMVP[0][0]);
+	glUniformMatrix4fv(render->shader->getLocation("depthMVP"), 1, GL_FALSE, &depthMVP[0][0]);
 
 	getState()->render.pass = State::Render::GEOMETRY;
 	gameState->manager->draw();

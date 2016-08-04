@@ -14,47 +14,14 @@ namespace flare {
 
 			~Shader();
 
-			struct {
-
-				// GLuint position = 0;
-				// GLuint texture = 0;
-				// GLuint normal = 0;
-
-				/** @brief Uniform location of model matrix */
-				GLuint model = 0;
-				/** @brief Uniform location of view matrix */
-				GLuint view = 0;
-				/** @brief Uniform location of projection matrix */
-				GLuint projection = 0;
-				/** @brief Uniform location of projection matrix */
-				GLuint depthMVP = 0;
-
-				/** @brief Uniform location of view position */
-				GLuint viewPosition = 0;
-
-				struct {
-					/** @brief Material shininess
-						@todo This should propably use Material Asset (?) */
-					GLuint shininess = 0;
-				} material;
-
-				struct {
-					/** @brief Uniform location of light direction vector */
-					GLuint direction = 0;
-					/** @brief Uniform location of ambient light color */
-					GLuint ambient = 0;
-					/** @brief Uniform location of diffuse light color */
-					GLuint diffuse = 0;
-					/** @brief Uniform location of specular light color */
-					GLuint specular = 0;
-				} light;
-
-				/** @brief Uniform location of a toggle that can be used in the shader for testing */
-				GLuint toggle = 0;
-			} locations;
+			std::unordered_map<std::string, int> textures;
+			std::unordered_map<std::string, int> locations;
 
 			/** @brief Load shader */
 			void _load() override;
+
+			int getLocation(const char *locationName);
+			int getTexture(const char *textureName);
 		};
 	}
 }

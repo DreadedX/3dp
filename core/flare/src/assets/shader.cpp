@@ -119,21 +119,73 @@ void flare::asset::Shader::_load() {
 	}
 
 	// Shader setup stuff
-	locations.model = glGetUniformLocation(id, "model");
-	locations.view = glGetUniformLocation(id, "view");
-	locations.projection = glGetUniformLocation(id, "projection");
-	locations.depthMVP = glGetUniformLocation(id, "depthMVP");
+	// locations.model = glGetUniformLocation(id, "model");
+	// locations.view = glGetUniformLocation(id, "view");
+	// locations.projection = glGetUniformLocation(id, "projection");
+	// locations.depthMVP = glGetUniformLocation(id, "depthMVP");
+    //
+	// locations.material.shininess = glGetUniformLocation(id, "material.shininess");
+    //
+	// locations.light.direction = glGetUniformLocation(id, "light.direction");
+	// locations.light.ambient = glGetUniformLocation(id, "light.ambient");
+	// locations.light.diffuse = glGetUniformLocation(id, "light.diffuse");
+	// locations.light.specular = glGetUniformLocation(id, "light.specular");
+    //
+	// locations.viewPosition = glGetUniformLocation(id, "viewPosition");
+    //
+	// locations.toggle = glGetUniformLocation(id, "toggle");
 
-	locations.material.shininess = glGetUniformLocation(id, "material.shininess");
+	// This should be loaded from the shaders
+	locations["model"] = 0;
+	locations["view"] = 0;
+	locations["projection"] = 0;
+	locations["depthMVP"] = 0;
+	locations["material.shininess"] = 0;
+	locations["light.direction"] = 0;
+	locations["light.ambient"] = 0;
+	locations["light.diffuse"] = 0;
+	locations["light.specular"] = 0;
+	locations["viewPosition"] = 0;
+	locations["toggle"] = 0;
 
-	locations.light.direction = glGetUniformLocation(id, "light.direction");
-	locations.light.ambient = glGetUniformLocation(id, "light.ambient");
-	locations.light.diffuse = glGetUniformLocation(id, "light.diffuse");
-	locations.light.specular = glGetUniformLocation(id, "light.specular");
+	// Set locations for the shader
+	for (auto i : locations) {
 
-	locations.viewPosition = glGetUniformLocation(id, "viewPosition");
+		locations[i.first] = glGetUniformLocation(id, i.first.c_str());
+	}
 
-	locations.toggle = glGetUniformLocation(id, "toggle");
+	// This should be loaded from the shaders
+	textures["material.diffuse"] = 0;
+	textures["material.normal"] = 1;
+	textures["material.specular"] = 2;
+	textures["render"] = 1;
+	textures["shadow"] = 3;
+	textures["gPositionMap"] = 0;
+	textures["gColorMap"] = 1;
+	textures["gNormalMap"] = 2;
+	textures["gTexCoordMap"] = 3;
+	textures["gDiffuseColorMap"] = 4;
+	textures["gSpecularColorMap"] = 5;
+	textures["ssaoBlurTexture"] = 6;
+	textures["skyboxTexture"] = 7;
+	textures["ssaoTexture"] = 0;
+	textures["noiseTexture"] = 1;
+	textures["skybox"] = 0;
+}
+
+int flare::asset::Shader::getLocation(const char *locationName) {
+
+	assert(locations.find(locationName) != locations.end());
+
+	return locations[locationName];
+}
+
+/* @todo Is this really needed */
+int flare::asset::Shader::getTexture(const char *textureName) {
+
+	assert(textures.find(textureName) != textures.end());
+
+	return textures[textureName];
 }
 
 flare::asset::Shader::~Shader() {
