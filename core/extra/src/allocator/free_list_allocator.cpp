@@ -2,8 +2,8 @@
 
 #include <stdio.h>
 
-FreeListAllocator::FreeListAllocator(size_t size, void *start)
-	: Allocator(size, start), _free_blocks((FreeBlock*)start) {
+FreeListAllocator::FreeListAllocator(size_t size, void *start, const char *name)
+	: Allocator(size, start, name), _free_blocks((FreeBlock*)start) {
 
 		assert(size > sizeof(FreeBlock));
 

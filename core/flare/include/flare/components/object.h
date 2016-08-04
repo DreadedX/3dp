@@ -10,12 +10,6 @@ namespace flare {
 		struct Object : fuse::Component {
 
 			/** @brief Pointer to the parent's Position Component */
-			Position *position = nullptr;
-			/** @brief Pointer to the parent's Scale Component */
-			Scale *scale = nullptr;
-			/** @brief Pointer to the parent's Rotation Component */
-			Rotation *rotation = nullptr;
-
 			/** @brief Pointer to Model Asset */
 			asset::Model *model = nullptr;
 
@@ -29,18 +23,6 @@ namespace flare {
 				@todo It is propably a good idea to remove the shader and just use a global shader */
 			Object(fuse::Entity *parent, std::string model) {
 				super(parent);
-
-				this->position = parent->getComponent<Position>();
-				/** Scale is optional */
-				if (parent->hasComponent<Scale>()) {
-
-					this->scale = parent->getComponent<Scale>();
-				}
-				/** Rotation is optional */
-				if (parent->hasComponent<Rotation>()) {
-
-					this->rotation = parent->getComponent<Rotation>();
-				}
 
 				this->model = asset::load<asset::Model>(model);
 			}

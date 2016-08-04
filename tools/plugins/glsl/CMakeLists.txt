@@ -14,4 +14,3 @@ file(GLOB_RECURSE CPP_FILES ${PROJECT_SOURCE_DIR}/*.cpp)
 add_library(${PROJECT_NAME} SHARED ${CPP_FILES})
 
 target_link_libraries(${PROJECT_NAME} extra)
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)

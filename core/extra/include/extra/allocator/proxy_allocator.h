@@ -7,7 +7,7 @@ class ProxyAllocator : public Allocator {
 
 	public:
 
-		ProxyAllocator(Allocator& allocator);
+		ProxyAllocator(Allocator& allocator, const char *name);
 		~ProxyAllocator();
 
 		void *allocate(size_t size, uint8_t alignment) override;
@@ -22,11 +22,11 @@ class ProxyAllocator : public Allocator {
 
 namespace allocator {
 
-	inline ProxyAllocator *make_new_proxy(Allocator &allocator) {
+	inline ProxyAllocator *make_new_proxy(Allocator &allocator, const char *name) {
 
 		void *p = allocator.allocate(sizeof(ProxyAllocator), __alignof(ProxyAllocator));
 
-		return new (p) ProxyAllocator(allocator);
+		return new (p) ProxyAllocator(allocator, name);
 	}
 
 	inline void make_delete_proxy(ProxyAllocator &proxyAllocator, Allocator &allocator) {

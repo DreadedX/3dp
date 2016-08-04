@@ -14,8 +14,8 @@ void fuse::Manager::update() {
 
 				if (!entity->_isAlive()) {
 
-				// delete entity;
-				allocator::make_delete(*manager_allocator, *entity);
+				delete entity;
+				// allocator::make_delete(*manager_allocator, *entity);
 				return true;
 				}
 
@@ -41,7 +41,8 @@ void fuse::Manager::draw() {
 /** Create a new entity, add it to the entity list and return a pointer */
 fuse::Entity *fuse::Manager::createEntity(const char *name, Entity *parent) {
 
-	Entity *entity = new (manager_allocator->allocate(sizeof(Entity), __alignof(Entity))) Entity(this, manager_allocator, name, parent);
+	// Entity *entity = new (manager_allocator->allocate(sizeof(Entity), __alignof(Entity))) Entity(this, manager_allocator, name, parent);
+	Entity *entity = new Entity(this, manager_allocator, name, parent);
 	entities.push_back(entity);
 
 	return entity;
@@ -53,6 +54,9 @@ void fuse::Manager::killAll() {
 
 		entity->kill();
 	}
+
+	update();
+	entities.clear();
 }
 
 std::vector<fuse::Entity*> *fuse::Manager::getEntities() {

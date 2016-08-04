@@ -2,8 +2,8 @@
 
 #include <stdio.h>
 
-PoolAllocator::PoolAllocator(size_t object_size, uint8_t object_alignment, size_t size, void* start) 
-	: Allocator(size, start), _object_size(object_size), _object_alignment(object_alignment) {
+PoolAllocator::PoolAllocator(size_t object_size, uint8_t object_alignment, size_t size, void* start, const char *name) 
+	: Allocator(size, start, name), _object_size(object_size), _object_alignment(object_alignment) {
 
 		assert(object_size >= sizeof(void*));
 

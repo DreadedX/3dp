@@ -2,8 +2,8 @@
 
 #include <stdio.h>
 
-LinearAllocator::LinearAllocator(size_t size, void *start)
-	: Allocator(size, start), _current_pos(start) {
+LinearAllocator::LinearAllocator(size_t size, void *start, const char *name)
+	: Allocator(size, start, name), _current_pos(start) {
 
 		assert(size > 0);
 	}

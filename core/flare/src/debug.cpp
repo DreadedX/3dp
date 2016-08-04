@@ -53,7 +53,6 @@ void flare::debug::general() {
 	ImGui::Text("Memory usage (fuse): %lu bytes (%i%%)", getState()->proxyAllocators.fuse->getUsedMemory(), (int)(getState()->proxyAllocators.fuse->getUsedMemory()*100/getState()->proxyAllocators.fuse->getSize()));
 	ImGui::Text("Memory usage (asset): %lu bytes (%i%%)", getState()->proxyAllocators.asset->getUsedMemory(), (int)(getState()->proxyAllocators.asset->getUsedMemory()*100/getState()->proxyAllocators.asset->getSize()));
 	ImGui::Text("Memory usage (model): %lu bytes (%i%%)", getState()->proxyAllocators.model->getUsedMemory(), (int)(getState()->proxyAllocators.model->getUsedMemory()*100/getState()->proxyAllocators.model->getSize()));
-	ImGui::Text("Memory usage (entities): %lu bytes (%i%%)", getState()->proxyAllocators.entities->getUsedMemory(), (int)(getState()->proxyAllocators.entities->getUsedMemory()*100/getState()->proxyAllocators.entities->getSize()));
 
 	ImGui::End();
 }

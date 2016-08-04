@@ -27,6 +27,4 @@ add_custom_command(
 set(CPP_FILES ${CPP_FILES} ${CMAKE_CURRENT_BINARY_DIR}/generated/info.cpp)
 add_library(${PROJECT_NAME} STATIC ${CPP_FILES})
 
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)
-
 cotire(${PROJECT_NAME})

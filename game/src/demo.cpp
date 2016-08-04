@@ -68,8 +68,8 @@ int main() {
 	}
 
 	fuse::Entity *house = flare::getState()->mainState->manager->createEntity("Sponza");
-	house->addComponent<flare::component::Position>(glm::vec3(0.0f, 0.0f, 0.0f));
-	house->addComponent<flare::component::Scale>(glm::vec3(0.1f, 0.1f, 0.1f));
+	house->setAttribute("position", glm::vec3(0.0f, 0.0f, 0.0f));
+	house->setAttribute("scale", glm::vec3(0.1f, 0.1f, 0.1f));
 	house->addComponent<flare::component::Object>("demo/model/sponza");
 
 	// Example of post proccessing
@@ -136,6 +136,14 @@ int main() {
 			timer.time = glfwGetTime() - timer.time;
 			flare::getState()->timers.push_back(timer);
 	}
+
+	// Make sure the state is cleaned up
+	for(flare::render::passes::Pass *pass : pauseState->renderPasses) {
+
+		delete pass;
+	}
+	delete pauseState->manager;
+	delete pauseState;
 
 	flare::terminate();
 }

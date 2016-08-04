@@ -1,7 +1,9 @@
 #include "flux/flux.h"
 
 /** @brief List of all the loaded container */
-Array<flux::Flux*> files;
+// Array<flux::Flux*> files;
+#include <vector>
+std::vector<flux::Flux*> files;
 
 /** @brief Amount of loaded files */
 int count = 0;
@@ -26,7 +28,8 @@ void flux::load() {
 
 		// flux::Flux *file = new flux::Flux;
 		flux::Flux *file = allocator::make_new<flux::Flux>(*flux_allocator);
-		files.add(file);
+		// files.add(file);
+		files.push_back(file);
 
 		file->load(fileNames[i]);
 	}

@@ -12,10 +12,11 @@ class Allocator {
 
 	public:
 
-		Allocator(size_t size, void* start) {
+		Allocator(size_t size, void *start, const char *name) {
 
 			_start           = start;
 			_size            = size;
+			_name            = name;
 
 			_used_memory     = 0;
 			_num_allocations = 0;
@@ -25,7 +26,7 @@ class Allocator {
 
 			if(_num_allocations != 0 && _used_memory != 0) {
 
-				print::w("Memory leak detected (%i object, %i bytes)", _num_allocations, _used_memory);
+				print::w("Memory leak detected in %s (%i object, %i bytes)", _name, _num_allocations, _used_memory);
 			}
 
 			_start = nullptr;
@@ -59,6 +60,7 @@ class Allocator {
 
 		void  *_start;
 		size_t _size;
+		const char *_name;
 
 		size_t _used_memory;
 		size_t _num_allocations;

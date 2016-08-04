@@ -22,20 +22,19 @@ void flare::init() {
 	arenaStart = malloc(RESERVED_MEMORY + sizeof(FreeListAllocator));
 
 	// Put main allocator in reserved memory
-	FreeListAllocator *tempAllocator = new (arenaStart) FreeListAllocator(RESERVED_MEMORY, pointer_math::add(arenaStart, sizeof(FreeListAllocator)));
+	FreeListAllocator *mainAllocator = new (arenaStart) FreeListAllocator(RESERVED_MEMORY, pointer_math::add(arenaStart, sizeof(FreeListAllocator)), "Main");
 
 	// Create state object
-	state = allocator::make_new<State>(*tempAllocator);
+	state = allocator::make_new<State>(*mainAllocator);
 
 	// Store pointer to main allocator in state
-	getState()->mainAllocator = tempAllocator;
+	getState()->mainAllocator = mainAllocator;
 
 	// Create proxy allocators
-	getState()->proxyAllocators.flux = allocator::make_new_proxy(*getState()->mainAllocator);
-	getState()->proxyAllocators.fuse = allocator::make_new_proxy(*getState()->mainAllocator);
-	getState()->proxyAllocators.asset = allocator::make_new_proxy(*getState()->mainAllocator);
-	getState()->proxyAllocators.model = allocator::make_new_proxy(*getState()->mainAllocator);
-	getState()->proxyAllocators.entities = allocator::make_new_proxy(*getState()->mainAllocator);
+	getState()->proxyAllocators.flux = allocator::make_new_proxy(*getState()->mainAllocator, "Flux");
+	getState()->proxyAllocators.fuse = allocator::make_new_proxy(*getState()->mainAllocator, "Fuse");
+	getState()->proxyAllocators.asset = allocator::make_new_proxy(*getState()->mainAllocator, "Asset");
+	getState()->proxyAllocators.model = allocator::make_new_proxy(*getState()->mainAllocator, "Model");
 
 	info::print();
 
@@ -107,7 +106,7 @@ void flare::init() {
 	getState()->mainState = allocator::make_new<MainState>(*getState()->mainAllocator);
 
 	// This should all be in the state constructor or init function
-	getState()->mainState->manager = allocator::make_new<fuse::Manager>(*getState()->proxyAllocators.entities);
+	getState()->mainState->manager = allocator::make_new<fuse::Manager>(*getState()->proxyAllocators.fuse);
 
 	// Initialize other systems
 	getState()->mainState->manager->init(getState()->proxyAllocators.fuse);
@@ -186,18 +185,24 @@ void flare::terminate(int errorCode) {
 
 	// Kill and remove all remaining entities
 	getState()->mainState->manager->killAll();
-	// Make sure the manager actually deletes the entities
-	getState()->mainState->manager->update();
 
 	// Close all files
 	flux::close();
 
 	glfwTerminate();
 
+	// Remove render passes
+	for(render::passes::Pass *pass : getState()->mainState->renderPasses) {
+
+		delete pass;
+	}
+
 	// Close all open asset files
 	asset::close();
 
 	print::d("The engine is now exiting");
+
+	allocator::make_delete(*getState()->proxyAllocators.fuse, getState()->mainState->manager);
 
 	// Remove all proxy allocators
 	allocator::make_delete_proxy(*getState()->proxyAllocators.flux, *getState()->mainAllocator);
@@ -208,18 +213,17 @@ void flare::terminate(int errorCode) {
 	getState()->proxyAllocators.asset = nullptr;
 	allocator::make_delete_proxy(*getState()->proxyAllocators.model, *getState()->mainAllocator);
 	getState()->proxyAllocators.model = nullptr;
-	allocator::make_delete_proxy(*getState()->proxyAllocators.entities, *getState()->mainAllocator);
-	getState()->proxyAllocators.entities = nullptr;
+
+	allocator::make_delete(*getState()->mainAllocator, *getState()->mainState);
 
 	// Create a temporary pointer to the main allocator
-	FreeListAllocator *tempAllocator = getState()->mainAllocator;
+	FreeListAllocator *mainAllocator = getState()->mainAllocator;
 
 	// Delete the state object
-	allocator::make_delete<State>(*tempAllocator, *getState());
+	allocator::make_delete(*mainAllocator, *getState());
 
 	// Call the destructor of the main allocator
-	tempAllocator->~FreeListAllocator();
-	tempAllocator = nullptr;
+	allocator::make_delete(*mainAllocator, mainAllocator);
 
 	// Free the reserved memory
 	free(arenaStart);

@@ -1,7 +1,7 @@
 #include "extra/allocator/proxy_allocator.h"
 
-ProxyAllocator::ProxyAllocator(Allocator& allocator)
-	: Allocator(allocator.getSize(), allocator.getStart()), _allocator(allocator) {
+ProxyAllocator::ProxyAllocator(Allocator& allocator, const char *name)
+	: Allocator(allocator.getSize(), allocator.getStart(), name), _allocator(allocator) {
 
 }
 

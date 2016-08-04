@@ -10,6 +10,8 @@ namespace fuse {
 
 		/** @brief List of all the components contained in this entity */
 		Array<Component*> components;
+		/** @brief Storage for entity attributes */
+		std::unordered_map<std::string, std::experimental::any> attributes;
 		/** @brief Predefined array of components for fast lookup */
 		std::array<Component*, MAX_COMPONENTS> componentArray;
 		/** @brief Bitset used to check if a component is already loaded */
@@ -56,6 +58,18 @@ namespace fuse {
 		void _update();
 		/** @brief Execute draw code for all components in this entity */
 		void _draw();
+
+		void setAttribute(std::string attributeName, std::experimental::any attributeValue);
+
+		bool hasAttribute(std::string attributeName);
+
+		template<typename T>
+		T getAttribute(const char *attributeName) {
+
+			assert(attributes.find(attributeName) != attributes.end());
+
+			return std::experimental::any_cast<T>(attributes[attributeName]);
+		}
 
 		/** @brief Check if the entity has a certain component
 			@tparam T - Component type to check for

@@ -7,7 +7,7 @@ class FreeListAllocator : public Allocator {
 
 	public:
 
-		FreeListAllocator(size_t size, void *start);
+		FreeListAllocator(size_t size, void *start, const char *name);
 		~FreeListAllocator();
 
 		void *allocate(size_t size, uint8_t alignment) override;

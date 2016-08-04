@@ -40,12 +40,11 @@ target_link_libraries(${PROJECT_NAME} flare fuse flux extra)
 target_link_libraries(${PROJECT_NAME} zlibstatic)
 
 if (NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
-	target_link_libraries(${PROJECT_NAME} leakage)
+	# target_link_libraries(${PROJECT_NAME} leakage)
 	target_link_libraries(${PROJECT_NAME} imgui)
 endif()
 if(WIN32)
     target_link_libraries(${PROJECT_NAME} glew32 glfw3 opengl32 imm32)
 endif(WIN32)
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)
 
 cotire(${PROJECT_NAME})

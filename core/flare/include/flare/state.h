@@ -23,7 +23,6 @@ namespace flare {
 			ProxyAllocator *fuse = nullptr;
 			ProxyAllocator *asset = nullptr;
 			ProxyAllocator *model = nullptr;
-			ProxyAllocator *entities = nullptr;
 		} proxyAllocators;
 
 		std::vector<Timer> timers;

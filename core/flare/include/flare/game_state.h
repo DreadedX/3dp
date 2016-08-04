@@ -15,6 +15,8 @@ namespace flare {
 
 			virtual void update() = 0;
 			virtual void draw() = 0;
+
+			virtual ~GameState(){}
 	};
 
 	class MainState : public GameState {

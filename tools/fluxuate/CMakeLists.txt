@@ -21,6 +21,5 @@ target_link_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS})
 if (NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Release")
 	target_link_libraries(${PROJECT_NAME} leakage)
 endif()
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)
 
 cotire(${PROJECT_NAME})

@@ -7,7 +7,7 @@ class PoolAllocator : public Allocator {
 
 	public:
 
-		PoolAllocator(size_t object_size, uint8_t object_alignment, size_t size, void *start);
+		PoolAllocator(size_t object_size, uint8_t object_alignment, size_t size, void *start, const char *name);
 		~PoolAllocator();
 
 		void *allocate(size_t size, uint8_t alignment) override;

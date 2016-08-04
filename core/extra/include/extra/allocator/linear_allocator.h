@@ -7,7 +7,7 @@ class LinearAllocator : public Allocator {
 
 	public:
 
-		LinearAllocator(size_t size, void* start);
+		LinearAllocator(size_t size, void* start, const char *name);
 		~LinearAllocator();
 
 		void *allocate(size_t size, uint8_t alignment) override;

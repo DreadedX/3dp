@@ -35,7 +35,10 @@ if ("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
   message(SEND_ERROR "In-source builds are not allowed.")
 endif ()
 
-set(EXTRA_FLAGS "-Wall -Wextra -Wno-unknown-pragmas")
+set_property(GLOBAL PROPERTY CXX_STANDARD 14)
+set(CXX_STANDARD_REQUIRED ON)
+
+set(EXTRA_FLAGS "-Wall -Wextra -Wno-unknown-pragmas -fpermissive -fstack-protector")
 
 # If compiling for windows statically link everything
 if (${CMAKE_SYSTEM_NAME} MATCHES Window)

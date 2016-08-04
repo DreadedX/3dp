@@ -10,7 +10,8 @@ include_directories(${${PROJECT_NAME}_INCLUDE_DIRS})
 
 file(GLOB_RECURSE CPP_FILES ${PROJECT_SOURCE_DIR}/*.cpp)
 
+add_definitions(-DNO_LEAKAGE)
+
 add_library(${PROJECT_NAME} SHARED ${CPP_FILES})
 
 target_link_libraries(${PROJECT_NAME} extra tinyobjloader)
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_range_for)

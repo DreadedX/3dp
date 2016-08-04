@@ -66,3 +66,13 @@ void fuse::Entity::_draw() {
 		component->_draw();
 	}
 }
+
+void fuse::Entity::setAttribute(std::string attributeName, std::experimental::any attributeValue) {
+
+	attributes[attributeName] = attributeValue;
+}
+
+bool fuse::Entity::hasAttribute(std::string attributeName) {
+
+	return attributes.find(attributeName) != attributes.end();
+}

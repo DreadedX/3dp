@@ -7,7 +7,7 @@ class StackAllocator : public Allocator {
 
 	public:
 
-		StackAllocator(size_t size, void *start);
+		StackAllocator(size_t size, void *start, const char *name);
 		~StackAllocator();
 
 		void *allocate(size_t size, uint8_t alignment) override;
