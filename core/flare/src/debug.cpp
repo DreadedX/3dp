@@ -3,28 +3,37 @@
 
 /** @brief Draw Entity-Component node
 	@todo Figure out if showChildren is neccesary */
-void entityTreeNode(fuse::Entity *entity, bool showChildren = false) {
+void entityTreeNode(fuse::Entity *entity) {
 
-	if (!entity->isChild() || showChildren) {
+	if (ImGui::TreeNode(print::format("%s (%p)", entity->getAttribute<const char*>("name"), entity).c_str())) {
 
-		if (ImGui::TreeNode(print::format("%s (%p)", entity->name, entity).c_str())) {
+		if (ImGui::TreeNode("Components")) {
+			for (fuse::Component *component : entity->components) {
 
-			if (ImGui::TreeNode("Components")) {
-				for (fuse::Component *component : entity->components) {
-
-					ImGui::BulletText("%s (%p)", component->name, component);
-				}
-				ImGui::TreePop();
-			}
-			if (ImGui::TreeNode("Children")) {
-				for (fuse::Entity *child : entity->children) {
-
-					entityTreeNode(child, true);
-				}
-				ImGui::TreePop();
+				ImGui::BulletText("%s (%p)", component->name, component);
 			}
 			ImGui::TreePop();
 		}
+		if (ImGui::TreeNode("Attributes")) {
+			for (auto i : entity->attributes) {
+
+				/** @todo This needs to have cases for more types */
+				if (i.second.type() == typeid(const char*)) {
+					ImGui::BulletText("%s: %s", i.first.c_str(), std::experimental::any_cast<const char*>(i.second));
+				} else if (i.second.type() == typeid(int)) {
+					ImGui::BulletText("%s: %i", i.first.c_str(), std::experimental::any_cast<int>(i.second));
+				} else if (i.second.type() == typeid(float)) {
+					ImGui::BulletText("%s: %f", i.first.c_str(), std::experimental::any_cast<float>(i.second));
+				} else if (i.second.type() == typeid(glm::vec3)) {
+					glm::vec3 vec3 = std::experimental::any_cast<glm::vec3>(i.second);
+					ImGui::BulletText("%s: %f,%f,%f", i.first.c_str(), vec3.x, vec3.y, vec3.z);
+				} else {
+					ImGui::BulletText("%s: -", i.first.c_str());
+				}
+			}
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
 	}
 }
 

@@ -16,10 +16,8 @@ namespace fuse {
 			void draw();
 
 			/** @brief Create a new entity
-			  @param name - Name assigned to the entity
-			  @param parent - Parent of the entity, nullptr if the entity has no parent
-			  @warning Never call this function with a parent, use Entity::addChild instead */
-			Entity *createEntity(const char *name = "Entity", Entity *parent = nullptr);
+			  @param name - Name assigned to the entity */
+			Entity *createEntity(const char *name = "Entity");
 
 			/** @brief Kill all entities */
 			void killAll();

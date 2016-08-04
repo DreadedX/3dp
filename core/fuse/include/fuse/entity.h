@@ -17,38 +17,20 @@ namespace fuse {
 		/** @brief Bitset used to check if a component is already loaded */
 		std::bitset<MAX_COMPONENTS> componentBitset;
 
-		/** @brief List of all child entities of this entity */
-		Array<Entity*> children;
-
-		/** @brief Entity name */
-		const char *name = "";
-
 		/** @brief Is the entity alive */
 		bool alive = true;
-		/** @brief Is the entity a child of another entity */
-		bool child = false;
-		/** @brief Parent entity
-			@note Only set when the entity is a child*/
-		Entity *parent = nullptr;
 
 		Manager *manager = nullptr;
 
 		/** @brief Entity constructor
 			@param name - Entity name
-			@param entity - Parent entity, nullptr if this entity is not a child
 			@warning You should never manually call this function, use the entity manager to create entities instead */
-		Entity(Manager *manager, Allocator *_allocator, const char *name, Entity *entity);
+		Entity(Manager *manager, Allocator *_allocator);
 		/** @brief Entity destructor */
 		~Entity();
 
 		Allocator *_allocator;
 
-		/** @brief Create a new entity that is a chil of this entity
-			@param name - Child entity name */
-		Entity *createChild(const char *name = "Entity");
-		/** @brief See if entity is a child entity
-			@returns True if entity is a child */
-		bool isChild();
 		/** @brief Queue entity for removal */
 		void kill();
 		/** @brief Check if entity is alive

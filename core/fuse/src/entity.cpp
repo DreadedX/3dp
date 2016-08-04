@@ -1,24 +1,12 @@
 #include "fuse/fuse.h"
 
-fuse::Entity::Entity(Manager *manager, Allocator *_allocator, const char *name, fuse::Entity *entity) {
+fuse::Entity::Entity(Manager *manager, Allocator *_allocator) {
 
 	this->manager = manager;
 	this->_allocator = _allocator;
-	this->name = name;
-
-	if (entity != nullptr) {
-
-		parent = entity;
-		child = true;
-	}
 }
 
 fuse::Entity::~Entity() {
-
-	for (Entity *child : children) {
-
-		child->kill();
-	}
 
 	for (Component *component : components) {
 
@@ -26,20 +14,6 @@ fuse::Entity::~Entity() {
 		allocator::make_delete(*_allocator, *component);
 	}
 }
-
-bool fuse::Entity::isChild() {
-
-	return child;
-}
-
-/** @todo Make a list of all the children, that get killed when the parent gets killed */
-fuse::Entity *fuse::Entity::createChild(const char *name) {
-
-	Entity *child = this->manager->createEntity(name, this);
-	children.add(child);
-	return child;
-}
-
 
 void fuse::Entity::kill() {
 

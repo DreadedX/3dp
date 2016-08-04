@@ -67,10 +67,13 @@ int main() {
 		player->addComponent<JoyDebugControl>();
 	}
 
-	fuse::Entity *house = flare::getState()->mainState->manager->createEntity("Sponza");
-	house->setAttribute("position", glm::vec3(0.0f, 0.0f, 0.0f));
-	house->setAttribute("scale", glm::vec3(0.1f, 0.1f, 0.1f));
-	house->addComponent<flare::component::Object>("demo/model/sponza");
+	fuse::Entity *sponza = flare::getState()->mainState->manager->createEntity("Sponza");
+
+	sponza->setAttribute("position", glm::vec3(0.0f, 0.0f, 0.0f));
+	sponza->setAttribute("scale", glm::vec3(0.1f, 0.1f, 0.1f));
+	sponza->addComponent<flare::component::Object>("demo/model/sponza");
+
+	sponza->setAttribute("test", 123);
 
 	// Example of post proccessing
 	// PostFX *scanline = new PostFX("demo/scanline");
