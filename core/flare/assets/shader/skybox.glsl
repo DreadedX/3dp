@@ -21,7 +21,7 @@ void main() {
 
 #pragma fragment
 
-#pragma include CalcTexCoord
+#pragma include include/CalcTexCoord
 
 out vec4 color;
 

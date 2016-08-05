@@ -61,7 +61,7 @@ void flare::render::passes::Basic::init() {
 
 void flare::render::passes::Basic::draw(GameState *gameState) {
 
-	flare::render::setShader(shader);
+	shader->use();
 
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
 

@@ -11,7 +11,7 @@ void main() {
 }
 
 #pragma fragment
-#pragma include Light
+#pragma include include/Light
 uniform Light light;
 uniform vec3 viewPosition;
 
@@ -27,7 +27,7 @@ uniform sampler2D skyboxTexture;
 
 out vec4 FragColor;
 
-#pragma include CalcTexCoord
+#pragma include include/CalcTexCoord
 
 const float kPi = 3.14159265;
 

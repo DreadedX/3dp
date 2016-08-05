@@ -35,12 +35,12 @@ layout (location = 3) out vec3 TexCoordOut;
 layout (location = 4) out vec3 DiffuseColorOut;
 layout (location = 5) out vec4 SpecularColorOut;
 
-#pragma include Material
+#pragma include include/Material
 uniform Material material;
-#pragma include Light
+#pragma include include/Light
 uniform Light light;
 
-#pragma include LinearizeDepth
+#pragma include include/LinearizeDepth
 
 void main() {
 

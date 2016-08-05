@@ -145,7 +145,7 @@ void flare::render::passes::Skybox::draw(GameState *gameState) {
 	glDepthMask(GL_FALSE);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	flare::render::setShader(shader);
+	shader->use();
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTexture);

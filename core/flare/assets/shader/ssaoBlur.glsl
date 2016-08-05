@@ -17,7 +17,7 @@ uniform sampler2D render;
 
 out vec4 FragColor;
 
-#pragma include CalcTexCoord
+#pragma include include/CalcTexCoord
 
 void main() {
 

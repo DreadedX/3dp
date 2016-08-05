@@ -20,8 +20,13 @@ namespace flare {
 			/** @brief Load shader */
 			void _load() override;
 
-			int getLocation(const char *locationName);
+			void use();
+
+			void addTexture(const char *textureName, int textureUnit);
 			int getTexture(const char *textureName);
+
+			void addLocation(const char *locationName);
+			int getLocation(const char *locationName);
 		};
 	}
 }

@@ -35,7 +35,7 @@ PRAGMA_COMMANDS pragmaSwitch (std::string const& s) {
 	return PRAGMA_COUNT;
 }
 
-std::string firstPass(std::string source) {
+std::string firstPass(std::string source, std::string filePath) {
 
 	for (std::size_t pragma = 0; pragma != std::string::npos; pragma = source.find("#pragma", pragma+1)) {
 
@@ -71,9 +71,16 @@ std::string firstPass(std::string source) {
 				end = source.find("\n", pragma);
 
 				ss >> includeName;
-				includeName = "include/" + includeName +".glsl";
+				includeName = filePath.substr(0, filePath.find_last_of("/")+1) + includeName +".glsl";
+				
 
 				r = std::ifstream(includeName);
+
+				if (!r) {
+
+					print::e("Include file not found: %s", includeName.c_str());
+					exit(-1);
+				}
 
 				includeSource = std::string((std::istreambuf_iterator<char>(r)), std::istreambuf_iterator<char>());
 
@@ -127,7 +134,7 @@ void load(std::string assetName, std::string filePath, Array<flux::FileWrite*> *
 
 	std::string source((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
 
-	source = firstPass(source);
+	source = firstPass(source, filePath);
 	source = secondPass(source);
 
 	// VERTEX

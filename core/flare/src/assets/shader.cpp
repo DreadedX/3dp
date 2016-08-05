@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-/** @todo Figure out a way to map this to the special glsl files, an idea is to add a shader compiler to the glsl plugin and map it back to the original file */
+/** @todo Add a glsl error check to the glsl plugin */
 void printError(char* error, const char* source, std::string name) {
 
 		print::w("Shader failed to compile (%s)", name.c_str());
@@ -136,41 +136,46 @@ void flare::asset::Shader::_load() {
 	// locations.toggle = glGetUniformLocation(id, "toggle");
 
 	// This should be loaded from the shaders
-	locations["model"] = 0;
-	locations["view"] = 0;
-	locations["projection"] = 0;
-	locations["depthMVP"] = 0;
-	locations["material.shininess"] = 0;
-	locations["light.direction"] = 0;
-	locations["light.ambient"] = 0;
-	locations["light.diffuse"] = 0;
-	locations["light.specular"] = 0;
-	locations["viewPosition"] = 0;
-	locations["toggle"] = 0;
+	addLocation("model");
+	addLocation("view");
+	addLocation("projection");
+	addLocation("depthMVP");
+	addLocation("material.shininess");
+	addLocation("light.direction");
+	addLocation("light.ambient");
+	addLocation("light.diffuse");
+	addLocation("light.specular");
+	addLocation("viewPosition");
+	addLocation("toggle");
 
+	// This should be loaded from the shaders
+	addTexture("material.diffuse", 0);
+	addTexture("material.normal", 1);
+	addTexture("material.specular", 2);
+	addTexture("render", 1);
+	addTexture("shadow", 3);
+	addTexture("gPositionMap", 0);
+	addTexture("gColorMap", 1);
+	addTexture("gNormalMap", 2);
+	addTexture("gTexCoordMap", 3);
+	addTexture("gDiffuseColorMap", 4);
+	addTexture("gSpecularColorMap", 5);
+	addTexture("ssaoBlurTexture", 6);
+	addTexture("skyboxTexture", 7);
+	addTexture("ssaoTexture", 0);
+	addTexture("noiseTexture", 1);
+	addTexture("skybox", 0);
+	
 	// Set locations for the shader
 	for (auto i : locations) {
 
 		locations[i.first] = glGetUniformLocation(id, i.first.c_str());
 	}
+}
 
-	// This should be loaded from the shaders
-	textures["material.diffuse"] = 0;
-	textures["material.normal"] = 1;
-	textures["material.specular"] = 2;
-	textures["render"] = 1;
-	textures["shadow"] = 3;
-	textures["gPositionMap"] = 0;
-	textures["gColorMap"] = 1;
-	textures["gNormalMap"] = 2;
-	textures["gTexCoordMap"] = 3;
-	textures["gDiffuseColorMap"] = 4;
-	textures["gSpecularColorMap"] = 5;
-	textures["ssaoBlurTexture"] = 6;
-	textures["skyboxTexture"] = 7;
-	textures["ssaoTexture"] = 0;
-	textures["noiseTexture"] = 1;
-	textures["skybox"] = 0;
+void flare::asset::Shader::addLocation(const char *locationName) {
+
+		locations[locationName] = glGetUniformLocation(id, locationName);
 }
 
 int flare::asset::Shader::getLocation(const char *locationName) {
@@ -179,6 +184,31 @@ int flare::asset::Shader::getLocation(const char *locationName) {
 
 	return locations[locationName];
 }
+
+void flare::asset::Shader::addTexture(const char* textureName, int textureUnit) {
+
+	textures[textureName] = textureUnit;
+	addLocation(textureName);
+}
+
+void flare::asset::Shader::use() {
+
+	State::Render *render = &getState()->render;
+
+    if (render->shader == nullptr || render->shader->id != id) {
+
+		glUseProgram(id);
+
+		for(auto i : textures) {
+
+			int location = glGetUniformLocation(id, i.first.c_str());
+			glUniform1i(location, i.second);
+		}
+
+		render->shader = this;
+    }
+}
+
 
 /* @todo Is this really needed */
 int flare::asset::Shader::getTexture(const char *textureName) {

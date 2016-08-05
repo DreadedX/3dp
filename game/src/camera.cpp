@@ -41,16 +41,19 @@ void Camera::_update() {
 		camera->rotation.x += 10 * speed;
 	}
 
-	glm::vec2 delta = glm::vec2(flare::input::getMouse()->position.x - flare::getState()->settings.resolution.x/2, flare::getState()->settings.resolution.y/2 - flare::input::getMouse()->position.y);
+	/** @todo This could be a little bit cleaner */
+	static glm::vec2 previous = flare::input::getMouse()->position;
+	glm::vec2 delta = glm::vec2(flare::input::getMouse()->position.x - previous.x, previous.y - flare::input::getMouse()->position.y);
+	previous = flare::input::getMouse()->position;
 	if (flare::input::keyCheck(GLFW_KEY_SPACE)) {
 
 		camera->rotation.x += delta.x * flare::getState()->settings.mouseSensitivity;
 		camera->rotation.y += delta.y * flare::getState()->settings.mouseSensitivity;
-		glfwSetCursorPos(flare::getState()->window, flare::getState()->settings.resolution.x/2, flare::getState()->settings.resolution.y/2);
+		glfwSetInputMode(flare::getState()->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-		// For some weird reason this is needed for mouse look to work, I have no idea why...
-		double x, y;
-		glfwGetCursorPos(flare::getState()->window, &x, &y);
+	} else {
+
+		glfwSetInputMode(flare::getState()->window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	}
 }
 

@@ -56,7 +56,7 @@ void flare::render::passes::Shadow::init() {
 
 void flare::render::passes::Shadow::draw(GameState *gameState) {
 
-	flare::render::setShader(shader);
+	shader->use();
 
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
 	glViewport(0, 0, shadowMapSize, shadowMapSize);

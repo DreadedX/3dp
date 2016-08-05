@@ -67,7 +67,7 @@ void Gausian::draw(flare::GameState *gameState) {
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	flare::render::setShader(shaderOne);
+	shaderOne->use();
 
 		{
 			glUniform3fv(render->shader->locations["light.direction"], 1, glm::value_ptr(render->light.direction));
@@ -98,7 +98,7 @@ void Gausian::draw(flare::GameState *gameState) {
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	flare::render::setShader(shader);
+	shader->use();
 
 		{
 			glUniform3fv(render->shader->locations["light.direction"], 1, glm::value_ptr(render->light.direction));

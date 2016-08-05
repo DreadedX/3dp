@@ -109,7 +109,7 @@ void flare::render::passes::SSAO::draw(GameState *gameState) {
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-	flare::render::setShader(shader);
+	shader->use();
 
 	glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[1]->textures[1]);
@@ -138,7 +138,7 @@ void flare::render::passes::SSAO::draw(GameState *gameState) {
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-	flare::render::setShader(shaderBlur);
+	shaderBlur->use();
 
 	glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textures[0]);

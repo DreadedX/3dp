@@ -152,18 +152,6 @@ void flare::update() {
 			input::keySet(GLFW_KEY_F5, false);
 		}
 
-		if (input::keyCheck(GLFW_KEY_Z)) {
-			static bool wireframe = false;
-
-			if (wireframe) {
-				glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-				wireframe = false;
-			} else {
-				glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-				wireframe = true;
-			}
-			input::keySet(GLFW_KEY_Z, false);
-		}
 	}, "debug keys" );
 
 	// Run manager logic

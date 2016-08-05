@@ -51,7 +51,7 @@ void flare::render::passes::Geometry::init() {
 
 void flare::render::passes::Geometry::draw(GameState *gameState) {
 
-	flare::render::setShader(shader);
+	shader->use();
 
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
 

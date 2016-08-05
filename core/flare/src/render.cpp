@@ -160,24 +160,6 @@ void flare::render::draw(GameState *gameState) {
 	}
 }
 
-void flare::render::setShader(flare::asset::Shader *shader) {
-
-	State::Render *render = &getState()->render;
-
-    if (render->shader == nullptr || render->shader->id != shader->id) {
-
-		glUseProgram(shader->id);
-
-		for(auto i : shader->textures) {
-
-			glUniform1i(glGetUniformLocation(shader->id, i.first.c_str()), i.second);
-		}
-
-		render->shader = shader;
-	
-    }
-}
-
 float flare::render::getDeltaTime() {
 
     return getState()->render.deltaTime;

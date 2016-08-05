@@ -16,7 +16,7 @@ void main() {
 }
 
 #pragma fragment
-#pragma include Material
+#pragma include include/Material
 uniform Material material;
 out float fragmentdepth;
 

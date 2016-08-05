@@ -51,7 +51,7 @@ void flare::render::passes::Lighting::draw(GameState *gameState) {
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	flare::render::setShader(shader);
+	shader->use();
 
 		{
 			glUniform3fv(render->shader->getLocation("light.direction"), 1, glm::value_ptr(render->light.direction));

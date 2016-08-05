@@ -31,9 +31,9 @@ void main() {
 }
 
 #pragma fragment
-#pragma include Material
+#pragma include include/Material
 uniform Material material;
-#pragma include Light
+#pragma include include/Light
 uniform Light light;
 
 uniform vec3 viewPosition;
@@ -44,7 +44,7 @@ layout (location = 0) out vec4 FragColor;
 layout (location = 1) out vec4 WorldPosOut;
 layout (location = 2) out vec3 NormalOut;
 
-#pragma include LinearizeDepth
+#pragma include include/LinearizeDepth
 
 vec2 poissonDisk[4] = vec2[](
   vec2( -0.94201624, -0.39906216 ),
