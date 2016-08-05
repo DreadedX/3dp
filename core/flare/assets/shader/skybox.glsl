@@ -1,9 +1,9 @@
-#pragma version 330
-#pragma interface_start
+#version 330
+#interface_start
 	vec3 EyeDirection;
-#pragma interface_end
+#interface_end
 
-#pragma vertex
+#vertex
 layout (location = 0) in vec3 position;
 
 uniform mat4 projection;
@@ -19,9 +19,9 @@ void main() {
 	gl_Position = vec4(position, 1.0);
 }
 
-#pragma fragment
+#fragment
 
-#pragma include include/CalcTexCoord
+#import include/CalcTexCoord
 
 out vec4 color;
 

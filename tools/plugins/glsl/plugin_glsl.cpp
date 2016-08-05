@@ -12,12 +12,12 @@ enum PRAGMA_COMMANDS {
 	PRAGMA_COUNT
 };
 
-const std::string STRING_PRAGMA          = "#pragma";
-const std::string STRING_VERSION         = STRING_PRAGMA + " version ";
-const std::string STRING_INTERFACE_START = STRING_PRAGMA + " interface_start";
-const std::string STRING_INTERFACE_END   = STRING_PRAGMA + " interface_end";
-const std::string STRING_VERTEX          = STRING_PRAGMA + " vertex";
-const std::string STRING_FRAGMENT        = STRING_PRAGMA + " fragment";
+const std::string STRING_PRAGMA          = "#";
+const std::string STRING_VERSION         = STRING_PRAGMA + "version ";
+const std::string STRING_INTERFACE_START = STRING_PRAGMA + "interface_start";
+const std::string STRING_INTERFACE_END   = STRING_PRAGMA + "interface_end";
+const std::string STRING_VERTEX          = STRING_PRAGMA + "vertex";
+const std::string STRING_FRAGMENT        = STRING_PRAGMA + "fragment";
 
 // Default version
 std::string version = "330 core";
@@ -30,23 +30,23 @@ PRAGMA_COMMANDS pragmaSwitch (std::string const& s) {
 	if (s == "version") return PRAGMA_VERSION;
 	if (s == "interface_start") return PRAGMA_INTERFACE_START;
 	if (s == "interface_end") return PRAGMA_INTERFACE_END;
-	if (s == "include") return PRAGMA_INCLUDE;
+	if (s == "import") return PRAGMA_INCLUDE;
 
 	return PRAGMA_COUNT;
 }
 
 std::string firstPass(std::string source, std::string filePath) {
 
-	for (std::size_t pragma = 0; pragma != std::string::npos; pragma = source.find("#pragma", pragma+1)) {
+	for (std::size_t pragma = 0; pragma != std::string::npos; pragma = source.find("#", pragma+1)) {
 
-		print::d("Pragma found at: %i", pragma);
+		print::d("Preprocessor instruction found at: %i", pragma);
 
-		std::stringstream ss(source.substr(pragma + 7));
+		std::stringstream ss(source.substr(pragma + 1));
 		std::string s;
 
 		ss >> s;
 
-		print::d("Pragma command: %s", s.c_str());
+		print::d("Preprocessor instruction: %s", s.c_str());
 
 		std::size_t end;
 		std::string includeName;

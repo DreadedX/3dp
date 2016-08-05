@@ -1,8 +1,8 @@
-#pragma version 330 core
-#pragma interface_start
+#version 330 core
+#interface_start
 	vec2 Texcoord;
-#pragma interface_end
-#pragma vertex
+#interface_end
+#vertex
 layout (location = 0) in vec3 position;
 layout (location = 3) in vec2 texcoord;
 
@@ -15,8 +15,8 @@ void main() {
 	vs_out.Texcoord = texcoord;
 }
 
-#pragma fragment
-#pragma include include/Material
+#fragment
+#import include/Material
 uniform Material material;
 out float fragmentdepth;
 

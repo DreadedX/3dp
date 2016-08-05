@@ -1,12 +1,12 @@
-#pragma version 330 core
-#pragma interface_start
+#version 330 core
+#interface_start
 	vec3 FragPosition;
 	vec2 Texcoord;
 	vec3 Normal;
 	vec4 ShadowCoord;
-#pragma interface_end
+#interface_end
 
-#pragma vertex
+#vertex
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 normal;
 layout (location = 2) in vec3 tangent;
@@ -30,10 +30,10 @@ void main() {
 	vs_out.ShadowCoord = depthMVP * model * vec4(position, 1.0);
 }
 
-#pragma fragment
-#pragma include include/Material
+#fragment
+#import include/Material
 uniform Material material;
-#pragma include include/Light
+#import include/Light
 uniform Light light;
 
 uniform vec3 viewPosition;
@@ -44,7 +44,7 @@ layout (location = 0) out vec4 FragColor;
 layout (location = 1) out vec4 WorldPosOut;
 layout (location = 2) out vec3 NormalOut;
 
-#pragma include include/LinearizeDepth
+#import include/LinearizeDepth
 
 vec2 poissonDisk[4] = vec2[](
   vec2( -0.94201624, -0.39906216 ),

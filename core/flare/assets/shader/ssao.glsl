@@ -1,11 +1,11 @@
-#pragma version 330 core
-#pragma interface_start
+#version 330 core
+#interface_start
 	vec3 FragPosition;
 	vec2 Texcoord;
 	vec3 Normal;
-#pragma interface_end
+#interface_end
 
-#pragma vertex
+#vertex
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 normal;
 layout (location = 2) in vec3 tangent;
@@ -17,7 +17,7 @@ void main() {
 	vs_out.Texcoord = texcoord;
 }
 
-#pragma fragment
+#fragment
 uniform sampler2D gPositionMap;
 uniform sampler2D noiseTexture;
 uniform sampler2D gNormalMap;

@@ -1,6 +1,6 @@
-#pragma version 330 core
+#version 330 core
 
-#pragma vertex
+#vertex
 layout (location = 0) in vec3 position;
 
 uniform mat4 model;
@@ -10,8 +10,8 @@ void main() {
 	gl_Position = model * vec4(position, 1.0);
 }
 
-#pragma fragment
-#pragma include include/Light
+#fragment
+#import include/Light
 uniform Light light;
 uniform vec3 viewPosition;
 
@@ -27,7 +27,7 @@ uniform sampler2D skyboxTexture;
 
 out vec4 FragColor;
 
-#pragma include include/CalcTexCoord
+#import include/CalcTexCoord
 
 const float kPi = 3.14159265;
 

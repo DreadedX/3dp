@@ -1,10 +1,10 @@
-#pragma version 330 core
+#version 330 core
 
-#pragma interface_start
+#interface_start
 	vec2 blurTextureCoords[25];
-#pragma interface_end
+#interface_end
 
-#pragma vertex
+#vertex
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 normal;
 layout (location = 2) in vec3 tangent;
@@ -25,7 +25,7 @@ void main() {
 	}
 }
 
-#pragma fragment
+#fragment
 uniform sampler2D renderedTexture;
 
 out vec3 FragColor;

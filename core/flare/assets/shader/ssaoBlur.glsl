@@ -1,6 +1,6 @@
-#pragma version 330 core
+#version 330 core
 
-#pragma vertex
+#vertex
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 normal;
 layout (location = 2) in vec3 tangent;
@@ -11,13 +11,13 @@ void main() {
 	gl_Position = vec4(position, 1.0);
 }
 
-#pragma fragment
+#fragment
 uniform sampler2D ssaoTexture;
 uniform sampler2D render;
 
 out vec4 FragColor;
 
-#pragma include include/CalcTexCoord
+#import include/CalcTexCoord
 
 void main() {
 
