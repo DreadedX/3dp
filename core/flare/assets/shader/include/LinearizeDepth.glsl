@@ -1,3 +1,4 @@
+#export
 const float NEAR = 0.1;
 const float FAR = 1000.0f;
 float LinearizeDepth(float depth)

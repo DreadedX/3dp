@@ -1,3 +1,4 @@
+#export
 struct Light {
 	vec3 direction;
 

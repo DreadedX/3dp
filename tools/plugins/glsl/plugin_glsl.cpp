@@ -9,6 +9,7 @@ enum PRAGMA_COMMANDS {
 	PRAGMA_INTERFACE_START,
 	PRAGMA_INTERFACE_END,
 	PRAGMA_IMPORT,
+	PRAGMA_EXPORT,
 	PRAGMA_COUNT
 };
 
@@ -18,6 +19,7 @@ const std::string STRING_INTERFACE_START = STRING_PRAGMA + "interface_start";
 const std::string STRING_INTERFACE_END   = STRING_PRAGMA + "interface_end";
 const std::string STRING_VERTEX          = STRING_PRAGMA + "vertex";
 const std::string STRING_FRAGMENT        = STRING_PRAGMA + "fragment";
+const std::string STRING_EXPORT          = STRING_PRAGMA + "export";
 
 // Default version
 std::string version = "330 core";
@@ -31,6 +33,7 @@ PRAGMA_COMMANDS pragmaSwitch (std::string const& s) {
 	if (s == "interface_start") return PRAGMA_INTERFACE_START;
 	if (s == "interface_end") return PRAGMA_INTERFACE_END;
 	if (s == "import") return PRAGMA_IMPORT;
+	if (s == "export") return PRAGMA_EXPORT;
 
 	return PRAGMA_COUNT;
 }
@@ -84,12 +87,16 @@ std::string firstPass(std::string source, std::string filePath) {
 
 				includeSource = std::string((std::istreambuf_iterator<char>(r)), std::istreambuf_iterator<char>());
 
-				source.replace(pragma, end - pragma + 1, includeSource);
+				source.replace(pragma, end - pragma + 1, includeSource.substr(STRING_EXPORT.length(), includeSource.length()));
 
 				break;
 
+			case PRAGMA_EXPORT:
+				// If the file is for export skip the file
+				return "";
+
 			default:
-				print::d("Ignoring: %s", s);
+				print::d("Ignoring: %s", s.c_str());
 				break;
 		}
 
@@ -133,6 +140,10 @@ void load(std::string assetName, std::string filePath, Array<flux::FileWrite*> *
 	std::string source((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
 
 	source = firstPass(source, filePath);
+	if (source == "") {
+		print::d("Skipping...");
+		return;
+	}
 	source = secondPass(source);
 
 	// VERTEX
