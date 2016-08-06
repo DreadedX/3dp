@@ -21,7 +21,7 @@ void main() {
 
 #fragment
 
-#import include/CalcTexCoord
+#import include/CalcTexCoord.glsl
 
 out vec4 color;
 

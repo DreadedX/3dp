@@ -35,12 +35,12 @@ layout (location = 3) out vec3 TexCoordOut;
 layout (location = 4) out vec3 DiffuseColorOut;
 layout (location = 5) out vec4 SpecularColorOut;
 
-#import include/Material
+#import include/Material.glsl
 uniform Material material;
-#import include/Light
+#import include/Light.glsl
 uniform Light light;
 
-#import include/LinearizeDepth
+#import include/LinearizeDepth.glsl
 
 void main() {
 

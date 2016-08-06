@@ -77,6 +77,8 @@ add_subdirectory(libs/imgui)
 add_subdirectory(libs/zlib-ng)
 add_subdirectory(libs/tinyobjloader)
 include_directories(${PROJECT_SOURCE_DIR}/libs/tinyobjloader)
+add_subdirectory(libs/xxHash/cmake_unofficial)
+include_directories(${PROJECT_SOURCE_DIR}/libs/xxHash)
 
 # Core engine components
 add_subdirectory(core/extra)

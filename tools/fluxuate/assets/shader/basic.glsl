@@ -31,9 +31,9 @@ void main() {
 }
 
 #fragment
-#import include/Material.glsl
+#import include/Material.glslm
 uniform Material material;
-#import include/Light.glsl
+#import include/Light.glslm
 uniform Light light;
 
 uniform vec3 viewPosition;
@@ -44,7 +44,7 @@ layout (location = 0) out vec4 FragColor;
 layout (location = 1) out vec4 WorldPosOut;
 layout (location = 2) out vec3 NormalOut;
 
-#import include/LinearizeDepth.glsl
+#import include/LinearizeDepth.glslm
 
 vec2 poissonDisk[4] = vec2[](
   vec2( -0.94201624, -0.39906216 ),

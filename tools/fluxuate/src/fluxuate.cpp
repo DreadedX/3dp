@@ -2,17 +2,34 @@
 
 void getDir(std::string dir, Array<std::string> &files, std::string prefix = "");
 void getFile(std::string basePath, std::string fileName, Array<flux::FileWrite*> *files);
-bool hasChanged(std::string filePath);
-
-void writeCache(flux::FileWrite *file, std::string fileName);
-void readCache(flux::FileWrite *file, std::string fileName);
-
-jsoncons::json cache;
-jsoncons::json cacheOld;
 
 std::string packageName;
 
 /** @todo This program contains some really unorganized and confusing code, really needs a refactor */
+
+unsigned long long generateHash(const char *filePath) {
+
+		FILE *hashFile = fopen( filePath, "rb" );
+		assert(hashFile != NULL);
+
+		fseek(hashFile, 0, SEEK_END);
+		size_t len = ftell(hashFile);
+		fseek(hashFile, 0, SEEK_SET);
+
+		byte *data = new byte[len];
+		size_t bytes_read = fread(data, sizeof(byte), len, hashFile);
+		XXH64_hash_t hash = XXH64(data, len, 0);
+		delete[] data;
+
+		// Make sure it read all the data
+		assert(bytes_read == len);
+		fclose(hashFile);
+
+		char actualpath[PATH_MAX+1];
+		print::d("%lu %s (hash)", hash, realpath(filePath, actualpath));
+
+		return hash;
+}
 
 int main(int argc, char* argv[]) {
 
@@ -34,11 +51,7 @@ int main(int argc, char* argv[]) {
 
 	uint count = files.size();
 
-	//flux::FileWrite *fluxFiles = new flux::FileWrite[count];
 	Array<flux::FileWrite*> fluxFiles;
-
-	// NOTE: Uncomment to enable caching
-	cacheOld = jsoncons::json::parse_file("cache/cache.json");
 
 	for (uint i = 0; i < count; ++i) {
 
@@ -47,6 +60,7 @@ int main(int argc, char* argv[]) {
 
 	count = fluxFiles.size();
 
+	print::d("Compressing data");
 	for (flux::FileWrite *file : fluxFiles) {
 
 		file->nameSize = file->name.length();
@@ -58,7 +72,7 @@ int main(int argc, char* argv[]) {
 		uLongf compressedDataSize = file->dataSize + 1024;
 		byte *compressedData = new byte[compressedDataSize];
 
-		int result = compress(compressedData, &compressedDataSize, uncompressedData, uncompressedDataSize);
+		int result = compress2(compressedData, &compressedDataSize, uncompressedData, uncompressedDataSize, Z_BEST_SPEED);
 		if (result != Z_OK) {
 			print::e("Compression of '%s' failed (%i)", file->name.c_str(), result);
 			exit(-1);
@@ -69,9 +83,7 @@ int main(int argc, char* argv[]) {
 		file->compressedDataSize = compressedDataSize;
 		file->data = compressedData;
 	}
-
-	std::ofstream os("cache/cache.json");
-	os << cache;
+	print::d("done");
 
 	ulong totalSize = 0;
 	ulong bytes_written = 0;
@@ -151,8 +163,8 @@ int main(int argc, char* argv[]) {
 	fclose(file);
 
 	assert(bytes_written == totalSize);
-	print::d("======");
-	print::m("Total data size: %llu", totalSize);
+	print::m("Packaging of '%s' completed successfully", packageName.c_str());
+	print::d("Total data size: %llu", totalSize);
 
 	// Preventing memory leaks
 	for (flux::FileWrite *fluxFile : fluxFiles) {
@@ -185,8 +197,6 @@ void getDir(std::string dir, Array<std::string> &files, std::string prefix) {
 
 		if (strcmp(entry->d_name, ".") && strcmp(entry->d_name, "..")) {
 
-			/** @todo Fix this on windows */
-#ifndef WIN32
 			if (entry->d_type == DT_DIR) {
 
 				getDir(dir + "/" + entry->d_name, files, prefix + entry->d_name + "/");
@@ -195,9 +205,6 @@ void getDir(std::string dir, Array<std::string> &files, std::string prefix) {
 
 				files.add(std::string(prefix + entry->d_name));
 			}
-#else
-				files.add(std::string(prefix + entry->d_name));
-#endif
 		}
 	}
 
@@ -206,14 +213,13 @@ void getDir(std::string dir, Array<std::string> &files, std::string prefix) {
 
 void getFile(std::string basePath, std::string fileName, Array<flux::FileWrite*> *files) {
 
-	print::d("======");
+	generateHash( (basePath + "/" + fileName).c_str() );
 
 	std::string extension;
 	std::string baseName;
 	int length = fileName.length();
 	int lastPoint = fileName.find_last_of(".");
 
-	// flux::File file;
 
 	if (lastPoint != 0) {
 
@@ -231,189 +237,80 @@ void getFile(std::string basePath, std::string fileName, Array<flux::FileWrite*>
 	// TODO: This needs needs to go automatically (recursive directory)
 	std::string assetName = packageName + "/" + baseName;
 
-	// TODO: Fix caching
-	// if (hasChanged(filePath)) {
-	if (false) {
-    //
-	// 	print::m("Loading from cache: %s (%s)", assetName.c_str(), extension.c_str());
-    //
-	// 	readCache(file, fileName);
-	// 	// NOTE: For some weird reason, this prints weird stuff, but it writes the correct stuff to the file...
-	} else {
+	print::m("Packing: %s (%s)", assetName.c_str(), extension.c_str());
 
-		print::m("Packing: %s (%s)", assetName.c_str(), extension.c_str());
-
-		/** @todo This should be in a seperate function */
-		typedef Plugin (*getPluginPointer)();
+	/** @todo This should be in a seperate function */
+	typedef Plugin (*getPluginPointer)();
 
 #if WIN32
-		std::string pluginName = "./plugin_" + extension + ".dll";
-		HINSTANCE dll = LoadLibraryA(pluginName.c_str());
+	std::string pluginName = "./plugin_" + extension + ".dll";
+	HINSTANCE dll = LoadLibraryA(pluginName.c_str());
+	DWORD error = GetLastError();
+	if (error == 0) {
+
+		getPluginPointer getPlugin = (getPluginPointer)GetProcAddress(dll, "getPlugin");
 		DWORD error = GetLastError();
-		if (error == 0) {
+		if (error != 0) {
 
-			getPluginPointer getPlugin = (getPluginPointer)GetProcAddress(dll, "getPlugin");
-			DWORD error = GetLastError();
-			if (error != 0) {
-
-				print::e("Invalid plugin (%li)", error);
-				exit(-1);
-			}
+			print::e("Invalid plugin (%li)", error);
+			exit(-1);
+		}
 #else
-		std::string pluginName = "./libplugin_" + extension + ".so";
-		void *handle = dlopen(pluginName.c_str(), RTLD_NOW);
-		char *error = dlerror();
-		if (error == nullptr) {
+	std::string pluginName = "./libplugin_" + extension + ".so";
+	void *handle = dlopen(pluginName.c_str(), RTLD_NOW);
+	char *error = dlerror();
+	if (error == nullptr) {
 
-			getPluginPointer getPlugin = (getPluginPointer)dlsym(handle, "getPlugin");
-			error = dlerror();
-			if (error != nullptr) {
+		getPluginPointer getPlugin = (getPluginPointer)dlsym(handle, "getPlugin");
+		error = dlerror();
+		if (error != nullptr) {
 
-				print::e("Invalid plugin: ", error);
-				print::e(error);
-				exit(-1);
-			}
+			print::e("Invalid plugin: ", error);
+			print::e(error);
+			exit(-1);
+		}
 #endif
 
-			/** @todo This function has a kind of weird name */
-			Plugin plugin = getPlugin();
+		/** @todo This function has a kind of weird name */
+		Plugin plugin = getPlugin();
 
-			print::m("Using: %s", plugin.name);
+		print::m("Using: %s", plugin.name);
 
-			plugin.load(assetName, filePath, files);
+		plugin.load(assetName, filePath, files);
 
-		} else {
-
-#if WIN32
-			print::d("%li", error);
-#else
-			print::d("%s", error);
-#endif
-
-			flux::FileWrite *file = new flux::FileWrite;
-			files->add(file);
-
-			file->name = assetName;
-
-			if (extension == "vertex" || extension == "fragment") {
-
-				std::string assetNameSpecial = assetName + "_" + extension;
-				file->nameSize = assetNameSpecial.size();
-				file->name = assetNameSpecial;
-			}
-
-			if (extension == "mtl") {
-
-				std::string assetNameSpecial = assetName + "_material";
-				file->nameSize = assetNameSpecial.size();
-				file->name = assetNameSpecial;
-			}
-
-			FILE *sourceFile = fopen(filePath.c_str(), "rb");
-			assert(sourceFile != NULL);
-
-			fseek(sourceFile, 0, SEEK_END);
-			file->dataSize = ftell(sourceFile);
-			fseek(sourceFile, 0, SEEK_SET);
-
-			file->data = new byte[file->dataSize];
-			ulong bytes_read = fread(file->data, sizeof(byte), file->dataSize, sourceFile);
-
-			// Make sure it read all the data
-			assert(bytes_read == file->dataSize);
-			fclose(sourceFile);
-		}
-
-		// TODO: Write all data to cache file
-		// writeCache(file, fileName);
-
-	}
-}
-
-/** @todo This needs to be in a seperate file 
-	@todo Clean up this function */
-bool hasChanged(std::string filePath) {
-
-	struct stat attr;
-	stat(filePath.c_str(), &attr);
-
-	// The file has not been modified since...
-	if (cacheOld.has_member(filePath) && cacheOld.get(filePath).get("modified").as<time_t>() == attr.st_mtime) {
-
-		print::d("File has not changed! (date)");
-
-		jsoncons::json file;
-		file.set("hash", cacheOld.get(filePath).get("hash").as<std::string>());
-		file.set("modified", attr.st_mtime);
-
-		cache.set(filePath, file);
-
-		return true;
-	}
-
-	MD5 md5;
-
-	std::string hash(md5.digestFile(strdup(filePath.c_str())));
-
-	jsoncons::json file;
-	file.set("hash", hash);
-	file.set("modified", attr.st_mtime);
-
-	cache.set(filePath, file);
-
-	if (cacheOld.has_member(filePath)) {
-
-		std::string hashOld = cacheOld.get(filePath).get("hash").as<std::string>();
-
-		if (hashOld == hash) {
-
-			print::d("File has not changed! (hash)");
-
-			return true;
-		} else {
-
-			print::d("OLD: %s NEW: %s", hashOld.c_str(), hash.c_str());
-			print::d("File has changed!");
-
-			return false;
-		}
 	} else {
 
-		print::d("File has changed!");
+		flux::FileWrite *file = new flux::FileWrite;
+		files->add(file);
 
-		return false;
+		file->name = assetName;
+
+		if (extension == "vertex" || extension == "fragment") {
+
+			std::string assetNameSpecial = assetName + "_" + extension;
+			file->nameSize = assetNameSpecial.size();
+			file->name = assetNameSpecial;
+		}
+
+		if (extension == "mtl") {
+
+			std::string assetNameSpecial = assetName + "_material";
+			file->nameSize = assetNameSpecial.size();
+			file->name = assetNameSpecial;
+		}
+
+		FILE *sourceFile = fopen(filePath.c_str(), "rb");
+		assert(sourceFile != NULL);
+
+		fseek(sourceFile, 0, SEEK_END);
+		file->dataSize = ftell(sourceFile);
+		fseek(sourceFile, 0, SEEK_SET);
+
+		file->data = new byte[file->dataSize];
+		ulong bytes_read = fread(file->data, sizeof(byte), file->dataSize, sourceFile);
+
+		// Make sure it read all the data
+		assert(bytes_read == file->dataSize);
+		fclose(sourceFile);
 	}
-}
-
-void writeCache(flux::FileWrite *file, std::string fileName) {
-
-	std::ofstream os;
-	os.open("cache/" + fileName + ".flxcache", std::ios::out | std::ios::binary);
-
-	os.write(reinterpret_cast<const char*>(&file->nameSize), sizeof(file->nameSize));
-	os.write(file->name.c_str(), file->nameSize);
-	os.write(reinterpret_cast<const char*>(&file->dataSize), sizeof(file->dataSize));
-	os.write(reinterpret_cast<const char*>(&file->compressedDataSize), sizeof(file->compressedDataSize));
-	// TODO: Data location needs to be calculated when packaging
-	// os.write(reinterpret_cast<const char*>(&file->dataLocation), sizeof(file->dataLocation));
-	os.write(reinterpret_cast<const char*>(file->data), file->compressedDataSize);
-}
-
-void readCache(flux::FileWrite *file, std::string fileName) {
-
-	std::ifstream is;
-	is.open("cache/" + fileName + ".flxcache", std::ios::out | std::ios::binary);
-
-	is.read(reinterpret_cast<char*>(&file->nameSize), sizeof(file->nameSize));
-
-	char *name = new char[file->nameSize];
-	is.read(name, file->nameSize);
-	// NOTE: Char array is correct
-	file->name = std::string(name);
-	delete[] name;
-	
-	is.read(reinterpret_cast<char*>(&file->dataSize), sizeof(file->dataSize));
-	is.read(reinterpret_cast<char*>(&file->compressedDataSize), sizeof(file->compressedDataSize));
-	file->data = new byte[file->compressedDataSize];
-	is.read(reinterpret_cast<char*>(file->data), file->compressedDataSize);
 }

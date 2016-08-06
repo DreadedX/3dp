@@ -11,7 +11,7 @@ void main() {
 }
 
 #fragment
-#import include/Light.glsl
+#import include/Light.glslm
 uniform Light light;
 uniform vec3 viewPosition;
 
@@ -27,7 +27,7 @@ uniform sampler2D skyboxTexture;
 
 out vec4 FragColor;
 
-#import include/CalcTexCoord.glsl
+#import include/CalcTexCoord.glslm
 
 const float kPi = 3.14159265;
 

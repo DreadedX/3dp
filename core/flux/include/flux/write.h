@@ -8,6 +8,7 @@ namespace flux {
 
 		/** @brief Pointer to the data that needs to be stored */
 		byte *data = nullptr;
+		unsigned long long hash = 0;
 	};
 }
 

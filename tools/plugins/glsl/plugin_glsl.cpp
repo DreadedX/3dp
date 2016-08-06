@@ -8,7 +8,7 @@ enum PRAGMA_COMMANDS {
 	PRAGMA_VERSION,
 	PRAGMA_INTERFACE_START,
 	PRAGMA_INTERFACE_END,
-	PRAGMA_INCLUDE,
+	PRAGMA_IMPORT,
 	PRAGMA_COUNT
 };
 
@@ -30,7 +30,7 @@ PRAGMA_COMMANDS pragmaSwitch (std::string const& s) {
 	if (s == "version") return PRAGMA_VERSION;
 	if (s == "interface_start") return PRAGMA_INTERFACE_START;
 	if (s == "interface_end") return PRAGMA_INTERFACE_END;
-	if (s == "import") return PRAGMA_INCLUDE;
+	if (s == "import") return PRAGMA_IMPORT;
 
 	return PRAGMA_COUNT;
 }
@@ -67,11 +67,11 @@ std::string firstPass(std::string source, std::string filePath) {
 				pragma = 0;
 				break;
 
-			case PRAGMA_INCLUDE:
+			case PRAGMA_IMPORT:
 				end = source.find("\n", pragma);
 
 				ss >> includeName;
-				includeName = filePath.substr(0, filePath.find_last_of("/")+1) + includeName +".glsl";
+				includeName = filePath.substr(0, filePath.find_last_of("/")+1) + includeName;
 				
 
 				r = std::ifstream(includeName);
@@ -121,8 +121,6 @@ std::string removeWhitespace(std::string source) {
 	for (std::size_t whitespace = source.find("\n\n"); whitespace != std::string::npos; whitespace = source.find("\n\n")) {
 
 		source.replace(whitespace, 2, "\n");
-
-		print::d("Removing whitespace");
 	}
 
 	return source;
@@ -150,15 +148,6 @@ void load(std::string assetName, std::string filePath, Array<flux::FileWrite*> *
 	vertexString = removeWhitespace(vertexString);
 	print::d(vertexString.c_str());
 
-	flux::FileWrite *vertexFile = new flux::FileWrite;
-	files->add(vertexFile);
-	vertexFile->name = assetName + "/vertex";
-
-	vertexFile->dataSize = vertexString.length();
-	vertexFile->data = new byte[vertexFile->dataSize];
-
-	vertexString.copy(reinterpret_cast<char*>(vertexFile->data), vertexFile->dataSize, 0);
-
 	// FRAGMENT
 	std::string fragmentString;
 
@@ -172,14 +161,35 @@ void load(std::string assetName, std::string filePath, Array<flux::FileWrite*> *
 	fragmentString = removeWhitespace(fragmentString);
 	print::d(fragmentString.c_str());
 
-	flux::FileWrite *fragmentFile = new flux::FileWrite;
-	files->add(fragmentFile);
-	fragmentFile->name = assetName + "/fragment";
+	// Create final asset
+	flux::FileWrite *file = new flux::FileWrite;
+	files->add(file);
 
-	fragmentFile->dataSize = fragmentString.length();
-	fragmentFile->data = new byte[fragmentFile->dataSize];
+	file->name = assetName;
+	file->dataSize = sizeof(size_t) + sizeof(size_t) + vertexString.length() + 1 + fragmentString.length() + 1;
+	file->data = new byte[file->dataSize];
 
-	fragmentString.copy(reinterpret_cast<char*>(fragmentFile->data), fragmentFile->dataSize, 0);
+	uint offset = 0;
+	for (uint i = 0; i < sizeof(size_t); ++i) {
+
+		file->data[i+offset] = reinterpret_cast<size_t>(vertexString.length() + 1) >> (i*8);
+	}
+	offset += sizeof(size_t);
+	for (uint i = 0; i < sizeof(size_t); ++i) {
+
+		file->data[i+offset] = reinterpret_cast<size_t>(fragmentString.length() + 1) >> (i*8);
+	}
+	offset += sizeof(size_t);
+
+	offset += vertexString.copy(reinterpret_cast<char*>(file->data + offset), vertexString.length(), 0);
+	file->data[offset] = '\0';
+	offset += 1;
+
+	offset += fragmentString.copy(reinterpret_cast<char*>(file->data + offset), fragmentString.length(), 0);
+	file->data[offset] = '\0';
+	offset += 1;
+
+	assert(offset == file->dataSize);
 }
 
 Plugin plugin("GLSL Plugin", "Takes in special glsl files and processes them", load);

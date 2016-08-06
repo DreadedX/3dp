@@ -49,92 +49,7 @@ void deleteShader(flare::asset::Shader *shader) {
 
 void flare::asset::Shader::_load() {
 
-	deleteShader(this);
-
-	flux::FileLoad *vertexFile = flux::get(name + "/vertex");
-	flux::FileLoad *fragmentFile = flux::get(name + "/fragment");
-
-	char *vertexSource = reinterpret_cast<char*>(vertexFile->get(true));
-	char *fragmentSource = reinterpret_cast<char*>(fragmentFile->get(true));
-
-	// Load shader source
-	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexSource, NULL);
-	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
-
-	// Compile shader
-	glCompileShader(vertexShader);
-	glCompileShader(fragmentShader);
-
-	// Check compile status
-	GLint vertexStatus;
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vertexStatus);
-	if (vertexStatus != GL_TRUE) {
-		char buffer[512];
-		glGetShaderInfoLog(vertexShader, 512, NULL, buffer);
-
-		printError(buffer, vertexSource, name + "/vertex");
-
-		// delete[] vertexSource;
-		// delete[] fragmentSource;
-		allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, vertexSource);
-		allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, fragmentSource);
-		return;
-	}
-
-	GLint fragmentStatus;
-	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &fragmentStatus);
-	if (fragmentStatus != GL_TRUE) {
-		char buffer[512];
-		glGetShaderInfoLog(fragmentShader, 512, NULL, buffer);
-
-		printError(buffer, fragmentSource, name + "/fragment");
-
-		// delete[] vertexSource;
-		// delete[] fragmentSource;
-		allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, vertexSource);
-		allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, fragmentSource);
-		return;
-	}
-
-	// delete[] vertexSource;
-	// delete[] fragmentSource;
-	allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, vertexSource);
-	allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, fragmentSource);
-
-	// Combine shaders
-	id = glCreateProgram();
-	glAttachShader(id, vertexShader);
-	glAttachShader(id, fragmentShader);
-	glLinkProgram(id);
-
-	// Check program status
-	GLint programStatus;
-	glGetProgramiv(id, GL_LINK_STATUS, &programStatus);
-	if (programStatus != GL_TRUE) {
-		char buffer[512];
-		glGetProgramInfoLog(id, 512, NULL, buffer);
-		print::w("Shader link error: (%s)\n%s", name.c_str(), buffer);
-	}
-
 	// Shader setup stuff
-	// locations.model = glGetUniformLocation(id, "model");
-	// locations.view = glGetUniformLocation(id, "view");
-	// locations.projection = glGetUniformLocation(id, "projection");
-	// locations.depthMVP = glGetUniformLocation(id, "depthMVP");
-    //
-	// locations.material.shininess = glGetUniformLocation(id, "material.shininess");
-    //
-	// locations.light.direction = glGetUniformLocation(id, "light.direction");
-	// locations.light.ambient = glGetUniformLocation(id, "light.ambient");
-	// locations.light.diffuse = glGetUniformLocation(id, "light.diffuse");
-	// locations.light.specular = glGetUniformLocation(id, "light.specular");
-    //
-	// locations.viewPosition = glGetUniformLocation(id, "viewPosition");
-    //
-	// locations.toggle = glGetUniformLocation(id, "toggle");
-
 	// This should be loaded from the shaders
 	addLocation("model");
 	addLocation("view");
@@ -165,6 +80,94 @@ void flare::asset::Shader::_load() {
 	addTexture("ssaoTexture", 0);
 	addTexture("noiseTexture", 1);
 	addTexture("skybox", 0);
+
+	deleteShader(this);
+
+	flux::FileLoad *shaderFile = flux::get(name);
+
+	byte *shaderSource = shaderFile->get(true);
+
+	uint offset = 0;
+	size_t vertexLength = 0;
+	size_t fragmentLength = 0;
+
+	for (uint i = 0; i < sizeof(size_t); ++i) {
+		vertexLength += shaderSource[offset + i] << (i*8);
+	}
+	offset += sizeof(size_t);
+	for (uint i = 0; i < sizeof(size_t); ++i) {
+		fragmentLength += shaderSource[offset + i] << (i*8);
+	}
+	offset += sizeof(size_t);
+
+	char *vertexSource = allocator::make_new_array<char>(*getState()->proxyAllocators.flux, vertexLength);
+	char *fragmentSource = allocator::make_new_array<char>(*getState()->proxyAllocators.flux, fragmentLength);
+
+	for(uint i = 0; i < vertexLength; i++) {
+
+		vertexSource[i] = shaderSource[offset + i];
+	}
+	offset += vertexLength;
+	for(uint i = 0; i < fragmentLength; i++) {
+
+		fragmentSource[i] = shaderSource[offset + i];
+	}
+	allocator::make_delete_array(*getState()->proxyAllocators.flux, shaderSource);
+
+	// Load shader source
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &vertexSource, NULL);
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
+
+	// Compile shader
+	glCompileShader(vertexShader);
+	glCompileShader(fragmentShader);
+
+	// Check compile status
+	GLint vertexStatus;
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vertexStatus);
+	if (vertexStatus != GL_TRUE) {
+		char buffer[512];
+		glGetShaderInfoLog(vertexShader, 512, NULL, buffer);
+
+		printError(buffer, vertexSource, name + "/vertex");
+
+		allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, vertexSource);
+		allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, fragmentSource);
+		return;
+	}
+
+	GLint fragmentStatus;
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &fragmentStatus);
+	if (fragmentStatus != GL_TRUE) {
+		char buffer[512];
+		glGetShaderInfoLog(fragmentShader, 512, NULL, buffer);
+
+		printError(buffer, fragmentSource, name + "/fragment");
+
+		allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, vertexSource);
+		allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, fragmentSource);
+		return;
+	}
+
+	allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, vertexSource);
+	allocator::make_delete_array<char>(*getState()->proxyAllocators.flux, fragmentSource);
+
+	// Combine shaders
+	id = glCreateProgram();
+	glAttachShader(id, vertexShader);
+	glAttachShader(id, fragmentShader);
+	glLinkProgram(id);
+
+	// Check program status
+	GLint programStatus;
+	glGetProgramiv(id, GL_LINK_STATUS, &programStatus);
+	if (programStatus != GL_TRUE) {
+		char buffer[512];
+		glGetProgramInfoLog(id, 512, NULL, buffer);
+		print::w("Shader link error: (%s)\n%s", name.c_str(), buffer);
+	}
 	
 	// Set locations for the shader
 	for (auto i : locations) {

@@ -16,7 +16,7 @@ void main() {
 }
 
 #fragment
-#import include/Material
+#import include/Material.glsl
 uniform Material material;
 out float fragmentdepth;
 

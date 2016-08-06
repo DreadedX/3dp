@@ -18,13 +18,6 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-
-#include "jsoncons/json.hpp"
-
-#pragma GCC diagnostic pop
-
 #ifndef NDEBUG
     #include "imgui.h"
     #include "imgui_impl_glfw_gl3.h"

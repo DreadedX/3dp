@@ -20,12 +20,7 @@
 	#include <dlfcn.h>
 #endif
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-
-#include "jsoncons/json.hpp"
-
-#pragma GCC diagnostic pop
+#include "xxhash.h"
 
 #include "cmdline/cmdline.h"
 
@@ -36,13 +31,6 @@
 #ifndef NDEBUG
     #include "debug_new.h"
 #endif
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wparentheses"
-
-#include "md5.h"
-
-#pragma GCC diagnostic pop
 
 #include "extra/extra.h"
 #include "flux/flux.h"
