@@ -1,6 +1,9 @@
 #ifndef FLARE_INPUT_H
 #define FLARE_INPUT_H
 
+#include "glm/glm.hpp"
+#include "GLFW/glfw3.h"
+
 namespace flare {
 
 	/** @brief Input handling */

@@ -1,3 +1,5 @@
+#include <cstdarg>
+
 #include "extra/print.h"
 
 /** Define the max filename length for spacing */

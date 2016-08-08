@@ -1,4 +1,10 @@
-#include "flare/flare.h"
+#include <GL/glew.h>
+
+#include "flux/file.h"
+#include "flux/read.h"
+
+#include "flare/engine.h"
+#include "flare/assets.h"
 
 void clearTexture(flare::asset::Texture *texture) {
 
@@ -26,12 +32,12 @@ void flare::asset::Texture::_load() {
 
 	/** @todo This needs all kinds of checking */
 	float amount = 4.0f;
-	print::d("Anisotropic: %f", amount);
+	print_d("Anisotropic: %f", amount);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, amount);
 
 	if (name != "") {
-		flux::FileLoad *textureFile = flux::get(name);
-		byte *textureData = textureFile->get();
+		flux::File *textureFile = flux::read::get(name);
+		byte *textureData = textureFile->load();
 
 		int width = 0;
 		int height = 0;
@@ -59,14 +65,14 @@ void flare::asset::Texture::_load() {
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData + offset);
 		} else {
 
-			print::w("'%s' contains an invalid amount of bytes per pixel (%X)", name.c_str(), bytesPerPixel);
+			print_w("'%s' contains an invalid amount of bytes per pixel (%X)", name.c_str(), bytesPerPixel);
 		}
 
 		// delete[] textureData;
 		allocator::make_delete_array<byte>(*getState()->proxyAllocators.flux, textureData);
 	} else {
 
-		print::d("Generating empty texture");
+		print_d("Generating empty texture");
 
 		byte textureData[] =  {0x00, 0x00, 0x00, 0x00};
 

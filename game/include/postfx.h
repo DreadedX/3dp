@@ -1,6 +1,10 @@
 #ifndef POSTFX_H
 #define POSTFX_H
 
+#include "flare/game_state.h"
+#include "flare/render.h"
+#include "flare/passes.h"
+
 struct PostFX : flare::render::passes::Pass {
 
 	PostFX(std::string name, flare::GameState *gameState) {

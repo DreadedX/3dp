@@ -3,12 +3,14 @@
 
 #include <iostream>
 #include <vector>
-#include "flux/flux.h"
+
+#include "extra/array.h"
+#include "flux/file.h"
 
 // This should propably have a function pointer or something
 struct Plugin {
 
-	typedef void (*loadPtr)(std::string assetName, std::string filePath, Array<flux::FileWrite*> *files);
+	typedef void (*loadPtr)(std::string assetName, std::string filePath, Array<flux::File*> *files);
 
 	const char *name;
 	const char *description;

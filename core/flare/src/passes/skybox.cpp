@@ -1,4 +1,11 @@
-#include "flare/flare.h"
+#include <GL/glew.h>
+
+#include "glm/gtc/type_ptr.hpp"
+
+#include "flux/file.h"
+#include "flux/read.h"
+
+#include "flare/engine.h"
 
 GLfloat skyboxVertices[] = {
     // Positions          
@@ -67,8 +74,8 @@ void flare::render::passes::Skybox::init() {
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTexture);
 	for (GLuint i = 0; i < faces.size(); ++i) {
 
-		flux::FileLoad *textureFile = flux::get(faces[i]);
-		byte *textureData = textureFile->get();
+		flux::File *textureFile = flux::read::get(faces[i]);
+		byte *textureData = textureFile->load();
 
 		int width = 0;
 		int height = 0;
@@ -114,7 +121,7 @@ void flare::render::passes::Skybox::init() {
 	GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 	if (status != GL_FRAMEBUFFER_COMPLETE) {
-		print::e("FB error, status: 0x%x", status);
+		print_e("FB error, status: 0x%x", status);
 		exit(-1);
 	}
 

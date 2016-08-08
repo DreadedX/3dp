@@ -1,6 +1,8 @@
 #ifndef FLARE_ENGINE_H
 #define FLARE_ENGINE_H
 
+#include "flare/state.h"
+
 namespace flare {
 
 	/** @brief This function is called to initialize the Flare Engine */

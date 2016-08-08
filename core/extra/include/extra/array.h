@@ -2,7 +2,7 @@
 #define ARRAY_H
 
 #include "extra/typedef.h"
-#include <assert.h>
+#include <cassert>
 
 /** @brief Replacement for std::vector
 	@todo It is still missing some things */

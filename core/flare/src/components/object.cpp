@@ -1,4 +1,10 @@
-#include "flare/flare.h"
+#include <GL/glew.h>
+
+#include "glm/gtc/type_ptr.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
+#include "flare/components/object.h"
+#include "flare/engine.h"
 
 void flare::component::Object::_draw() {
 

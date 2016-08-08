@@ -27,14 +27,6 @@
 // Needed to be able to store assets in the same format as flare
 // #include "flare/assets.h"
 
-// Debug
-#ifndef NDEBUG
-    #include "debug_new.h"
-#endif
-
-#include "extra/extra.h"
-#include "flux/flux.h"
-
 #include "plugin.h"
 
 #endif

@@ -1,4 +1,6 @@
-#include "flare/flare.h"
+#include <GL/glew.h>
+
+#include "flare/engine.h"
 
 void flare::render::passes::Geometry::init() {
 
@@ -42,7 +44,7 @@ void flare::render::passes::Geometry::init() {
 	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 	if (status != GL_FRAMEBUFFER_COMPLETE) {
-		print::e("FB error, status: 0x%x", status);
+		print_e("FB error, status: 0x%x", status);
 		exit(-1);
 	}
 

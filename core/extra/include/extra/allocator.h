@@ -1,10 +1,8 @@
 #ifndef ALLOCATOR_H
 #define ALLOCATOR_H
 
-#include <iostream>
-#include <new>
+#include <string>
 #include <cassert>
-#include <cstdint>
 
 #include "extra/print.h"
 
@@ -26,7 +24,7 @@ class Allocator {
 
 			if(_num_allocations != 0 && _used_memory != 0) {
 
-				print::w("Memory leak detected in %s (%i object, %i bytes)", _name, _num_allocations, _used_memory);
+				print_w("Memory leak detected in %s (%i object, %i bytes)", _name, _num_allocations, _used_memory);
 			}
 
 			_start = nullptr;

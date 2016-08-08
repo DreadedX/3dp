@@ -1,6 +1,13 @@
 #ifndef FLARE_STATE_H
 #define FLARE_STATE_H
 
+#include <GLFW/glfw3.h>
+
+#include "extra/allocator/proxy_allocator.h"
+#include "extra/allocator/free_list_allocator.h"
+#include "flare/game_state.h"
+#include "flare/assets/model.h"
+
 namespace flare {
 
 	struct Timer {

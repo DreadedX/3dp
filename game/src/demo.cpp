@@ -1,4 +1,10 @@
-#include "demo.h"
+#include "flare/engine.h"
+#include "flare/components.h"
+
+#include "camera.h"
+#include "spin.h"
+#include "postfx.h"
+#include "gausian.h"
 
 glm::vec3 cubePositions[] = {
 	glm::vec3( 0.0f,  0.0f,  0.0f), 
@@ -28,7 +34,7 @@ struct JoyDebugControl : fuse::Component {
 
 		if (buttons[3] == 1 && !reloaded) {
 
-			print::d("Reloading assets");
+			print_d("Reloading assets");
 			flare::asset::reload();
 		}
 
@@ -44,16 +50,16 @@ int main() {
 
 	flare::init();
 
-	print::m("Welcome to Flare Engine");
+	print_m("Welcome to Flare Engine");
 
 	// NOTE: This is code to test joystick input
 	int present = glfwJoystickPresent(GLFW_JOYSTICK_2);
-	print::d("Present: %i", present);
+	print_d("Present: %i", present);
 
 	if (present == 1) {
 		const char *name = glfwGetJoystickName(GLFW_JOYSTICK_2);
 
-		print::d("Controller name: %s", name);
+		print_d("Controller name: %s", name);
 
 	}
 	// END
@@ -67,13 +73,12 @@ int main() {
 		player->addComponent<JoyDebugControl>();
 	}
 
+	// It should really be easier to create new entities
 	fuse::Entity *sponza = flare::getState()->mainState->manager->createEntity("Sponza");
 
 	sponza->setAttribute("position", glm::vec3(0.0f, 0.0f, 0.0f));
 	sponza->setAttribute("scale", glm::vec3(0.1f, 0.1f, 0.1f));
 	sponza->addComponent<flare::component::Object>("demo/model/sponza");
-
-	sponza->setAttribute("test", 123);
 
 	// Example of post proccessing
 	// PostFX *scanline = new PostFX("demo/scanline");
@@ -111,14 +116,14 @@ int main() {
 				blur = false;
 			}
 
-			print::d("Toggling pause");
+			print_d("Toggling pause");
 			paused = !paused;
 			flare::input::keySet(GLFW_KEY_P, false);
 		}
 
 		if (flare::input::keyCheck(GLFW_KEY_X) && player != nullptr) {
 
-			print::d("Toggling pause effect");
+			print_d("Toggling pause effect");
 			blur = !blur;
 			flare::input::keySet(GLFW_KEY_X, false);
 		}

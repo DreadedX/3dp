@@ -1,14 +1,5 @@
-// Standard library
-// #include <iostream>
-// #include <fstream>
-// #include <vector>
-// #include <cstring>
-// #include <dirent.h>
-// #include <assert.h>
-// #include <algorithm>
-// #include <ctime>
+#include <cstring>
 
-// System libraries
 #include <png.h>
 
 #include "plugin.h"
@@ -94,9 +85,9 @@ png::Data png::read(const char *name) {
 	return data;
 }
 
-void load(std::string assetName, std::string filePath, Array<flux::FileWrite*> *files) {
+void load(std::string assetName, std::string filePath, Array<flux::File*> *files) {
 
-	flux::FileWrite *file = new flux::FileWrite;
+	flux::File *file = new flux::File;
 	files->add(file);
 	file->name = assetName;
 

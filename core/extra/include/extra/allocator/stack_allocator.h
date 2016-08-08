@@ -1,7 +1,7 @@
 #ifndef STACK_ALLOCATOR_H
 #define STACK_ALLOCATOR_H
 
-#include "extra/allocator/allocator.h"
+#include "extra/allocator.h"
 
 class StackAllocator : public Allocator {
 

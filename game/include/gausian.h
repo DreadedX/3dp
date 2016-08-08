@@ -1,6 +1,8 @@
 #ifndef GAUSIAN_H
 #define GAUSIAN_H
 
+#include "flare/passes.h"
+
 struct Gausian : flare::render::passes::Pass {
 
 	GLfloat test = 0.0;

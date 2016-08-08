@@ -2,7 +2,7 @@
 #include <fstream>
 
 #include "plugin.h"
-#include "extra/extra.h"
+#include "extra/print.h"
 
 enum PRAGMA_COMMANDS {
 	PRAGMA_VERSION,
@@ -42,14 +42,14 @@ std::string firstPass(std::string source, std::string filePath) {
 
 	for (std::size_t pragma = 0; pragma != std::string::npos; pragma = source.find("#", pragma+1)) {
 
-		print::d("Preprocessor instruction found at: %i", pragma);
+		print_d("Preprocessor instruction found at: %i", pragma);
 
 		std::stringstream ss(source.substr(pragma + 1));
 		std::string s;
 
 		ss >> s;
 
-		print::d("Preprocessor instruction: %s", s.c_str());
+		print_d("Preprocessor instruction: %s", s.c_str());
 
 		std::size_t end;
 		std::string includeName;
@@ -81,7 +81,7 @@ std::string firstPass(std::string source, std::string filePath) {
 
 				if (!r) {
 
-					print::e("Include file not found: %s", includeName.c_str());
+					print_e("Include file not found: %s", includeName.c_str());
 					exit(-1);
 				}
 
@@ -96,7 +96,7 @@ std::string firstPass(std::string source, std::string filePath) {
 				return "";
 
 			default:
-				print::d("Ignoring: %s", s.c_str());
+				print_d("Ignoring: %s", s.c_str());
 				break;
 		}
 
@@ -133,7 +133,7 @@ std::string removeWhitespace(std::string source) {
 	return source;
 }
 
-void load(std::string assetName, std::string filePath, Array<flux::FileWrite*> *files) {
+void load(std::string assetName, std::string filePath, Array<flux::File*> *files) {
 
 	std::ifstream t(filePath);
 
@@ -141,7 +141,7 @@ void load(std::string assetName, std::string filePath, Array<flux::FileWrite*> *
 
 	source = firstPass(source, filePath);
 	if (source == "") {
-		print::d("Skipping...");
+		print_d("Skipping...");
 		return;
 	}
 	source = secondPass(source);
@@ -157,7 +157,7 @@ void load(std::string assetName, std::string filePath, Array<flux::FileWrite*> *
 	vertexString += vertex + "\n";
 
 	vertexString = removeWhitespace(vertexString);
-	print::d(vertexString.c_str());
+	print_d(vertexString.c_str());
 
 	// FRAGMENT
 	std::string fragmentString;
@@ -170,10 +170,10 @@ void load(std::string assetName, std::string filePath, Array<flux::FileWrite*> *
 	fragmentString += fragment + "\n";
 
 	fragmentString = removeWhitespace(fragmentString);
-	print::d(fragmentString.c_str());
+	print_d(fragmentString.c_str());
 
 	// Create final asset
-	flux::FileWrite *file = new flux::FileWrite;
+	flux::File *file = new flux::File;
 	files->add(file);
 
 	file->name = assetName;

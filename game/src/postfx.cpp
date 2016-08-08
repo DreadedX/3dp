@@ -1,4 +1,10 @@
-#include "demo.h"
+#include <GL/glew.h>
+
+#include "glm/gtc/type_ptr.hpp"
+
+#include "flare/engine.h"
+
+#include "postfx.h"
 
 void PostFX::init() {
 
@@ -18,7 +24,7 @@ void PostFX::init() {
 	GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 	if (status != GL_FRAMEBUFFER_COMPLETE) {
-		print::e("FB error, status: 0x%x", status);
+		print_e("FB error, status: 0x%x", status);
 		exit(-1);
 	}
 

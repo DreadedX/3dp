@@ -1,7 +1,7 @@
 #ifndef FREE_LIST_ALLOCATOR_H
 #define FREE_LIST_ALLOCATOR_H
 
-#include "extra/allocator/allocator.h"
+#include "extra/allocator.h"
 
 class FreeListAllocator : public Allocator {
 

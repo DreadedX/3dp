@@ -1,4 +1,11 @@
-#include "demo.h"
+#include <GL/glew.h>
+#include <GL/gl.h>
+
+#include "glm/gtc/type_ptr.hpp"
+
+#include "flare/engine.h"
+
+#include "gausian.h"
 
 void Gausian::init() {
 
@@ -18,7 +25,7 @@ void Gausian::init() {
 	GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 	if (status != GL_FRAMEBUFFER_COMPLETE) {
-		print::e("FB error, status: 0x%x", status);
+		print_e("FB error, status: 0x%x", status);
 		exit(-1);
 	}
 
@@ -42,7 +49,7 @@ void Gausian::init() {
 	status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 	if (status != GL_FRAMEBUFFER_COMPLETE) {
-		print::e("FB error, status: 0x%x", status);
+		print_e("FB error, status: 0x%x", status);
 		exit(-1);
 	}
 

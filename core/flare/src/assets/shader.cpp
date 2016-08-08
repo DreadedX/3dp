@@ -1,11 +1,16 @@
-#include "flare/flare.h"
-
 #include <sstream>
+
+#include <GL/glew.h>
+
+#include "flux/file.h"
+#include "flux/read.h"
+#include "flare/engine.h"
+#include "flare/assets/shader.h"
 
 /** @todo Add a glsl error check to the glsl plugin */
 void printError(char* error, const char* source, std::string name) {
 
-		print::w("Shader failed to compile (%s)", name.c_str());
+		print_w("Shader failed to compile (%s)", name.c_str());
 
 		std::istringstream errorStream(error);
 		std::string errorLine;
@@ -20,18 +25,18 @@ void printError(char* error, const char* source, std::string name) {
 			std::istringstream sourceStream(source);
 			std::string sourceLine;
 
-			print::w(errorLine.c_str());
+			print_w(errorLine.c_str());
 
 			int count = 1;
 			while(std::getline(sourceStream, sourceLine)) {
 
 				if (lineNumber.compare(std::to_string(count-1)) == 0 || lineNumber.compare(std::to_string(count+1)) == 0 ) {
 
-					print::w("	%i: \033[37m%s\033[39m", count, sourceLine.c_str());
+					print_w("	%i: \033[37m%s\033[39m", count, sourceLine.c_str());
 				}
 				if (lineNumber.compare(std::to_string(count)) == 0) {
 
-					print::w("	%i: \033[39m%s", count, sourceLine.c_str());
+					print_w("	%i: \033[39m%s", count, sourceLine.c_str());
 				}
 				count++;
 			}
@@ -83,9 +88,9 @@ void flare::asset::Shader::_load() {
 
 	deleteShader(this);
 
-	flux::FileLoad *shaderFile = flux::get(name);
+	flux::File *shaderFile = flux::read::get(name);
 
-	byte *shaderSource = shaderFile->get(true);
+	byte *shaderSource = shaderFile->load();
 
 	uint offset = 0;
 	size_t vertexLength = 0;
@@ -166,7 +171,7 @@ void flare::asset::Shader::_load() {
 	if (programStatus != GL_TRUE) {
 		char buffer[512];
 		glGetProgramInfoLog(id, 512, NULL, buffer);
-		print::w("Shader link error: (%s)\n%s", name.c_str(), buffer);
+		print_w("Shader link error: (%s)\n%s", name.c_str(), buffer);
 	}
 	
 	// Set locations for the shader

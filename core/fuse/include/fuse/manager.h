@@ -1,6 +1,11 @@
 #ifndef MANAGER_H
 #define MANAGER_H
 
+#include <vector>
+
+#include "extra/allocator.h"
+#include "fuse/entity.h"
+
 namespace fuse {
 
 	class Manager {

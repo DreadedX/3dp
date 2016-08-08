@@ -1,7 +1,7 @@
 #ifndef LINEAR_ALLOCATOR_H
 #define LINEAR_ALLOCATOR_H
 
-#include "extra/allocator/allocator.h"
+#include "extra/allocator.h"
 
 class LinearAllocator : public Allocator {
 

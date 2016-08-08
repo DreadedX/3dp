@@ -1,5 +1,14 @@
 #ifndef NDEBUG
-#include "flare/flare.h"
+
+#include "imgui.h"
+#include "imgui_impl_glfw_gl3.h"
+#include "glm/glm.hpp"
+
+#include "fuse/entity.h"
+
+#include "flare/engine.h"
+#include "flare/input.h"
+#include "flare/debug.h"
 
 /** @brief Draw Entity-Component node
 	@todo Figure out if showChildren is neccesary */

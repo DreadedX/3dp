@@ -46,5 +46,3 @@ endif()
 if(WIN32)
     target_link_libraries(${PROJECT_NAME} glew32 glfw3 opengl32 imm32)
 endif(WIN32)
-
-cotire(${PROJECT_NAME})

@@ -1,35 +1,38 @@
 #include "standard.h"
 
-void getDir(std::string dir, Array<std::string> &files, std::string prefix = "");
-void getFile(std::string basePath, std::string fileName, Array<flux::FileWrite*> *files);
+#include "extra/print.h"
+#include "flux/write.h"
+
+void getDir(std::string dir, Array<std::string> &fileNames, std::string prefix = "");
+void getFile(std::string basePath, std::string fileName, Array<flux::File*> *files);
 
 std::string packageName;
 
 /** @todo This program contains some really unorganized and confusing code, really needs a refactor */
 
-unsigned long long generateHash(const char *filePath) {
-
-		FILE *hashFile = fopen( filePath, "rb" );
-		assert(hashFile != NULL);
-
-		fseek(hashFile, 0, SEEK_END);
-		size_t len = ftell(hashFile);
-		fseek(hashFile, 0, SEEK_SET);
-
-		byte *data = new byte[len];
-		size_t bytes_read = fread(data, sizeof(byte), len, hashFile);
-		XXH64_hash_t hash = XXH64(data, len, 0);
-		delete[] data;
-
-		// Make sure it read all the data
-		assert(bytes_read == len);
-		fclose(hashFile);
-
-		char actualpath[PATH_MAX+1];
-		print::d("%lu %s (hash)", hash, realpath(filePath, actualpath));
-
-		return hash;
-}
+// unsigned long long generateHash(const char *filePath) {
+//
+// 		FILE *hashFile = fopen( filePath, "rb" );
+// 		assert(hashFile != NULL);
+//
+// 		fseek(hashFile, 0, SEEK_END);
+// 		size_t len = ftell(hashFile);
+// 		fseek(hashFile, 0, SEEK_SET);
+//
+// 		byte *data = new byte[len];
+// 		size_t bytes_read = fread(data, sizeof(byte), len, hashFile);
+// 		XXH64_hash_t hash = XXH64(data, len, 0);
+// 		delete[] data;
+//
+// 		// Make sure it read all the data
+// 		assert(bytes_read == len);
+// 		fclose(hashFile);
+//
+// 		char actualpath[PATH_MAX+1];
+// 		print::d("%lu %s (hash)", hash, realpath(filePath, actualpath));
+//
+// 		return hash;
+// }
 
 int main(int argc, char* argv[]) {
 
@@ -45,151 +48,52 @@ int main(int argc, char* argv[]) {
 	std::string dir = a.get<std::string>("dir");
 	packageName = a.get<std::string>("pkg");
 
-	Array<std::string> files;
+	Array<std::string> fileNames;
 
-	getDir(dir, files);
+	getDir(dir, fileNames);
 
-	uint count = files.size();
+	uint count = fileNames.size();
 
-	Array<flux::FileWrite*> fluxFiles;
+	Array<flux::File*> files;
 
 	for (uint i = 0; i < count; ++i) {
 
-		getFile(dir, files[i].c_str(), &fluxFiles);
+		getFile(dir, fileNames[i].c_str(), &files);
 	}
 
-	count = fluxFiles.size();
+	print_m("Compressing data");
+	flux::write::compress(&files);
 
-	print::d("Compressing data");
-	for (flux::FileWrite *file : fluxFiles) {
+	print_m("Writing data");
+	uint totalSize = flux::write::write(&files, (packageName + ".flx").c_str());
 
-		file->nameSize = file->name.length();
-
-		// Compress the data
-		uint uncompressedDataSize = file->dataSize;
-		byte *uncompressedData = file->data;
-		// Temporary size
-		uLongf compressedDataSize = file->dataSize + 1024;
-		byte *compressedData = new byte[compressedDataSize];
-
-		int result = compress2(compressedData, &compressedDataSize, uncompressedData, uncompressedDataSize, Z_BEST_SPEED);
-		if (result != Z_OK) {
-			print::e("Compression of '%s' failed (%i)", file->name.c_str(), result);
-			exit(-1);
-		}
-
-		delete[] file->data;
-
-		file->compressedDataSize = compressedDataSize;
-		file->data = compressedData;
-	}
-	print::d("done");
-
-	ulong totalSize = 0;
-	ulong bytes_written = 0;
-	// TODO: Determine the output file name based on the directory
-	FILE *file = fopen((packageName + ".flx").c_str(), "w+b");
-
-	ulong dataLocation = 4 + sizeof(uint);
-	for (flux::FileWrite *fluxFile : fluxFiles) {
-
-		dataLocation += sizeof(byte);
-		dataLocation += fluxFile->nameSize;
-		dataLocation += sizeof(uint);
-		dataLocation += sizeof(uint);
-		dataLocation += sizeof(ulong);
-	}
-	totalSize += dataLocation;
-	for (flux::FileWrite *fluxFile : fluxFiles) {
-
-		fluxFile->dataLocation = dataLocation;
-		dataLocation += fluxFile->compressedDataSize;
-	}
-	/** @todo This needs to move into flux */
-	bytes_written += fwrite("FLX1", sizeof(byte), 4, file);
-	bytes_written += fwrite(&count, sizeof(byte), sizeof(uint), file);
-	for (flux::FileWrite *fluxFile : fluxFiles) {
-
-		bytes_written += fwrite(&fluxFile->nameSize, sizeof(byte), sizeof(byte), file);
-		bytes_written += fwrite(fluxFile->name.c_str(), sizeof(byte), fluxFile->nameSize, file);
-		bytes_written += fwrite(&fluxFile->dataSize, sizeof(byte), sizeof(uint), file);
-		bytes_written += fwrite(&fluxFile->compressedDataSize, sizeof(byte), sizeof(uint), file);
-		bytes_written += fwrite(&fluxFile->dataLocation, sizeof(byte), sizeof(ulong), file);
-	}
-	for (flux::FileWrite *fluxFile : fluxFiles) {
-
-		bytes_written += fwrite(fluxFile->data, sizeof(byte), fluxFile->compressedDataSize, file);
-
-		totalSize += fluxFile->compressedDataSize;
-	}
-
-	fseek(file, 0, SEEK_END);
-	ulong fileSize = ftell(file);
-	fseek(file, 0, SEEK_SET);
-
-	uint adler = adler32(0L, Z_NULL, 0);
-
-	uint length = 1024;
-	byte *buffer = nullptr;
-
-	bool shouldContinue = true;
-
-	while(shouldContinue) {
-
-		ulong currentPosition = ftell(file);
-
-		if (fileSize - currentPosition < length) {
-
-			length = static_cast<uint>(fileSize - currentPosition);
-
-			shouldContinue = false;
-		}
-
-		buffer = new byte[length];
-
-		uint read = fread(buffer, sizeof(byte), length, file);
-		assert(length == read);
-		adler = adler32(adler, buffer, length);
-
-		delete[] buffer;
-		buffer = nullptr;
-	}
-
-	fseek(file, 0, SEEK_END);
-
-	bytes_written += fwrite(&adler, sizeof(byte), sizeof(uint), file);
-	totalSize += sizeof(uint);
-
-	fclose(file);
-
-	assert(bytes_written == totalSize);
-	print::m("Packaging of '%s' completed successfully", packageName.c_str());
-	print::d("Total data size: %llu", totalSize);
+	print_m("Packaging of '%s' completed successfully", packageName.c_str());
+	print_m("Total data size: %llu", totalSize);
 
 	// Preventing memory leaks
-	for (flux::FileWrite *fluxFile : fluxFiles) {
+	for (flux::File *file : files) {
 
-		delete[] fluxFile->data;
-		fluxFile->data = nullptr;
+		delete[] file->data;
+		file->data = nullptr;
 
-		delete fluxFile;
-		fluxFile = nullptr;
+		delete file;
+		file = nullptr;
 	}
 
-	fluxFiles.clear();
+	files.clear();
 
 	double delta = difftime(clock(), t);
-	print::d("Packing took %f seconds", delta/CLOCKS_PER_SEC);
+	print_d("Packing took %f seconds", delta/CLOCKS_PER_SEC);
 }
 
-void getDir(std::string dir, Array<std::string> &files, std::string prefix) {
+void getDir(std::string dir, Array<std::string> &fileNames, std::string prefix) {
 
 	DIR *dp;
 	struct dirent *entry;
 
 	if ((dp = opendir(dir.c_str())) == NULL) {
 
-		print::e("Error (%i) while opening %s", errno, dir.c_str());
+		print_e("Error (%i) while opening %s", errno, dir.c_str());
 		return;
 	}
 
@@ -199,11 +103,11 @@ void getDir(std::string dir, Array<std::string> &files, std::string prefix) {
 
 			if (entry->d_type == DT_DIR) {
 
-				getDir(dir + "/" + entry->d_name, files, prefix + entry->d_name + "/");
+				getDir(dir + "/" + entry->d_name, fileNames, prefix + entry->d_name + "/");
 
 			} else {
 
-				files.add(std::string(prefix + entry->d_name));
+				fileNames.add(std::string(prefix + entry->d_name));
 			}
 		}
 	}
@@ -211,15 +115,12 @@ void getDir(std::string dir, Array<std::string> &files, std::string prefix) {
 	closedir(dp);
 }
 
-void getFile(std::string basePath, std::string fileName, Array<flux::FileWrite*> *files) {
-
-	generateHash( (basePath + "/" + fileName).c_str() );
+void getFile(std::string basePath, std::string fileName, Array<flux::File*> *files) {
 
 	std::string extension;
 	std::string baseName;
 	int length = fileName.length();
 	int lastPoint = fileName.find_last_of(".");
-
 
 	if (lastPoint != 0) {
 
@@ -237,7 +138,7 @@ void getFile(std::string basePath, std::string fileName, Array<flux::FileWrite*>
 	// TODO: This needs needs to go automatically (recursive directory)
 	std::string assetName = packageName + "/" + baseName;
 
-	print::m("Packing: %s (%s)", assetName.c_str(), extension.c_str());
+	print_m("Packing: %s (%s)", assetName.c_str(), extension.c_str());
 
 	/** @todo This should be in a seperate function */
 	typedef Plugin (*getPluginPointer)();
@@ -265,8 +166,8 @@ void getFile(std::string basePath, std::string fileName, Array<flux::FileWrite*>
 		error = dlerror();
 		if (error != nullptr) {
 
-			print::e("Invalid plugin: ", error);
-			print::e(error);
+			print_e("Invalid plugin: ", error);
+			print_e(error);
 			exit(-1);
 		}
 #endif
@@ -274,13 +175,13 @@ void getFile(std::string basePath, std::string fileName, Array<flux::FileWrite*>
 		/** @todo This function has a kind of weird name */
 		Plugin plugin = getPlugin();
 
-		print::m("Using: %s", plugin.name);
+		print_m("Using: %s", plugin.name);
 
 		plugin.load(assetName, filePath, files);
 
 	} else {
 
-		flux::FileWrite *file = new flux::FileWrite;
+		flux::File *file = new flux::File;
 		files->add(file);
 
 		file->name = assetName;

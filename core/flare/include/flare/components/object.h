@@ -1,6 +1,9 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include "fuse/component.h"
+#include "flare/assets/model.h"
+
 namespace flare {
 
 	namespace component {

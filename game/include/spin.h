@@ -1,6 +1,9 @@
 #ifndef SPIN_H
 #define SPIN_H
 
+#include "fuse/entity.h"
+#include "flare/input.h"
+
 struct Spin : fuse::Component {
 
 	GLfloat rotationBase = 0;

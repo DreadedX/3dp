@@ -1,6 +1,10 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include "glm/glm.hpp"
+
+#include "flare/assets/texture.h"
+
 namespace flare {
 
 	namespace asset {

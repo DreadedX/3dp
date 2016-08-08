@@ -1,15 +1,14 @@
 #ifndef WRITE_H
 #define WRITE_H
 
-namespace flux {
+#include "extra/array.h"
 
-	/** @brief FLX single file header variant for writing data, stores pointer to data that needs to be written */
-	struct FileWrite : FileBase {
+namespace flux::write {
 
-		/** @brief Pointer to the data that needs to be stored */
-		byte *data = nullptr;
-		unsigned long long hash = 0;
-	};
+	#define BUFFER_SIZE 1024
+
+	void compress(Array<flux::File*> *files);
+	uint write(Array<flux::File*> *files, const char *containerName);
 }
 
 #endif

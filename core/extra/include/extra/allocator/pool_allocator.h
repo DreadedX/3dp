@@ -1,7 +1,7 @@
 #ifndef POOL_ALLOCATOR_H
 #define POOL_ALLOCATOR_H
 
-#include "extra/allocator/allocator.h"
+#include "extra/allocator.h"
 
 class PoolAllocator : public Allocator {
 

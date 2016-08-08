@@ -1,7 +1,7 @@
 #ifndef PROXY_ALLOCATOR_H
 #define PROXY_ALLOCATOR_H
 
-#include "allocator.h"
+#include "extra/allocator.h"
 
 class ProxyAllocator : public Allocator {
 

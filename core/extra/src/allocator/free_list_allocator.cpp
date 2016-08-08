@@ -1,6 +1,6 @@
-#include "extra/allocator/free_list_allocator.h"
+#include <cstdio>
 
-#include <stdio.h>
+#include "extra/allocator/free_list_allocator.h"
 
 FreeListAllocator::FreeListAllocator(size_t size, void *start, const char *name)
 	: Allocator(size, start, name), _free_blocks((FreeBlock*)start) {
@@ -79,13 +79,13 @@ void *FreeListAllocator::allocate(size_t size, uint8_t alignment) {
 		return (void*)aligned_adress;
 	}
 
-	print::e("Could not find free block large enough (%lu needed, only %lu available)\n", size, _size-_used_memory);
+	print_e("Could not find free block large enough (%lu needed, only %lu available)\n", size, _size-_used_memory);
 
 	free_block = _free_blocks;
 
 	while(free_block->next != nullptr) {
 
-		print::e("Freeblock %i bytes (start: %p, end: %p)", free_block->size, free_block, free_block + free_block->size);
+		print_e("Freeblock %i bytes (start: %p, end: %p)", free_block->size, free_block, free_block + free_block->size);
 
 		free_block = free_block->next;
 	}

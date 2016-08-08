@@ -1,6 +1,15 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include <experimental/any>
+#include <bitset>
+#include <unordered_map>
+
+#include "extra/array.h"
+#include "extra/allocator.h"
+
+#include "fuse/component.h"
+
 namespace fuse {
 
 	struct Manager;

@@ -1,7 +1,5 @@
 #include "extra/allocator/stack_allocator.h"
 
-#include <stdio.h>
-
 StackAllocator::StackAllocator(size_t size, void* start, const char *name) 
 	: Allocator(size, start, name), _current_pos(start) {
 

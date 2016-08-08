@@ -1,4 +1,9 @@
-#include "flare/flare.h"
+#include <random>
+#include <GL/glew.h>
+
+#include "glm/gtc/type_ptr.hpp"
+
+#include "flare/engine.h"
 
 GLfloat lerp(GLfloat a, GLfloat b, GLfloat f) {
 
@@ -69,7 +74,7 @@ void flare::render::passes::SSAO::init() {
 	GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 	if (status != GL_FRAMEBUFFER_COMPLETE) {
-		print::e("FB error, status: 0x%x", status);
+		print_e("FB error, status: 0x%x", status);
 		exit(-1);
 	}
 
@@ -89,7 +94,7 @@ void flare::render::passes::SSAO::init() {
 	status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 	if (status != GL_FRAMEBUFFER_COMPLETE) {
-		print::e("FB error, status: 0x%x", status);
+		print_e("FB error, status: 0x%x", status);
 		exit(-1);
 	}
 

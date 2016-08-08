@@ -1,4 +1,6 @@
-#include "fuse/fuse.h"
+#include <algorithm>
+
+#include "fuse/manager.h"
 
 void fuse::Manager::init(Allocator *_allocator) {
 

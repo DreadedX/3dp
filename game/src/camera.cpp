@@ -1,4 +1,6 @@
-#include "demo.h"
+#include "flare/engine.h"
+#include "flare/input.h"
+#include "camera.h"
 
 void Camera::_update() {
 

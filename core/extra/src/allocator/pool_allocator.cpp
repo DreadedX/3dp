@@ -1,7 +1,5 @@
 #include "extra/allocator/pool_allocator.h"
 
-#include <stdio.h>
-
 PoolAllocator::PoolAllocator(size_t object_size, uint8_t object_alignment, size_t size, void* start, const char *name) 
 	: Allocator(size, start, name), _object_size(object_size), _object_alignment(object_alignment) {
 

@@ -1,4 +1,4 @@
-#include "fuse/fuse.h"
+#include "fuse/entity.h"
 
 fuse::Entity::Entity(Manager *manager, Allocator *_allocator) {
 

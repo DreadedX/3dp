@@ -1,7 +1,9 @@
-#include "flare/flare.h"
+#include "extra/array.h"
+#include "flux/read.h"
+#include "flare/assets.h"
 
 Array<flare::asset::Asset*> flare::asset::assetList;
-std::map<std::string, flare::asset::Asset*> flare::asset::assetMap;
+std::unordered_map<std::string, flare::asset::Asset*> flare::asset::assetMap;
 Allocator *flare::asset::asset_allocator;
 
 void flare::asset::init(Allocator *_allocator) {
@@ -11,11 +13,11 @@ void flare::asset::init(Allocator *_allocator) {
 
 void flare::asset::reload() {
 
-	flux::reload();
+	flux::read::reload();
 
 	for (Asset *asset : assetList) {
 
-		print::d("Reloading asset: %s", asset->name.c_str());
+		print_d("Reloading asset: %s", asset->name.c_str());
 		asset->_load();
 	}
 }

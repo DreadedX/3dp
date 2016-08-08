@@ -10,5 +10,3 @@ include_directories(${${PROJECT_NAME}_INCLUDE_DIRS})
 file(GLOB_RECURSE CPP_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
 add_library(${PROJECT_NAME} STATIC ${CPP_FILES})
-
-cotire(${PROJECT_NAME})

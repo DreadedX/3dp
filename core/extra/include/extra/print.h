@@ -1,10 +1,8 @@
 #ifndef PRINT_H
 #define PRINT_H
 
-#include <iostream>
-#include <cstdarg>
+#include <string>
 #include <cstring>
-#include <ctime>
 
 /** @brief Print functions that adds logging */
 namespace print {
@@ -42,13 +40,13 @@ namespace print {
 	#define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
 	/** Wraps print::logm so it automatically fills in the filename and linenumber for you */
-	#define m(format, ...) logm(__FILENAME__, __LINE__, format, ##__VA_ARGS__)
+	#define print_m(format, ...) print::logm(__FILENAME__, __LINE__, format, ##__VA_ARGS__)
 	/** Wraps print::logd so it automatically fills in the filename and linenumber for you */
-	#define d(format, ...) logd(__FILENAME__, __LINE__, format, ##__VA_ARGS__)
+	#define print_d(format, ...) print::logd(__FILENAME__, __LINE__, format, ##__VA_ARGS__)
 	/** Wraps print::logw so it automatically fills in the filename and linenumber for you */
-	#define w(format, ...) logw(__FILENAME__, __LINE__, format, ##__VA_ARGS__)
+	#define print_w(format, ...) print::logw(__FILENAME__, __LINE__, format, ##__VA_ARGS__)
 	/** Wraps print::loge so it automatically fills in the filename and linenumber for you */
-	#define e(format, ...) loge(__FILENAME__, __LINE__, format, ##__VA_ARGS__)
+	#define print_e(format, ...) print::loge(__FILENAME__, __LINE__, format, ##__VA_ARGS__)
 }
 
 #endif

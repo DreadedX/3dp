@@ -1,6 +1,10 @@
 #ifndef GAME_STATE_H
 #define GAME_STATE_H
 
+#include "fuse/manager.h"
+#include "flare/render.h"
+#include "flare/passes.h"
+
 namespace flare {
 
 	class GameState {

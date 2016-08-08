@@ -1,6 +1,16 @@
-#include "flare/flare.h"
-#include <thread>
-#include <chrono>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
+#ifndef NDEBUG
+	#include "imgui.h"
+	#include "imgui_impl_glfw_gl3.h"
+#endif
+
+#include "flux/read.h"
+#include "flare/engine.h"
+#include "flare/input.h"
+#include "flare/info.h"
+#include "flare/debug.h"
 
 /** @brief Pointer the settings that are currently used by the engine
   @todo Add a way to set this externally */
@@ -13,7 +23,7 @@ void *arenaStart;
 /** @todo This should be moved to a seperate file */
 void errorCallbackGLFW(int error, const char *description) {
 
-	print::e("GLFW error (%i): %s", error, description);
+	print_e("GLFW error (%i): %s", error, description);
 }
 
 void flare::init() {
@@ -45,11 +55,11 @@ void flare::init() {
 
 	assert(settings != nullptr);
 
-	print::d("The current resolution is %i by %i", settings->resolution.x, settings->resolution.y);
+	print_d("The current resolution is %i by %i", settings->resolution.x, settings->resolution.y);
 
 	if (!glfwInit()) {
 
-		print::e("Failed to initialize glfw!");
+		print_e("Failed to initialize glfw!");
 		exit(-1);
 	}
 
@@ -69,7 +79,7 @@ void flare::init() {
 
 	if (getState()->window == nullptr) {
 
-		print::e("Failed to initialize window");
+		print_e("Failed to initialize window");
 		exit(-1);
 	}
 
@@ -85,7 +95,7 @@ void flare::init() {
 	GLenum glewStatus = glewInit();
 	if (glewStatus != GLEW_OK) {
 
-		print::e("Failed to initialize glew: %s", glewGetErrorString(glewStatus));
+		print_e("Failed to initialize glew: %s", glewGetErrorString(glewStatus));
 		exit(-1);
 	}
 
@@ -100,8 +110,8 @@ void flare::init() {
 	glGetError();
 
 	// Load all asset files
-	flux::init(getState()->proxyAllocators.flux);
-	flux::load();
+	flux::read::init(getState()->proxyAllocators.flux);
+	flux::read::load();
 
 	getState()->mainState = allocator::make_new<MainState>(*getState()->mainAllocator);
 
@@ -115,7 +125,7 @@ void flare::init() {
 
 	render::init();
 
-	print::d("Engine initialized");
+	print_d("Engine initialized");
 }
 
 bool flare::isRunning() {
@@ -147,7 +157,7 @@ void flare::update() {
 
 		if (input::keyCheck(GLFW_KEY_F5)) {
 
-			print::d("Reloading assets");
+			print_d("Reloading assets");
 			asset::reload();
 			input::keySet(GLFW_KEY_F5, false);
 		}
@@ -175,7 +185,7 @@ void flare::terminate(int errorCode) {
 	getState()->mainState->manager->killAll();
 
 	// Close all files
-	flux::close();
+	flux::read::close();
 
 	glfwTerminate();
 
@@ -188,7 +198,7 @@ void flare::terminate(int errorCode) {
 	// Close all open asset files
 	asset::close();
 
-	print::d("The engine is now exiting");
+	print_d("The engine is now exiting");
 
 	allocator::make_delete(*getState()->proxyAllocators.fuse, getState()->mainState->manager);
 

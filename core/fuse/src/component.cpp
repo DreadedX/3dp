@@ -1,4 +1,4 @@
-#include "fuse/fuse.h"
+#include "fuse/component.h"
 
 #pragma push_macro("super")
 #undef super

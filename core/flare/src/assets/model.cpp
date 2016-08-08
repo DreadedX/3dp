@@ -1,4 +1,9 @@
-#include "flare/flare.h"
+#include <GL/glew.h>
+
+#include "flux/file.h"
+#include "flux/read.h"
+#include "flare/engine.h"
+#include "flare/assets/model.h"
 
 /** @todo The majority of this code should move into fluxuate, in order to store the raw data for faster parsing at runtime
 	@todo This uses to much data */
@@ -26,10 +31,10 @@ void flare::asset::Model::_load() {
 
 	double timer = glfwGetTime();
 
-	flux::FileLoad *modelFile = flux::get(name);
+	flux::File *modelFile = flux::read::get(name);
 	// flux::FileLoad *materialFile = flux::get("base/" + name + "_material");
 
-	byte *modelData = modelFile->get();
+	byte *modelData = modelFile->load();
 	// byte *materialData = materialFile->get();
 
 	clearMeshes(this);
@@ -237,14 +242,14 @@ void flare::asset::Model::_load() {
 	allocator::make_delete_array(*getState()->proxyAllocators.model, indexCount);
 	allocator::make_delete_array(*getState()->proxyAllocators.model, vertexCount);
 
-	print::d("File memory usage: %i bytes (%i%%)", getState()->proxyAllocators.flux->getUsedMemory(),
+	print_d("File memory usage: %i bytes (%i%%)", getState()->proxyAllocators.flux->getUsedMemory(),
 			(int)(getState()->proxyAllocators.flux->getUsedMemory()*100/getState()->proxyAllocators.flux->getSize()));
 
 	// delete[] modelData;
 	allocator::make_delete_array<byte>(*getState()->proxyAllocators.flux, modelData);
 
 	double delta = glfwGetTime() - timer;
-	print::d("Model loaded in %f seconds", delta);
+	print_d("Model loaded in %f seconds", delta);
 }
 
 flare::asset::Model::~Model() {

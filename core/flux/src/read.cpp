@@ -1,24 +1,30 @@
-#include "flux/flux.h"
+#include <unordered_map>
+
+#include <zlib.h>
+
+#include "extra/allocator.h"
+#include "flux/file.h"
+#include "flux/read.h"
 
 /** @brief List of all the loaded container */
 // Array<flux::Flux*> files;
 #include <vector>
-std::vector<flux::Flux*> files;
+std::vector<flux::Container*> containers;
 
 /** @brief Amount of loaded files */
 int count = 0;
 
 /** @brief Hash map used to make sure we are not loading FLX files more than once */
-std::map<std::string, flux::FileLoad*> map;
+std::unordered_map<std::string, flux::File*> map;
 
 Allocator *flux_allocator = nullptr;
 
-void flux::init(Allocator *_allocator) {
+void flux::read::init(Allocator *_allocator) {
 
 	flux_allocator = _allocator;
 }
 
-void flux::load() {
+void flux::read::load() {
 
 	/** @todo Make it find all flux files automatically */
 	count = 2;
@@ -26,25 +32,23 @@ void flux::load() {
 
 	for (int i = 0; i < count; i++) {
 
-		// flux::Flux *file = new flux::Flux;
-		flux::Flux *file = allocator::make_new<flux::Flux>(*flux_allocator);
-		// files.add(file);
-		files.push_back(file);
+		flux::Container *container = allocator::make_new<flux::Container>(*flux_allocator);
+		container->load(fileNames[i]);
 
-		file->load(fileNames[i]);
+		containers.push_back(container);
 	}
 
-	for (flux::Flux *file : files) {
+	for (flux::Container *container : containers) {
 
-		for (uint i = 0; i < file->indexSize; i++) {
+		for (uint i = 0; i < container->indexSize; i++) {
 
-			print::d("Asset: %s", file->index[i].name.c_str());
+			print_d("Asset: %s", container->index[i].name.c_str());
 		}
 	}
 }
 
 /** @todo Should the file be closed again */
-void flux::Flux::load(std::string name) {
+void flux::Container::load(std::string name) {
 
 	this->name = name;
 	valid = true;
@@ -58,7 +62,7 @@ void flux::Flux::load(std::string name) {
 
 		uint adler = adler32(0L, Z_NULL, 0);
 
-		uint length = 1024;
+		uint bufferSize = BUFFER_SIZE;
 
 		bool shouldContinue = true;
 
@@ -66,18 +70,18 @@ void flux::Flux::load(std::string name) {
 
 			ulong currentPosition = ftell(fileHandle);
 
-			if (fileSize - currentPosition < length) {
+			if (fileSize - currentPosition < bufferSize) {
 
-				length = static_cast<uint>(fileSize - currentPosition);
+				bufferSize = static_cast<uint>(fileSize - currentPosition);
 
 				shouldContinue = false;
 			}
 
-			// byte *buffer = new byte[length];
-			byte *buffer = allocator::make_new_array<byte>(*flux_allocator, length);
+			// byte *buffer = new byte[bufferSize];
+			byte *buffer = allocator::make_new_array<byte>(*flux_allocator, bufferSize);
 
-			fread(buffer, sizeof(byte), length, fileHandle);
-			adler = adler32(adler, buffer, length);
+			fread(buffer, sizeof(byte), bufferSize, fileHandle);
+			adler = adler32(adler, buffer, bufferSize);
 
 			// delete[] buffer;
 			allocator::make_delete_array<byte>(*flux_allocator, buffer);
@@ -88,7 +92,6 @@ void flux::Flux::load(std::string name) {
 
 		fseek(fileHandle, 0, SEEK_SET);
 
-		// byte *header = new byte[6];
 		byte *header = allocator::make_new_array<byte>(*flux_allocator, 6);
 		fread(header, sizeof(byte), 4, fileHandle);
 		// Make string null terminated
@@ -96,15 +99,14 @@ void flux::Flux::load(std::string name) {
 		header[5] = 0x00;
 
 		std::string headerString(reinterpret_cast<const char*>(header));
-		// delete[] header;
 		allocator::make_delete_array<byte>(*flux_allocator, header);
 
 		if (headerString == "FLX1" && checksum == adler)  {
 
 			fread(&indexSize, sizeof(byte), sizeof(uint), fileHandle);
-			print::d("FLX Container '%s' contains %i files", name.c_str(), indexSize);
+			print_d("FLX Container '%s' contains %i files", name.c_str(), indexSize);
 			// this->index = new FileLoad[indexSize];
-			this->index = allocator::make_new_array<FileLoad>(*flux_allocator, indexSize);
+			this->index = allocator::make_new_array<File>(*flux_allocator, indexSize);
 
 			for (uint i = 0; i < indexSize; ++i) {
 
@@ -139,7 +141,7 @@ void flux::Flux::load(std::string name) {
 				index[i].parent = this;
 			}
 
-			print::d("FLX Container '%s' indexed", name.c_str());
+			print_d("FLX Container '%s' indexed", name.c_str());
 			valid = true;
 
 			return;
@@ -147,76 +149,66 @@ void flux::Flux::load(std::string name) {
 
 		if (checksum != adler) {
 
-			print::w("'%s' is corrupted", name.c_str());
+			print_w("'%s' is corrupted", name.c_str());
 		} else {
 			
-			print::w("'%s' is not a valid FLX1 file", name.c_str());
+			print_w("'%s' is not a valid FLX1 file", name.c_str());
 		}
 		return;
 	}
-	print::e("Failed to open: '%s'", name.c_str());
+	print_e("Failed to open: '%s'", name.c_str());
 	exit(-1);
 }
 
-flux::FileLoad *flux::get(std::string name) {
+flux::File *flux::read::get(std::string name) {
 
 	if (map.find(name) != map.end()) {
 
 		return map[name];
 	}
 
-	print::e("Asset '%s' not found", name.c_str());
+	print_e("Asset '%s' not found", name.c_str());
 	exit(-1);
 }
 
 /** @todo addNullTerminator should be removed */
-byte *flux::FileLoad::get(bool addNullTerminator) {
+byte *flux::File::load() {
 
-	print::d("Loading file: '%s'", name.c_str());
+	print_d("Loading file: '%s'", name.c_str());
 
 	// byte *compressedData = new byte[compressedDataSize];
 	byte *compressedData = allocator::make_new_array<byte>(*flux_allocator, compressedDataSize);
 	fseek(parent->fileHandle, dataLocation, SEEK_SET);
 	fread(compressedData, sizeof(byte), compressedDataSize, parent->fileHandle);
 
-	byte *data = nullptr;
-	if (!addNullTerminator) {
+	byte *data = allocator::make_new_array<byte>(*flux_allocator, dataSize);
 
-		// data = new byte[dataSize];
-		data = allocator::make_new_array<byte>(*flux_allocator, dataSize);
-	} else {
-
-		// data = new byte[dataSize+1];
-		data = allocator::make_new_array<byte>(*flux_allocator, dataSize + 1);
-		data[dataSize] = 0x00;
-	}
 	uLongf tempDataSize = dataSize; 
 	int result = uncompress(data, &tempDataSize, compressedData, compressedDataSize);
 	assert(dataSize == tempDataSize);
 	if (result != Z_OK) {
 
-		print::e("Uncompression of '%s' failed (%i)", name.c_str(), result);
+		print_e("Uncompression of '%s' failed (%i)", name.c_str(), result);
 		exit(-1);
 	}
 
-	// delete[] compressedData;
 	allocator::make_delete_array<byte>(*flux_allocator, compressedData);
 
 	return data;
 }
 
-void flux::close() {
+void flux::read::close() {
 
-	for (Flux *file : files) {
+	for (Container *container : containers) {
 
-		file->close();
+		container->close();
 
 		// delete files[i];
-		allocator::make_delete<flux::Flux>(*flux_allocator, *file);
+		allocator::make_delete<flux::Container>(*flux_allocator, *container);
 	}
 }
 
-void flux::Flux::close() {
+void flux::Container::close() {
 
 	if (fileHandle != nullptr) {
 
@@ -231,19 +223,19 @@ void flux::Flux::close() {
 	}
 }
 
-void flux::reload() {
+void flux::read::reload() {
 
 	close();
 
-	print::d("Removing old asset list");
+	print_d("Removing old asset list");
 
-	for (uint i = 0; i < files.size(); ++i) {
+	for (uint i = 0; i < containers.size(); ++i) {
 
-		print::d("Freeing memory");
-		files[i]->close();
+		print_d("Freeing memory");
+		containers[i]->close();
 	}
 
-	files.clear();
+	containers.clear();
 
 	map.clear();
 	load();

@@ -1,6 +1,10 @@
 #ifndef PASSES_H
 #define PASSES_H
 
+#include "glm/glm.hpp"
+
+#include "flare/assets/shader.h"
+
 namespace flare {
 
 	class GameState;

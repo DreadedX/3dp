@@ -1,6 +1,10 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
+#include <GL/gl.h>
+
+#include "flare/assets.h"
+
 namespace flare {
 
 	namespace asset {

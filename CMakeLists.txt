@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 2.6)
 project(all)
 
-cmake_policy(SET CMP0011 NEW)
 set( CMAKE_POSITION_INDEPENDENT_CODE ON )
-set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/modules")
-include(cotire)
+
+# cmake_policy(SET CMP0011 NEW)
+# set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/modules")
+# include(cotire)
 
 find_program(CCACHE_FOUND ccache)
 if(CCACHE_FOUND)

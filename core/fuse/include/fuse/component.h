@@ -5,6 +5,17 @@
 	@note Only used for in-engine entity-component tree */
 #define super(parent) super(parent, __func__)
 
+#ifndef MAX_COMPONENTS
+	/** @brief Maximum allowed components
+		@todo This should propably get bigger in the future (Maybe automatically?) */
+    #define MAX_COMPONENTS 32
+#endif
+
+#include <type_traits>
+#include <cassert>
+
+#include "extra/typedef.h"
+
 namespace fuse {
 
 	struct Entity;

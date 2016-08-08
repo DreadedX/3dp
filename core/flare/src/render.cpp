@@ -1,4 +1,9 @@
-#include "flare/flare.h"
+#include <GL/glew.h>
+
+#include "glm/gtc/matrix_transform.hpp"
+
+#include "flare/engine.h"
+#include "flare/input.h"
 
 void flare::render::init() {
 
@@ -111,14 +116,14 @@ void flare::render::draw(GameState *gameState) {
 	static bool debug = false;
 	if (input::keyCheck(GLFW_KEY_F1)) {
 
-		print::d("Toggling debug render");
+		print_d("Toggling debug render");
 
 		debug = !debug;
 		input::keySet(GLFW_KEY_F1, false);
 	}
 	if (input::keyCheck(GLFW_KEY_N)) {
 
-		print::d("Toggling day/night");
+		print_d("Toggling day/night");
 
 		static bool night = false;
 		if (night) {

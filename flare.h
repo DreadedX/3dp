@@ -33,15 +33,6 @@ namespace flare{
 	struct ProxyAllocators;
 };
 
-#include "extra/allocator/allocator.h"
-#include "extra/allocator/free_list_allocator.h"
-#include "extra/allocator/proxy_allocator.h"
-
-#include "extra/extra.h"
-
-#include "flux/flux.h"
-#include "fuse/fuse.h"
-
 #include "flare/debug.h"
 #include "flare/engine.h"
 #include "flare/input.h"

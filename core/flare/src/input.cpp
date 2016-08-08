@@ -1,4 +1,5 @@
-#include "flare/flare.h"
+#include "flare/input.h"
+#include "flare/engine.h"
 
 /** @brief List of all possible keys and if they are pressed or not */
 bool keys[25536] = {false};

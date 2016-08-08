@@ -1,4 +1,8 @@
-#include "flare/flare.h"
+#include <GL/glew.h>
+
+#include "glm/gtc/matrix_transform.hpp"
+
+#include "flare/engine.h"
 
 /** @todo This should propably be in a config */
 float shadowMapSize = 1024*2;
@@ -44,9 +48,9 @@ void flare::render::passes::Shadow::init() {
 	GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
 	if (status != GL_FRAMEBUFFER_COMPLETE) {
-		print::e("FB error, status: 0x%x", status);
+		print_e("FB error, status: 0x%x", status);
 		if (status == GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT) {
-			print::e("error");
+			print_e("error");
 		}
 		exit(-1);
 	}

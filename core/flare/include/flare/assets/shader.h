@@ -1,6 +1,12 @@
 #ifndef SHADER_H
 #define SHADER_H
 
+#include <unordered_map>
+
+#include <GL/gl.h>
+
+#include "flare/assets.h"
+
 namespace flare {
 
 	namespace asset {

@@ -1,7 +1,5 @@
 #include "extra/allocator/linear_allocator.h"
 
-#include <stdio.h>
-
 LinearAllocator::LinearAllocator(size_t size, void *start, const char *name)
 	: Allocator(size, start, name), _current_pos(start) {
 

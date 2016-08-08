@@ -1,8 +1,12 @@
 #include <random>
 
-#include "tiny_obj_loader.h"
+#include <GL/gl.h>
 
-#include "flare/flare.h"
+#include "tiny_obj_loader.h"
+#include "glm/glm.hpp"
+
+#include "flare/assets/model.h"
+
 #include "plugin.h"
 
 namespace obj {
@@ -73,7 +77,7 @@ obj::Model obj::read(const char *name) {
 	/** @todo Make this not hardcoded */
 	bool succes = tinyobj::LoadObj(shapes, materials, err, name, basePath.c_str());
 	if (!succes) {
-		print::e(err.c_str());
+		print_e(err.c_str());
 		exit(1);
 	}
 
@@ -129,16 +133,16 @@ obj::Model obj::read(const char *name) {
 			mesh->specularMap = material.specular_texname;
 		} else {
 
-			print::w("Model '%s' is missing a material", name);
+			print_w("Model '%s' is missing a material", name);
 		}
 	}
 
 	return model;
 }
 
-void load(std::string assetName, std::string filePath, Array<flux::FileWrite*> *files) {
+void load(std::string assetName, std::string filePath, Array<flux::File*> *files) {
 
-	flux::FileWrite *file = new flux::FileWrite;
+	flux::File *file = new flux::File;
 	files->add(file);
 	file->name = assetName;
 
