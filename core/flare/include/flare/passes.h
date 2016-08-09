@@ -4,6 +4,7 @@
 #include "glm/glm.hpp"
 
 #include "flare/assets/shader.h"
+#include "flare/assets/skybox.h"
 
 namespace flare {
 
@@ -58,7 +59,7 @@ namespace flare {
 
 			struct Skybox : Pass {
 
-				GLuint skyboxTexture = 0;
+				asset::Skybox *skybox = nullptr;
 				GLuint vao;
 
 				void init() override;
