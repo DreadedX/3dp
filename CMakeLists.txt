@@ -63,8 +63,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/${CMAKE_SYSTEM_NAME
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
  
-set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
-
 include_directories(${PROJECT_INCLUDE_DIR})
 include_directories(${PROJECT_SOURCE_DIR})
 
@@ -73,9 +71,10 @@ if (WIN32)
 endif ()
 
 # Libraries
-add_subdirectory(libs/leakage)
+include_directories(${PROJECT_SOURCE_DIR}/libs/cmdline)
+include_directories(${PROJECT_SOURCE_DIR}/libs/glm)
 add_subdirectory(libs/imgui)
-add_subdirectory(libs/zlib-ng)
+add_subdirectory(libs/zlib-ng EXCLUDE_FROM_ALL)
 add_subdirectory(libs/tinyobjloader)
 include_directories(${PROJECT_SOURCE_DIR}/libs/tinyobjloader)
 add_subdirectory(libs/xxHash/cmake_unofficial)

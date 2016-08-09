@@ -22,7 +22,7 @@
 
 #include "xxhash.h"
 
-#include "cmdline/cmdline.h"
+#include "cmdline.h"
 
 // Needed to be able to store assets in the same format as flare
 // #include "flare/assets.h"
