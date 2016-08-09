@@ -5,22 +5,19 @@
 
 #include "flare/assets.h"
 
-namespace flare {
+namespace flare::asset {
 
-	namespace asset {
+	/** @brief Asset struct containing texture info */
+	struct Texture : Asset {
 
-		/** @brief Asset struct containing texture info */
-		struct Texture : Asset {
+		~Texture();
 
-			~Texture();
+		/** @brief Texture id */
+		GLuint id = 0;
 
-			/** @brief Texture id */
-			GLuint id = 0;
-
-			/** @brief Load texture */
-			void _load() override;
-		};
-	}
+		/** @brief Load texture */
+		void _load() override;
+	};
 }
 
 #endif

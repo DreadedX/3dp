@@ -3,18 +3,15 @@
 
 #ifndef NDEBUG
 
-namespace flare {
+/** @brief Debug functions */
+namespace flare::debug {
 
-	/** @brief Debug functions */
-	namespace debug {
+	/** Use imgui to create a browsable entity-component tree */
+	void entityTree();
+	void general();
+	void timers();
 
-		/** Use imgui to create a browsable entity-component tree */
-		void entityTree();
-		void general();
-		void timers();
-
-		void debug();
-	}
+	void debug();
 }
 
 #define DEBUG_TIME_INIT flare::Timer timer("empty", 0);
