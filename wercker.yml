@@ -3,7 +3,12 @@ box: debian:testing
 build:
   steps:
     - install-packages:
-        packages: cmake g++ zlib1g-dev doxygen libglfw3-dev libpng-dev libglew-dev pkg-config
+        packages: git cmake g++ zlib1g-dev doxygen libglfw3-dev libpng-dev libglew-dev pkg-config
+
+    - script:
+        name: setup submodules
+        code: |
+            ./tools/scripts/init-repository.sh
 
     - script:
         name: setup cmake
