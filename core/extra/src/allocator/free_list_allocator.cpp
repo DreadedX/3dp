@@ -85,7 +85,7 @@ void *FreeListAllocator::allocate(size_t size, uint8_t alignment) {
 
 	while(free_block->next != nullptr) {
 
-		print_e("Freeblock %i bytes (start: %p, end: %p)", free_block->size, free_block, free_block + free_block->size);
+		print_e("Freeblock %i bytes (start: %p, end: %p)", free_block->size, uintptr_t(free_block), uintptr_t(free_block + free_block->size));
 
 		free_block = free_block->next;
 	}

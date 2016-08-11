@@ -6,6 +6,8 @@
 #include "postfx.h"
 #include "gausian.h"
 
+#include "fmt/printf.h"
+
 glm::vec3 cubePositions[] = {
 	glm::vec3( 0.0f,  0.0f,  0.0f), 
 	glm::vec3( 2.0f,  5.0f, -15.0f), 
@@ -48,6 +50,12 @@ struct JoyDebugControl : fuse::Component {
 // TODO: Controllers cause some issues on wine, they are detected, but are null
 int main() {
 
+	// print_m("Welcome to Flare Engine");
+	// print_d("Welcome to Flare Engine");
+	// print_w("Welcome to Flare Engine");
+	// print_e("Welcome to Flare Engine");
+	// exit(0);
+	//
 	flare::init();
 
 	print_m("Welcome to Flare Engine");

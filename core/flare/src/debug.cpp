@@ -14,7 +14,7 @@
 	@todo Figure out if showChildren is neccesary */
 void entityTreeNode(fuse::Entity *entity) {
 
-	if (ImGui::TreeNode(print::format("%s (%p)", entity->getAttribute<const char*>("name"), entity).c_str())) {
+	if (ImGui::TreeNode( (std::string(entity->getAttribute<const char*>("name")) + " " + std::to_string(uintptr_t(entity)) ).c_str() )) {
 
 		if (ImGui::TreeNode("Components")) {
 			for (fuse::Component *component : entity->components) {

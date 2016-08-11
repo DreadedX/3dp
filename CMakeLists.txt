@@ -36,7 +36,7 @@ if ("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
   message(SEND_ERROR "In-source builds are not allowed.")
 endif ()
 
-set_property(GLOBAL PROPERTY CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 14)
 set(CXX_STANDARD_REQUIRED ON)
 
 set(EXTRA_FLAGS "-Wall -Wextra -Wno-unknown-pragmas -fpermissive -fstack-protector")
@@ -73,12 +73,14 @@ endif ()
 # Libraries
 include_directories(${PROJECT_SOURCE_DIR}/libs/cmdline)
 include_directories(${PROJECT_SOURCE_DIR}/libs/glm)
-add_subdirectory(libs/imgui)
+add_subdirectory(libs/imgui EXCLUDE_FROM_ALL)
 add_subdirectory(libs/zlib-ng EXCLUDE_FROM_ALL)
-add_subdirectory(libs/tinyobjloader)
+add_subdirectory(libs/tinyobjloader EXCLUDE_FROM_ALL)
 include_directories(${PROJECT_SOURCE_DIR}/libs/tinyobjloader)
-add_subdirectory(libs/xxHash/cmake_unofficial)
+add_subdirectory(libs/xxHash/cmake_unofficial EXCLUDE_FROM_ALL)
 include_directories(${PROJECT_SOURCE_DIR}/libs/xxHash)
+add_subdirectory(libs/fmt EXCLUDE_FROM_ALL)
+include_directories(${PROJECT_SOURCE_DIR}/libs/fmt)
 
 # Core engine components
 add_subdirectory(core/extra)

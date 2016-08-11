@@ -123,6 +123,31 @@ std::string secondPass(std::string source) {
 	return source;
 }
 
+std::vector<std::string> findUniform(std::string source) {
+
+	std::vector<std::string> uniforms;
+
+	std::istringstream iss(source);
+	std::string word;
+
+	while(iss >> word) {
+
+		if (word == "uniform") {
+
+			std::string type;
+			iss >> type;
+			std::string name;
+			iss >> name;
+
+			name = name.substr(0, name.length()-1);
+
+			uniforms.push_back(name);
+		}
+	}
+
+	return uniforms;
+}
+
 std::string removeWhitespace(std::string source) {
 
 	for (std::size_t whitespace = source.find("\n\n"); whitespace != std::string::npos; whitespace = source.find("\n\n")) {
@@ -146,6 +171,14 @@ void load(std::string assetName, std::string filePath, Array<flux::File*> *files
 	}
 	source = secondPass(source);
 
+	std::vector<std::string> uniforms = findUniform(source);
+
+	print_d("Uniforms:");
+	for (std::string uniform : uniforms) {
+
+		print_d("%s", uniform.c_str());
+	}
+
 	// VERTEX
 	std::string vertexString;
 
@@ -157,7 +190,7 @@ void load(std::string assetName, std::string filePath, Array<flux::File*> *files
 	vertexString += vertex + "\n";
 
 	vertexString = removeWhitespace(vertexString);
-	print_d(vertexString.c_str());
+	// print_d(vertexString.c_str());
 
 	// FRAGMENT
 	std::string fragmentString;
@@ -170,7 +203,7 @@ void load(std::string assetName, std::string filePath, Array<flux::File*> *files
 	fragmentString += fragment + "\n";
 
 	fragmentString = removeWhitespace(fragmentString);
-	print_d(fragmentString.c_str());
+	// print_d(fragmentString.c_str());
 
 	// Create final asset
 	flux::File *file = new flux::File;
