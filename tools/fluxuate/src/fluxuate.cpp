@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
 
 	for (uint i = 0; i < count; ++i) {
 
-		getFile(dir, fileNames[i].c_str(), &files);
+		getFile(dir, fileNames[i], &files);
 	}
 
 	print_m("Compressing data");
@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
 	print_m("Writing data");
 	uint totalSize = flux::write::write(&files, (packageName + ".flx").c_str());
 
-	print_m("Packaging of '%s' completed successfully", packageName.c_str());
+	print_m("Packaging of '%s' completed successfully", packageName);
 	print_m("Total data size: %llu", totalSize);
 
 	// Preventing memory leaks
@@ -93,7 +93,7 @@ void getDir(std::string dir, Array<std::string> &fileNames, std::string prefix) 
 
 	if ((dp = opendir(dir.c_str())) == NULL) {
 
-		print_e("Error (%i) while opening %s", errno, dir.c_str());
+		print_e("Error (%i) while opening %s", errno, dir);
 		return;
 	}
 
@@ -138,7 +138,7 @@ void getFile(std::string basePath, std::string fileName, Array<flux::File*> *fil
 	// TODO: This needs needs to go automatically (recursive directory)
 	std::string assetName = packageName + "/" + baseName;
 
-	print_m("Packing: %s (%s)", assetName.c_str(), extension.c_str());
+	print_m("Packing: %s (%s)", assetName, extension);
 
 	/** @todo This should be in a seperate function */
 	typedef Plugin (*getPluginPointer)();

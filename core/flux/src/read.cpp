@@ -42,7 +42,7 @@ void flux::read::load() {
 
 		for (uint i = 0; i < container->indexSize; i++) {
 
-			print_d("Asset: %s", container->index[i].name.c_str());
+			print_d("Asset: %s", container->index[i].name);
 		}
 	}
 }
@@ -104,7 +104,7 @@ void flux::Container::load(std::string name) {
 		if (headerString == "FLX1" && checksum == adler)  {
 
 			fread(&indexSize, sizeof(byte), sizeof(uint), fileHandle);
-			print_d("FLX Container '%s' contains %i files", name.c_str(), indexSize);
+			print_d("FLX Container '%s' contains %i files", name, indexSize);
 			// this->index = new FileLoad[indexSize];
 			this->index = allocator::make_new_array<File>(*flux_allocator, indexSize);
 
@@ -127,7 +127,7 @@ void flux::Container::load(std::string name) {
 
 				// printf("\n");
 				// log::d("- - - - ASSET - - - -");
-				// log::d("Name: %s", index[i].name.c_str());
+				// log::d("Name: %s", index[i].name);
 				// printf("[DEBUG] Extra: ");
 				// for (uint j = 0; j < index[i].extraSize; j++) {
 				//     printf("%x ", index[i].extra[j]);
@@ -141,7 +141,7 @@ void flux::Container::load(std::string name) {
 				index[i].parent = this;
 			}
 
-			print_d("FLX Container '%s' indexed", name.c_str());
+			print_d("FLX Container '%s' indexed", name);
 			valid = true;
 
 			return;
@@ -149,14 +149,14 @@ void flux::Container::load(std::string name) {
 
 		if (checksum != adler) {
 
-			print_w("'%s' is corrupted", name.c_str());
+			print_w("'%s' is corrupted", name);
 		} else {
 			
-			print_w("'%s' is not a valid FLX1 file", name.c_str());
+			print_w("'%s' is not a valid FLX1 file", name);
 		}
 		return;
 	}
-	print_e("Failed to open: '%s'", name.c_str());
+	print_e("Failed to open: '%s'", name);
 	exit(-1);
 }
 
@@ -167,14 +167,14 @@ flux::File *flux::read::get(std::string name) {
 		return map[name];
 	}
 
-	print_e("Asset '%s' not found", name.c_str());
+	print_e("Asset '%s' not found", name);
 	exit(-1);
 }
 
 /** @todo addNullTerminator should be removed */
 byte *flux::File::load() {
 
-	print_d("Loading file: '%s'", name.c_str());
+	print_d("Loading file: '%s'", name);
 
 	// byte *compressedData = new byte[compressedDataSize];
 	byte *compressedData = allocator::make_new_array<byte>(*flux_allocator, compressedDataSize);
@@ -188,7 +188,7 @@ byte *flux::File::load() {
 	assert(dataSize == tempDataSize);
 	if (result != Z_OK) {
 
-		print_e("Uncompression of '%s' failed (%i)", name.c_str(), result);
+		print_e("Uncompression of '%s' failed (%i)", name, result);
 		exit(-1);
 	}
 

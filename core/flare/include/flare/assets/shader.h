@@ -2,10 +2,12 @@
 #define SHADER_H
 
 #include <unordered_map>
+#include <tuple>
 
 #include <GL/gl.h>
 
 #include "flare/assets.h"
+#include "flare/assets/texture.h"
 
 namespace flare::asset {
 
@@ -26,6 +28,7 @@ namespace flare::asset {
 
 		void use();
 
+		/** @todo Needs better names */
 		void addTexture(const char *textureName, int textureUnit);
 		int getTexture(const char *textureName);
 

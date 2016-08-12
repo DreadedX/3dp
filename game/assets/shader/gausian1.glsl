@@ -64,6 +64,6 @@ void main() {
 	FragColor += texture(renderedTexture, fs_in.blurTextureCoords[23]).rgb * 0.00723;
 	FragColor += texture(renderedTexture, fs_in.blurTextureCoords[24]).rgb * 0.004571;
 
-	// TODO: Attach this to a uniform to allow transition to blur
+	// TODO: Attach this to a uniform_ to allow transition to blur
 	FragColor = mix(texture(renderedTexture, fs_in.blurTextureCoords[12]).rgb, FragColor, test);
 }  

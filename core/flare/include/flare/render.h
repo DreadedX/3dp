@@ -1,6 +1,10 @@
 #ifndef FLARE_RENDER_H
 #define FLARE_RENDER_H
 
+#include <string>
+
+#include "extra/typedef.h"
+
 namespace flare {
 
 	class GameState;
@@ -18,6 +22,9 @@ namespace flare {
 			@returns The delta frame time */
 		float getDeltaTime();
 
+		void setShaderOutput(std::string texureName, uint textureId);
+
+		uint getShaderOutput(std::string texureName);
 	}
 }
 

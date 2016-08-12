@@ -93,14 +93,14 @@ void main() {
 	vec3 diffuse = light.diffuse * diff * color;
 
 	// Specular (currently not in use)
-	const float kPi = 3.14159265;
-	float shininess = material.shininess;
-	shininess = 32;
-	float energyConservation = (8.0 + shininess) / (8.0 * kPi);
-	vec3 viewDir = normalize(viewPosition - fs_in.FragPosition);
-	vec3 halfwayDir = normalize(lightDir + viewDir);
-	float spec = energyConservation * pow(max(dot(fs_in.Normal, halfwayDir), 0.0), shininess);
-	vec3 specular = light.specular * texture(material.specular, fs_in.Texcoord).rgb * spec;
+	// const float kPi = 3.14159265;
+	// float shininess = material.shininess;
+	// shininess = 32;
+	// float energyConservation = (8.0 + shininess) / (8.0 * kPi);
+	// vec3 viewDir = normalize(viewPosition - fs_in.FragPosition);
+	// vec3 halfwayDir = normalize(lightDir + viewDir);
+	// float spec = energyConservation * pow(max(dot(fs_in.Normal, halfwayDir), 0.0), shininess);
+	// vec3 specular = light.specular * texture(material.specular, fs_in.Texcoord).rgb * spec;
 
 	FragColor.rgb = ambient + (diffuse * CalcShadowFactor());
 

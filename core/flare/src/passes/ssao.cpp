@@ -105,7 +105,7 @@ void flare::render::passes::SSAO::init() {
 	generateSSAOKernel(this);
 }
 
-void flare::render::passes::SSAO::draw(GameState *gameState) {
+void flare::render::passes::SSAO::draw(GameState *) {
 
 	State::Render *render = &getState()->render;
 
@@ -116,12 +116,12 @@ void flare::render::passes::SSAO::draw(GameState *gameState) {
 
 	shader->use();
 
-	glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[1]->textures[1]);
-    glActiveTexture(GL_TEXTURE1);
+	glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("gPositionMap"));
+    glBindTexture(GL_TEXTURE_2D, getShaderOutput("gPositionMap"));
+	glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("noiseTexture"));
     glBindTexture(GL_TEXTURE_2D, textures[2]);
-    glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[1]->textures[2]);
+	glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("gNormalMap"));
+    glBindTexture(GL_TEXTURE_2D, getShaderOutput("gNormalMap"));
 
 	for (GLuint i = 0; i < 128; ++i) {
 
@@ -145,11 +145,11 @@ void flare::render::passes::SSAO::draw(GameState *gameState) {
 
 	shaderBlur->use();
 
-	glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("ssaoTexture"));
     glBindTexture(GL_TEXTURE_2D, textures[0]);
 
-	glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[1]->textures[0]);
+	glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("render"));
+    glBindTexture(GL_TEXTURE_2D, getShaderOutput("render"));
 
 	for (flare::asset::model::Mesh *mesh : render->quad->meshes) {
 
@@ -159,4 +159,6 @@ void flare::render::passes::SSAO::draw(GameState *gameState) {
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	setShaderOutput("render", textures[1]);
 }

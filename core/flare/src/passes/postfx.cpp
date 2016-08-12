@@ -3,12 +3,11 @@
 #include "glm/gtc/type_ptr.hpp"
 
 #include "flare/engine.h"
+#include "flare/passes.h"
 
-#include "postfx.h"
+void flare::render::passes::PostFX::init() {
 
-void PostFX::init() {
-
-	shader = flare::asset::load<flare::asset::Shader>(name);
+	shader = asset::load<flare::asset::Shader>(name);
 
 	GLuint texture = 0;
 
@@ -16,7 +15,7 @@ void PostFX::init() {
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, flare::getState()->settings.resolution.x, flare::getState()->settings.resolution.y, 0, GL_RGBA, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, getState()->settings.resolution.x, getState()->settings.resolution.y, 0, GL_RGBA, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
@@ -33,9 +32,9 @@ void PostFX::init() {
 	textures.add(texture);
 }
 
-void PostFX::draw(flare::GameState *gameState) {
+void flare::render::passes::PostFX::draw(GameState *) {
 
-	flare::State::Render *render = &flare::getState()->render;
+	State::Render *render = &getState()->render;
 	
 	glEnable(GL_BLEND);
 	glBlendEquation(GL_FUNC_ADD);
@@ -46,7 +45,7 @@ void PostFX::draw(flare::GameState *gameState) {
 	glActiveTexture(GL_TEXTURE0);
 
 	/** @todo Need to make this so that it takes the output of the previous shader */
-	glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[previous]->textures[0]);
+	glBindTexture(GL_TEXTURE_2D, getShaderOutput("render"));
 	// This is just a hack to test out some things
 
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -64,7 +63,7 @@ void PostFX::draw(flare::GameState *gameState) {
 
 		glUniform1f(glGetUniformLocation(shader->id, "test"), test);
 
-	for (flare::asset::model::Mesh *mesh : render->quad->meshes) {
+	for (asset::model::Mesh *mesh : render->quad->meshes) {
 
 		glBindVertexArray(mesh->vao);
 
@@ -72,4 +71,6 @@ void PostFX::draw(flare::GameState *gameState) {
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	setShaderOutput("render", textures[0]);
 }

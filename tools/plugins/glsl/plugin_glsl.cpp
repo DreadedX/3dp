@@ -49,7 +49,7 @@ std::string firstPass(std::string source, std::string filePath) {
 
 		ss >> s;
 
-		print_d("Preprocessor instruction: %s", s.c_str());
+		print_d("Preprocessor instruction: %s", s);
 
 		std::size_t end;
 		std::string includeName;
@@ -81,7 +81,7 @@ std::string firstPass(std::string source, std::string filePath) {
 
 				if (!r) {
 
-					print_e("Include file not found: %s", includeName.c_str());
+					print_e("Include file not found: %s", includeName);
 					exit(-1);
 				}
 
@@ -96,7 +96,7 @@ std::string firstPass(std::string source, std::string filePath) {
 				return "";
 
 			default:
-				print_d("Ignoring: %s", s.c_str());
+				print_d("Ignoring: %s", s);
 				break;
 		}
 
@@ -123,31 +123,6 @@ std::string secondPass(std::string source) {
 	return source;
 }
 
-std::vector<std::string> findUniform(std::string source) {
-
-	std::vector<std::string> uniforms;
-
-	std::istringstream iss(source);
-	std::string word;
-
-	while(iss >> word) {
-
-		if (word == "uniform") {
-
-			std::string type;
-			iss >> type;
-			std::string name;
-			iss >> name;
-
-			name = name.substr(0, name.length()-1);
-
-			uniforms.push_back(name);
-		}
-	}
-
-	return uniforms;
-}
-
 std::string removeWhitespace(std::string source) {
 
 	for (std::size_t whitespace = source.find("\n\n"); whitespace != std::string::npos; whitespace = source.find("\n\n")) {
@@ -171,14 +146,6 @@ void load(std::string assetName, std::string filePath, Array<flux::File*> *files
 	}
 	source = secondPass(source);
 
-	std::vector<std::string> uniforms = findUniform(source);
-
-	print_d("Uniforms:");
-	for (std::string uniform : uniforms) {
-
-		print_d("%s", uniform.c_str());
-	}
-
 	// VERTEX
 	std::string vertexString;
 
@@ -190,7 +157,7 @@ void load(std::string assetName, std::string filePath, Array<flux::File*> *files
 	vertexString += vertex + "\n";
 
 	vertexString = removeWhitespace(vertexString);
-	// print_d(vertexString.c_str());
+	// print_d(vertexString);
 
 	// FRAGMENT
 	std::string fragmentString;
@@ -203,7 +170,7 @@ void load(std::string assetName, std::string filePath, Array<flux::File*> *files
 	fragmentString += fragment + "\n";
 
 	fragmentString = removeWhitespace(fragmentString);
-	// print_d(fragmentString.c_str());
+	// print_d(fragmentString);
 
 	// Create final asset
 	flux::File *file = new flux::File;
@@ -211,6 +178,7 @@ void load(std::string assetName, std::string filePath, Array<flux::File*> *files
 
 	file->name = assetName;
 	file->dataSize = sizeof(size_t) + sizeof(size_t) + vertexString.length() + 1 + fragmentString.length() + 1;
+
 	file->data = new byte[file->dataSize];
 
 	uint offset = 0;

@@ -41,11 +41,11 @@ namespace flare::asset {
 
 			if (assetMap.find(name) != assetMap.end()) {
 
-				// print::d("'%s' already loaded", name.c_str());
+				// print::d("'%s' already loaded", name);
 				return reinterpret_cast<T*>(assetMap[name]);
 			}
 
-			print_d("Loading asset '%s'", name.c_str());
+			print_d("Loading asset '%s'", name);
 
 			// T *asset = new T();
 			T* asset = allocator::make_new<T>(*asset_allocator);

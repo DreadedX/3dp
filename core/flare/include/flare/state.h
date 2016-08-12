@@ -1,6 +1,8 @@
 #ifndef FLARE_STATE_H
 #define FLARE_STATE_H
 
+#include <string>
+
 #include <GLFW/glfw3.h>
 
 #include "extra/allocator/proxy_allocator.h"
@@ -65,14 +67,6 @@ namespace flare {
 
 		struct Render {
 
-			enum RENDER_PASSES {
-				GEOMETRY,
-				SKYBOX,
-				SSAO,
-				LIGHTING,
-				POST
-			};
-
 			/** @brief View matrix */
 			glm::mat4 view;
 			/** @brief Projection matrix */
@@ -110,11 +104,11 @@ namespace flare {
 			GLuint vao = 0;
 			/** @brief The currently used shader */
 			flare::asset::Shader *shader = nullptr;
+			std::unordered_map<std::string, GLuint> shaderOutput;
 
 			/** @todo This needs to go */
 			asset::Model *quad = nullptr;
 
-			uint pass = GEOMETRY;
 			// Array<flare::render::passes::Pass*> renderPasses;
 
 			/** @brief Frame delta time */

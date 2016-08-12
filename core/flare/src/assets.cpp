@@ -17,7 +17,7 @@ void flare::asset::reload() {
 
 	for (Asset *asset : assetList) {
 
-		print_d("Reloading asset: %s", asset->name.c_str());
+		print_d("Reloading asset: %s", asset->name);
 		asset->_load();
 	}
 }

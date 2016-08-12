@@ -24,17 +24,16 @@ namespace print {
 	#define FILENAME_LENGTH 30
 
 	FMT_VARIADIC(void, log, std::FILE*, print::Color, const char*, const char*, int, const char*)
-	/** Wraps print::logm so it automatically fills in the filename and linenumber for you */
+
 	#define print_m(format, ...) print::log(stdout, print::RESET, "MESSAGE", __FILENAME__, __LINE__, format, ##__VA_ARGS__)
-	/** Wraps print::logd so it automatically fills in the filename and linenumber for you */
 	#ifndef NDEBUG
 		#define print_d(format, ...) print::log(stdout, print::BLUE, "DEBUG", __FILENAME__, __LINE__, format, ##__VA_ARGS__)
+		#define print_dw(format, ...) print::log(stderr, print::YELLOW, "DWARNING", __FILENAME__, __LINE__, format, ##__VA_ARGS__)
 	#else
 		#define print_d(format, ...)
+		#define print_dw(format, ...)
 	#endif
-	/** Wraps print::logw so it automatically fills in the filename and linenumber for you */
 	#define print_w(format, ...) print::log(stderr, print::YELLOW, "WARNING", __FILENAME__, __LINE__, format, ##__VA_ARGS__)
-	/** Wraps print::loge so it automatically fills in the filename and linenumber for you */
 	#define print_e(format, ...) print::log(stderr, print::RED, "ERROR", __FILENAME__, __LINE__, format, ##__VA_ARGS__)
 }
 

@@ -80,7 +80,7 @@ void flare::render::passes::Basic::draw(GameState *gameState) {
 	State::Render *render = &getState()->render;
 	glUniform3fv(render->shader->getLocation("light.direction"), 1, glm::value_ptr(render->light.direction));
 	glUniform3fv(render->shader->getLocation("light.ambient"), 1, glm::value_ptr(render->light.ambient));
-	glUniform3fv(render->shader->getLocation("viewPosition"), 1, glm::value_ptr(render->camera.position));
+	// glUniform3fv(render->shader->getLocation("viewPosition"), 1, glm::value_ptr(render->camera.position));
 
 	glUniformMatrix4fv(render->shader->getLocation("view"), 1, GL_FALSE, glm::value_ptr(render->view));
 	glUniformMatrix4fv(render->shader->getLocation("projection"), 1, GL_FALSE, glm::value_ptr(render->projection));
@@ -101,15 +101,17 @@ void flare::render::passes::Basic::draw(GameState *gameState) {
 
 	glUniformMatrix4fv(render->shader->getLocation("depthMVP"), 1, GL_FALSE, &depthBiasMVP[0][0]);
 
-	glActiveTexture(GL_TEXTURE3);
-	/** @todo Make this not hardcoded and use the previous shader step */
-	glBindTexture(GL_TEXTURE_2D, gameState->renderPasses[0]->textures[0]);
+	glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("shadow"));
+	glBindTexture(GL_TEXTURE_2D, getShaderOutput("shadow"));
 
-	getState()->render.pass = State::Render::GEOMETRY;
 	gameState->manager->draw();
 
 	glDepthMask(GL_FALSE);
 	glDisable(GL_DEPTH_TEST);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	setShaderOutput("render", textures[0]);
+	setShaderOutput("gPositionMap", textures[1]);
+	setShaderOutput("gNormalMap", textures[2]);
 }

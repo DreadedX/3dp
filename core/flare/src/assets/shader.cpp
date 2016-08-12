@@ -10,7 +10,7 @@
 /** @todo Add a glsl error check to the glsl plugin */
 void printError(char* error, const char* source, std::string name) {
 
-		print_w("Shader failed to compile (%s)", name.c_str());
+		print_w("Shader failed to compile (%s)", name);
 
 		std::istringstream errorStream(error);
 		std::string errorLine;
@@ -25,18 +25,18 @@ void printError(char* error, const char* source, std::string name) {
 			std::istringstream sourceStream(source);
 			std::string sourceLine;
 
-			print_w(errorLine.c_str());
+			print_w("%s", errorLine);
 
 			int count = 1;
 			while(std::getline(sourceStream, sourceLine)) {
 
 				if (lineNumber.compare(std::to_string(count-1)) == 0 || lineNumber.compare(std::to_string(count+1)) == 0 ) {
 
-					print_w("	%i: \033[37m%s\033[39m", count, sourceLine.c_str());
+					print_w("	%i: \033[37m%s\033[39m", count, sourceLine);
 				}
 				if (lineNumber.compare(std::to_string(count)) == 0) {
 
-					print_w("	%i: \033[39m%s", count, sourceLine.c_str());
+					print_w("	%i: \033[39m%s", count, sourceLine);
 				}
 				count++;
 			}
@@ -53,38 +53,6 @@ void deleteShader(flare::asset::Shader *shader) {
 }
 
 void flare::asset::Shader::_load() {
-
-	// Shader setup stuff
-	// This should be loaded from the shaders
-	addLocation("model");
-	addLocation("view");
-	addLocation("projection");
-	addLocation("depthMVP");
-	addLocation("material.shininess");
-	addLocation("light.direction");
-	addLocation("light.ambient");
-	addLocation("light.diffuse");
-	addLocation("light.specular");
-	addLocation("viewPosition");
-	addLocation("toggle");
-
-	// This should be loaded from the shaders
-	addTexture("material.diffuse", 0);
-	addTexture("material.normal", 1);
-	addTexture("material.specular", 2);
-	addTexture("render", 1);
-	addTexture("shadow", 3);
-	addTexture("gPositionMap", 0);
-	addTexture("gColorMap", 1);
-	addTexture("gNormalMap", 2);
-	addTexture("gTexCoordMap", 3);
-	addTexture("gDiffuseColorMap", 4);
-	addTexture("gSpecularColorMap", 5);
-	addTexture("ssaoBlurTexture", 6);
-	addTexture("skyboxTexture", 7);
-	addTexture("ssaoTexture", 0);
-	addTexture("noiseTexture", 1);
-	addTexture("skybox", 0);
 
 	deleteShader(this);
 
@@ -117,6 +85,8 @@ void flare::asset::Shader::_load() {
 
 		fragmentSource[i] = shaderSource[offset + i];
 	}
+	offset += fragmentLength;
+
 	allocator::make_delete_array(*getState()->proxyAllocators.flux, shaderSource);
 
 	// Load shader source
@@ -171,24 +141,43 @@ void flare::asset::Shader::_load() {
 	if (programStatus != GL_TRUE) {
 		char buffer[512];
 		glGetProgramInfoLog(id, 512, NULL, buffer);
-		print_w("Shader link error: (%s)\n%s", name.c_str(), buffer);
+		print_w("Shader link error: (%s)\n%s", name, buffer);
 	}
 	
-	// Set locations for the shader
-	for (auto i : locations) {
-
-		locations[i.first] = glGetUniformLocation(id, i.first.c_str());
-	}
+	// This should be loaded from the shaders
+	addTexture("material.diffuse", 0);
+	addTexture("material.normal", 1);
+	addTexture("material.specular", 2);
+	addTexture("gPositionMap", 0);
+	addTexture("gNormalMap", 2);
+	addTexture("render", 1);
+	addTexture("shadow", 3);
+	addTexture("ssaoBlurTexture", 6);
+	addTexture("skyboxTexture", 7);
+	addTexture("ssaoTexture", 0);
+	addTexture("noiseTexture", 1);
+	addTexture("skybox", 0);
 }
 
 void flare::asset::Shader::addLocation(const char *locationName) {
 
 		locations[locationName] = glGetUniformLocation(id, locationName);
+
+		if (locations[locationName] != -1) {
+
+			print_d("Registered uniform: %s", locationName);
+		} else {
+
+			print_dw("Uniform does not exist in '%s': %s", this->name, locationName);
+		}
 }
 
 int flare::asset::Shader::getLocation(const char *locationName) {
 
-	assert(locations.find(locationName) != locations.end());
+	if(locations.find(locationName) == locations.end()) {
+
+		addLocation(locationName);
+	}
 
 	return locations[locationName];
 }
@@ -197,6 +186,13 @@ void flare::asset::Shader::addTexture(const char* textureName, int textureUnit) 
 
 	textures[textureName] = textureUnit;
 	addLocation(textureName);
+}
+
+int flare::asset::Shader::getTexture(const char *textureName) {
+
+	assert(textures.find(textureName) != textures.end());
+
+	return textures[textureName];
 }
 
 void flare::asset::Shader::use() {
@@ -209,21 +205,11 @@ void flare::asset::Shader::use() {
 
 		for(auto i : textures) {
 
-			int location = glGetUniformLocation(id, i.first.c_str());
-			glUniform1i(location, i.second);
+			glUniform1i(getLocation(i.first.c_str()), i.second);
 		}
 
 		render->shader = this;
     }
-}
-
-
-/* @todo Is this really needed */
-int flare::asset::Shader::getTexture(const char *textureName) {
-
-	assert(textures.find(textureName) != textures.end());
-
-	return textures[textureName];
 }
 
 flare::asset::Shader::~Shader() {

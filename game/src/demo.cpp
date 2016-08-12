@@ -1,10 +1,9 @@
 #include "flare/engine.h"
 #include "flare/components.h"
+#include "flare/passes.h"
 
 #include "camera.h"
 #include "spin.h"
-#include "postfx.h"
-#include "gausian.h"
 
 #include "fmt/printf.h"
 
@@ -50,12 +49,12 @@ struct JoyDebugControl : fuse::Component {
 // TODO: Controllers cause some issues on wine, they are detected, but are null
 int main() {
 
-	// print_m("Welcome to Flare Engine");
-	// print_d("Welcome to Flare Engine");
-	// print_w("Welcome to Flare Engine");
-	// print_e("Welcome to Flare Engine");
-	// exit(0);
-	//
+	print_m("This is a message");
+	print_d("This is a debug message");
+	print_w("This is a warning");
+	print_dw("This is a debug warning");
+	print_e("This is an error");
+
 	flare::init();
 
 	print_m("Welcome to Flare Engine");
@@ -89,17 +88,22 @@ int main() {
 	sponza->addComponent<flare::component::Object>("demo/model/sponza");
 
 	// Example of post proccessing
-	// PostFX *scanline = new PostFX("demo/scanline");
-	// scanline->init();
-	// flare::getState()->render.renderPasses.add(scanline);
+	flare::render::passes::PostFX *scanline = new flare::render::passes::PostFX("demo/shader/scanline");
+	scanline->init();
+	flare::getState()->mainState->renderPasses.add(scanline);
 
+	// Example of a pause system
 	flare::PauseState *pauseState = new flare::PauseState;
 	pauseState->previousState = flare::getState()->mainState;
 	pauseState->manager = new fuse::Manager;
 
-	Gausian *gausian = new Gausian;
-	gausian->init();
-	pauseState->renderPasses.add(gausian);
+	flare::render::passes::PostFX *gausian1 = new flare::render::passes::PostFX("demo/shader/gausian1");
+	gausian1->init();
+	pauseState->renderPasses.add(gausian1);
+
+	flare::render::passes::PostFX *gausian2 = new flare::render::passes::PostFX("demo/shader/gausian2");
+	gausian2->init();
+	pauseState->renderPasses.add(gausian2);
 
 	while (flare::isRunning()) {
 
@@ -138,13 +142,15 @@ int main() {
 
 		if (blur) {
 
-			gausian->test = fmin(gausian->test + 7*flare::render::getDeltaTime(), 1.0f);
+			gausian1->test = fmin(gausian1->test + 7*flare::render::getDeltaTime(), 1.0f);
+			gausian2->test = fmin(gausian2->test + 7*flare::render::getDeltaTime(), 1.0f);
 		}
 		if (!blur) {
 
-			gausian->test = fmax(gausian->test - 7*flare::render::getDeltaTime(), 0.0f);
+			gausian1->test = fmax(gausian1->test - 7*flare::render::getDeltaTime(), 0.0f);
+			gausian2->test = fmax(gausian2->test - 7*flare::render::getDeltaTime(), 0.0f);
 			// This is really not efficient at all
-			if (gausian->test == 0.0f) {
+			if (gausian1->test == 0.0f) {
 
 				flare::getState()->mainState = pauseState->previousState;
 			}

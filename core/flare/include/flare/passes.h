@@ -37,25 +37,6 @@ namespace flare {
 			void draw(GameState *) override;
 		};
 
-		struct Geometry : Pass {
-
-			enum GBUFFER_TEXTURE_TYPE {
-				GBUFFER_TEXTURE_TYPE_POSITION,
-				GBUFFER_TEXTURE_TYPE_DIFFUSE,
-				GBUFFER_TEXTURE_TYPE_NORMAL,
-				GBUFFER_TEXTURE_TYPE_TEXCOORD,
-				GBUFFER_TEXTURE_TYPE_DIFFUSE_LIGHT,
-				GBUFFER_TEXTURE_TYPE_SPECULAR_LIGHT,
-				GBUFFER_NUM_TEXTURES
-			};
-
-			/** @todo Is this really needed? */
-			GLuint depthTexture = 0;
-
-			void init() override;
-			void draw(GameState *gameState) override;
-		};
-
 		struct Skybox : Pass {
 
 			asset::Skybox *skybox = nullptr;
@@ -77,7 +58,17 @@ namespace flare {
 			void draw(GameState *) override;
 		};
 
-		struct Lighting : Pass {
+		struct PostFX : Pass {
+
+			PostFX(std::string name) {
+
+				this->name = name;
+			}
+
+			std::string name;
+			size_t previous = 0;
+
+			GLfloat test = 0.0;
 
 			void init() override;
 			void draw(GameState *) override;

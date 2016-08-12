@@ -83,7 +83,6 @@ void flare::render::passes::Shadow::draw(GameState *gameState) {
 
 	glUniformMatrix4fv(render->shader->getLocation("depthMVP"), 1, GL_FALSE, &depthMVP[0][0]);
 
-	getState()->render.pass = State::Render::GEOMETRY;
 	gameState->manager->draw();
 
 	glDepthMask(GL_FALSE);
@@ -92,4 +91,6 @@ void flare::render::passes::Shadow::draw(GameState *gameState) {
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, getState()->settings.resolution.x, getState()->settings.resolution.y);
+
+	setShaderOutput("shadow", textures[0]);
 }

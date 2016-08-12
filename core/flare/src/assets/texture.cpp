@@ -65,7 +65,7 @@ void flare::asset::Texture::_load() {
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData + offset);
 		} else {
 
-			print_w("'%s' contains an invalid amount of bytes per pixel (%X)", name.c_str(), bytesPerPixel);
+			print_w("'%s' contains an invalid amount of bytes per pixel (%X)", name, bytesPerPixel);
 		}
 
 		// delete[] textureData;

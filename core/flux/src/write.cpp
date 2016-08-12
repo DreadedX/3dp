@@ -21,7 +21,7 @@ void flux::write::compress(Array<flux::File*> *files) {
 
 		int result = compress2(compressedData, &compressedDataSize, uncompressedData, uncompressedDataSize, Z_BEST_SPEED);
 		if (result != Z_OK) {
-			print_e("Compression of '%s' failed (%i)", file->name.c_str(), result);
+			print_e("Compression of '%s' failed (%i)", file->name, result);
 			exit(-1);
 		}
 

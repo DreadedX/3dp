@@ -1,7 +1,10 @@
+#include <cassert>
+
 #include <GL/glew.h>
 
 #include "glm/gtc/matrix_transform.hpp"
 
+#include "flare/state.h"
 #include "flare/engine.h"
 #include "flare/input.h"
 
@@ -170,3 +173,14 @@ float flare::render::getDeltaTime() {
     return getState()->render.deltaTime;
 }
 
+void flare::render::setShaderOutput(std::string textureName, uint textureId) {
+
+	getState()->render.shaderOutput[textureName] = textureId;
+}
+
+uint flare::render::getShaderOutput(std::string textureName) {
+
+	assert(getState()->render.shaderOutput.find(textureName) != getState()->render.shaderOutput.end());
+
+	return getState()->render.shaderOutput[textureName];
+}

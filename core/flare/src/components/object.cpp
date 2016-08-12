@@ -10,27 +10,27 @@ void flare::component::Object::_draw() {
 
 	for (asset::model::Mesh *mesh : model->meshes) {
 
+		State::Render *render = &getState()->render;
 		if (mesh->diffuse != nullptr) {
 
-			glActiveTexture(GL_TEXTURE0);
+			glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("material.diffuse"));
 			glBindTexture(GL_TEXTURE_2D, mesh->diffuse->id);
 		}
 		// if (mesh->material->normal != nullptr) {
 		//
-		//     glActiveTexture(GL_TEXTURE1);
+		//     glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("material.normal"));
 		//     glBindTexture(GL_TEXTURE_2D, mesh->normal->id);
 		// }
 		if (mesh->specular != nullptr) {
 
-			glActiveTexture(GL_TEXTURE2);
+			glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("material.specular"));
 			glBindTexture(GL_TEXTURE_2D, mesh->specular->id);
 		}
 
 		glBindVertexArray(mesh->vao);
 
-		State::Render *render = &getState()->render;
-		glUniform3fv(render->shader->getLocation("light.diffuse"), 1, glm::value_ptr(mesh->diffuseColor * render->light.diffuse));		
 		glUniform3fv(render->shader->getLocation("light.specular"), 1, glm::value_ptr(mesh->specularColor * render->light.specular));		
+		glUniform3fv(render->shader->getLocation("light.diffuse"), 1, glm::value_ptr(mesh->diffuseColor * render->light.diffuse));		
 
 		glm::mat4 modelMatrix;
 		modelMatrix = glm::translate(modelMatrix, parent->getAttribute<glm::vec3>("position"));

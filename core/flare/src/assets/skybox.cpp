@@ -29,7 +29,6 @@ void flare::asset::Skybox::_load() {
 	faces.add("core/skybox/polar/back");
 
 	glGenTextures(1, &id);
-	glActiveTexture(GL_TEXTURE0);
 
 	glBindTexture(GL_TEXTURE_CUBE_MAP, id);
 	for (GLuint i = 0; i < faces.size(); ++i) {

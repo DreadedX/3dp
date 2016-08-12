@@ -77,7 +77,7 @@ obj::Model obj::read(const char *name) {
 	/** @todo Make this not hardcoded */
 	bool succes = tinyobj::LoadObj(shapes, materials, err, name, basePath.c_str());
 	if (!succes) {
-		print_e(err.c_str());
+		print_e("%s", err);
 		exit(1);
 	}
 

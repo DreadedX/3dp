@@ -16,7 +16,7 @@ uniform sampler2D renderedTexture;
 
 out vec3 FragColor;
 
-#import CalcTexCoord
+#import include/CalcTexCoord.glsl
 
 void main() {
 
