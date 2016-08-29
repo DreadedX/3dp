@@ -8,6 +8,19 @@
 #include "flare/engine.h"
 #include "flare/input.h"
 
+GLfloat vertices[] = {
+	// Left bottom triangle
+	-1.0f, 1.0f, -1.0f,
+	-1.0f, -1.0f, -1.0f,
+	1.0f, -1.0f, -1.0f,
+	// Right top triangle
+	1.0f, -1.0f, -1.0f,
+	1.0f, 1.0f, -1.0f,
+	-1.0f, 1.0f, -1.0f
+};
+
+GLuint vao;
+
 void flare::render::init() {
 
 	State::Render *render = &getState()->render;
@@ -48,6 +61,15 @@ void flare::render::init() {
 	
 	/** @todo This needs to not use a model, but a hardcoded quad */
 	render->quad = asset::load<asset::Model>("core/model/quad");
+
+	GLuint vbo = 0;
+	glGenVertexArrays(1, &vao);
+	glGenBuffers(1, &vbo);
+
+	glBindVertexArray(vao);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices[0], GL_STATIC_DRAW);
 }
 
 void debugRender(flare::GameState *gameState) {
@@ -183,4 +205,23 @@ uint flare::render::getShaderOutput(std::string textureName) {
 	assert(getState()->render.shaderOutput.find(textureName) != getState()->render.shaderOutput.end());
 
 	return getState()->render.shaderOutput[textureName];
+}
+
+void flare::render::quad() {
+
+	// glBindVertexArray(vao);
+	// glDrawArrays(GL_TRIANGLES, 0, 6);
+	
+	for (flare::asset::model::Mesh *mesh : getState()->render.quad->meshes) {
+
+		glBindVertexArray(mesh->vao);
+
+		glDrawElements(GL_TRIANGLES, mesh->indexSize, GL_UNSIGNED_INT, 0);
+	}
+}
+
+void flare::render::setTexture(uint textureLocation, uint textureUniform) {
+
+	glActiveTexture(GL_TEXTURE0 + textureLocation);
+	glBindTexture(GL_TEXTURE_2D, textureUniform);
 }

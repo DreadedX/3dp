@@ -88,9 +88,9 @@ int main() {
 	sponza->addComponent<flare::component::Object>("demo/model/sponza");
 
 	// Example of post proccessing
-	flare::render::passes::PostFX *scanline = new flare::render::passes::PostFX("demo/shader/scanline");
-	scanline->init();
-	flare::getState()->mainState->renderPasses.add(scanline);
+	// flare::render::passes::PostFX *scanline = new flare::render::passes::PostFX("demo/shader/scanline");
+	// scanline->init();
+	// flare::getState()->mainState->renderPasses.add(scanline);
 
 	// Example of a pause system
 	flare::PauseState *pauseState = new flare::PauseState;

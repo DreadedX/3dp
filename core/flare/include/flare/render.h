@@ -25,6 +25,10 @@ namespace flare {
 		void setShaderOutput(std::string texureName, uint textureId);
 
 		uint getShaderOutput(std::string texureName);
+
+		void quad();
+
+		void setTexture(uint textureLocation, uint textureUniform);
 	}
 }
 

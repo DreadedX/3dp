@@ -116,12 +116,9 @@ void flare::render::passes::SSAO::draw(GameState *) {
 
 	shader->use();
 
-	glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("gPositionMap"));
-    glBindTexture(GL_TEXTURE_2D, getShaderOutput("gPositionMap"));
-	glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("noiseTexture"));
-    glBindTexture(GL_TEXTURE_2D, textures[2]);
-	glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("gNormalMap"));
-    glBindTexture(GL_TEXTURE_2D, getShaderOutput("gNormalMap"));
+	render::setTexture(shader->getTexture("gPositionMap"), getShaderOutput("gPositionMap"));
+	render::setTexture(shader->getTexture("noiseTexture"), textures[2]);
+	render::setTexture(shader->getTexture("gNormalMap"), getShaderOutput("gNormalMap"));
 
 	for (GLuint i = 0; i < 128; ++i) {
 
@@ -131,12 +128,7 @@ void flare::render::passes::SSAO::draw(GameState *) {
 	glUniformMatrix4fv(render->shader->getLocation("view"), 1, GL_FALSE, glm::value_ptr(render->view));
 	glUniformMatrix4fv(render->shader->getLocation("projection"), 1, GL_FALSE, glm::value_ptr(render->projection));
 
-	for (flare::asset::model::Mesh *mesh : render->quad->meshes) {
-
-		glBindVertexArray(mesh->vao);
-
-		glDrawElements(GL_TRIANGLES, mesh->indexSize, GL_UNSIGNED_INT, 0);
-	}
+	render::quad();
 
 	// Blur
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
@@ -145,18 +137,10 @@ void flare::render::passes::SSAO::draw(GameState *) {
 
 	shaderBlur->use();
 
-	glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("ssaoTexture"));
-    glBindTexture(GL_TEXTURE_2D, textures[0]);
+	render::setTexture(shader->getTexture("ssaoTexture"), textures[0]);
+	render::setTexture(shader->getTexture("render"), getShaderOutput("render"));
 
-	glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("render"));
-    glBindTexture(GL_TEXTURE_2D, getShaderOutput("render"));
-
-	for (flare::asset::model::Mesh *mesh : render->quad->meshes) {
-
-		glBindVertexArray(mesh->vao);
-
-		glDrawElements(GL_TRIANGLES, mesh->indexSize, GL_UNSIGNED_INT, 0);
-	}
+	render::quad();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 

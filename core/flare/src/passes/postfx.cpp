@@ -42,33 +42,26 @@ void flare::render::passes::PostFX::draw(GameState *) {
 
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
-	glActiveTexture(GL_TEXTURE0);
-
-	/** @todo Need to make this so that it takes the output of the previous shader */
-	glBindTexture(GL_TEXTURE_2D, getShaderOutput("render"));
-	// This is just a hack to test out some things
+	// This one only works when we acctually load all the info from the shader somehow
+	// render::setTexture(shader->getTexture("render"), getShaderOutput("render"));
+	render::setTexture(0, getShaderOutput("render"));
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	shader->use();
 
 		{
-			glUniform3fv(render->shader->locations["light.direction"], 1, glm::value_ptr(render->light.direction));
-			glUniform3fv(render->shader->locations["light.ambient"], 1, glm::value_ptr(render->light.ambient));
+			glUniform3fv(shader->locations["light.direction"], 1, glm::value_ptr(render->light.direction));
+			glUniform3fv(shader->locations["light.ambient"], 1, glm::value_ptr(render->light.ambient));
 
-			glUniform3fv(render->shader->locations["viewPosition"], 1, glm::value_ptr(render->camera.position));
+			glUniform3fv(shader->locations["viewPosition"], 1, glm::value_ptr(render->camera.position));
 		}
 
-		glUniformMatrix4fv(render->shader->locations["model"], 1, GL_FALSE, glm::value_ptr(glm::mat4()));
+	glUniformMatrix4fv(shader->locations["model"], 1, GL_FALSE, glm::value_ptr(glm::mat4()));
 
-		glUniform1f(glGetUniformLocation(shader->id, "test"), test);
+	glUniform1f(glGetUniformLocation(shader->id, "test"), test);
 
-	for (asset::model::Mesh *mesh : render->quad->meshes) {
-
-		glBindVertexArray(mesh->vao);
-
-		glDrawElements(GL_TRIANGLES, mesh->indexSize, GL_UNSIGNED_INT, 0);
-	}
+	render::quad();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
