@@ -81,27 +81,32 @@ void debugRender(flare::GameState *gameState) {
 		GLsizei width = (GLsizei)flare::getState()->settings.resolution.x;
 		GLsizei height = (GLsizei)flare::getState()->settings.resolution.y;
 
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[1]->fbo);
-		glReadBuffer(GL_COLOR_ATTACHMENT0);
-		glBlitFramebuffer(0, 0, width, height, 
-				0, height/2, width/2, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+		glDrawBuffer(GL_BACK);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+		// glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[1]->fbo);
+		// glReadBuffer(GL_COLOR_ATTACHMENT0);
+		// glBlitFramebuffer(0, 0, width, height, 
+		// 		0, height/2, width/2, height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
 		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[0]->fbo);
 		// glReadBuffer(GL_COLOR_ATTACHMENT1);
 		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBlitFramebuffer(0, 0, 1024*2, 1024*2, 
-				width/2, 0, width, height/2, GL_COLOR_BUFFER_BIT, GL_LINEAR); 
+				width/2, 0, width, height/2, GL_COLOR_BUFFER_BIT, GL_NEAREST); 
 
 		glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[2]->fbo);
 		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBlitFramebuffer(0, 0, width, height, 
-				width/2, height/2, width, height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+				width/2, height/2, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
 		glBindFramebuffer(GL_READ_FRAMEBUFFER, gameState->renderPasses[gameState->renderPasses.size()-1]->fbo);
 		glReadBuffer(GL_COLOR_ATTACHMENT0);
 		glBlitFramebuffer(0, 0, width, height,
-				0, 0, width/2, height/2, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+				0, 0, width/2, height/2, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
+		// glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[1]->fbo);
+		// glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 }
 
 /** @todo Functions like these need unit testing */

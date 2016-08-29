@@ -116,9 +116,13 @@ void flare::render::passes::SSAO::draw(GameState *) {
 
 	shader->use();
 
-	render::setTexture(shader->getTexture("gPositionMap"), getShaderOutput("gPositionMap"));
+	// render::setTexture(shader->getTexture("gPositionMap"), getShaderOutput("gPositionMap"));
+	glActiveTexture(GL_TEXTURE0 + shader->getTexture("gPositionMap"));
+	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, getShaderOutput("gPositionMap"));
 	render::setTexture(shader->getTexture("noiseTexture"), textures[2]);
-	render::setTexture(shader->getTexture("gNormalMap"), getShaderOutput("gNormalMap"));
+	// render::setTexture(shader->getTexture("gNormalMap"), getShaderOutput("gNormalMap"));
+	glActiveTexture(GL_TEXTURE0 + shader->getTexture("gNormalMap"));
+	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, getShaderOutput("gNormalMap"));
 
 	for (GLuint i = 0; i < 128; ++i) {
 
@@ -138,7 +142,9 @@ void flare::render::passes::SSAO::draw(GameState *) {
 	shaderBlur->use();
 
 	render::setTexture(shader->getTexture("ssaoTexture"), textures[0]);
-	render::setTexture(shader->getTexture("render"), getShaderOutput("render"));
+	// render::setTexture(shader->getTexture("render"), getShaderOutput("render"));
+	glActiveTexture(GL_TEXTURE0 + shader->getTexture("render"));
+	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, getShaderOutput("render"));
 
 	render::quad();
 

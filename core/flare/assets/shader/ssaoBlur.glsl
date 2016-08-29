@@ -13,7 +13,7 @@ void main() {
 
 #fragment
 uniform sampler2D ssaoTexture;
-uniform sampler2D render;
+uniform sampler2DMS render;
 
 out vec4 FragColor;
 
@@ -34,6 +34,12 @@ void main() {
 		}
 	}
 
-    FragColor.rgb = texture(render, CalcTexCoord()).rgb * vec3(result / (4.0 * 4.0)) * vec3(result / (4.0 * 4.0));
-	FragColor.a = texture(render, CalcTexCoord()).a;
+	vec3 color;
+	for (int i = 0; i < 8; i++) {
+
+		color += texelFetch(render, ivec2(CalcTexCoord().x * 1280, CalcTexCoord().y * 720), i).rgb;
+	}
+
+    FragColor.rgb = (color/8) * vec3(result / (4.0 * 4.0)) * vec3(result / (4.0 * 4.0));
+	FragColor.a = texelFetch(render, ivec2(CalcTexCoord().x * 1280, CalcTexCoord().y * 720), 0).a;
 }  

@@ -109,5 +109,7 @@ void main() {
 	FragColor.rgb = pow(FragColor.rgb, vec3(1.0/gamma));
 	FragColor.a = LinearizeDepth(gl_FragCoord.z);
 
+	FragColor = vec4(1.0);
+
 	/* FragColor.rgb = vec3(texture( shadow, fs_in.ShadowCoord.xy ).r); */
 }

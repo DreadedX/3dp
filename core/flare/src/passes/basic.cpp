@@ -7,6 +7,8 @@
 
 void flare::render::passes::Basic::init() {
 
+	int samples = 8;
+
 	shader = asset::load<asset::Shader>("core/shader/basic");
 
 	GLuint texture = 0;
@@ -15,11 +17,11 @@ void flare::render::passes::Basic::init() {
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
 	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, getState()->settings.resolution.x, getState()->settings.resolution.y, 0, GL_RGBA, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
+	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, texture);
+	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, GL_RGBA, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
+	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, texture, 0);
 
 	textures.add(texture);
 		
@@ -28,15 +30,15 @@ void flare::render::passes::Basic::init() {
 		GLuint extraTexture = 0;
 
 		glGenTextures(1, &extraTexture);
-		glBindTexture(GL_TEXTURE_2D, extraTexture);
+		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, extraTexture);
 		if (i == 0) {
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, getState()->settings.resolution.x, getState()->settings.resolution.y, 0, GL_RGBA, GL_FLOAT, NULL);
+			glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, GL_RGBA32F, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
 		} else {
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, getState()->settings.resolution.x, getState()->settings.resolution.y, 0, GL_RGB, GL_FLOAT, NULL);
+			glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, GL_RGB32F, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
 		}
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1 + i, GL_TEXTURE_2D, extraTexture, 0);
+		// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1 + i, GL_TEXTURE_2D_MULTISAMPLE, extraTexture, 0);
 
 		textures.add(extraTexture);
 	}
@@ -44,9 +46,9 @@ void flare::render::passes::Basic::init() {
 	GLuint depthTexture = 0;
 
 	glGenTextures(1, &depthTexture);
-	glBindTexture(GL_TEXTURE_2D, depthTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, getState()->settings.resolution.x, getState()->settings.resolution.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
+	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, depthTexture);
+	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, GL_DEPTH_COMPONENT32F, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D_MULTISAMPLE, depthTexture, 0);
 
 	GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 }; 
 	glDrawBuffers(3, drawBuffers);
@@ -55,7 +57,7 @@ void flare::render::passes::Basic::init() {
 
 	if (status != GL_FRAMEBUFFER_COMPLETE) {
 		print_e("FB error, status: 0x%x", status);
-		if (status == GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT) {
+		if (status == GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE) {
 			print_e("error");
 		}
 		exit(-1);
