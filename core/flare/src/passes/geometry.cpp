@@ -1,0 +1,104 @@
+#include <GL/glew.h>
+
+#include "glm/gtc/type_ptr.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
+#include "flare/engine.h"
+
+void flare::render::passes::Geometry::init() {
+
+	shader = asset::load<asset::Shader>("core/shader/geometry");
+
+	glGenFramebuffers(1, &fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+	for (int i = 0; i < 2; i++) {
+
+		GLuint extraTexture = 0;
+
+		glGenTextures(1, &extraTexture);
+		glBindTexture(GL_TEXTURE_2D, extraTexture);
+		if (i == 0) {
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, getState()->settings.resolution.x, getState()->settings.resolution.y, 0, GL_RGBA, GL_FLOAT, NULL);
+		} else {
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, getState()->settings.resolution.x, getState()->settings.resolution.y, 0, GL_RGB, GL_FLOAT, NULL);
+		}
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, extraTexture, 0);
+
+		textures.add(extraTexture);
+	}
+
+	GLuint depthTexture = 0;
+
+	glGenTextures(1, &depthTexture);
+	glBindTexture(GL_TEXTURE_2D, depthTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, getState()->settings.resolution.x, getState()->settings.resolution.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
+
+	GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1}; 
+	glDrawBuffers(2, drawBuffers);
+
+	GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+
+	if (status != GL_FRAMEBUFFER_COMPLETE) {
+		print_e("FB error, status: 0x%x", status);
+		if (status == GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE) {
+			print_e("error");
+		}
+		exit(-1);
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void flare::render::passes::Geometry::draw(GameState *gameState) {
+
+	shader->use();
+
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
+
+	glDepthMask(GL_TRUE);
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_BLEND);
+
+	State::Render *render = &getState()->render;
+	glUniform3fv(shader->getLocation("light.direction"), 1, glm::value_ptr(render->light.direction));
+	glUniform3fv(shader->getLocation("light.ambient"), 1, glm::value_ptr(render->light.ambient));
+	// glUniform3fv(shader->getLocation("viewPosition"), 1, glm::value_ptr(render->camera.position));
+
+	glUniformMatrix4fv(shader->getLocation("view"), 1, GL_FALSE, glm::value_ptr(render->view));
+	glUniformMatrix4fv(shader->getLocation("projection"), 1, GL_FALSE, glm::value_ptr(render->projection));
+
+	glm::mat4 depthProjectionMatrix = glm::ortho<float>(-400, 400, -400, 400, -400, 400);
+	glm::mat4 depthViewMatrix = glm::lookAt(-render->light.direction, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 depthModelMatrix = glm::mat4(1.0f);
+
+	glm::mat4 depthMVP = depthProjectionMatrix * depthViewMatrix * depthModelMatrix;
+
+	glm::mat4 biasMatrix(
+			0.5, 0.0, 0.0, 0.0,
+			0.0, 0.5, 0.0, 0.0,
+			0.0, 0.0, 0.5, 0.0,
+			0.5, 0.5, 0.5, 1.0
+			);
+	glm::mat4 depthBiasMVP = biasMatrix*depthMVP;
+
+	glUniformMatrix4fv(shader->getLocation("depthMVP"), 1, GL_FALSE, &depthBiasMVP[0][0]);
+
+	render::setTexture(shader->getTexture("shadow"), getShaderOutput("shadow"));
+
+	gameState->manager->draw();
+
+	glDepthMask(GL_FALSE);
+	glDisable(GL_DEPTH_TEST);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	setShaderOutput("gPositionMap", textures[0]);
+	setShaderOutput("gNormalMap", textures[1]);
+}

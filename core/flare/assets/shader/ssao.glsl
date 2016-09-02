@@ -18,9 +18,9 @@ void main() {
 }
 
 #fragment
-uniform sampler2DMS gPositionMap;
+uniform sampler2D gPositionMap;
 uniform sampler2D noiseTexture;
-uniform sampler2DMS gNormalMap;
+uniform sampler2D gNormalMap;
 
 uniform vec3 samples[128];
 uniform mat4 projection;
@@ -32,13 +32,13 @@ out float FragColor;
 const vec2 noiseScale = vec2(1280.0/4.0, 720.0/4.0);
 
 int kernelSize = 128;
-float radius = 2.0;
+float radius = 3.0;
 
 void main() {
 
-	vec3 fragPos = texelFetch(gPositionMap, ivec2(fs_in.Texcoord.x * 1280, fs_in.Texcoord.y * 720), 0).xyz;
+	vec3 fragPos = texture(gPositionMap, fs_in.Texcoord).xyz;
 
-	vec3 normal = texelFetch(gNormalMap, ivec2(fs_in.Texcoord.x * 1280, fs_in.Texcoord.y * 720), 0).xyz;
+	vec3 normal = texture(gNormalMap, fs_in.Texcoord).xyz;
 	mat3 normalMatrix = transpose(inverse(mat3(view)));
 	normal = normalMatrix * normal;
 	vec3 randomVec = texture(noiseTexture, fs_in.Texcoord * noiseScale).xyz;
@@ -59,7 +59,7 @@ void main() {
 		offset.xyz /= offset.w;
 		offset.xyz = offset.xyz * 0.5 + 0.5;
 
-		float sampleDepth = -texelFetch(gPositionMap, ivec2(offset.x * 1280, offset.y * 720), 0).a;
+		float sampleDepth = -texture(gPositionMap, offset.xy).a;
 
 		// Enable this when we have skyboxes
 		float rangeCheck = smoothstep(0.0, 1.0, radius / abs(fragPos.z - sampleDepth));
@@ -67,7 +67,14 @@ void main() {
 		//occlusion += (sampleDepth >= sample.z ? 1.0 : 0.0);     
 
 	}
+
 	occlusion = 1.0 - (occlusion / kernelSize);
+
+	if (texture(gPositionMap, fs_in.Texcoord).a == 0.0) {
+
+		occlusion = 1.0;
+	}
 
 	FragColor = occlusion;
 }
+

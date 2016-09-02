@@ -37,14 +37,6 @@ void flux::read::load() {
 
 		containers.push_back(container);
 	}
-
-	for (flux::Container *container : containers) {
-
-		for (uint i = 0; i < container->indexSize; i++) {
-
-			print_d("Asset: %s", container->index[i].name);
-		}
-	}
 }
 
 /** @todo Should the file be closed again */

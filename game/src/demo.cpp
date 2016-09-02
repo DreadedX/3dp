@@ -90,6 +90,12 @@ int main() {
 	sponza->setAttribute("scale", glm::vec3(0.1f, 0.1f, 0.1f));
 	sponza->addComponent<flare::component::Object>("demo/model/sponza");
 
+	// fuse::Entity *lostEmpire = flare::getState()->mainState->manager->createEntity("Lost Empire");
+    //
+	// lostEmpire->setAttribute("position", glm::vec3(0.0f, 0.0f, 0.0f));
+	// lostEmpire->setAttribute("scale", glm::vec3(5.0f, 5.0f, 5.0f));
+	// lostEmpire->addComponent<flare::component::Object>("demo/model/lost_empire");
+
 	// Example of post proccessing
 	// flare::render::passes::PostFX *scanline = new flare::render::passes::PostFX("demo/shader/scanline");
 	// scanline->init();
@@ -111,8 +117,8 @@ int main() {
 	while (flare::isRunning()) {
 
 		// Shadow test
-		// flare::getState()->render.light.direction.x = 100 * cos(glfwGetTime()/5);
-		// flare::getState()->render.light.direction.z = 100 * sin(glfwGetTime()/5);
+		flare::getState()->render.light.direction.x = 100 * cos(glfwGetTime()/20);
+		flare::getState()->render.light.direction.z = 100 * sin(glfwGetTime()/20);
 		//////
 
 		flare::update();

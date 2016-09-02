@@ -17,8 +17,12 @@ void flare::asset::reload() {
 
 	for (Asset *asset : assetList) {
 
-		print_d("Reloading asset: %s", asset->name);
-		asset->_load();
+		// For now only reload core assets for testing
+		if (asset->name.substr(0, 4).compare("core") == 0) {
+
+			print_d("Reloading asset: %s", asset->name);
+			asset->_load();
+		}
 	}
 }
 

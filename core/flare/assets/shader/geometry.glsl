@@ -14,6 +14,7 @@ layout (location = 3) in vec2 texcoord;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
+uniform mat4 depthMVP;
 
 void main() {
 
@@ -23,38 +24,22 @@ void main() {
 	vs_out.Texcoord = texcoord;
 
 	mat3 normalMatrix = transpose(inverse(mat3(model)));
-	vs_out.Normal = normalMatrix * normal;
+	vs_out.Normal = normalize(normalMatrix * normal);
 }
 
 #fragment
-layout (location = 0) out vec4 WorldPosOut;
-layout (location = 1) out vec3 ColorOut;
-layout (location = 2) out vec3 NormalOut;
-layout (location = 3) out vec3 TexCoordOut;
-
-layout (location = 4) out vec3 DiffuseColorOut;
-layout (location = 5) out vec4 SpecularColorOut;
-
 #import include/Material.glsl
 uniform Material material;
-#import include/Light.glsl
-uniform Light light;
+
+layout (location = 0) out vec4 WorldPosOut;
+layout (location = 1) out vec3 NormalOut;
 
 #import include/LinearizeDepth.glsl
 
 void main() {
 
-	if (texture(material.diffuse, fs_in.Texcoord).a == 0.0) {
-		discard;
-	}
-
-	WorldPosOut.xyz = fs_in.FragPosition;
+	// Export some values that other shaders can use
+	WorldPosOut.rgb = fs_in.FragPosition;
 	WorldPosOut.a = LinearizeDepth(gl_FragCoord.z);
-	ColorOut = texture(material.diffuse, fs_in.Texcoord).rgb;
-	NormalOut = normalize(fs_in.Normal);
-	TexCoordOut = vec3(fs_in.Texcoord, 0.0);
-
-	DiffuseColorOut = light.diffuse;
-	SpecularColorOut.rgb = light.specular * texture(material.specular, fs_in.Texcoord).rgb;
-	SpecularColorOut.a = material.shininess;
+	NormalOut = fs_in.Normal;
 }

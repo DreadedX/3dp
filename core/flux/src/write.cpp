@@ -42,6 +42,7 @@ uint flux::write::write(Array<flux::File*> *files, const char *containerName) {
 	ulong dataLocation = 4 + sizeof(uint);
 	for (flux::File *file : *files) {
 
+		print_d("%s", file->name);
 		assert(file->compressedDataSize != 0);
 
 		dataLocation += sizeof(byte);

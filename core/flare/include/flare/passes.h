@@ -46,6 +46,18 @@ namespace flare {
 			void draw(GameState *) override;
 		};
 
+		struct ResolveMSAA : Pass {
+
+			void init() override;
+			void draw(GameState *) override;
+		};
+
+		struct Geometry : Pass {
+
+			void init() override;
+			void draw(GameState *) override;
+		};
+
 		struct SSAO : Pass {
 
 			Array<glm::vec3> ssaoKernel = Array<glm::vec3>(64);

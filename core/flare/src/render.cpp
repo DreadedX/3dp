@@ -28,12 +28,15 @@ void flare::render::init() {
 
 	State::Render *render = &getState()->render;
 
+	// Shaders need to have MSAA and resolution data
 	getState()->mainState->renderPasses.add(new passes::Shadow);
 	getState()->mainState->renderPasses.add(new passes::Basic);
 	getState()->mainState->renderPasses.add(new passes::Skybox);
+	getState()->mainState->renderPasses.add(new passes::ResolveMSAA);
 	// There needs to be a pass that resolves the multisample texture to a normal texture
 	// There needs to be a pass that generates geometry data that is not multisampled
-	// getState()->mainState->renderPasses.add(new passes::SSAO);
+	getState()->mainState->renderPasses.add(new passes::Geometry);
+	getState()->mainState->renderPasses.add(new passes::SSAO);
 
 	for(passes::Pass *pass : getState()->mainState->renderPasses) {
 
@@ -91,16 +94,16 @@ void debugRender(flare::GameState *) {
 
 		if (flare::input::keyCheck(GLFW_KEY_1)) {
 
-			glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[1]->fbo);
+			glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[0]->fbo);
 			glReadBuffer(GL_COLOR_ATTACHMENT0);
-			glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+			glBlitFramebuffer(0, 0, 1024*2, 1024*2, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 		}
 
 		if (flare::input::keyCheck(GLFW_KEY_2)) {
 
-			glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[0]->fbo);
+			glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[1]->fbo);
 			glReadBuffer(GL_COLOR_ATTACHMENT0);
-			glBlitFramebuffer(0, 0, 1024*2, 1024*2, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+			glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 		}
 
 		if (flare::input::keyCheck(GLFW_KEY_3)) {
@@ -113,6 +116,20 @@ void debugRender(flare::GameState *) {
 		if (flare::input::keyCheck(GLFW_KEY_4)) {
 
 			glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[3]->fbo);
+			glReadBuffer(GL_COLOR_ATTACHMENT0);
+			glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+		}
+
+		if (flare::input::keyCheck(GLFW_KEY_5)) {
+
+			glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[4]->fbo);
+			glReadBuffer(GL_COLOR_ATTACHMENT0);
+			glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+		}
+
+		if (flare::input::keyCheck(GLFW_KEY_6)) {
+
+			glBindFramebuffer(GL_READ_FRAMEBUFFER, flare::getState()->mainState->renderPasses[5]->fbo);
 			glReadBuffer(GL_COLOR_ATTACHMENT0);
 			glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 		}

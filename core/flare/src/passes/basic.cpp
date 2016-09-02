@@ -23,24 +23,6 @@ void flare::render::passes::Basic::init() {
 
 	textures.add(texture);
 		
-	for (int i = 0; i < 2; i++) {
-
-		GLuint extraTexture = 0;
-
-		glGenTextures(1, &extraTexture);
-		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, extraTexture);
-		if (i == 0) {
-			glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, getState()->render.sampleCount, GL_RGBA32F, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
-		} else {
-			glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, getState()->render.sampleCount, GL_RGB32F, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
-		}
-		// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1 + i, GL_TEXTURE_2D_MULTISAMPLE, extraTexture, 0);
-
-		textures.add(extraTexture);
-	}
-
 	GLuint depthTexture = 0;
 
 	glGenTextures(1, &depthTexture);
@@ -48,8 +30,8 @@ void flare::render::passes::Basic::init() {
 	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, getState()->render.sampleCount, GL_DEPTH_COMPONENT32F, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D_MULTISAMPLE, depthTexture, 0);
 
-	GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 }; 
-	glDrawBuffers(3, drawBuffers);
+	GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0 }; 
+	glDrawBuffers(1, drawBuffers);
 
 	GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
@@ -111,6 +93,4 @@ void flare::render::passes::Basic::draw(GameState *gameState) {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	setShaderOutput("render", textures[0]);
-	setShaderOutput("gPositionMap", textures[1]);
-	setShaderOutput("gNormalMap", textures[2]);
 }

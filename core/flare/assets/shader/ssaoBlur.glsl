@@ -13,7 +13,7 @@ void main() {
 
 #fragment
 uniform sampler2D ssaoTexture;
-uniform sampler2DMS render;
+uniform sampler2D render;
 
 out vec4 FragColor;
 
@@ -34,20 +34,7 @@ void main() {
 		}
 	}
 
-	vec3 color;
-	float skybox;
-	for (int i = 0; i < 8; i++) {
+	vec4 color = texture(render, CalcTexCoord());
 
-		color += texelFetch(render, ivec2(CalcTexCoord().x * 1280, CalcTexCoord().y * 720), i).rgb;
-		skybox += texelFetch(render, ivec2(CalcTexCoord().x * 1280, CalcTexCoord().y * 720), i).a;
-	}
-
-	if (skybox/8 != 0.0) {
-
-		FragColor.rgb = (color/8) * vec3(result / (4.0 * 4.0)) * vec3(result / (4.0 * 4.0));
-	} else {
-
-		FragColor.rgb = (color/8);
-	}
-	FragColor.a = texelFetch(render, ivec2(CalcTexCoord().x * 1280, CalcTexCoord().y * 720), 0).a;
+	FragColor.rgb = color.rgb * vec3(pow(result / (4.0 * 4.0), 2));
 }  
