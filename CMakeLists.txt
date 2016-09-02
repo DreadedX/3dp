@@ -72,6 +72,7 @@ endif ()
 
 # Libraries
 include_directories(${PROJECT_SOURCE_DIR}/libs/cmdline)
+include_directories(${PROJECT_SOURCE_DIR}/libs/rapidjson/include)
 include_directories(${PROJECT_SOURCE_DIR}/libs/glm)
 add_subdirectory(libs/imgui EXCLUDE_FROM_ALL)
 add_subdirectory(libs/zlib-ng EXCLUDE_FROM_ALL)

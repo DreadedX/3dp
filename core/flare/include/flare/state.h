@@ -73,7 +73,7 @@ namespace flare {
 			glm::mat4 projection;
 
 			// MSAA Sample count
-			int sampleCount;
+			int sampleCount = 0;
 
 			/** @brief Global light settings
 			  @todo This should configurable */

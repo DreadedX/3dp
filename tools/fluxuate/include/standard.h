@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <ctime>
 #include <sys/stat.h>
+#include <experimental/filesystem>
 
 /** @todo This only works on linux */
 #if WIN32
@@ -21,6 +22,12 @@
 #endif
 
 #include "xxhash.h"
+
+#include "rapidjson/rapidjson.h"
+#include "rapidjson/document.h"
+#include "rapidjson/filereadstream.h"
+#include "rapidjson/filewritestream.h"
+#include "rapidjson/writer.h"
 
 #include "cmdline.h"
 

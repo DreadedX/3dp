@@ -35,11 +35,19 @@ void main() {
 	}
 
 	vec3 color;
+	float skybox;
 	for (int i = 0; i < 8; i++) {
 
 		color += texelFetch(render, ivec2(CalcTexCoord().x * 1280, CalcTexCoord().y * 720), i).rgb;
+		skybox += texelFetch(render, ivec2(CalcTexCoord().x * 1280, CalcTexCoord().y * 720), i).a;
 	}
 
-    FragColor.rgb = (color/8) * vec3(result / (4.0 * 4.0)) * vec3(result / (4.0 * 4.0));
+	if (skybox/8 != 0.0) {
+
+		FragColor.rgb = (color/8) * vec3(result / (4.0 * 4.0)) * vec3(result / (4.0 * 4.0));
+	} else {
+
+		FragColor.rgb = (color/8);
+	}
 	FragColor.a = texelFetch(render, ivec2(CalcTexCoord().x * 1280, CalcTexCoord().y * 720), 0).a;
 }  

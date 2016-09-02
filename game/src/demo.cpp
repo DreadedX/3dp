@@ -70,6 +70,9 @@ int main() {
 
 	}
 	// END
+	
+	flare::getState()->render.camera.position = glm::vec3(-144, 170, -24);
+	flare::getState()->render.camera.rotation = glm::vec3(35, -18, 0);
 
 	fuse::Entity *player = flare::getState()->mainState->manager->createEntity("Player");
 	player->addComponent<Camera>();
@@ -108,8 +111,8 @@ int main() {
 	while (flare::isRunning()) {
 
 		// Shadow test
-		flare::getState()->render.light.direction.x = 100 * cos(glfwGetTime()/5);
-		flare::getState()->render.light.direction.z = 100 * sin(glfwGetTime()/5);
+		// flare::getState()->render.light.direction.x = 100 * cos(glfwGetTime()/5);
+		// flare::getState()->render.light.direction.z = 100 * sin(glfwGetTime()/5);
 		//////
 
 		flare::update();

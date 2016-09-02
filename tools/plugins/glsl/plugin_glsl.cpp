@@ -42,14 +42,14 @@ std::string firstPass(std::string source, std::string filePath) {
 
 	for (std::size_t pragma = 0; pragma != std::string::npos; pragma = source.find("#", pragma+1)) {
 
-		print_d("Preprocessor instruction found at: %i", pragma);
+		// print_d("Preprocessor instruction found at: %i", pragma);
 
 		std::stringstream ss(source.substr(pragma + 1));
 		std::string s;
 
 		ss >> s;
 
-		print_d("Preprocessor instruction: %s", s);
+		// print_d("Preprocessor instruction: %s", s);
 
 		std::size_t end;
 		std::string includeName;
@@ -96,7 +96,7 @@ std::string firstPass(std::string source, std::string filePath) {
 				return "";
 
 			default:
-				print_d("Ignoring: %s", s);
+				// print_d("Ignoring: %s", s);
 				break;
 		}
 
@@ -141,7 +141,7 @@ void load(std::string assetName, std::string filePath, Array<flux::File*> *files
 
 	source = firstPass(source, filePath);
 	if (source == "") {
-		print_d("Skipping...");
+		// print_d("Skipping...");
 		return;
 	}
 	source = secondPass(source);

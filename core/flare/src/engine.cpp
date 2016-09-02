@@ -177,6 +177,10 @@ void flare::update() {
 #endif
 
 	DEBUG_TIME( glfwSwapBuffers(getState()->window), "swap buffers" );
+
+	char array[10];
+	snprintf(array, sizeof(array), "%f", getState()->render.deltaTime * 1000);
+	glfwSetWindowTitle(getState()->window, array);
 }
 
 void flare::terminate(int errorCode) {

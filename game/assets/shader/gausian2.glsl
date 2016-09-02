@@ -1,5 +1,4 @@
 #version 330 core
-
 #interface_start
 	vec2 blurTextureCoords[25];
 #interface_end

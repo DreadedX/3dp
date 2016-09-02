@@ -7,8 +7,6 @@
 
 void flare::render::passes::Basic::init() {
 
-	int samples = 8;
-
 	shader = asset::load<asset::Shader>("core/shader/basic");
 
 	GLuint texture = 0;
@@ -18,7 +16,7 @@ void flare::render::passes::Basic::init() {
 
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, texture);
-	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, GL_RGBA, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
+	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, getState()->render.sampleCount, GL_RGBA, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
 	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, texture, 0);
@@ -32,9 +30,9 @@ void flare::render::passes::Basic::init() {
 		glGenTextures(1, &extraTexture);
 		glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, extraTexture);
 		if (i == 0) {
-			glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, GL_RGBA32F, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
+			glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, getState()->render.sampleCount, GL_RGBA32F, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
 		} else {
-			glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, GL_RGB32F, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
+			glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, getState()->render.sampleCount, GL_RGB32F, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
 		}
 		// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -47,7 +45,7 @@ void flare::render::passes::Basic::init() {
 
 	glGenTextures(1, &depthTexture);
 	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, depthTexture);
-	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, GL_DEPTH_COMPONENT32F, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
+	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, getState()->render.sampleCount, GL_DEPTH_COMPONENT32F, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D_MULTISAMPLE, depthTexture, 0);
 
 	GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 }; 

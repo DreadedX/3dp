@@ -1,4 +1,4 @@
-#version 330
+#version 400 core
 #interface_start
 	vec3 EyeDirection;
 #interface_end
@@ -26,17 +26,19 @@ void main() {
 out vec4 color;
 
 uniform samplerCube skybox;
-uniform sampler2D render;
+uniform sampler2DMS render;
 
 void main() {
 
 	vec2 texCoords = CalcTexCoord();
 
-	if (texture(render, texCoords).a == 0.0) {
+	if (texelFetch(render, ivec2(texCoords.x * 1280, texCoords.y * 720), gl_SampleID).a == 0.0) {
 
 		color.rgb = texture(skybox, fs_in.EyeDirection).rgb;
 	} else {
 
-		color.rgb = texture(render, texCoords).rgb;
+		color.rgb = texelFetch(render, ivec2(texCoords.x * 1280, texCoords.y * 720), gl_SampleID).rgb;
 	}
+
+	color.a = texelFetch(render, ivec2(texCoords.x * 1280, texCoords.y * 720), gl_SampleID).a;
 }

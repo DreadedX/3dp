@@ -63,11 +63,11 @@ void flare::render::passes::Skybox::init() {
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 	glGenTextures(1, &skyboxRenderedTexture);
-	glBindTexture(GL_TEXTURE_2D, skyboxRenderedTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, getState()->settings.resolution.x, getState()->settings.resolution.y, 0, GL_RGBA, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, skyboxRenderedTexture, 0);
+	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, skyboxRenderedTexture);
+	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, getState()->render.sampleCount, GL_RGBA, getState()->settings.resolution.x, getState()->settings.resolution.y, GL_FALSE);
+	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, skyboxRenderedTexture, 0);
 
 	GLuint status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
@@ -107,7 +107,9 @@ void flare::render::passes::Skybox::draw(GameState *) {
 
 	glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("skybox"));
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skybox->id);
-	render::setTexture(shader->getTexture("render"), getShaderOutput("render"));
+	// render::setTexture(shader->getTexture("render"), getShaderOutput("render"));
+	glActiveTexture(GL_TEXTURE0 + render->shader->getTexture("render"));
+	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, getShaderOutput("render"));
 
 	glm::mat4 view = glm::mat4(glm::mat3(render->view));
 	glUniformMatrix4fv(render->shader->getLocation("view"), 1, GL_FALSE, glm::value_ptr(view));

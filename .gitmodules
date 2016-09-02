@@ -29,3 +29,6 @@
 [submodule "libs/fmt"]
 	path = libs/fmt
 	url = https://github.com/fmtlib/fmt
+[submodule "libs/rapidjson"]
+	path = libs/rapidjson
+	url = https://github.com/miloyip/rapidjson
