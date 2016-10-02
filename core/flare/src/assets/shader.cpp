@@ -61,17 +61,17 @@ void flare::asset::Shader::_load() {
 	byte *shaderSource = shaderFile->load();
 
 	uint offset = 0;
-	size_t vertexLength = 0;
-	size_t fragmentLength = 0;
+	ulong vertexLength = 0;
+	ulong fragmentLength = 0;
 
-	for (uint i = 0; i < sizeof(size_t); ++i) {
+	for (uint i = 0; i < sizeof(ulong); ++i) {
 		vertexLength += shaderSource[offset + i] << (i*8);
 	}
-	offset += sizeof(size_t);
-	for (uint i = 0; i < sizeof(size_t); ++i) {
+	offset += sizeof(ulong);
+	for (uint i = 0; i < sizeof(ulong); ++i) {
 		fragmentLength += shaderSource[offset + i] << (i*8);
 	}
-	offset += sizeof(size_t);
+	offset += sizeof(ulong);
 
 	char *vertexSource = allocator::make_new_array<char>(*getState()->proxyAllocators.flux, vertexLength);
 	char *fragmentSource = allocator::make_new_array<char>(*getState()->proxyAllocators.flux, fragmentLength);
